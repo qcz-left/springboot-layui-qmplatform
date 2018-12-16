@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qcz.qmplatform.module.sys.dao.MenuDao">
+	
+	<select id="menuTreesData" resultType="com.qcz.qmplatform.module.sys.entity.Tree">
+		select distinct
+		 	sm.menu_id id,
+		 	sm.menu_name name,
+		 	sm.parent_id,
+		 	sm.parent_name,
+		 	sm.icon,
+		 	sm.url
+		from
+			sys_user_role sur
+		join sys_role_menu srm on sur.role_id = srm.role_id
+		and sur.user_id = #{userId}
+		join sys_menu sm on srm.menu_id = sm.menu_id
+		order by sm.sort
+	</select>
+	
+	<select id="menuList" resultType="map">
+		select
+			menu_id id,
+			menu_name name,
+			parent_id pid,
+			parent_name pname,
+			icon,
+			url
+		from
+			sys_menu
+		order by sort
+	</select>
+	
+	<select id="getMenuTreeWithStatus" resultType="map">
+		SELECT
+			sm.menu_id id,
+			sm.menu_name title,
+			sm.parent_id parentId,
+			case when exists(select 1 from sys_role_menu srm where srm.menu_id = sm.menu_id and srm.role_id = #{roleId}) then 1 else 0 end checked
+		FROM
+			sys_menu sm
+	</select>
+	
+</mapper>

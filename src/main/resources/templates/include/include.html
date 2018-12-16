@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<!-- 头部模块，动态加载js、css等静态文件 -->
+	<head th:fragment="static(params)">
+		<meta charset="UTF-8">
+		<script th:inline="javascript">var _ctx = [[@{/}]];</script>
+		<th:block th:each="item : ${#strings.listSplit(params,',')}">
+			<th:block th:switch="${item}">
+				<th:block th:case="'layui'">
+					<link rel="stylesheet" th:href="@{/static/plugin/layui/css/layui.css}" />
+					<script type="text/javascript" th:src="@{/static/plugin/jquery/jquery-2.2.2.min.js}"></script>
+					<script type="text/javascript" th:src="@{/static/plugin/layui/layui.js}"></script>
+					<script type="text/javascript" th:src="@{/static/common/layer-extends.js}"></script>
+				</th:block>
+				<th:block th:case="'vue'">
+					<script type="text/javascript" th:src="@{/static/plugin/vuejs/vue-2.3.0/vue.min.js}"></script>
+					<script type="text/javascript" th:src="@{/static/plugin/vuejs/vue-2.3.0/vue-resource.js}"></script>
+					<script type="text/javascript" th:src="@{/static/common/vue-component.js}"></script>
+				</th:block>
+				<th:block th:case="'echarts'">
+					<script type="text/javascript" th:src="@{/static/plugin/echarts3.3.2/echarts.min.js}"></script>
+				</th:block>
+				<th:block th:case="'layer'">
+					<link rel="stylesheet" th:href="@{/static/plugin/layer/layer-v3.1.0/theme/default/layer.css}" />
+					<script type="text/javascript" th:src="@{/static/plugin/layer/layer-v3.1.0/layer.js}"></script>
+				</th:block>
+				<th:block th:case="'laydate'">
+					<link rel="stylesheet" th:href="@{/static/plugin/laydate/theme/default/laydate.css}" />
+					<script type="text/javascript" th:src="@{/static/plugin/laydate/laydate.js}"></script>
+				</th:block>
+				<th:block th:case="'dtree'">
+					<link rel="stylesheet" th:href="@{/static/plugin/dtree/font/iconfont.css}" />
+					<link rel="stylesheet" th:href="@{/static/plugin/dtree/dtree.css}" />
+					<script type="text/javascript" th:src="@{/static/plugin/dtree/dtree.js}"></script>
+				</th:block>
+				<th:block th:case="'error'">
+					<link rel="stylesheet" th:href="@{/static/error/error.css}" />
+				</th:block>
+			</th:block>
+		</th:block>
+		<!-- 自定义公共js库 -->
+		<link rel="stylesheet" th:href="@{/static/common/css/common.css}" />
+		<script type="text/javascript" th:src="@{/static/common/common.js}"></script>
+		<script type="text/javascript" th:src="@{/static/common/app.js}"></script>
+	</head>
+</body>
+</html>

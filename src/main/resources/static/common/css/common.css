@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+body {
+	background: white;
+	width: 100%;
+}
+
+html {
+	width: 100%;
+}
+
+.content-body {
+	padding: 5px;
+}
+
+.hide {
+	display: none
+}
+
+.content-body .layui-form .layui-form-item {
+	margin-bottom: 0;
+}
+
+.content-body .layui-form .layui-form-label {
+	font-weight: bold;
+	min-width: 120px;
+}
+
+.content-body .layui-form .layui-input-block {
+	margin-left: 150px;
+}
+
+.content-body .layui-form button {
+	margin-left: 5px;
+}
+
+.data-grid .layui-table {
+	margin-top: 5px;
+}
+
+#operator {
+	bottom: 0px;
+	position: fixed;
+	z-index: 9999;
+	width: 100%;
+	text-align: center;
+	padding: 10px;
+	background: #eee;
+}
+
+.btn-input-inline {
+	position: absolute;
+	right: 300px;
+}
+
+.text-danger {
+	color: red;
+}
+
+.text-success {
+	color: green;
+}
+
+/* layui confirm皮肤扩展 */
+body .my-layer-danger .layui-layer-title {
+	background: #c00;
+	color: white;
+}
+body .my-layer-danger .layui-layer-btn0 {
+	background: #c00;
+	border: none;
+}
+body .my-layer-warm .layui-layer-title {
+	background: yellow;
+}
+body .my-layer-warm .layui-layer-btn0 {
+	background: yellow;
+	color: black;
+	border: none;
+}

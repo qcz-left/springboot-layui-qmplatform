@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="/include/include :: static(params='layui,vue')"></head>
+<title>Qu管理平台-首页</title>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin" id="vue-container">
+		<div class="layui-header">
+			<div class="layui-logo">Qu管理平台</div>
+			<ul class="layui-nav layui-layout-right">
+				<li class="layui-nav-item"><a href="javascript:;"> <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
+					<th:block th:text="${session.currentUser.userName}"/>
+				</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="javascript:;">基本资料</a>
+						</dd>
+						<dd>
+							<a class="safe-setting" href="javascript:;">安全设置</a>
+						</dd>
+					</dl></li>
+				<li class="layui-nav-item"><a th:href="@{/main/logout}">退出</a></li>
+			</ul>
+		</div>
+
+		<div class="layui-side layui-bg-black">
+			<div class="layui-side-scroll">
+				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+				<ul class="layui-nav layui-nav-tree">
+<!-- 					<menu-tree :message="data.menuTree"></menu-tree> -->
+					<!-- 写死了，最多只允许三级菜单，后期优化无限级菜单 -->
+					<template v-for="(menu,index) in data.menuTree">
+						<li class="layui-nav-item layui-nav-itemed" v-if="menu.hasChild">
+							<a href="javascript:;" v-HTML="'<i class=&quot;'+menu.icon+'&quot;></i>&nbsp;&nbsp;'+menu.name+'<span class=&quot;layui-nav-more&quot;></span>'"></a>
+							<dl class="layui-nav-child">
+								<template v-for="(menuChildrenOne, indexOne) in menu.childrens">
+									<dd v-if="menuChildrenOne.hasChild">
+										<a style="padding-left: 34px;" href="javascript:;" v-HTML="'<i class=&quot;'+menuChildrenOne.icon+'&quot;></i>&nbsp;&nbsp;'+menuChildrenOne.name+'<span class=&quot;layui-nav-more&quot;></span>'"></a>
+										<dl class="layui-nav-child">
+											<dd :class="(index == 0 && indexOne == 0 ? 'layui-this' : '')" v-for="menuChildrenTwo in menuChildrenOne.childrens"><a @click="visitMenu(menuChildrenTwo)" style="padding-left: 48px;" :lay-href="menuChildrenTwo.url" v-HTML="'<i class=&quot;'+menuChildrenTwo.icon+'&quot;></i>&nbsp;&nbsp;'+menuChildrenTwo.name"></a></dd>
+										</dl>
+									</dd>
+									<dd :class="(index == 0 && indexOne == 0 ? 'layui-this' : '')" v-else><a @click="visitMenu(menuChildrenOne)" style="padding-left: 34px;" :lay-href="menuChildrenOne.url" v-HTML="'<i class=&quot;'+menuChildrenOne.icon+'&quot;></i>&nbsp;&nbsp;'+menuChildrenOne.name"></a></dd>
+								</template>
+							</dl>
+						</li>
+						<li :class="'layui-nav-item'+(index == 0 ? ' layui-this' : '')" v-else><a @click="visitMenu(menu)" :lay-href="menu.url" v-HTML="'<i class=&quot;'+menu.icon+'&quot;></i>&nbsp;&nbsp;'+menu.name"></a></li>
+					</template>
+				</ul>
+			</div>
+		</div>
+
+		<!-- 页面标签 -->
+		<div class="layadmin-pagetabs" id="lay_app_tabs">
+			<div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+			<div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+			<div class="layui-icon layadmin-tabs-control layui-icon-down">
+				<ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+					<li class="layui-nav-item" lay-unselect><a href="javascript:;"></a>
+						<dl class="layui-nav-child layui-anim-fadein">
+							<dd layadmin-event="closeThisTabs">
+								<a href="javascript:;">关闭当前标签页</a>
+							</dd>
+							<dd layadmin-event="closeOtherTabs">
+								<a href="javascript:;">关闭其它标签页</a>
+							</dd>
+							<dd layadmin-event="closeAllTabs">
+								<a href="javascript:;">关闭全部标签页</a>
+							</dd>
+						</dl></li>
+				</ul>
+			</div>
+			<div class="layui-tab" lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+				<ul class="layui-tab-title" id="lay_app_tabsheader">
+				
+				</ul>
+			</div>
+		</div>
+
+
+		<div class="layui-body">
+			<template v-for="item in list.tabMenu">
+			<div :class="'layadmin-tabsbody-item'+(data.iframeSrc==item.url?' layui-show' : '')">
+				<iframe :src="item.url" frameborder="0" id="iframe-body" style="width: 100%;height: 99%;"></iframe>
+			</div>
+			</template>
+		</div>
+
+	</div>
+	<link>
+	<link rel="stylesheet" th:href="@{/static/index.css}" />
+	<script type="text/javascript" th:src="@{/static/index.js}"></script>
+</body>
+</html>

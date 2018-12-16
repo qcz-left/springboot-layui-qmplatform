@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="/include/include :: static(params='layui,vue')"></head>
+<title>用户表单</title>
+<body>
+	<div class="content-body layui-row">
+		<div class="layui-form" id="vue-container">
+			<div class="layui-col-space10 layui-form-item layui-col-lg6">
+				<div>
+					<label class="layui-form-label">用户名：</label>
+					<div class="layui-input-block">
+						<input type="text" name="userName" v-model="data.userName" lay-filter="userName" lay-verify="required" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div>
+					<label class="layui-form-label">登录名：</label>
+					<div class="layui-input-block">
+						<input type="text" name="loginName" v-model="data.loginName" lay-verify="required" autocomplete="off" class="layui-input">
+						<error class="text-danger" v-text="error.loginName"></error>
+					</div>
+				</div>
+				<div>
+					<label class="layui-form-label">性别：</label>
+					<div class="layui-input-block">
+						<select name="userSex" v-model="data.userSex" lay-verify="required" lay-filter="userSex">
+							<option value="M">男</option>
+							<option value="F">女</option>
+						</select>
+					</div>
+				</div>
+				<div>
+					<label class="layui-form-label">状态：</label>
+					<div class="layui-input-block">
+						<select name="locked" v-model="data.locked" lay-verify="required" lay-filter="locked">
+							<option value="1">正常</option>
+							<option value="0">锁定</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-lg6">
+				<div class="layui-card">
+					<div class="layui-card-header">绑定角色：</div>
+					<div class="layui-card-body">
+						<table class="layui-table" id="data-table" lay-filter="data-table"></table>
+					</div>
+				</div>
+			</div>
+			<div id="operator">
+				<button class="layui-btn layui-btn-info" lay-submit lay-filter="*"><i class="layui-icon layui-icon-ok"></i>保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="layui-btn layui-btn-danger closeNowLayer"><i class="layui-icon layui-icon-close"></i>关闭</a>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		var userId = [[${param.userId[0]}]];
+		var action = [[${param.action[0]}]];
+	</script>
+	<script th:src="@{/static/module/sys/user/userForm.js}"></script>
+</body>
+</html>

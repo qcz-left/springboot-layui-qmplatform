@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="/include/include :: static(params='layui,vue')"></head>
+<title>安全设置</title>
+<body>
+	<div class="content-body layui-row">
+		<div class="layui-form" id="vue-container">
+			<div class="layui-col-space10 layui-form-item layui-col-lg12">
+				<div>
+					<label class="layui-form-label">原密码：</label>
+					<div class="layui-input-block">
+						<input type="password" name="oldLoginPassword" v-model="data.oldLoginPassword" lay-verify="required" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div>
+					<label class="layui-form-label">新密码：</label>
+					<div class="layui-input-block">
+						<input type="password" name="loginPassword" v-model="data.loginPassword" lay-verify="required" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div>
+					<label class="layui-form-label">重复新密码：</label>
+					<div class="layui-input-block">
+						<input type="password" name="againLoginPassword" v-model="data.againLoginPassword" lay-verify="required" autocomplete="off" class="layui-input">
+						<error class="text-danger" v-text="error.againLoginPassword"></error>
+					</div>
+				</div>
+			</div>
+			<div id="operator">
+				<button class="layui-btn layui-btn-info" lay-submit lay-filter="*"><i class="layui-icon layui-icon-ok"></i>保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="layui-btn layui-btn-danger closeNowLayer"><i class="layui-icon layui-icon-close"></i>关闭</a>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/static/module/sys/user/safeSetting.js}"></script>
+</body>
+</html>

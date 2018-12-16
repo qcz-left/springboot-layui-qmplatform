@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="/include/include :: static(params='layui,vue')"></head>
+<title>菜单表单</title>
+<body>
+	<div class="content-body layui-row">
+		<div class="layui-form" id="vue-container">
+			<div class="layui-col-space10 layui-form-item">
+				<div class="layui-col-lg6">
+					<label class="layui-form-label">菜单名称：</label>
+					<div class="layui-input-block">
+						<input type="text" name="data.menuName" v-model="data.menuName" lay-verify="required" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-col-lg6">
+					<label class="layui-form-label">上级菜单：</label>
+					<div class="layui-input-block">
+						<div class="layui-form-mid layui-word" v-text="data.parentName"></div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-space10 layui-form-item">
+				<div class="layui-col-lg6">
+					<label class="layui-form-label">访问路径：</label>
+					<div class="layui-input-block">
+						<input type="text" name="data.url" v-model="data.url" lay-verify="required" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-col-lg6">
+					<label class="layui-form-label">图标：</label>
+					<div class="layui-input-block">
+						<div class="layui-form-mid layui-word">
+							<i :class="data.icon"></i>
+						</div>
+						<button @click="searchIcon" class="layui-btn btn-input-inline"><i class="layui-icon layui-icon-search"></i></button>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-space10 layui-form-item">
+				<div class="layui-col-lg6">
+					<label class="layui-form-label">排序：</label>
+					<div class="layui-input-block">
+						<input type="number" name="data.sort" v-model="data.sort" lay-verify="required" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+			
+			<div id="operator">
+				<button class="layui-btn layui-btn-info" lay-submit lay-filter="*"><i class="layui-icon layui-icon-ok"></i>保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="layui-btn layui-btn-danger closeNowLayer"><i class="layui-icon layui-icon-close"></i>关闭</a>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		var menuId = [[${param.menuId[0]}]];
+		var parentId = [[${param.parentId[0]}]];
+		var parentName = [[${param.parentName[0]}]];
+		var action = [[${param.action[0]}]];
+	</script>
+	<script th:src="@{/static/module/sys/menu/menuForm.js}"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="/include/include :: static(params='layui,vue,dtree')"></head>
+<title>角色表单</title>
+<body>
+	<div class="content-body layui-row">
+		<div class="layui-form" id="vue-container">
+			<div class="layui-col-space10 layui-form-item layui-col-lg6">
+				<div>
+					<label class="layui-form-label">角色名：</label>
+					<div class="layui-input-block">
+						<input type="text" name="roleName" v-model="data.roleName" lay-filter="roleName" lay-verify="required" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div>
+					<label class="layui-form-label">角色标记：</label>
+					<div class="layui-input-block">
+						<input type="text" name="roleSign" v-model="data.roleSign" lay-verify="required" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div>
+					<label class="layui-form-label">备注：</label>
+					<div class="layui-input-block">
+						<textarea name="remark" v-model="data.remark" lay-filter="roleName" class="layui-textarea"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-lg6">
+				<div class="layui-card">
+					<div class="layui-card-header">分配菜单：</div>
+					<div class="layui-card-body">
+						<ul id="menuTree" class="dtree" data-id="0"></ul>
+					</div>
+				</div>
+			</div>
+			<div id="operator">
+				<button class="layui-btn layui-btn-info" lay-submit lay-filter="*"><i class="layui-icon layui-icon-ok"></i>保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="layui-btn layui-btn-danger closeNowLayer"><i class="layui-icon layui-icon-close"></i>关闭</a>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		var roleId = [[${param.roleId[0]}]];
+		var action = [[${param.action[0]}]];
+	</script>
+	<script th:src="@{/static/module/sys/role/roleForm.js}"></script>
+</body>
+</html>
