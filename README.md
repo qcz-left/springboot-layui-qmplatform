@@ -15,3 +15,6 @@
     - 菜单管理
     - 角色管理
   - 操作日志
+## 功能截图
+  ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/login.jpg)
+  ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/index.jpg)
