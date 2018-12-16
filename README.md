@@ -18,3 +18,4 @@
 ## 功能截图
   ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/login.jpg)
   ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/index.jpg)
+  ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/user-list.jpg)
