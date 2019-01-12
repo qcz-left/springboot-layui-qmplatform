@@ -79,7 +79,7 @@ public class UserService extends BaseService<User, UserDao> {
 		if (!StringUtils.isBlank(roleIds)) {
 			roleService.bindRole(userId, roleIds.split(","));
 		}
-		return ResponseResult.ok(result);
+		return ResponseResult.ok("保存成功", result);
 	}
 
 	/**

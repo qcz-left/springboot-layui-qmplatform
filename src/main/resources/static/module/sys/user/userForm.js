@@ -88,9 +88,9 @@ var vm = new Vue({
 					layer.closeAll('loading');
 					if (data.isSuccess) {
 						vmData.data.userId = data.data;
-						layer.success("保存成功!");
+						layer.success(data.msg);
 					} else {
-						layer.error("保存失败!");
+						layer.error(data.msg);
 					}
 				});
 			});

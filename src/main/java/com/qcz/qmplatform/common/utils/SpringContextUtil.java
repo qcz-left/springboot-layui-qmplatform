@@ -1,13 +1,16 @@
 package com.qcz.qmplatform.common.utils;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 /**
  * spring上下文工具类
  * @author changzhongq
  * @time 2018年6月16日 上午12:22:20
  */
-public class SpringContextUtil {
+@Component
+public class SpringContextUtil implements ApplicationContextAware {
 
 	private static ApplicationContext applicationContext;
 
@@ -17,8 +20,9 @@ public class SpringContextUtil {
 	}
 
 	// 设置上下文
-	public static void setApplicationContext(ApplicationContext applicationContext) {
-		SpringContextUtil.applicationContext = applicationContext;
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
 	}
 
 	// 通过名字获取上下文中的bean

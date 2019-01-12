@@ -94,8 +94,10 @@ layui.use([ 'element' ], function() {
 	var visitorSeriesData = [];
 	for ( var i in echartsVisitorData) {
 		var item = echartsVisitorData[i];
-		visitorXAxisData.push(item.userName);
-		visitorSeriesData.push(item.operateCount);
+		if (item.userName) {
+            visitorXAxisData.push(item.userName);
+            visitorSeriesData.push(item.operateCount);
+        }
 	}
 	var echartsVisitor = echarts.init(document.getElementById('echarts-visitor'));
 	echartsVisitorOption = {

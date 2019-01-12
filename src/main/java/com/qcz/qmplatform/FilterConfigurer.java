@@ -33,7 +33,7 @@ public class FilterConfigurer {
 		registration.addUrlPatterns("/*");
 		registration.addInitParameter("paramName", "paramValue");
 		registration.setName("loginFilter");
-		registration.setOrder(2);
+		registration.setOrder(1);
 		return registration;
 	}
 }

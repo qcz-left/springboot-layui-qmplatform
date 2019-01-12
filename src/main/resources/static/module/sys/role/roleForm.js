@@ -36,9 +36,9 @@ layui.use(['element', 'form', 'layer', 'dtree'], function() {
 			layer.closeAll('loading');
 			if (data.isSuccess) {
 				vmData.data.roleId = data.data;
-				layer.success("保存成功!");
+				layer.success(data.msg);
 			} else {
-				layer.error("保存失败!");
+				layer.error(data.msg);
 			}
 		});
 	});

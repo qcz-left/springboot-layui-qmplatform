@@ -19,9 +19,9 @@ layui.use(['element', 'form', 'layer'], function() {
 			layer.closeAll('loading');
 			if (data.isSuccess) {
 				vmData.data.menuId = data.data;
-				layer.success("保存成功!");
+				layer.success(data.msg);
 			} else {
-				layer.error("保存失败!");
+				layer.error(data.msg);
 			}
 		});
 	});

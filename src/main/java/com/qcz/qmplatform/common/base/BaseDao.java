@@ -1,10 +1,9 @@
 package com.qcz.qmplatform.common.base;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
-
 import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
 
 /**
  * 

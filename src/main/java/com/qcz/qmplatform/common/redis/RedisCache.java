@@ -1,19 +1,13 @@
 package com.qcz.qmplatform.common.redis;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
+import com.qcz.qmplatform.common.utils.Constants;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
-import com.qcz.qmplatform.common.utils.Constants;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * redis 缓存工具类
@@ -382,7 +376,6 @@ public class RedisCache<K, V> implements Cache<K, V> {
 	 * 将list放入缓存
 	 * @param key 键
 	 * @param value 值
-	 * @param time 时间(秒)
 	 * @return
 	 */
 	public boolean lSet(K key, V value) {
@@ -418,7 +411,6 @@ public class RedisCache<K, V> implements Cache<K, V> {
 	 * 将list放入缓存
 	 * @param key 键
 	 * @param value 值
-	 * @param time 时间(秒)
 	 * @return
 	 */
 	public boolean lSet(K key, List<V> value) {

@@ -28,87 +28,87 @@ import com.qcz.qmplatform.common.utils.StringUtils;
  */
 public class BaseController<T, S extends BaseService<T, ?>> {
 
-	protected Logger logger = null;
+    protected Logger logger = null;
 
-	@Autowired
-	protected S service;
+    @Autowired
+    protected S service;
 
-	/**
-	 * 构造方法，同时为继承的类赋Class值
-	 */
-	protected BaseController() {
-		logger = LoggerFactory.getLogger(getClass());
-	}
+    /**
+     * 构造方法，同时为继承的类赋Class值
+     */
+    protected BaseController() {
+        logger = LoggerFactory.getLogger(getClass());
+    }
 
-	/**
-	 * 根据ID查询单条记录
-	 * @param id 数据ID
-	 */
-	@RequestMapping(value = "/data/{id}", method = RequestMethod.GET)
-	@ResponseBody
-	public T data(@PathVariable("id") Object id) {
-		return service.find(id);
-	}
+    /**
+     * 根据ID查询单条记录
+     * @param id 数据ID
+     */
+    @RequestMapping(value = "/data/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public T data(@PathVariable("id") Object id) {
+        return service.find(id);
+    }
 
-	/**
-	 * 单条记录删除
-	 * @param id 数据ID
-	 */
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public ResponseResult delete(@PathVariable("id") Object id) {
-		return service.delete(id);
-	}
+    /**
+     * 单条记录删除
+     * @param id 数据ID
+     */
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseResult delete(@PathVariable("id") Object id) {
+        return service.delete(id);
+    }
 
-	/**
-	 * 新增或修改操作
-	 * @param data 需要保存的数据
-	 */
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseResult insertOrUpdate(T data) {
-		return ResponseResult.ok(service.save(data));
-	}
+    /**
+     * 新增或修改操作
+     * @param data 需要保存的数据
+     */
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseResult insertOrUpdate(T data) {
+        return ResponseResult.ok("保存数据成功！", service.save(data));
+    }
 
-	/**
-	 * 通用导出方法
-	 * @param request 请求信息
-	 * @param response 响应信息
-	 */
-	@SuppressWarnings("unchecked")
-	@RequestMapping("/export")
-	@ResponseBody
-	public void export(HttpServletRequest request, HttpServletResponse response) {
-		String param = (String) request.getParameter("param");
-		Map<String, Object> paramMap = (Map<String, Object>) JSONUtils.parse(StringUtils.isEmpty(param) ? "{}" : param);
-		// 创建HSSFWorkbook
-		try {
-			HSSFWorkbook wb = service.getHSSFWorkbook(paramMap);
-			response.reset();
-			response.setContentType("application/octet-stream; charset=utf-8");
-			response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode((String) paramMap.get("fileName"), "UTF-8"));
-			OutputStream os = response.getOutputStream();
-			wb.write(os);
-			os.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * 通用导出方法
+     * @param request  请求信息
+     * @param response 响应信息
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping("/export")
+    @ResponseBody
+    public void export(HttpServletRequest request, HttpServletResponse response) {
+        String param = (String) request.getParameter("param");
+        Map<String, Object> paramMap = (Map<String, Object>) JSONUtils.parse(StringUtils.isEmpty(param) ? "{}" : param);
+        // 创建HSSFWorkbook
+        try {
+            HSSFWorkbook wb = service.getHSSFWorkbook(paramMap);
+            response.reset();
+            response.setContentType("application/octet-stream; charset=utf-8");
+            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode((String) paramMap.get("fileName"), "UTF-8"));
+            OutputStream os = response.getOutputStream();
+            wb.write(os);
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * 发送响应流方法
-	 * @param response 响应信息
-	 * @param fileName 文件名
-	 */
-	public void setResponseHeader(HttpServletResponse response, String fileName) {
-		try {
-			fileName = new String(fileName.getBytes(), "ISO8859-1");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		response.setContentType("application/octet-stream;charset=ISO8859-1");
-		response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-		response.addHeader("Pargam", "no-cache");
-		response.addHeader("Cache-Control", "no-cache");
-	}
+    /**
+     * 发送响应流方法
+     * @param response 响应信息
+     * @param fileName 文件名
+     */
+    public void setResponseHeader(HttpServletResponse response, String fileName) {
+        try {
+            fileName = new String(fileName.getBytes(), "ISO8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+    }
 }
