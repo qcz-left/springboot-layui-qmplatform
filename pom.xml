@@ -124,6 +124,11 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.15</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
 		<!-- 模板引擎 thymeleaf -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
