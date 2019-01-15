@@ -116,12 +116,14 @@ layui.use([ 'layer', 'table', 'form' ], function() {
 			var param = {
 					userId : userId,
 					locked : checked ? "1" : "0"
-			}
-			commonUtils.postAjax(_ctx + "user/changeLockedStatus", param, function(data) {
-				if (data.isSuccess) {
-					layer.success(data.msg);
+			};
+			commonUtils.postAjax(_ctx + "user/changeLockedStatus", param, function(result) {
+				if (result.isSuccess) {
+					layer.success(result.msg);
 				} else {
-					layer.error(data.msg);
+					data.elem.checked = !checked;
+					form.render();
+					layer.error(result.msg);
 				}
 			})
 		}, function() {

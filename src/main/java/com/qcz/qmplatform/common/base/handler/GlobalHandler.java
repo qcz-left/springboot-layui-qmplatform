@@ -2,7 +2,10 @@ package com.qcz.qmplatform.common.base.handler;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import com.qcz.qmplatform.common.message.ResponseResult;
 
 /**
  * 全局处理
@@ -21,8 +24,9 @@ public class GlobalHandler {
 	 * 服务器异常500
 	 */
 	@ExceptionHandler(Exception.class)
-	public String errorHandleBy500(Exception ex) {
-		return PATH_PREFIX + "500";
+	@ResponseBody
+	public ResponseResult errorHandleBy500(Exception ex) {
+		return ResponseResult.error("服务器好像出现错误了，请联系管理员！");
 	}
 
 	/**

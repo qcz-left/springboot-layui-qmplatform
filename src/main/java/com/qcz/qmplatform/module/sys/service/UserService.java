@@ -64,7 +64,7 @@ public class UserService extends BaseService<User, UserDao> {
 		data.setUpdateTime(timestamp);
 		data.setUpdateUserId(user.getUserId());
 		data.setUpdateUserName(user.getUserName());
-		// 设置默认密码123456
+		// 设置默认密码12345678
 		data.setLoginPassword(SubjectUtils.md5Encrypt(data.getLoginName(), Constants.DEFAULT_USER_LOGIN_PASSWORD));
 		if (StringUtils.isBlank(userId)) {
 			userId = StringUtils.getUUID();
