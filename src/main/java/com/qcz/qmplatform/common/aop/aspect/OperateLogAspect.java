@@ -157,7 +157,7 @@ public class OperateLogAspect {
 							break;
 						}
 					}
-					insertOperateLog(operateStatusTemp, type, "", moduleName, requestUrl, ipAddress);
+					insertOperateLog(operateStatusTemp, type, "", moduleName, requestUrl, ipAddress, null);
 				}
 			});
 		}
@@ -219,7 +219,7 @@ public class OperateLogAspect {
 					if (module != null) {
 						moduleName = module.value();
 					}
-					insertOperateLog(operateStatusTemp, OperateType.FIND, JSONUtils.toJSONString(updateParams), moduleName, requestUrl, ipAddress);
+					insertOperateLog(operateStatusTemp, OperateType.FIND, JSONUtils.toJSONString(updateParams), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(ReflectUtils.getEntityClass(targetClass)));
 				}
 			});
 		}
@@ -241,20 +241,20 @@ public class OperateLogAspect {
 		}
 		Map<String, Object> updateParams = new HashMap<>();
 		OperateType operateType = null;
+		Class<?> entityClass = ReflectUtils.getEntityClass(targetClass);
 		try {
 			// 方法参数值
 			Object data = joinPoint.getArgs()[0];
 			Map<String, Object> nowData = CommonUtils.convertMap(data);
 			Object id = ReflectUtils.getId(data);
-			if (StringUtils.isEmpty(id)) {
+			Map<String, Object> preUpdateData = CommonService.findByIdWithLowerCaseKey(entityClass, id);
+			if (preUpdateData == null) {
 				// 新增
 				operateType = OperateType.INSERT;
 				updateParams = nowData;
 			} else {
 				// 修改
 				operateType = OperateType.UPDATE;
-				// 修改前的数据
-				Map<String, Object> preUpdateData = CommonService.findById(ReflectUtils.getEntityClass(targetClass), id);
 				updateParams.put("updateBefore", preUpdateData);
 				updateParams.put("updateAfter", nowData);
 			}
@@ -287,7 +287,7 @@ public class OperateLogAspect {
 					if (module != null) {
 						moduleName = module.value();
 					}
-					insertOperateLog(operateStatusTemp, operateTypeTemp, JSONUtils.toJSONString(updateParamsTemp), moduleName, requestUrl, ipAddress);
+					insertOperateLog(operateStatusTemp, operateTypeTemp, JSONUtils.toJSONString(updateParamsTemp), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(entityClass));
 				}
 			});
 		}
@@ -308,11 +308,12 @@ public class OperateLogAspect {
 			return joinPoint.proceed();
 		}
 		Map<String, Object> oldData = null;
+		Class<?> entityClass = ReflectUtils.getEntityClass(targetClass);
 		try {
 			// 方法参数值
 			Object id = joinPoint.getArgs()[0];
 			// 待删除的数据
-			oldData = CommonService.findById(ReflectUtils.getEntityClass(targetClass), id);
+			oldData = CommonService.findByIdWithLowerCaseKey(entityClass, id);
 		} catch (Exception e) {
 			return joinPoint.proceed();
 		}
@@ -341,7 +342,7 @@ public class OperateLogAspect {
 					if (module != null) {
 						moduleName = module.value();
 					}
-					insertOperateLog(operateStatusTemp, OperateType.DELETE, JSONUtils.toJSONString(oldDataTemp), moduleName, requestUrl, ipAddress);
+					insertOperateLog(operateStatusTemp, OperateType.DELETE, JSONUtils.toJSONString(oldDataTemp), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(entityClass));
 				}
 			});
 		}
@@ -356,8 +357,9 @@ public class OperateLogAspect {
 	 * @param module 模块名，在service类上使用注解@Module定义
 	 * @param requestUrl 请求路径（MVC C）
 	 * @param ipAddress ip地址
+	 * @param tableName 表名
 	 */
-	public void insertOperateLog(int operateStatus, OperateType operateType, String updateParams, String module, String requestUrl, String ipAddress) {
+	public void insertOperateLog(int operateStatus, OperateType operateType, String updateParams, String module, String requestUrl, String ipAddress, String tableName) {
 		SysOperateLog log = new SysOperateLog();
 		log.setOperateModule(module);
 		log.setUpdateParams(updateParams);
@@ -369,6 +371,7 @@ public class OperateLogAspect {
 		log.setOperateType(String.valueOf(operateType.getType()));
 		log.setRequestUrl(requestUrl);
 		log.setIp(ipAddress);
+		log.setTableName(tableName);
 		log.setOperateStatus(operateStatus);
 
 		sysOperateLogDao.insert(log);

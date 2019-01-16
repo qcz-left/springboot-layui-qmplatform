@@ -23,7 +23,7 @@ public class SysOperateLog implements Serializable {
 	private String logId;
 
 	/**
-	 * 操作类型（-1：退出系统，0：进入系统，1：查询，2：新增，3：修改，4：删除） 需要其他类型，请自添加并注释
+	 * 操作类型（-1：退出系统，1：进入系统，2：查询，3：新增，4：修改，5：删除） 需要其他类型，请自添加并注释
 	 */
 	private String operateType;
 

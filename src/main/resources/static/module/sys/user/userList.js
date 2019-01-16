@@ -112,7 +112,9 @@ layui.use([ 'layer', 'table', 'form' ], function() {
 		var userId = elem.dataset["id"];
 		var userName = elem.dataset["name"];
 		var checked = elem.checked;
-		layer.confirm("确定要"+(checked ? '开启 ' : '锁定 ')+userName+" 吗？", {skin:"my-layer-warm"}, function() {
+		layer.confirm("确定要"+(checked ? '开启 ' : '锁定 ')+userName+" 吗？", {
+				skin : "my-layer-warm"
+		}, function() {
 			var param = {
 					userId : userId,
 					locked : checked ? "1" : "0"

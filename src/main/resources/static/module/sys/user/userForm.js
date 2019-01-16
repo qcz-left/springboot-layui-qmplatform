@@ -27,17 +27,17 @@ var vm = new Vue({
 	el : "#vue-container",
 	data : vmData,
 	methods : {
-		// 加载基础数据
-		loadBaseData : function() {
-			if (action == "view" || action == "edit") {
-				commonUtils.getAjax(_ctx + "user/data/" + userId, function(data) {
-					// 时间在后台逻辑设置
-					delete data['createTime'];
-					delete data['updateTime'];
-					vmData.old.loginName = data.loginName;
-					vmData.data = data;
-				});
-			}
+		
+	},
+	created :  function() {
+		if (action == "view" || action == "edit") {
+			commonUtils.getAjax(_ctx + "user/data/" + userId, function(data) {
+				// 时间在后台逻辑设置
+				delete data['createTime'];
+				delete data['updateTime'];
+				vmData.old.loginName = data.loginName;
+				vmData.data = data;
+			});
 		}
 	},
 	watch : {
@@ -57,15 +57,13 @@ var vm = new Vue({
 			});
 		}
 	},
-	updated: function() {
-		form.render();
-    },
 	mounted : function() {
 		layui.use(['element', 'form', 'layer', 'table'], function() {
 			element = layui.element;
 			form = layui.form;
 			layer = layui.layer;
 			table = layui.table;
+			form.render();
 			// 下拉框选择事件监听
 			form.on('select(locked)', function(data) {
 				vmData.data.locked = data.value;
@@ -122,9 +120,3 @@ var vm = new Vue({
 		})
 	}
 });
-
-vm.$on('loadBaseData', function() {
-	this.loadBaseData();
-});
-
-vm.$emit('loadBaseData');

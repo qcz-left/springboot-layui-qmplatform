@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.common;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,10 +35,34 @@ public class CommonService {
 		return commonDao;
 	}
 
+	/**
+	 * 根据ID查询数据
+	 * @param clazz 类类型
+	 * @param id 数据ID
+	 * @return key为数据库字段的Map数据
+	 */
 	public static Map<String, Object> findById(Class<?> clazz, Object id) {
 		String table = ReflectUtils.getTable(clazz);
 		String idColumn = ReflectUtils.getIdColumn(clazz);
 		return getDao().findById(table, ReflectUtils.getColumnsStr(clazz), idColumn, id);
+	}
+
+	/**
+	 * 根据ID查询数据
+	 * @param clazz 类类型
+	 * @param id 数据ID
+	 * @return key为驼峰形式的Map数据
+	 */
+	public static Map<String, Object> findByIdWithLowerCaseKey(Class<?> clazz, Object id) {
+		Map<String, Object> data = findById(clazz, id);
+		if (data == null) {
+			return null;
+		}
+		Map<String, Object> newData = new HashMap<>();
+		for (String key : data.keySet()) {
+			newData.put(StringUtils.camelCaseName(key), data.get(key));
+		}
+		return newData;
 	}
 
 	/**

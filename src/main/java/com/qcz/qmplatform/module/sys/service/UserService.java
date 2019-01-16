@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,10 +73,8 @@ public class UserService extends BaseService<User, UserDao> {
 			data.setCreateUserId(user.getUserId());
 			data.setCreateUserName(user.getUserName());
 			data.setCreateTime(timestamp);
-			result = mapper.insertSelective(data) > 0 ? userId : null;
-		} else {
-			result = mapper.updateByPrimaryKeySelective(data) > 0 ? userId : null;
 		}
+		result = ((UserService) AopContext.currentProxy()).save(data);
 		if (!StringUtils.isBlank(roleIds)) {
 			roleService.bindRole(userId, roleIds.split(","));
 		}

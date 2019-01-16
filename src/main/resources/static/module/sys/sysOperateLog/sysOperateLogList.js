@@ -18,9 +18,9 @@ layui.use([ 'layer', 'table' ], function() {
 		limit : _limit,
 		limits : _limits,
 		autoSort : false, // 关闭数据在前端排序，通过服务器返回的数据排序
-		initSort: {
-		    field: 'operateTime',
-		    type: 'desc' // 排序方式 asc: 升序、desc: 降序、null: 默认排序
+		initSort : {
+			field : 'operateTime',
+			type : 'desc' // 排序方式 asc: 升序、desc: 降序、null: 默认排序
 		},
 		cols : [ [ // 表头
 		{
@@ -83,8 +83,10 @@ layui.use([ 'layer', 'table' ], function() {
 			field : 'operator',
 			title : '操作',
 			templet : function(item) {
-				var btnEdit = '<a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-xs"><i class="layui-icon layui-icon-read"></i>查看详情</a>';
-				return btnEdit;
+				if (item.operateType == "3" || item.operateType == "4" || item.operateType == "5") {
+					return '<a href="javascript:;" lay-event="look" class="layui-btn layui-btn-primary layui-btn-xs"><i class="layui-icon layui-icon-read"></i>查看详情</a>';
+				}
+				return "";
 			}
 		} ] ]
 	});
@@ -94,18 +96,60 @@ layui.use([ 'layer', 'table' ], function() {
 	table.on('tool(' + tableId + ')', function(obj) {
 		var data = obj.data;
 		var layEvent = obj.event;
-		if (layEvent == "edit") {
-			
+		if (layEvent == "look") {
+			var operateType = data.operateType;
+			var operateTypeName = (operateType == "5" ? "删除" : (operateType == "4" ? "修改" : (operateType == "3" ? "新增" : "")));
+			var title = "操作详情（" + data.operateModule + "-" + data.operateUserName + "-" + operateTypeName + "）";
+			var updateParams = JSON.parse(data.updateParams);
+			var updateParamsTemp = {};
+			if (operateType == "4") {
+				// 修改
+				var updateBefore = updateParams.updateBefore;
+				var updateAfter = updateParams.updateAfter;
+				for ( var i in updateBefore) {
+					if (updateBefore[i] != updateAfter[i]) {
+						updateParamsTemp[i + ""] = updateBefore[i] + " → " + "<span class='text-danger'>" + updateAfter[i] + "</span>";
+					}
+				}
+			} else if (operateType == "5" || operateType == "3") {
+				// 删除
+				updateParamsTemp = updateParams;
+			}
+			var content = '<div class="layui-row">';
+			var annotationMappingJson_user = {};
+			$.ajax({
+				url : _ctx + "static/json/annotationMapping.json",
+				type : "get",
+				async : false,
+				success: function(result){
+					annotationMappingJson_user = result.user;
+				}
+			});
+			for ( var i in updateParamsTemp) {
+				var item = updateParamsTemp[i];
+				content += '<div class="layui-form-item"><label class="layui-col-xs4" style="text-align:right;">' + (annotationMappingJson_user[i]?annotationMappingJson_user[i]:i)  + '：</label><div class="layui-col-xs8 layui-word-aux">' + (item ? item : "") + '</div></div>';
+			}
+			content += "</div>";
+			layer.open({
+				type : 1,
+				title : title,
+				content : content,
+				area : [ "50%", "90%" ],
+				skin : 'layui-layer-molv',
+				shade : 0.3,
+				zIndex : layer.zIndex
+			});
 		}
 	});
-	
+
 	// 搜索
 	$("#app-btn-search").click(function() {
-		table.reload(tableId,{
+		table.reload(tableId, {
 			page : 1,
 			where : {
 				param : getParam()
 			}
 		});
 	});
+
 });
