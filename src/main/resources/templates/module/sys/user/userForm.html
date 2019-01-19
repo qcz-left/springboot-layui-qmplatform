@@ -56,6 +56,6 @@
 		var userId = [[${param.userId[0]}]];
 		var action = [[${param.action[0]}]];
 	</script>
-	<script th:src="@{/static/module/sys/user/userForm.js}"></script>
+	<script th:src="@{/static/module/sys/user/userForm.js?v=}+${#strings.randomAlphanumeric(16)}"></script>
 </body>
 </html>

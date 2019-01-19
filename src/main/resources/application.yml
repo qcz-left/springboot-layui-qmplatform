@@ -27,7 +27,7 @@ spring:
       suffix: .html
   # thymeleaf配置
   thymeleaf:
-    mode: HTML5
+    mode: HTML
     encoding: utf-8
     cache: false
     servlet:

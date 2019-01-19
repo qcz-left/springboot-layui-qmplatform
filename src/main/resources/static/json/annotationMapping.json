@@ -1,31 +1,24 @@
 {
 	"user": {
+		"userName": "用户名",
+		"loginName": "登录名",
 		"userSex": "性别",
-		"updateUserId": "修改人ID",
 		"updateUserName": "修改人名称",
 		"updateTime": "修改时间",
 		"createTime": "创建时间",
-		"createUserId": "创建人ID",
 		"createUserName": "创建人名称",
 		"remark": "备注",
-		"userName": "用户名",
-		"userId": "用户名ID",
 		"userImage": "用户图片",
-		"loginName": "登录名",
-		"locked": "是否锁定（0：锁定，1：正常）",
-		"loginPassword": "登录密码"
+		"locked": "是否锁定（0：锁定，1：正常）"
 	},
 	"menu": {
-		"menuId": "菜单ID",
 		"menuName": "菜单名称",
-		"parentId": "父菜单ID",
 		"parentName": "父菜单名称",
 		"url": "请求路径",
 		"icon": "菜单图标",
 		"sort": "排序"
 	},
-	"": {
-		"roleId": "角色ID",
+	"role": {
 		"roleName": "角色名称",
 		"roleSign": "角色标识",
 		"remark": "备注"

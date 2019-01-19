@@ -16,19 +16,6 @@ var vm = new Vue({
 	el : "#vue-container",
 	data : vmData,
 	methods : {
-		// 加载基础数据
-		loadBaseData : function() {
-			commonUtils.getAjax(_ctx + "menu/menuTreeData", function(data) {
-				var menuTree = data.data;
-				Vue.set(vmData.data, 'menuTree', menuTree);
-				var firstVisitedMenu = getFirstVisitedMenu(menuTree);
-				firstVisitedMenu_url = firstVisitedMenu.url;
-				var firstVisitedMenu_name = firstVisitedMenu.name;
-				$("#lay_app_tabsheader").append('<li lay-id="'+firstVisitedMenu_url+'" class="layui-this">'+(firstVisitedMenu_name=='主页'?'<i class="'+firstVisitedMenu.icon+'"></i>':firstVisitedMenu_name)+'</li>');
-				vmData.list.tabMenu.push(firstVisitedMenu);
-				vmData.data.iframeSrc = firstVisitedMenu_url;
-			});
-		},
 		visitMenu : function(menu) {
 			// 选项卡样式切换
 			$("#lay_app_tabsheader li.layui-this").removeClass("layui-this");
@@ -45,10 +32,39 @@ var vm = new Vue({
 			vmData.data.iframeSrc = url;
 		}
 	},
+	created : function() {
+		// 加载基础数据
+		commonUtils.getAjax(_ctx + "menu/menuTreeData", function(data) {
+			var menuTree = data.data;
+			Vue.set(vmData.data, 'menuTree', menuTree);
+			var firstVisitedMenu = getFirstVisitedMenu(menuTree);
+			firstVisitedMenu_url = firstVisitedMenu.url;
+			var firstVisitedMenu_name = firstVisitedMenu.name;
+			$("#lay_app_tabsheader").append('<li lay-id="'+firstVisitedMenu_url+'" class="layui-this">'+(firstVisitedMenu_name=='主页'?'<i class="'+firstVisitedMenu.icon+'"></i>':firstVisitedMenu_name)+'</li>');
+			vmData.list.tabMenu.push(firstVisitedMenu);
+			vmData.data.iframeSrc = firstVisitedMenu_url;
+		});
+	},
+	updated : function() {
+		element.render();
+	},
 	mounted : function() {
 		//这段代码直接写在最外层，会造成layui和vue冲突，样式不起作用
-		layui.use(["element"], function() {
+		layui.use(["element", "colorpicker"], function() {
 			element = layui.element;
+			var colorpicker = layui.colorpicker;
+			// 选择主题
+			colorpicker.render({
+				elem : '#choose-color',
+				color : '#0869a6', // 设置默认色
+				done : function(color) {
+					$("#index-left").removeClass("layui-bg-black").css("background-color", color);
+					$("#index-left .layui-nav").css("background-color", color);
+					$(".layui-layout-admin .layui-header").css("background-color", color);
+					$(".layui-header .layui-logo").css("color", "white");
+					$(".layui-header li>a").css("color", "white");
+				}
+			});
 			// 选项卡删除监听
 			element.on('tabDelete(layadmin-layout-tabs)', function(data){
 				navStyleShowback();
@@ -95,17 +111,8 @@ var vm = new Vue({
 				});
 			});
 		});
-	},
-	updated : function() {
-		element.render();
 	}
 });
-
-vm.$on('loadBaseData', function() {
-	this.loadBaseData();
-});
-
-vm.$emit('loadBaseData');
 
 /*
  * 获取第一个被访问到的菜单

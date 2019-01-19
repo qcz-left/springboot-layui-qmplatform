@@ -57,7 +57,7 @@ public class OperateLogAspect {
 	public OperateLogAspect() {
 		executorService = Executors.newFixedThreadPool(10);
 	}
-	
+
 	/**
 	 * 切点-登录登出
 	 */
@@ -75,27 +75,19 @@ public class OperateLogAspect {
 	}
 
 	/**
-	 * 切点-新增
-	 */
-	@Pointcut("execution(* com.qcz.qmplatform.module..*.service.*.insert*(..))")
-	public void insertPointcut() {
-
-	}
-
-	/**
 	 * 切点-修改
 	 */
-	@Pointcut("execution(* com.qcz.qmplatform.module..*.service.*.update*(..))")
+	@Pointcut("execution(* com.qcz.qmplatform.common.base.BaseService.updateWithOperateLog(..))")
 	public void updatePointcut() {
 
 	}
-	
+
 	/**
 	 * 切点-保存
 	 */
 	@Pointcut("execution(* com.qcz.qmplatform.common.base.BaseService.save(..))")
 	public void savePointcut() {
-		
+
 	}
 
 	/**
@@ -163,7 +155,7 @@ public class OperateLogAspect {
 		}
 		return proceed;
 	}
-	
+
 	/**
 	 * 通知：查询日志记录
 	 * @param joinPoint 连接点
@@ -219,7 +211,8 @@ public class OperateLogAspect {
 					if (module != null) {
 						moduleName = module.value();
 					}
-					insertOperateLog(operateStatusTemp, OperateType.FIND, JSONUtils.toJSONString(updateParams), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(ReflectUtils.getEntityClass(targetClass)));
+					insertOperateLog(operateStatusTemp, OperateType.FIND, JSONUtils.toJSONString(updateParams), moduleName, requestUrl, ipAddress,
+							ReflectUtils.getTable(ReflectUtils.getEntityClass(targetClass)));
 				}
 			});
 		}
@@ -293,7 +286,7 @@ public class OperateLogAspect {
 		}
 		return proceed;
 	}
-	
+
 	/**
 	 * 通知：删除日志记录
 	 * @param joinPoint 连接点
@@ -343,6 +336,50 @@ public class OperateLogAspect {
 						moduleName = module.value();
 					}
 					insertOperateLog(operateStatusTemp, OperateType.DELETE, JSONUtils.toJSONString(oldDataTemp), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(entityClass));
+				}
+			});
+		}
+		return proceed;
+	}
+
+	/**
+	 * 通知：更新日志记录
+	 * @param joinPoint 连接点
+	 * @throws Throwable
+	 */
+	@Around("updatePointcut()")
+	public Object updateAround(ProceedingJoinPoint joinPoint) throws Throwable {
+		Class<?> targetClass = joinPoint.getTarget().getClass();
+		final HttpServletRequest request = getHttpServletRequest();
+		// 找不到方法或如果类上有不记录日志的注解，则操作记录将不会插入到数据库
+		if (request == null || targetClass.getAnnotation(NoRecordLog.class) != null) {
+			return joinPoint.proceed();
+		}
+		Class<?> entityClass = ReflectUtils.getEntityClass(targetClass);
+		int operateStatus = 1;
+		Object proceed = null;
+		try {
+			proceed = joinPoint.proceed();
+		} catch (Exception e) {// 原逻辑程序有异常，这里抛回，并修改操作状态
+			operateStatus = 0;
+			throw new Exception(e);
+		} finally {
+			String requestUrl = request.getServletPath();
+			String ipAddress = HttpServletUtils.getIpAddress(request);
+			// 在另一线程使用外部可变变量需要做一层过渡
+			int operateStatusTemp = operateStatus;
+			executorService.submit(new Runnable() {
+				@Override
+				public void run() {
+					Map<String, Object> updateParams = new HashMap<>();
+					updateParams.put("updateBefore", CommonUtils.convertMap(joinPoint.getArgs()[0]));
+					updateParams.put("updateAfter", CommonUtils.convertMap(joinPoint.getArgs()[1]));
+					Module module = targetClass.getAnnotation(Module.class);
+					String moduleName = null;
+					if (module != null) {
+						moduleName = module.value();
+					}
+					insertOperateLog(operateStatusTemp, OperateType.UPDATE, JSONUtils.toJSONString(updateParams), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(entityClass));
 				}
 			});
 		}

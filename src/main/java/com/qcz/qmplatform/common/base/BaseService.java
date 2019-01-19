@@ -16,8 +16,10 @@ import javax.persistence.Id;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.qcz.qmplatform.common.message.ResponseResult;
@@ -38,7 +40,17 @@ public class BaseService<T, M extends BaseDao<T>> {
 	@Autowired
 	protected M mapper;
 
+	/**
+	 * entity类类型
+	 */
 	private Class<T> classT;
+
+	/**
+	 * 获取当前代理对象
+	 */
+	public BaseService<T, M> getProxyService() {
+		return (BaseService<T, M>) AopContext.currentProxy();
+	}
 
 	protected BaseService() {
 		Type genType = getClass().getGenericSuperclass();
@@ -69,12 +81,37 @@ public class BaseService<T, M extends BaseDao<T>> {
 			} else if (mapper.selectByPrimaryKey(id) == null) {
 				return mapper.insertSelective(data) > 0 ? id : null;
 			}
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error("反射获取/设置参数异常", e);
 		}
 		return mapper.updateByPrimaryKeySelective(data) > 0 ? id : null;
+	}
+
+	/**
+	 * 更新数据并记录日志
+	 * @param updateBefore
+	 * @param updateAfter
+	 * @return
+	 */
+	public Object updateWithOperateLog(T updateBefore, T updateAfter) {
+		Class<?> classBef = updateBefore.getClass();
+		Class<?> classAft = updateAfter.getClass();
+		if (!classBef.equals(classAft)) {
+			logger.warn("两个参数的类型不同！");
+			throw new RuntimeException();
+		}
+		try {
+			Object id = ReflectUtils.getId(updateBefore);
+			Assert.notNull(id, "id must not be null");
+			if (!id.equals(ReflectUtils.getId(updateAfter))) {
+				logger.warn("两个参数的主键值不相同，无法更新！");
+				throw new RuntimeException();
+			}
+			return mapper.updateByPrimaryKeySelective(updateAfter) > 0 ? id : null;
+		} catch (Exception e) {
+			logger.error("获取参数异常！");
+		}
+		return null;
 	}
 
 	/**
@@ -147,10 +184,11 @@ public class BaseService<T, M extends BaseDao<T>> {
 	}
 
 	/**
-	 * 获取HSSFWorkbook对象，使用URL方式调用Java接口，获取数据后按格式填充值
+	 * 获取HSSFWorkbook对象，使用URL方式调用Java接口，获取数据后按格式填充值（配置jqgrid使用）
 	 * @param map
 	 * @throws IOException
 	 */
+	@Deprecated
 	public HSSFWorkbook getHSSFWorkbook(Map<String, Object> map) throws IOException {
 		String exportUrl = (String) map.get("exportUrl");
 		URL url = new URL(exportUrl);

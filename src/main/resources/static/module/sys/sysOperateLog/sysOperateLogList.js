@@ -7,7 +7,7 @@ layui.use([ 'layer', 'table' ], function() {
 	var tableId = "data-table";
 	table.render({
 		elem : '#' + tableId,
-		height : 'full-75',
+		height : 'full-55',
 		url : _ctx + 'sysOperateLog/sysOperateLogList',
 		where : {
 			field : 'operateTime',
@@ -108,7 +108,9 @@ layui.use([ 'layer', 'table' ], function() {
 				var updateAfter = updateParams.updateAfter;
 				for ( var i in updateBefore) {
 					if (updateBefore[i] != updateAfter[i]) {
-						updateParamsTemp[i + ""] = updateBefore[i] + " → " + "<span class='text-danger'>" + updateAfter[i] + "</span>";
+						updateParamsTemp[i + ""] = "<span class='text-danger'>" + updateBefore[i] + " → " + updateAfter[i] + "</span>";
+					} else {
+						updateParamsTemp[i + ""] = updateBefore[i];
 					}
 				}
 			} else if (operateType == "5" || operateType == "3") {
@@ -125,9 +127,9 @@ layui.use([ 'layer', 'table' ], function() {
 					annotationMappingJson_user = result.user;
 				}
 			});
-			for ( var i in updateParamsTemp) {
-				var item = updateParamsTemp[i];
-				content += '<div class="layui-form-item"><label class="layui-col-xs4" style="text-align:right;">' + (annotationMappingJson_user[i]?annotationMappingJson_user[i]:i)  + '：</label><div class="layui-col-xs8 layui-word-aux">' + (item ? item : "") + '</div></div>';
+			for ( var i in annotationMappingJson_user) {
+				var item = annotationMappingJson_user[i];
+				content += '<div class="layui-form-item"><label class="layui-col-xs4" style="text-align:right;">' + item  + '：</label><div class="layui-col-xs8 layui-word-aux">' + (updateParamsTemp[i] ? updateParamsTemp[i] : "") + '</div></div>';
 			}
 			content += "</div>";
 			layer.open({

@@ -43,6 +43,6 @@
 		var roleId = [[${param.roleId[0]}]];
 		var action = [[${param.action[0]}]];
 	</script>
-	<script th:src="@{/static/module/sys/role/roleForm.js}"></script>
+	<script th:src="@{/static/module/sys/role/roleForm.js?v=}+${#strings.randomAlphanumeric(16)}"></script>
 </body>
 </html>

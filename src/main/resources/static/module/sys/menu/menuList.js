@@ -80,7 +80,7 @@ layui.use(['layer', 'table', 'treetable'], function() {
 	}
 	
 	function deleteItem(id, name) {
-		layer.confirm("是否要删除菜单：" + name + "，删除后将不可恢复！", function() {
+		layer.confirm("是否要删除菜单：" + name + "，删除后将不可恢复！", {title:"警告", skin:"my-layer-danger"}, function() {
 			commonUtils.deleteAjax(_ctx + "menu/delete/" + id, {}, function(data) {
 				if (data.isSuccess) {
 					layer.success(data.msg);

@@ -60,25 +60,20 @@ var vm = new Vue({
 	el : "#vue-container",
 	data : vmData,
 	methods : {
+		
+	},
+	created : function() {
 		// 加载基础数据
-		loadBaseData : function() {
-			if (action == "view" || action == "edit") {
-				commonUtils.getAjax(_ctx + "role/data/" + roleId, function(data) {
-					// 时间在后台逻辑设置
-					delete data['createTime'];
-					delete data['updateTime'];
-					vmData.data = data;
-				});
-			}
+		if (action == "view" || action == "edit") {
+			commonUtils.getAjax(_ctx + "role/data/" + roleId, function(data) {
+				// 时间在后台逻辑设置
+				delete data['createTime'];
+				delete data['updateTime'];
+				vmData.data = data;
+			});
 		}
 	},
 	mounted : function() {
 		
 	}
 });
-
-vm.$on('loadBaseData', function() {
-	this.loadBaseData();
-});
-
-vm.$emit('loadBaseData');

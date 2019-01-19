@@ -57,6 +57,6 @@
 		var parentName = [[${param.parentName[0]}]];
 		var action = [[${param.action[0]}]];
 	</script>
-	<script th:src="@{/static/module/sys/menu/menuForm.js}"></script>
+	<script th:src="@{/static/module/sys/menu/menuForm.js?v=}+${#strings.randomAlphanumeric(16)}"></script>
 </body>
 </html>

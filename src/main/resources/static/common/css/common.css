@@ -66,13 +66,16 @@ body .my-layer-danger .layui-layer-title {
 	background: #c00;
 	color: white;
 }
+
 body .my-layer-danger .layui-layer-btn0 {
 	background: #c00;
 	border: none;
 }
+
 body .my-layer-warm .layui-layer-title {
 	background: yellow;
 }
+
 body .my-layer-warm .layui-layer-btn0 {
 	background: yellow;
 	color: black;

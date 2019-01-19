@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,7 +73,7 @@ public class UserService extends BaseService<User, UserDao> {
 			data.setCreateUserName(user.getUserName());
 			data.setCreateTime(timestamp);
 		}
-		result = ((UserService) AopContext.currentProxy()).save(data);
+		result = getProxyService().save(data);
 		if (!StringUtils.isBlank(roleIds)) {
 			roleService.bindRole(userId, roleIds.split(","));
 		}
@@ -86,13 +85,15 @@ public class UserService extends BaseService<User, UserDao> {
 	 * @param data
 	 * @return
 	 */
-	public ResponseResult changeLockedStatus(User newData) {
-		User data = mapper.selectByPrimaryKey(newData.getUserId());
+	public ResponseResult changeLockedStatus(User user) {
+		User data = mapper.selectByPrimaryKey(user.getUserId());
 		if (data == null) {
 			return ResponseResult.error("用户不存在！");
 		}
-		data.setLocked(newData.getLocked());
-		return mapper.updateByPrimaryKey(data) > 0 ? ResponseResult.ok("操作成功！", data) : ResponseResult.error("操作失败！");
+		User newData = (User) data.clone();
+		newData.setLocked(user.getLocked());
+
+		return getProxyService().updateWithOperateLog(data, newData) != null ? ResponseResult.ok("操作成功！", data) : ResponseResult.error("操作失败！");
 	}
 
 	/**

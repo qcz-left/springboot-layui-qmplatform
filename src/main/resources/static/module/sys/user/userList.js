@@ -8,7 +8,7 @@ layui.use([ 'layer', 'table', 'form' ], function() {
 	var tableId = "data-table";
 	table.render({
 		elem : '#'+tableId,
-		height : 'full-75',
+		height : 'full-55',
 		url : _ctx + 'user/userList',
 		where : {
 			field : 'userName',
@@ -56,18 +56,18 @@ layui.use([ 'layer', 'table', 'form' ], function() {
 			title : '状态',
 			templet : function(item) {
 				var locked = item.locked;
+				var lockedHtml = '<input type="checkbox" data-id="'+item.userId+'" data-name="'+item.userName+'" lay-skin="switch" lay-filter="locked" lay-text="正常|锁定"';
 				switch (locked) {
 				case "0":
-					locked = '<input type="checkbox" data-id="'+item.userId+'" data-name="'+item.userName+'" lay-skin="switch" lay-filter="locked" lay-text="正常|锁定">';
+					lockedHtml += '>';
 					break;
 				case "1":
-					locked = '<input type="checkbox" data-id="'+item.userId+'" data-name="'+item.userName+'" lay-skin="switch" lay-filter="locked" lay-text="正常|锁定" checked>';
+					lockedHtml += ' checked>';
 					break;
 				default:
-					locked = "数据有误";
-					break;
+					return "数据有误";
 				}
-				return locked;
+				return lockedHtml;
 			}
 		}, {
 			field : 'operator',
@@ -113,7 +113,10 @@ layui.use([ 'layer', 'table', 'form' ], function() {
 		var userName = elem.dataset["name"];
 		var checked = elem.checked;
 		layer.confirm("确定要"+(checked ? '开启 ' : '锁定 ')+userName+" 吗？", {
-				skin : "my-layer-warm"
+				skin : "my-layer-warm",
+				end : function() {
+					table.reload(tableId);
+				}
 		}, function() {
 			var param = {
 					userId : userId,
@@ -123,14 +126,9 @@ layui.use([ 'layer', 'table', 'form' ], function() {
 				if (result.isSuccess) {
 					layer.success(result.msg);
 				} else {
-					data.elem.checked = !checked;
-					form.render();
 					layer.error(result.msg);
 				}
 			})
-		}, function() {
-			data.elem.checked = !checked;
-			form.render();
 		});
 	});
     // 搜索
@@ -166,7 +164,7 @@ layui.use([ 'layer', 'table', 'form' ], function() {
 	}
 	
 	function deleteItem(id, name) {
-		layer.confirm("是否要删除用户：" + name + "，删除后将不可恢复！", {skin:"my-layer-danger"}, function() {
+		layer.confirm("是否要删除用户：" + name + "，删除后将不可恢复！", {title:"警告", skin:"my-layer-danger"}, function() {
 			commonUtils.deleteAjax(_ctx + "user/delete/" + id, {}, function(data) {
 				if (data.isSuccess) {
 					layer.success(data.msg);

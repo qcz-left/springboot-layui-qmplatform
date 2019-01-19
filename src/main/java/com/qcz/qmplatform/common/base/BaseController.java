@@ -75,7 +75,7 @@ public class BaseController<T, S extends BaseService<T, ?>> {
      * @param request  请求信息
      * @param response 响应信息
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     @RequestMapping("/export")
     @ResponseBody
     public void export(HttpServletRequest request, HttpServletResponse response) {

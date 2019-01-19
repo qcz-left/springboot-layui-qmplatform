@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * @time 2018年6月10日 上午10:58:28
  */
 @Table(name = "sys_user")
-public class User implements Serializable {
+public class User implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -97,6 +97,16 @@ public class User implements Serializable {
 	
 	public User(String loginName) {
 		this.loginName = loginName;
+	}
+	
+	@Override
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String getUserImage() {

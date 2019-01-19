@@ -18,6 +18,6 @@
 			<table class="layui-table" id="menu-tree-table" lay-filter="menu-tree-table"></table>
 		</div>
 	</div>
-	<script type="text/javascript" th:src="@{/static/module/sys/menu/menuList.js}"></script>
+	<script type="text/javascript" th:src="@{/static/module/sys/menu/menuList.js?v=}+${#strings.randomAlphanumeric(16)}"></script>
 </body>
 </html>

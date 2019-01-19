@@ -7,7 +7,7 @@ layui.use([ 'layer', 'table' ], function() {
 	var tableId = "data-table";
 	table.render({
 		elem : '#'+tableId,
-		height : 'full-75',
+		height : 'full-55',
 		url : _ctx + 'role/roleList',
 		where : {
 			field : 'roleName',
@@ -90,7 +90,7 @@ layui.use([ 'layer', 'table' ], function() {
 	}
 	
 	function deleteItem(id, name) {
-		layer.confirm("是否要删除角色：" + name + "，删除后将不可恢复！", function() {
+		layer.confirm("是否要删除角色：" + name + "，删除后将不可恢复！", {title:"警告", skin:"my-layer-danger"}, function() {
 			commonUtils.deleteAjax(_ctx + "role/delete/" + id, {}, function(data) {
 				if (data.isSuccess) {
 					layer.success(data.msg);

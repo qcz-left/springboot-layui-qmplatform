@@ -31,14 +31,6 @@ var vm = new Vue({
 	el : "#vue-container",
 	data : vmData,
 	methods : {
-		// 加载基础数据
-		loadBaseData : function() {
-			if (action == "view" || action == "edit") {
-				commonUtils.getAjax(_ctx + "menu/data/" + menuId, function(data) {
-					vmData.data = data;
-				});
-			}
-		},
 		searchIcon : function() {
 			layer.open({
 				type : 2,
@@ -48,13 +40,15 @@ var vm = new Vue({
 			});
 		}
 	},
+	created : function() {
+		// 加载基础数据
+		if (action == "view" || action == "edit") {
+			commonUtils.getAjax(_ctx + "menu/data/" + menuId, function(data) {
+				vmData.data = data;
+			});
+		}
+	},
 	mounted : function() {
 		
 	}
 });
-
-vm.$on('loadBaseData', function() {
-	this.loadBaseData();
-});
-
-vm.$emit('loadBaseData');
