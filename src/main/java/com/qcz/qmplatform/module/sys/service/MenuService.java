@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.sys.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,10 +19,12 @@ import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.common.CommonService;
 import com.qcz.qmplatform.module.sys.dao.IconDao;
 import com.qcz.qmplatform.module.sys.dao.MenuDao;
+import com.qcz.qmplatform.module.sys.dao.RoleDao;
 import com.qcz.qmplatform.module.sys.entity.Icon;
 import com.qcz.qmplatform.module.sys.entity.Menu;
 import com.qcz.qmplatform.module.sys.entity.RoleMenu;
 import com.qcz.qmplatform.module.sys.entity.Tree;
+import com.qcz.qmplatform.module.sys.form.RoleForm;
 
 /**
  * 菜单服务
@@ -34,9 +37,17 @@ public class MenuService extends BaseService<Menu, MenuDao> {
 
     @Autowired
     private IconDao iconDao;
+    
+    @Autowired
+    private RoleDao roleDao;
 
-    public Set<String> listPerms(String userId) {
-        return null;
+    public Set<String> listRoles(String userId) {
+    	Set<String> set = new HashSet<>();
+    	List<RoleForm> roles = roleDao.getRoleByUserId(userId);
+    	for (RoleForm role : roles) {
+			set.add(role.roleId);
+		}
+        return set;
     }
 
     public List<Map<String, Object>> findMenuList() {
@@ -91,7 +102,7 @@ public class MenuService extends BaseService<Menu, MenuDao> {
     @Transactional
     public ResponseResult bindMenu(String roleId, String[] menuIds) {
         if (StringUtils.isBlank(roleId)) {
-            throw new NullPointerException("传入的roleId为空！");
+            throw new IllegalArgumentException("传入的roleId为空！");
         }
         CommonService.deleteBy(RoleMenu.class, "roleId", roleId);
         List<RoleMenu> roleMenus = new ArrayList<RoleMenu>();

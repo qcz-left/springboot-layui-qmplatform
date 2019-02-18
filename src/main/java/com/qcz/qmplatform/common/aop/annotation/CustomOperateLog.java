@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 
 /**
- * 自定义方法注解
+ * 自定义日志方法注解
  * @author changzhongq
  */
 @Target({ ElementType.METHOD })

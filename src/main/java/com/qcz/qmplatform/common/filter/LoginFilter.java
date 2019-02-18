@@ -42,8 +42,8 @@ public class LoginFilter extends FormAuthenticationFilter {
 	private boolean isAjax(ServletRequest request) {
 		String header = ((HttpServletRequest) request).getHeader("X-Requested-With");
 		if ("XMLHttpRequest".equalsIgnoreCase(header)) {
-			return Boolean.TRUE;
+			return true;
 		}
-		return Boolean.FALSE;
+		return false;
 	}
 }

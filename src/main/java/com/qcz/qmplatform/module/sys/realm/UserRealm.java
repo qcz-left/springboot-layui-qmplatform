@@ -34,9 +34,9 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		MenuService menuService = (MenuService) SpringContextUtil.getBean(MenuService.class);
-		Set<String> set = menuService.listPerms(SubjectUtils.getUserId());
+		Set<String> set = menuService.listRoles(SubjectUtils.getUserId());
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		info.setStringPermissions(set);
+		info.addRoles(set);
 		return info;
 	}
 

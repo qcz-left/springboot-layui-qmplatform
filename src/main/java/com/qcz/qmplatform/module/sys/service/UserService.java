@@ -19,8 +19,6 @@ import com.qcz.qmplatform.module.sys.dao.UserDao;
 import com.qcz.qmplatform.module.sys.entity.User;
 import com.qcz.qmplatform.module.sys.form.PasswordForm;
 
-import tk.mybatis.mapper.entity.Example;
-
 /**
  * 用户 逻辑层
  * @author changzhongq
@@ -38,7 +36,6 @@ public class UserService extends BaseService<User, UserDao> {
 	}
 
 	public List<User> findUserList(Map<String, Object> paramMap) {
-
 		return mapper.findUserList(paramMap);
 	}
 
@@ -98,7 +95,7 @@ public class UserService extends BaseService<User, UserDao> {
 
 	/**
 	 * 安全设置
-	 * @param data
+	 * @param form
 	 * @return
 	 */
 	public ResponseResult safeSetting(PasswordForm form) {
@@ -126,10 +123,8 @@ public class UserService extends BaseService<User, UserDao> {
 	 */
 	public ResponseResult resetLoginPassword(String userId) {
 		if (StringUtils.isBlank(userId)) {
-			throw new NullPointerException("userId 不能为空！");
+			throw new IllegalArgumentException("userId 不能为空！");
 		}
-		Example example = new Example(User.class);
-		example.createCriteria().andEqualTo("userId", userId);
 		User user = this.find(userId);
 		int result = mapper.updatePasswordById(userId, SubjectUtils.md5Encrypt(user.getLoginName(), Constants.DEFAULT_USER_LOGIN_PASSWORD));
 		return result > 0 ? ResponseResult.ok("重置成功！", null) : ResponseResult.error("重置失败！");

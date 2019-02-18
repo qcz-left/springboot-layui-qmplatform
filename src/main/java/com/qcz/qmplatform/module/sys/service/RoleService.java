@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.base.BaseService;
@@ -38,9 +39,7 @@ public class RoleService extends BaseService<Role, RoleDao> {
 	 */
 	@Transactional
 	public void bindRole(String userId, String[] roles) {
-		if (StringUtils.isBlank(userId)) {
-			throw new NullPointerException("传入的userId为空！");
-		}
+		Assert.notNull(userId, "The userId must not be null");
 		CommonService.deleteBy(UserRole.class, "userId", userId);
 		List<UserRole> userRoles = new ArrayList<UserRole>();
 		for (String roleId : roles) {
