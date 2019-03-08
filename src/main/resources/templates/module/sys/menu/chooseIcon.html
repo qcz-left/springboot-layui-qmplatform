@@ -73,13 +73,12 @@
 		var vm = new Vue({
 			el : "#vue-container",
 			data : vmData,
+			created : function() {
+				commonUtils.getAjax(_ctx + "menu/chooseIcon", function(data) {
+					vmData.data.iconList = data.data;
+				});
+			},
 			methods : {
-				// 加载基础数据
-				loadBaseData : function() {
-					commonUtils.getAjax(_ctx + "menu/chooseIcon", function(data) {
-						vmData.data.iconList = data.data;
-					});
-				},
 				chooseIcon : function(icon) {
 					parent.vmData.data.icon = icon.iconFontClass;
 					closeCurrentIframe();
@@ -90,11 +89,6 @@
 			}
 		});
 
-		vm.$on('loadBaseData', function() {
-			this.loadBaseData();
-		});
-
-		vm.$emit('loadBaseData');
 	</script>
 </body>
 </html>

@@ -144,6 +144,7 @@ public class UserService extends BaseService<User, UserDao> {
 		params.put("themeColor", themeColor);
 		boolean res = this.updateById(userId, params);
 		if (res) {
+			// 修改成功后同时更新session信息
 			User user = SubjectUtils.getUser();
 			user.setThemeColor(themeColor);
 			SubjectUtils.setUser(user);

@@ -50,7 +50,8 @@ var vm = new Vue({
 		}
 	},
 	updated : function() {
-		element.render();
+		if (element)
+			element.render();
 	},
 	mounted : function() {
 		//这段代码直接写在最外层，会造成layui和vue冲突，样式不起作用
@@ -60,7 +61,7 @@ var vm = new Vue({
 			// 选择主题
 			colorpicker.render({
 				elem : '#choose-color',
-				color : themeColor ? themeColor : '#23262E', // 设置默认色
+				color : themeColor ? themeColor : $(".layui-layout-admin .layui-header").attr("background-color"), // 设置默认色
 				done : function(color) {
 					if (color) {
 						updateTheme(color);
