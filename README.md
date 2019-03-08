@@ -26,6 +26,7 @@
   |-- resources                               // 资源文件目录
     |-- mapper                                // mybatis数据库映射文件
     |-- static                                // 静态文件
+    |-- templates                             // HTML页面
     |-- application-dev.yml                   // 开发环境配置文件
     |-- application-pro.yml                   // 正式环境配置文件
     |-- application.yml                       // 项目主配置文件
