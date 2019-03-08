@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qcz.qmplatform.common.base.BaseController;
@@ -27,17 +28,17 @@ public class SysOperateLogController extends BaseController<SysOperateLog, SysOp
 
 	private static final String PATH_PREFIX = "/module/sys/sysOperateLog/";
 
-	@RequestMapping("/sysOperateLogListPage")
+	@RequestMapping(value = "/sysOperateLogListPage", method = RequestMethod.GET)
 	public String sysOperateLogListPage() {
 		return PATH_PREFIX + "sysOperateLogList";
 	}
 
-	@RequestMapping("/sysOperateLogForm")
+	@RequestMapping(value = "/sysOperateLogForm", method = RequestMethod.GET)
 	public String sysOperateLogForm() {
 		return PATH_PREFIX + "sysOperateLogForm";
 	}
 
-	@RequestMapping("/sysOperateLogList")
+	@RequestMapping(value = "/sysOperateLogList", method = RequestMethod.GET)
 	@ResponseBody
 	public PageResult sysOperateLogList(HttpServletRequest request, PageRequest pageRequest) {
 
@@ -45,22 +46,22 @@ public class SysOperateLogController extends BaseController<SysOperateLog, SysOp
 		PageResultHelper.startPage(pageRequest);
 		return PageResultHelper.parseResult(service.findSysOperateLogList(paramMap));
 	}
-	
+
 	/**
 	 * 根据操作类型统计日志
 	 * @return
 	 */
-	@RequestMapping("/statisticsOperateLog")
+	@RequestMapping(value = "/statisticsOperateLog", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseResult statisticsByOperateType() {
 		return ResponseResult.ok(service.statisticsByOperateType());
 	}
-	
+
 	/**
 	 * 根据用户统计访问数量
 	 * @return
 	 */
-	@RequestMapping("/statisticsVisitUser")
+	@RequestMapping(value = "/statisticsVisitUser", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseResult statisticsByUser() {
 		return ResponseResult.ok(service.statisticsByUser());

@@ -1,7 +1,6 @@
 package com.qcz.qmplatform.module.sys.service;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -139,10 +138,8 @@ public class UserService extends BaseService<User, UserDao> {
 	 */
 	public ResponseResult updateThemeColor(String userId, String themeColor) {
 		ResponseResult responseResult = new ResponseResult();
-		
-		Map<String, Object> params = new HashMap<>(2);
-		params.put("themeColor", themeColor);
-		boolean res = this.updateById(userId, params);
+
+		boolean res = this.updateById(userId, "themeColor", themeColor);
 		if (res) {
 			// 修改成功后同时更新session信息
 			User user = SubjectUtils.getUser();

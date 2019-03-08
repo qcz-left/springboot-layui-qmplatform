@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.sys.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qcz.qmplatform.common.base.BaseController;
@@ -22,17 +23,17 @@ public class MenuController extends BaseController<Menu, MenuService> {
 
 	private static final String PATH_PREFIX = "/module/sys/menu/";
 	
-	@RequestMapping("/menuListPage")
+	@RequestMapping(value = "/menuListPage", method = RequestMethod.GET)
 	public String menuListPage() {
 		return PATH_PREFIX + "menuList";
 	}
 
-	@RequestMapping("/menuForm")
+	@RequestMapping(value = "/menuForm", method = RequestMethod.GET)
 	public String menuForm() {
 		return PATH_PREFIX + "menuForm";
 	}
 
-	@RequestMapping("/menuTreePage")
+	@RequestMapping(value = "/menuTreePage", method = RequestMethod.GET)
 	public String menuTreePage() {
 		return PATH_PREFIX + "menuTree";
 	}
@@ -40,12 +41,12 @@ public class MenuController extends BaseController<Menu, MenuService> {
 	/**
 	 * 选择图标页面
 	 */
-	@RequestMapping("/chooseIconPage")
+	@RequestMapping(value = "/chooseIconPage", method = RequestMethod.GET)
 	public String chooseIconPage() {
 		return PATH_PREFIX + "chooseIcon";
 	}
 
-	@RequestMapping("/menuList")
+	@RequestMapping(value = "/menuList", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseResult menuList() {
 		return ResponseResult.ok(service.findMenuList());
@@ -55,7 +56,7 @@ public class MenuController extends BaseController<Menu, MenuService> {
 	 * 获取菜单树信息
 	 * @return json数据
 	 */
-	@RequestMapping("/menuTreeData")
+	@RequestMapping(value = "/menuTreeData", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseResult menuTreeData() {
 		return ResponseResult.ok(service.findMenuTreesData());
@@ -64,7 +65,7 @@ public class MenuController extends BaseController<Menu, MenuService> {
 	/**
 	 * 选择图标
 	 */
-	@RequestMapping("/chooseIcon")
+	@RequestMapping(value = "/chooseIcon", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseResult chooseIcon() {
 		return ResponseResult.ok(service.chooseIcon());
@@ -74,7 +75,7 @@ public class MenuController extends BaseController<Menu, MenuService> {
 	 * 根据角色id查询树形结构的菜单数据
 	 * @param roleId
 	 */
-	@RequestMapping("/menuTreeWithStatus")
+	@RequestMapping(value = "/menuTreeWithStatus", method = RequestMethod.GET)
 	@ResponseBody
 	public PageResult menuTreeWithStatus(String roleId) {
 		return PageResultHelper.parseResult(service.getMenuTreeWithStatus(roleId));

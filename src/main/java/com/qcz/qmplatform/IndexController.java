@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.common.CommonService;
@@ -17,13 +18,13 @@ import com.qcz.qmplatform.module.sys.entity.User;
  */
 @Controller
 public class IndexController {
-	
-	@RequestMapping("/index")
+
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index() {
 		return "index";
 	}
 
-	@RequestMapping("test")
+	@RequestMapping(value = "test", method = RequestMethod.GET)
 	public void test() {
 		List<User> users = new ArrayList<User>();
 		for (int i = 0; i < 10; i++) {

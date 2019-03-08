@@ -89,7 +89,7 @@ public class BaseService<T, M extends BaseDao<T>> {
 	}
 
 	/**
-	 * 更新数据并记录日志
+	 * 更新数据，需要记录操作日志时请使用此方法
 	 * @param updateBefore
 	 * @param updateAfter
 	 * @return
@@ -183,16 +183,29 @@ public class BaseService<T, M extends BaseDao<T>> {
 		String table = ReflectUtils.getTable(classT);
 		return mapper.batchDelete(table, idColumn, ids) == ids.length;
 	}
-	
+
 	/**
-	 * 根据主键修改信息
+	 * 根据主键修改信息，需要修改的信息用map传递，key为实体类的成员变量，value为要更新的值
 	 * @param id
 	 * @param params
 	 * @return
 	 */
 	public boolean updateById(Object id, Map<String, Object> params) {
 		List<com.qcz.qmplatform.module.common.Field> fields = CommonUtils.mapToField(params);
-		int result = mapper.updateById(ReflectUtils.getTable(classT), ReflectUtils.getIdColumn(classT), id, fields);
+		int result = mapper.updateByIdWithMap(ReflectUtils.getTable(classT), ReflectUtils.getIdColumn(classT), id, fields);
+		return result > 0 ? true : false;
+	}
+
+	/**
+	 * 根据主键修改信息，该方法只能修改一个值，需要修改多个值 {@link com.qcz.qmplatform.common.base.BaseService
+	 * updateById(Object, Map<String, Object>)}
+	 * @param id
+	 * @param fieldName
+	 * @param fieldValue
+	 * @return
+	 */
+	public boolean updateById(Object id, String fieldName, Object fieldValue) {
+		int result = mapper.updateByIdWithField(ReflectUtils.getTable(classT), ReflectUtils.getIdColumn(classT), id, fieldName, fieldValue);
 		return result > 0 ? true : false;
 	}
 

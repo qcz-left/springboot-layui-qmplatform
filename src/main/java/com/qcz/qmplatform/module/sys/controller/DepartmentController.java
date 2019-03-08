@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.sys.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.qcz.qmplatform.common.base.BaseController;
 import com.qcz.qmplatform.module.sys.entity.Department;
@@ -17,17 +18,17 @@ public class DepartmentController extends BaseController<Department, DepartmentS
 
 	private static final String PREFIX = "/module/sys/department/";
 
-	@RequestMapping("/departmentListPage")
+	@RequestMapping(value = "/departmentListPage", method = RequestMethod.GET)
 	public String departmentListPage() {
 		return PREFIX + "departmentList";
 	}
 
-	@RequestMapping("/departmentForm")
+	@RequestMapping(value = "/departmentForm", method = RequestMethod.GET)
 	public String departmentForm() {
 		return PREFIX + "departmentForm";
 	}
 
-	@RequestMapping("/departmentTreePage")
+	@RequestMapping(value = "/departmentTreePage", method = RequestMethod.GET)
 	public String departmentTreePage() {
 		return PREFIX + "departmentTree";
 	}

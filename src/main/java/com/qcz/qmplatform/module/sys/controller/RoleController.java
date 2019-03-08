@@ -29,17 +29,17 @@ public class RoleController extends BaseController<Role, RoleService> {
 
     private static final String PATH_PREFIX = "/module/sys/role/";
 
-    @RequestMapping("/roleListPage")
+    @RequestMapping(value = "/roleListPage", method = RequestMethod.GET)
     public String roleListPage() {
         return PATH_PREFIX + "roleList";
     }
 
-    @RequestMapping("/roleForm")
+    @RequestMapping(value = "/roleForm", method = RequestMethod.GET)
     public String roleForm() {
         return PATH_PREFIX + "roleForm";
     }
 
-    @RequestMapping("/chooseRolePage")
+    @RequestMapping(value = "/chooseRolePage", method = RequestMethod.GET)
     public String chooseRolePage() {
         return PATH_PREFIX + "chooseRole";
     }
@@ -49,7 +49,7 @@ public class RoleController extends BaseController<Role, RoleService> {
      * @param userId 用户ID
      * @param roles  要绑定的角色ID
      */
-    @RequestMapping("/bindRole")
+    @RequestMapping(value = "/bindRole", method = RequestMethod.POST)
     @ResponseBody
     public ResponseResult bindRole(String userId, String[] roles) {
         logger.info("the called method : bindRole");
@@ -61,14 +61,14 @@ public class RoleController extends BaseController<Role, RoleService> {
      * 根据用户id获取用户角色关系
      * @param userId 用户ID
      */
-    @RequestMapping("/getRoleByUserId")
+    @RequestMapping(value = "/getRoleByUserId", method = RequestMethod.GET)
     @ResponseBody
     public PageResult getRoleByUserId(String userId) {
         logger.info("the called method : getRoleByUserId");
         return PageResultHelper.parseResult(service.getRoleByUserId(userId));
     }
 
-    @RequestMapping("/roleList")
+    @RequestMapping(value = "/roleList", method = RequestMethod.GET)
     @ResponseBody
     public PageResult roleList(HttpServletRequest request, PageRequest pageRequest) {
         Map<String, Object> paramMap = HttpServletUtils.parseRequestByParam(request);
@@ -76,7 +76,7 @@ public class RoleController extends BaseController<Role, RoleService> {
         return PageResultHelper.parseResult(service.findRoleList(paramMap));
     }
 
-    @RequestMapping("/roleListWithStatus")
+    @RequestMapping(value = "/roleListWithStatus", method = RequestMethod.GET)
     @ResponseBody
     public PageResult roleListWithStatus(HttpServletRequest request, PageRequest pageRequest) {
         Map<String, Object> paramMap = HttpServletUtils.parseRequestByParam(request);

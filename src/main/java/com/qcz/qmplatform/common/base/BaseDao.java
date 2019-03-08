@@ -18,5 +18,7 @@ public interface BaseDao<T> extends Mapper<T> {
 
 	int batchDelete(@Param("table") String table, @Param("idCloumn") String idCloumn, @Param("ids") Object[] ids);
 	
-	int updateById(@Param("table") String table, @Param("idCloumn") Object idCloumn, @Param("idValue") Object idValue, @Param("fields") List<Field> fields);
+	int updateByIdWithMap(@Param("table") String table, @Param("idCloumn") Object idCloumn, @Param("idValue") Object idValue, @Param("fields") List<Field> fields);
+	
+	int updateByIdWithField(@Param("table") String table, @Param("idCloumn") Object idCloumn, @Param("idValue") Object idValue, @Param("fieldName") String fieldName, @Param("fieldValue") Object fieldValue);
 }

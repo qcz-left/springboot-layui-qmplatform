@@ -30,22 +30,22 @@ public class UserController extends BaseController<User, UserService> {
 
 	private static final String PREFIX = "/module/sys/user/";
 
-	@RequestMapping("/userListPage")
+	@RequestMapping(value = "/userListPage", method = RequestMethod.GET)
 	public String userListPage() {
 		return PREFIX + "userList";
 	}
 
-	@RequestMapping("/userForm")
+	@RequestMapping(value = "/userForm", method = RequestMethod.GET)
 	public String userForm() {
 		return PREFIX + "userForm";
 	}
-	
-	@RequestMapping("/safeSettingPage")
+
+	@RequestMapping(value = "/safeSettingPage", method = RequestMethod.GET)
 	public String safeSettingPage() {
 		return PREFIX + "safeSetting";
 	}
 
-	@RequestMapping("/userList")
+	@RequestMapping(value = "/userList", method = RequestMethod.GET)
 	@ResponseBody
 	public PageResult userList(HttpServletRequest request, PageRequest pageRequest) {
 
@@ -63,7 +63,7 @@ public class UserController extends BaseController<User, UserService> {
 	public ResponseResult validateOnlyLoginName(String loginName) {
 		return service.findByLoginName(loginName);
 	}
-	
+
 	/**
 	 * 保存用户信息
 	 * @param data 用户基本信息
@@ -75,7 +75,7 @@ public class UserController extends BaseController<User, UserService> {
 	public ResponseResult saveUser(User data, String roleIds) {
 		return service.saveUser(data, roleIds);
 	}
-	
+
 	/**
 	 * 更新用户状态
 	 * @param data
@@ -86,7 +86,7 @@ public class UserController extends BaseController<User, UserService> {
 	public ResponseResult changeLockedStatus(User data) {
 		return service.changeLockedStatus(data);
 	}
-	
+
 	/**
 	 * 安全设置
 	 * @param data
@@ -97,7 +97,7 @@ public class UserController extends BaseController<User, UserService> {
 	public ResponseResult safeSetting(PasswordForm data) {
 		return service.safeSetting(data);
 	}
-	
+
 	/**
 	 * 重置密码
 	 * @param userId 用户id
@@ -108,10 +108,10 @@ public class UserController extends BaseController<User, UserService> {
 	public ResponseResult resetLoginPassword(String userId) {
 		return service.resetLoginPassword(userId);
 	}
-	
+
 	/**
 	 * 修改主题色
-	 * @param themeColor 
+	 * @param themeColor
 	 * @return
 	 */
 	@RequestMapping(value = "/updateThemeColor", method = RequestMethod.POST)
