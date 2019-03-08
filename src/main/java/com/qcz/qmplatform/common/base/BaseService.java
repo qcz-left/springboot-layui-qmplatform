@@ -23,6 +23,7 @@ import org.springframework.util.Assert;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.qcz.qmplatform.common.message.ResponseResult;
+import com.qcz.qmplatform.common.utils.CommonUtils;
 import com.qcz.qmplatform.common.utils.ExcelUtils;
 import com.qcz.qmplatform.common.utils.ReflectUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -181,6 +182,18 @@ public class BaseService<T, M extends BaseDao<T>> {
 		String idColumn = ReflectUtils.getIdColumn(classT);
 		String table = ReflectUtils.getTable(classT);
 		return mapper.batchDelete(table, idColumn, ids) == ids.length;
+	}
+	
+	/**
+	 * 根据主键修改信息
+	 * @param id
+	 * @param params
+	 * @return
+	 */
+	public boolean updateById(Object id, Map<String, Object> params) {
+		List<com.qcz.qmplatform.module.common.Field> fields = CommonUtils.mapToField(params);
+		int result = mapper.updateById(ReflectUtils.getTable(classT), ReflectUtils.getIdColumn(classT), id, fields);
+		return result > 0 ? true : false;
 	}
 
 	/**

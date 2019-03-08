@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.sys.service;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -128,5 +129,30 @@ public class UserService extends BaseService<User, UserDao> {
 		User user = this.find(userId);
 		int result = mapper.updatePasswordById(userId, SubjectUtils.md5Encrypt(user.getLoginName(), Constants.DEFAULT_USER_LOGIN_PASSWORD));
 		return result > 0 ? ResponseResult.ok("重置成功！", null) : ResponseResult.error("重置失败！");
+	}
+
+	/**
+	 * 修改主题色
+	 * @param userId
+	 * @param themeColor
+	 * @return
+	 */
+	public ResponseResult updateThemeColor(String userId, String themeColor) {
+		ResponseResult responseResult = new ResponseResult();
+		
+		Map<String, Object> params = new HashMap<>(2);
+		params.put("themeColor", themeColor);
+		boolean res = this.updateById(userId, params);
+		if (res) {
+			User user = SubjectUtils.getUser();
+			user.setThemeColor(themeColor);
+			SubjectUtils.setUser(user);
+			responseResult.setIsSuccess(true);
+			responseResult.setMsg("主题切换成功！");
+		} else {
+			responseResult.setIsSuccess(false);
+			responseResult.setMsg("主题切换失败！");
+		}
+		return responseResult;
 	}
 }

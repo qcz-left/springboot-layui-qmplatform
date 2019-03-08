@@ -2,7 +2,7 @@
 	"user": {
 		"userName": "用户名",
 		"loginName": "登录名",
-		"userSex": "性别",
+		"userSex": "性别（M：男；F：女）",
 		"updateUserName": "修改人名称",
 		"updateTime": "修改时间",
 		"createTime": "创建时间",

@@ -10,6 +10,7 @@ var vmData = {
 		tabMenu : []
 	}
 };
+
 var element = null;
 var firstVisitedMenu_url = null;
 var vm = new Vue({
@@ -44,6 +45,9 @@ var vm = new Vue({
 			vmData.list.tabMenu.push(firstVisitedMenu);
 			vmData.data.iframeSrc = firstVisitedMenu_url;
 		});
+		if (themeColor) {
+			updateTheme(themeColor);
+		}
 	},
 	updated : function() {
 		element.render();
@@ -56,13 +60,21 @@ var vm = new Vue({
 			// 选择主题
 			colorpicker.render({
 				elem : '#choose-color',
-				color : '#0869a6', // 设置默认色
+				color : themeColor ? themeColor : '#23262E', // 设置默认色
 				done : function(color) {
-					$("#index-left").removeClass("layui-bg-black").css("background-color", color);
-					$("#index-left .layui-nav").css("background-color", color);
-					$(".layui-layout-admin .layui-header").css("background-color", color);
-					$(".layui-header .layui-logo").css("color", "white");
-					$(".layui-header li>a").css("color", "white");
+					if (color) {
+						updateTheme(color);
+					} else {
+						defaultTheme();
+					}
+					// 保存到数据库
+					commonUtils.postAjax(_ctx + "user/updateThemeColor", {themeColor:color}, function(data) {
+						if (data.isSuccess) {
+							layer.success(data.msg);
+						} else {
+							layer.error(data.msg);
+						}
+					});
 				}
 			});
 			// 选项卡删除监听
@@ -148,4 +160,26 @@ function checkUrl(url) {
 function navStyleShowback() {
 	$(".layui-nav-tree .layui-this").removeClass("layui-this");
 	$(".layui-nav-tree a[lay-href='"+$("#lay_app_tabsheader li.layui-this").attr("lay-id")+"']").parent().addClass("layui-this");
+}
+
+/*
+ * 修改主题色
+ */
+function updateTheme(color) {
+	$("#index-left").removeClass("layui-bg-black").css("background-color", color);
+	$("#index-left .layui-nav").css("background-color", color);
+	$(".layui-layout-admin .layui-header").css("background-color", color);
+	$(".layui-header .layui-logo").css("color", "white");
+	$(".layui-header li>a").css("color", "white");
+}
+
+/*
+ * 默认主题色
+ */
+function defaultTheme() {
+	$("#index-left").css("background-color", "").addClass("layui-bg-black");
+	$("#index-left .layui-nav").css("background-color", "#393D49");
+	$(".layui-layout-admin .layui-header").css("background-color", "#23262E");
+	$(".layui-header .layui-logo").css("color", "#009688");
+	$(".layui-header li>a").css("color", "rgba(255,255,255,.7)");
 }

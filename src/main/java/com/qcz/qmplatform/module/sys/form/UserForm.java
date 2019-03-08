@@ -79,5 +79,10 @@ public class UserForm {
 	 */
 	public String userImage;
 	
+	/**
+	 * 用户主题
+	 */
+	public String themeColor;
+	
 	public String[] roleIds;
 }

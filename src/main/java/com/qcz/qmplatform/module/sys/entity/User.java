@@ -87,6 +87,11 @@ public class User implements Serializable, Cloneable {
 	 */
 	private String userImage;
 
+	/**
+	 * 用户主题
+	 */
+	public String themeColor;
+
 	public User() {
 	}
 
@@ -219,6 +224,14 @@ public class User implements Serializable, Cloneable {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getThemeColor() {
+		return themeColor;
+	}
+
+	public void setThemeColor(String themeColor) {
+		this.themeColor = themeColor;
 	}
 
 }

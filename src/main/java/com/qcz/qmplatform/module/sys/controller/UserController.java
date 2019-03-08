@@ -15,6 +15,7 @@ import com.qcz.qmplatform.common.message.PageResult;
 import com.qcz.qmplatform.common.message.PageResultHelper;
 import com.qcz.qmplatform.common.message.ResponseResult;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.sys.entity.User;
 import com.qcz.qmplatform.module.sys.form.PasswordForm;
 import com.qcz.qmplatform.module.sys.service.UserService;
@@ -106,5 +107,16 @@ public class UserController extends BaseController<User, UserService> {
 	@ResponseBody
 	public ResponseResult resetLoginPassword(String userId) {
 		return service.resetLoginPassword(userId);
+	}
+	
+	/**
+	 * 修改主题色
+	 * @param themeColor 
+	 * @return
+	 */
+	@RequestMapping(value = "/updateThemeColor", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseResult updateThemeColor(String themeColor) {
+		return service.updateThemeColor(SubjectUtils.getUserId(), themeColor);
 	}
 }
