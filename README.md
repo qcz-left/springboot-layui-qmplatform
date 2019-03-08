@@ -11,25 +11,25 @@
 ## 图表组件：
   echarts
 ## 项目结构：
->-- src
->>-- main
->>>-- java
->>>>-- com
->>>>>-- qcz
->>>>>>-- qmplatform
->>>>>>>-- common          		            // 公共类目录
->>>>>>>-- main         		                // 登录、登出等
->>>>>>>-- moudle                          // 业务模块
->>>>>>>-- QmplatformApplication.java 	    // 项目加载入口类
->>>>>>>-- *Configurer.java                // 各种配置文件
->>>-- resources                               // 资源文件目录
->>>>-- mapper                               	// mybatis数据库映射文件
->>>>-- static                              	// 静态文件
->>>>-- application-dev.yml                 	// 开发环境配置文件
->>>>-- application-pro.yml                 	// 正式环境配置文件
->>>>-- application.yml                     	// 项目主配置文件
->>>>-- logback-spring.xml                    // logback日志配置
->|-- pom.xml
+-- src\
+--- main\
+---- java\
+----- com\
+------ qcz\
+------- qmplatform\
+-------- common          		              // 公共类目录\
+-------- main         		                // 登录、登出等\
+-------- moudle                           // 业务模块\
+-------- QmplatformApplication.java 	    // 项目加载入口类\
+-------- *Configurer.java                 // 各种配置文件\
+--- resources                             // 资源文件目录\
+---- mapper                               // mybatis数据库映射文件\
+---- static                              	// 静态文件\
+---- application-dev.yml                 	// 开发环境配置文件\
+---- application-pro.yml                 	// 正式环境配置文件\
+---- application.yml                     	// 项目主配置文件\
+---- logback-spring.xml                   // logback日志配置\
+-- pom.xml
 ## 主要功能（极简）
   - 首页
   - 系统管理
