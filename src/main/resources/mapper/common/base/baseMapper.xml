@@ -11,8 +11,12 @@
 		DELETE FROM ${table} WHERE ${idCloumn} IN(<foreach item="item" collection="ids" separator=",">#{item}</foreach>)
 	</delete>
 	
-	<update id="updateById">
+	<update id="updateByIdWithMap">
 		update ${table} set <foreach item="item" collection="fields" separator=",">${item.cloumn} = #{item.value}</foreach> where ${idCloumn} = #{idValue}
+	</update>
+	
+	<update id="updateByIdWithField">
+		update ${table} set ${fieldName} = #{fieldValue} where ${idCloumn} = #{idValue}
 	</update>
 	
 </mapper>

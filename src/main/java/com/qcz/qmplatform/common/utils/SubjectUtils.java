@@ -6,6 +6,7 @@ import org.apache.shiro.util.ByteSource;
 
 import com.qcz.qmplatform.common.redis.RedisCache;
 import com.qcz.qmplatform.module.sys.entity.User;
+import com.qcz.qmplatform.module.sys.service.UserService;
 
 /**
  * shiro 工具类，主要用于获取session中的当前人信息及设置当前人信息，以及加密方法
@@ -20,18 +21,23 @@ public class SubjectUtils {
 	}
 
 	public static User getUser() {
-		RedisCache<String, Object> redisCache = getRedisCache();
-		Object currentUser = redisCache.get(Constants.CURRENT_USER_SIGN);
-		if (currentUser == null) {
-			currentUser = SecurityUtils.getSubject().getPrincipal();
-			redisCache.put(Constants.CURRENT_USER_SIGN, currentUser);
+		Object principal = SecurityUtils.getSubject().getPrincipal();
+		if (principal != null) {
+			RedisCache<String, Object> redisCache = getRedisCache();
+			String sign = Constants.CURRENT_USER_SIGN + principal;
+			Object user = redisCache.get(sign);
+			if (user == null) {
+				user = ((UserService) SpringContextUtil.getBean(UserService.class)).find(principal);
+				redisCache.put(sign, user);
+			}
+			return (User) user;
 		}
-		return currentUser == null ? new User() : (User) currentUser;
+		return null;
 	}
 
-	public static void setUser(Object user) {
+	public static void setUser(User user) {
 		SecurityUtils.getSubject().getSession().setAttribute(Constants.CURRENT_USER_SIGN, user);
-		getRedisCache().put(Constants.CURRENT_USER_SIGN, user);
+		getRedisCache().put(Constants.CURRENT_USER_SIGN + user.getUserId(), user);
 	}
 
 	public static String getUserId() {

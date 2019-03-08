@@ -45,6 +45,7 @@ layui.use(['element', 'form', 'layer', 'dtree'], function() {
 	var menuTree = dtree.render({
 		elem: "#menuTree",
 		url: _ctx + "menu/menuTreeWithStatus?roleId="+roleId,
+		method: "get",
 		response:{message:"msg",statusCode:0},
 		dataStyle: 'layuiStyle',
 //		checkbarType: 'no-all',// 半选

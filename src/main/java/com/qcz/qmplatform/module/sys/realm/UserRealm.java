@@ -63,7 +63,7 @@ public class UserRealm extends AuthorizingRealm {
 		}
 		// 盐值
 		ByteSource credentialsSalt = ByteSource.Util.bytes(username);
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, credentialsSalt, getName());
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getUserId(), password, credentialsSalt, getName());
 		SubjectUtils.setUser(user);
 		return info;
 	}

@@ -205,7 +205,7 @@ public class BaseService<T, M extends BaseDao<T>> {
 	 * @return
 	 */
 	public boolean updateById(Object id, String fieldName, Object fieldValue) {
-		int result = mapper.updateByIdWithField(ReflectUtils.getTable(classT), ReflectUtils.getIdColumn(classT), id, fieldName, fieldValue);
+		int result = mapper.updateByIdWithField(ReflectUtils.getTable(classT), ReflectUtils.getIdColumn(classT), id, StringUtils.underScoreName(fieldName), fieldValue);
 		return result > 0 ? true : false;
 	}
 

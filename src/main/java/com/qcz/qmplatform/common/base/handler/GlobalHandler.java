@@ -26,6 +26,7 @@ public class GlobalHandler {
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
 	public ResponseResult errorHandleBy500(Exception ex) {
+		ex.printStackTrace();
 		return ResponseResult.error("服务器好像出现错误了，请联系管理员！");
 	}
 
