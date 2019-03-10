@@ -10,6 +10,9 @@ layui.use(['form', 'layer'], function () {
         data: {
             loginName: "admin",
             loginPassword: "admin.123"
+        },
+        error: {
+        	loginFail: (type == "kickout" ? "您的账号已在另一地点登录，您已被强制下线！" : "")
         }
     }
 
@@ -29,7 +32,7 @@ layui.use(['form', 'layer'], function () {
             if (!data.isSuccess) {
                 layer.error(data.msg);
             } else {
-                top.location.href = _ctx + "index";
+                top.location.href = _ctx;
             }
         });
     });

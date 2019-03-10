@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.druid.support.json.JSONUtils;
@@ -60,5 +61,13 @@ public class HttpServletUtils {
 			ip = request.getRemoteAddr();
 		}
 		return ip;
+	}
+	
+	public static boolean isAjax(ServletRequest request) {
+		String header = ((HttpServletRequest) request).getHeader("X-Requested-With");
+		if ("XMLHttpRequest".equalsIgnoreCase(header)) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -1,11 +1,16 @@
 package com.qcz.qmplatform.main.controller;
 
+import java.util.Collection;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +30,9 @@ import com.qcz.qmplatform.module.sys.entity.User;
 @RequestMapping("/main")
 public class MainController {
 
+	@Autowired
+	private SessionDAO sessionDAO;
+	
 	/**
 	 * 日志记录类
 	 */
@@ -81,10 +89,17 @@ public class MainController {
 	public String logout() {
 		Subject subject = SecurityUtils.getSubject();
 		if (subject.isAuthenticated()) {
-			User user = (User) subject.getPrincipal();
+			Object user = subject.getPrincipal();
 			subject.logout();
-			logger.debug("logout : {} | {}", user.getLoginName(), user.getUserName());
+			logger.debug("logout : {}", user);
 		}
 		return "redirect:" + PATH_PREFIX + "/loginPage";
 	}
+
+	@RequestMapping(value = "/sessionList", method = RequestMethod.GET)
+	@ResponseBody
+	public Collection<Session> sessionList() {
+		return sessionDAO.getActiveSessions();
+	}
+	
 }

@@ -11,7 +11,7 @@ import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration.JedisPoolingClientConfigurationBuilder;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -57,11 +57,12 @@ public class RedisConfigurer implements EnvironmentAware {
     @Bean
     public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
-        redisTemplate.setKeySerializer(new GenericJackson2JsonRedisSerializer());// 这里不要使用StringRedisSerializer()，调用RedisCache.remove(K
+        StringRedisSerializer redisSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(new JdkSerializationRedisSerializer());// 这里不要使用StringRedisSerializer()，调用RedisCache.remove(K
         // k)时k为一个对象参数
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setHashKeySerializer(redisSerializer);
+//        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+//        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         // 开启事务
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.setConnectionFactory(jedisConnectionFactory);

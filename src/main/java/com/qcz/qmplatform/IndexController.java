@@ -19,7 +19,7 @@ import com.qcz.qmplatform.module.sys.entity.User;
 @Controller
 public class IndexController {
 
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index() {
 		return "index";
 	}

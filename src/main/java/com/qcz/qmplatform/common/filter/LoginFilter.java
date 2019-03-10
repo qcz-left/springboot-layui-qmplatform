@@ -4,11 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.qcz.qmplatform.common.message.ResponseResult;
+import com.qcz.qmplatform.common.utils.HttpServletUtils;
+
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -25,7 +26,7 @@ public class LoginFilter extends FormAuthenticationFilter {
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
 		HttpServletResponse resp = (HttpServletResponse) response;
-		if (isAjax(request)) {
+		if (HttpServletUtils.isAjax(request)) {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("application/json");
 			ResponseResult resultData = new ResponseResult();
@@ -39,11 +40,4 @@ public class LoginFilter extends FormAuthenticationFilter {
 		return false;
 	}
 
-	private boolean isAjax(ServletRequest request) {
-		String header = ((HttpServletRequest) request).getHeader("X-Requested-With");
-		if ("XMLHttpRequest".equalsIgnoreCase(header)) {
-			return true;
-		}
-		return false;
-	}
 }

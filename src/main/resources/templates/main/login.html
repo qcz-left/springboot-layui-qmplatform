@@ -18,6 +18,7 @@
 				<label class="layui-icon layui-icon-password" for="user-login-password"></label> 
 				<input type="password" name="loginPassword" v-model="data.loginPassword" id="user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
 			</div>
+			<div class="text-danger" v-text="error.loginFail"></div>
 			<div class="layui-form-item">
 				<button class="layui-btn layui-btn-fluid" lay-submit lay-filter="*">登 入</button>
 			</div>
@@ -32,6 +33,10 @@
 			</p>
 		</div>
 	</div>
+	<script th:inline="javascript">
+		var type = [[${param.type}]];
+		type = (type ? type[0] : "");
+	</script>
 	<script type="text/javascript" th:src="@{/static/main/login.js?v=}+${#strings.randomAlphanumeric(16)}"></script>
 </body>
 </html>
