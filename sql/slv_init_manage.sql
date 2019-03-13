@@ -136,6 +136,7 @@ CREATE TABLE `sys_user`  (
   `REMARK` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `USER_IMAGE` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片',
   `LOCKED` int(1) NULL DEFAULT 1 COMMENT '锁定状态（0：锁定，1：正常）',
+  `THEME_COLOR` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '主题颜色',
   PRIMARY KEY (`USER_ID`) USING BTREE,
   INDEX `USER_ID_INDEX`(`USER_ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
@@ -143,18 +144,17 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('03ec73e9-51c4-4b05-a822-88dfc33e30fe', '666', NULL, '', '', '2018-12-01 22:00:39', 'admin', '管理员', '666', '', 'M', NULL, '', '', 1);
-INSERT INTO `sys_user` VALUES ('0ce1e783-962b-48e5-a988-6461883cfa8b', 'qq', NULL, '', '', '2018-12-01 20:51:12', 'admin', '管理员', 'qqqq', '', 'F', NULL, '', '', 0);
-INSERT INTO `sys_user` VALUES ('38c91f58-5858-4dac-8547-bdbb445d235a', 'ww', NULL, 'admin', '管理员', '2018-11-24 20:05:31', 'admin', '管理员', 'ww', '', 'M', NULL, '', '', 1);
-INSERT INTO `sys_user` VALUES ('714ce926-cfca-4ca3-9746-2df2ca8a2643', 'qq', NULL, NULL, NULL, NULL, NULL, NULL, 'qqq', NULL, 'M', NULL, NULL, NULL, 1);
-INSERT INTO `sys_user` VALUES ('8887538c-9e0f-4564-bbce-b32ef62f9a02', '111', '2018-12-02 01:27:37', 'admin', '管理员', '2018-12-15 15:25:27', 'admin', '管理员', '111', 'dfeac3beb98399e70c9fcd4287a5e917', 'M', NULL, '', '', 0);
-INSERT INTO `sys_user` VALUES ('8dc44685-519a-483c-a39a-f8cbcfad9653', 'test5', NULL, '', '', '2018-12-02 15:13:01', 'admin', '管理员', 'test', 'test5', 'M', NULL, '', '', 0);
-INSERT INTO `sys_user` VALUES ('a7a74381-b759-42bd-9453-af82f9a320c6', 'qq', NULL, NULL, NULL, NULL, NULL, NULL, 'qq', NULL, 'M', NULL, NULL, NULL, 1);
-INSERT INTO `sys_user` VALUES ('admin', '管理员', '2018-11-13 15:07:45', '', '', '2018-12-01 20:55:17', 'admin', '管理员', 'admin', '83976aece2b2d3ec1eb0caa78bbc43d7', 'M', NULL, '', '', 1);
-INSERT INTO `sys_user` VALUES ('b0061be8-7aa2-425e-b49e-de38fd57a2a9', 'www', NULL, '', '', '2018-11-24 20:02:37', 'admin', '管理员', 'www', '', 'M', NULL, '', '', 0);
-INSERT INTO `sys_user` VALUES ('d06fc615-371e-433c-9982-383dfddad7fb', '测试用户01', '2018-12-08 11:51:51', 'admin', '管理员', '2018-12-08 11:51:51', 'admin', '管理员', 'test01', 'b12193c759c2a5eaed86ca3eb058c724', 'M', NULL, NULL, NULL, 1);
-INSERT INTO `sys_user` VALUES ('e862dedb-5602-45a3-a3da-5f3c12a35ec5', 'qq', '2018-11-24 20:10:31', 'admin', '管理员', '2018-11-24 20:10:31', 'admin', '管理员', 'qqqqq', NULL, 'M', NULL, NULL, NULL, 1);
-INSERT INTO `sys_user` VALUES ('e8c6c37a-f145-4ded-941c-5d83f89d7c53', 'ee', '2018-11-24 19:56:58', 'admin', '管理员', '2018-11-24 19:56:58', 'admin', '管理员', 'ee', NULL, 'M', NULL, NULL, NULL, 1);
+INSERT INTO `sys_user` VALUES ('0ce1e783-962b-48e5-a988-6461883cfa8b', 'qq', NULL, '', '', '2019-01-16 16:06:21', 'admin', '管理员', 'qqqq', '137fa95a33e1a48e7842f10db756e6f4', 'F', NULL, '', '', 1, NULL);
+INSERT INTO `sys_user` VALUES ('38c91f58-5858-4dac-8547-bdbb445d235a', 'ww', NULL, 'admin', '管理员', '2018-11-24 20:05:31', 'admin', '管理员', 'ww', '', 'M', NULL, '', '', 1, NULL);
+INSERT INTO `sys_user` VALUES ('714ce926-cfca-4ca3-9746-2df2ca8a2643', 'qq', NULL, NULL, NULL, NULL, NULL, NULL, 'qqq', NULL, 'M', NULL, NULL, NULL, 1, NULL);
+INSERT INTO `sys_user` VALUES ('7e9810d2-0b4a-4f57-b2d7-c14a1d99cc63', 'qcz', '2019-01-16 16:18:25', 'admin', '管理员', '2019-01-16 16:18:25', 'admin', '管理员', 'qcz', 'f6c690eb0919796ee5cab5c2d1b47369', 'M', NULL, NULL, NULL, 1, NULL);
+INSERT INTO `sys_user` VALUES ('8dc44685-519a-483c-a39a-f8cbcfad9653', 'test5', NULL, '', '', '2018-12-02 15:13:01', 'admin', '管理员', 'test', 'test5', 'M', NULL, '', '', 0, NULL);
+INSERT INTO `sys_user` VALUES ('a7a74381-b759-42bd-9453-af82f9a320c6', 'qq', NULL, NULL, NULL, NULL, NULL, NULL, 'qq', NULL, 'M', NULL, NULL, NULL, 1, NULL);
+INSERT INTO `sys_user` VALUES ('admin', '管理员', '2018-11-13 15:07:45', '', '', '2018-12-01 20:55:17', 'admin', '管理员', 'admin', '83976aece2b2d3ec1eb0caa78bbc43d7', 'M', NULL, '', '', 1, '');
+INSERT INTO `sys_user` VALUES ('b0061be8-7aa2-425e-b49e-de38fd57a2a9', 'www', NULL, '', '', '2019-03-08 21:02:53', 'b0061be8-7aa2-425e-b49e-de38fd57a2a9', 'www', 'www', '05b6837f6cf010be52688b53d6045a87', 'M', NULL, '', '', 1, '#4e4747');
+INSERT INTO `sys_user` VALUES ('d06fc615-371e-433c-9982-383dfddad7fb', '测试用户01', '2018-12-08 11:51:51', 'admin', '管理员', '2018-12-08 11:51:51', 'admin', '管理员', 'test01', 'b12193c759c2a5eaed86ca3eb058c724', 'M', NULL, NULL, NULL, 1, NULL);
+INSERT INTO `sys_user` VALUES ('e862dedb-5602-45a3-a3da-5f3c12a35ec5', 'qq', '2018-11-24 20:10:31', 'admin', '管理员', '2018-11-24 20:10:31', 'admin', '管理员', 'qqqqq', NULL, 'M', NULL, NULL, NULL, 1, NULL);
+INSERT INTO `sys_user` VALUES ('e8c6c37a-f145-4ded-941c-5d83f89d7c53', 'ee', '2018-11-24 19:56:58', 'admin', '管理员', '2018-11-24 19:56:58', 'admin', '管理员', 'ee', NULL, 'M', NULL, NULL, NULL, 1, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_role
