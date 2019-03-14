@@ -117,6 +117,7 @@ public class OperateLogAspect {
 		 */
 		int operateStatus = 1;
 		Object proceed = null;
+		User currentUser = SubjectUtils.getUser();
 		try {
 			proceed = joinPoint.proceed();
 		} catch (Exception e) {// 原逻辑程序有异常，这里抛回，并修改操作状态
@@ -149,7 +150,7 @@ public class OperateLogAspect {
 							break;
 						}
 					}
-					insertOperateLog(operateStatusTemp, type, "", moduleName, requestUrl, ipAddress, null);
+					insertOperateLog(operateStatusTemp, type, "", moduleName, requestUrl, ipAddress, null, currentUser);
 				}
 			});
 		}
@@ -175,6 +176,7 @@ public class OperateLogAspect {
 		 */
 		int operateStatus = 1;
 		Object proceed = null;
+		User currentUser = SubjectUtils.getUser();
 		try {
 			proceed = joinPoint.proceed();
 		} catch (Exception e) {// 原逻辑程序有异常，这里抛回，并修改操作状态
@@ -212,7 +214,7 @@ public class OperateLogAspect {
 						moduleName = module.value();
 					}
 					insertOperateLog(operateStatusTemp, OperateType.FIND, JSONUtils.toJSONString(updateParams), moduleName, requestUrl, ipAddress,
-							ReflectUtils.getTable(ReflectUtils.getEntityClass(targetClass)));
+							ReflectUtils.getTable(ReflectUtils.getEntityClass(targetClass)), currentUser);
 				}
 			});
 		}
@@ -260,6 +262,7 @@ public class OperateLogAspect {
 		 */
 		int operateStatus = 1;
 		Object proceed = null;
+		User currentUser = SubjectUtils.getUser();
 		try {
 			proceed = joinPoint.proceed();
 		} catch (Exception e) {// 原逻辑程序有异常，这里抛回，并修改操作状态
@@ -280,7 +283,7 @@ public class OperateLogAspect {
 					if (module != null) {
 						moduleName = module.value();
 					}
-					insertOperateLog(operateStatusTemp, operateTypeTemp, JSONUtils.toJSONString(updateParamsTemp), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(entityClass));
+					insertOperateLog(operateStatusTemp, operateTypeTemp, JSONUtils.toJSONString(updateParamsTemp), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(entityClass), currentUser);
 				}
 			});
 		}
@@ -316,6 +319,7 @@ public class OperateLogAspect {
 		 */
 		int operateStatus = 1;
 		Object proceed = null;
+		User currentUser = SubjectUtils.getUser();
 		try {
 			proceed = joinPoint.proceed();
 		} catch (Exception e) {// 原逻辑程序有异常，这里抛回，并修改操作状态
@@ -335,7 +339,7 @@ public class OperateLogAspect {
 					if (module != null) {
 						moduleName = module.value();
 					}
-					insertOperateLog(operateStatusTemp, OperateType.DELETE, JSONUtils.toJSONString(oldDataTemp), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(entityClass));
+					insertOperateLog(operateStatusTemp, OperateType.DELETE, JSONUtils.toJSONString(oldDataTemp), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(entityClass), currentUser);
 				}
 			});
 		}
@@ -358,6 +362,7 @@ public class OperateLogAspect {
 		Class<?> entityClass = ReflectUtils.getEntityClass(targetClass);
 		int operateStatus = 1;
 		Object proceed = null;
+		User currentUser = SubjectUtils.getUser();
 		try {
 			proceed = joinPoint.proceed();
 		} catch (Exception e) {// 原逻辑程序有异常，这里抛回，并修改操作状态
@@ -379,7 +384,7 @@ public class OperateLogAspect {
 					if (module != null) {
 						moduleName = module.value();
 					}
-					insertOperateLog(operateStatusTemp, OperateType.UPDATE, JSONUtils.toJSONString(updateParams), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(entityClass));
+					insertOperateLog(operateStatusTemp, OperateType.UPDATE, JSONUtils.toJSONString(updateParams), moduleName, requestUrl, ipAddress, ReflectUtils.getTable(entityClass), currentUser);
 				}
 			});
 		}
@@ -395,13 +400,13 @@ public class OperateLogAspect {
 	 * @param requestUrl 请求路径（MVC C）
 	 * @param ipAddress ip地址
 	 * @param tableName 表名
+	 * @param currentUser 当前操作人
 	 */
-	public void insertOperateLog(int operateStatus, OperateType operateType, String updateParams, String module, String requestUrl, String ipAddress, String tableName) {
+	public void insertOperateLog(int operateStatus, OperateType operateType, String updateParams, String module, String requestUrl, String ipAddress, String tableName, User currentUser) {
 		SysOperateLog log = new SysOperateLog();
 		log.setOperateModule(module);
 		log.setUpdateParams(updateParams);
 		log.setLogId(StringUtils.getUUID());
-		User currentUser = SubjectUtils.getUser();
 		log.setOperateUserId(currentUser.getUserId());
 		log.setOperateUserName(currentUser.getUserName());
 		log.setOperateTime(TimeUtils.getTimestamp());

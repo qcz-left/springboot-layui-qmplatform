@@ -8,8 +8,12 @@ import com.qcz.qmplatform.common.utils.Constants;
 import com.qcz.qmplatform.module.sys.realm.UserRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
 import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.SessionValidationScheduler;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
+import org.apache.shiro.session.mgt.eis.SessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -44,6 +48,9 @@ public class ShiroConfigurer {
 		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
 		sessionManager.setSessionDAO(sessionDAO());
 		sessionManager.setSessionIdCookieEnabled(true);
+		sessionManager.setGlobalSessionTimeout(1800000);
+		sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
+		sessionManager.setSessionValidationSchedulerEnabled(true);
 		return sessionManager;
 	}
 
@@ -51,9 +58,22 @@ public class ShiroConfigurer {
 	public SessionDAO sessionDAO() {
 		MySessionDAO sessionDAO = new MySessionDAO();
 		sessionDAO.setCacheManager(shiroRedisCacheManager);
+		sessionDAO.setSessionIdGenerator(sessionIdGenerator());
 		return sessionDAO;
 	}
 
+	@Bean
+	public SessionIdGenerator sessionIdGenerator() {
+		return new JavaUuidSessionIdGenerator();
+	}
+	
+	@Bean
+	public SessionValidationScheduler sessionValidationScheduler() {
+		ExecutorServiceSessionValidationScheduler scheduler = new ExecutorServiceSessionValidationScheduler();
+		scheduler.setInterval(3600000);
+		return scheduler;
+	}
+	
 	@Bean
 	public ShiroRedisCacheManager shiroRedisCacheManager() {
 		ShiroRedisCacheManager redisCacheManager = new ShiroRedisCacheManager(redisTemplate);

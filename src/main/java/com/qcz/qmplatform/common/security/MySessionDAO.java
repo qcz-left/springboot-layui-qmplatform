@@ -1,69 +1,50 @@
 package com.qcz.qmplatform.common.security;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
+import org.springframework.amqp.utils.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.qcz.qmplatform.common.redis.RedisCache;
+import com.qcz.qmplatform.module.sys.entity.SysSession;
+import com.qcz.qmplatform.module.sys.service.SysSessionService;
 
 /**
  * 
  * @author changzhongq
  * @time 2019年3月10日 上午1:08:38
  */
-@SuppressWarnings("unchecked")
 public class MySessionDAO extends CachingSessionDAO {
 
 	@Autowired
-	private RedisCache<String, Object> redisCache;
-
-	private static final String SESSION_CACHE = "session-cache";
-
-	private static Map<Serializable, Session> sessionMap;
+	private SysSessionService sysSessionService;
 
 	protected Serializable doCreate(Session session) {
 		Serializable sessionId = generateSessionId(session);
 		assignSessionId(session, sessionId);
-		getSessionMap().put(sessionId, session);
-		setSessionMap();
+
+		SysSession sysSession = new SysSession();
+		sysSession.setSessionId(sessionId.toString());
+		sysSession.setSession(SerializationUtils.serialize(session));
+		sysSessionService.save(sysSession);
 		return sessionId;
 	}
 
 	protected Session doReadSession(Serializable sessionId) {
-		return getSessionMap().get(sessionId);
+		return (Session) SerializationUtils.deserialize(sysSessionService.find(sessionId).getSession());
 	}
 
 	protected void doUpdate(Session session) {
-		getSessionMap().put(session.getId(), session);
-		setSessionMap();
+		SysSession sysSession = sysSessionService.find(session.getId());
+		if (sysSession != null) {
+			sysSession.setSession(SerializationUtils.serialize(session));
+			sysSessionService.save(sysSession);
+		}
 	}
 
 	protected void doDelete(Session session) {
-		getSessionMap().remove(session.getId(), session);
-		setSessionMap();
-	}
-
-	@Override
-	public Collection<Session> getActiveSessions() {
-		return getSessionMap().values();
-	}
-
-	public Map<Serializable, Session> getSessionMap() {
-		sessionMap = (ConcurrentHashMap<Serializable, Session>) redisCache.get(SESSION_CACHE);
-		if (sessionMap == null) {
-			sessionMap = new ConcurrentHashMap<Serializable, Session>();
-			redisCache.put(SESSION_CACHE, sessionMap);
-		}
-		return sessionMap;
-	}
-
-	public void setSessionMap() {
-		redisCache.put(SESSION_CACHE, sessionMap);
+		sysSessionService.delete(session.getId());
 	}
 
 }
