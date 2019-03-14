@@ -183,4 +183,14 @@ INSERT INTO `sys_user_role` VALUES ('7ba24658-4a8f-4c54-9e99-62f60623a6c7', 'd06
 INSERT INTO `sys_user_role` VALUES ('89f631a7-8799-44a0-918d-83b5536a4642', 'd06fc615-371e-433c-9982-383dfddad7fb', '745fcee9-74d3-4063-a95d-8fe416b98ce5');
 INSERT INTO `sys_user_role` VALUES ('d32aa568-de0f-42b9-93c7-b32c1bf31951', 'admin', '1');
 
+-- ----------------------------
+-- Table structure for sys_session
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_session`;
+CREATE TABLE `sys_session`  (
+  `session_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '会话ID',
+  `session` blob NULL,
+  PRIMARY KEY (`session_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
 SET FOREIGN_KEY_CHECKS = 1;
