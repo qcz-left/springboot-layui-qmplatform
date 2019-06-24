@@ -45,4 +45,3 @@
   ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/index.jpg)
   ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/user-list.jpg)
   ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/sysOperateLog-list.jpg)
-## 后续打算取消模板引擎，改造成前后端分离的模式，把layui替换成elementui
