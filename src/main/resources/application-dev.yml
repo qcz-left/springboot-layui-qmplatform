@@ -1,9 +1,0 @@
-spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/slv_init_manage
-    username: root
-    password: 1234
-  redis:
-    host: 127.0.0.1
-    port: 6379

@@ -1,167 +1,171 @@
 @charset "UTF-8";
 
 .layadmin-pagetabs {
-	height: 40px;
-	line-height: 40px;
-	padding: 0 80px 0 40px;
-	background-color: #fff;
-	box-sizing: border-box;
-	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
-	position: fixed;
-	top: 62px;
-	right: 0;
-	z-index: 999;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 80px 0 40px;
+    background-color: #fff;
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+    position: fixed;
+    top: 62px;
+    right: 0;
+    z-index: 999;
 }
 
 .layadmin-pagetabs, .layui-layout-admin .layui-body, .layui-layout-admin .layui-footer,
-	.layui-layout-admin .layui-header .layui-layout-right,
-	.layui-layout-admin .layui-header .layui-nav .layui-nav-item,
-	.layui-layout-admin .layui-layout-left, .layui-layout-admin .layui-logo,
-	.layui-layout-admin .layui-side {
-	transition: all .3s;
-	-webkit-transition: all .3s;
+.layui-layout-admin .layui-header .layui-layout-right,
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item,
+.layui-layout-admin .layui-layout-left, .layui-layout-admin .layui-logo,
+.layui-layout-admin .layui-side {
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+
+.layui-layout-admin .layui-side, .layui-nav-tree {
+    width: 260px;
 }
 
 .layadmin-pagetabs, .layui-layout-admin .layui-body, .layui-layout-admin .layui-footer,
-	.layui-layout-admin .layui-layout-left {
-	left: 200px;
+.layui-layout-admin .layui-layout-left {
+    left: 260px;
 }
 
 .layadmin-pagetabs .layui-icon-prev {
-	left: 0;
-	border-left: none;
-	border-right: 1px solid #f6f6f6;
+    left: 0;
+    border-left: none;
+    border-right: 1px solid #f6f6f6;
 }
 
 .layadmin-pagetabs .layadmin-tabs-control {
-	position: absolute;
-	top: 0;
-	width: 40px;
-	height: 100%;
-	text-align: center;
-	cursor: pointer;
-	transition: all .3s;
-	-webkit-transition: all .3s;
-	box-sizing: border-box;
-	border-left: 1px solid #f6f6f6;
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    text-align: center;
+    cursor: pointer;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+    box-sizing: border-box;
+    border-left: 1px solid #f6f6f6;
 }
 
 [lay-href], [lay-tips], [layadmin-event] {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .layadmin-pagetabs .layui-tab {
-	margin: 0;
-	overflow: hidden;
+    margin: 0;
+    overflow: hidden;
 }
 
 .layadmin-pagetabs .layui-tab-title {
-	height: 40px;
-	border: none;
+    height: 40px;
+    border: none;
 }
 
 .layadmin-pagetabs .layui-tab-title li {
-	min-width: 0;
-	line-height: 40px;
-	max-width: 160px;
-	text-overflow: ellipsis;
-	padding-right: 40px;
-	overflow: hidden;
-	border-right: 1px solid #f6f6f6;
-	vertical-align: top;
+    min-width: 0;
+    line-height: 40px;
+    max-width: 160px;
+    text-overflow: ellipsis;
+    padding-right: 40px;
+    overflow: hidden;
+    border-right: 1px solid #f6f6f6;
+    vertical-align: top;
 }
 
 .layadmin-pagetabs .layui-tab-title li .layui-tab-close {
-	position: absolute;
-	right: 8px;
-	top: 50%;
-	margin: -7px 0 0;
-	width: 16px;
-	height: 16px;
-	line-height: 16px;
-	border-radius: 50%;
-	font-size: 12px;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    margin: -7px 0 0;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    border-radius: 50%;
+    font-size: 12px;
 }
 
 .layadmin-pagetabs .layui-icon-next {
-	right: 40px;
+    right: 40px;
 }
 
 .layadmin-tabs-select.layui-nav {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	padding: 0;
-	background: 0 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: 0 0;
 }
 
 .layadmin-pagetabs .layui-icon-down {
-	right: 0;
+    right: 0;
 }
 
 .layadmin-tabs-select.layui-nav .layui-nav-item {
-	line-height: 40px;
+    line-height: 40px;
 }
 
-.layadmin-tabs-select.layui-nav .layui-nav-item>a {
-	height: 40px;
+.layadmin-tabs-select.layui-nav .layui-nav-item > a {
+    height: 40px;
 }
 
 .layadmin-tabs-select.layui-nav .layui-nav-child {
-	top: 40px;
-	left: auto;
-	right: 0;
+    top: 40px;
+    left: auto;
+    right: 0;
 }
 
 .layadmin-pagetabs .layui-tab-title li:first-child .layui-tab-close,
-	.layadmin-tabs-select.layui-nav .layui-nav-bar, .layadmin-tabs-select.layui-nav .layui-nav-more
-	{
-	display: none;
+.layadmin-tabs-select.layui-nav .layui-nav-bar, .layadmin-tabs-select.layui-nav .layui-nav-more {
+    display: none;
 }
 
 .layadmin-pagetabs .layui-tab-title li.layui-this, .layadmin-pagetabs .layui-tab-title li:hover {
-	background-color: #f6f6f6;
+    background-color: #f6f6f6;
 }
 
 .layadmin-tabs-control .layui-nav .layui-nav-child dd.layui-this a, .layadmin-tabs-control .layui-nav-child dd.layui-this {
-	background-color: white;
-	color: #333;
+    background-color: white;
+    color: #333;
 }
 
 .layadmin-pagetabs .layui-tab-title li:first-child {
-	padding-right: 15px;
+    padding-right: 15px;
 }
 
 .layadmin-pagetabs .layui-tab-title li.layui-this:after {
-	width: 100%;
-	border: none;
-	height: 2px;
-	background-color: #292B34;
+    width: 100%;
+    border: none;
+    height: 2px;
+    background-color: #292B34;
 }
 
 .layadmin-pagetabs .layui-tab-title li:after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 0;
-	height: 2px;
-	border-radius: 0;
-	background-color: #292B34;
-	transition: all .3s;
-	-webkit-transition: all .3s;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    border-radius: 0;
+    background-color: #292B34;
+    transition: all .3s;
+    -webkit-transition: all .3s;
 }
 
 .layadmin-pagetabs .layadmin-tabs-control:hover {
-	background-color: #f6f6f6;
+    background-color: #f6f6f6;
 }
 
 .layui-layout-admin .layui-body {
-	position: fixed;
-	top: 102px;
-	bottom: 0;
+    position: fixed;
+    /*top: 102px;*/
+    bottom: 0;
+    /*padding-top: 10px;*/
 }
 
 .layui-layout-admin .layui-body .layadmin-tabsbody-item {
@@ -174,11 +178,28 @@
 }
 
 .layui-layout-admin .layui-body .layadmin-tabsbody-item.layui-show {
-	background-color: #f2f2f2;
+    background-color: #f2f2f2;
     z-index: 99;
 }
 
 html {
-	background-color: #f2f2f2;
-	color: #666;
+    background-color: #f2f2f2;
+    color: #666;
+}
+
+.layui-tab-content .layui-tab-item {
+    height: 100%;
+}
+
+.layui-tab {
+    margin: 10px;
+    height: calc(100% - 20px);
+}
+
+.layui-tab-content {
+    height: calc(100% - 61px);
+}
+
+.layui-side-scroll {
+    padding: 0;
 }

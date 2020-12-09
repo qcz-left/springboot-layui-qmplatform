@@ -1,50 +1,38 @@
-#spring配置
+server:
+  port: 8088
+  servlet:
+    context-path: /qmplatform
+
 spring:
-  profiles:
-    include: pro
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    # 连接池配置
-    tomcat:
-      initial-size: 5
-      min-idle: 5
-      max-active: 20
-      #连接等待超时时间
-      max-wait: 60000
-      #配置隔多久进行一次检测(检测可以关闭的空闲连接)
-      time-between-eviction-runs-millis: 60000
-      #配置连接在池中的最小生存时间
-      min-evictable-idle-time-millis: 300000
-      validation-query: SELECT 1 FROM DUAL
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/qmplatform_single
+    username: postgres
+    password: postgres
   mvc:
     view:
-      prefix: classpath:templates/
-      suffix: .html
-  # thymeleaf配置
-  thymeleaf:
-    mode: HTML
-    encoding: utf-8
-    cache: false
-    servlet:
-      content-type: text/html
-  # 消息队列配置
-  rabbitmq:
-    host: 192.168.56.103
-    port: 5672
-    username: admin
-    password: admin
-    virtual-host: demo
-    connection-timeout: 60000
-server:
-  servlet:
-    context-path: /slv-init-manage
-  port: 9090
-database:
-  name: slv_init_manage
+      prefix: classpath:/templates/
+      suffix: .ftl
+  freemarker:
+    request-context-attribute: requestContext
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+
+# 分页插件
+pagehelper:
+  helper-dialect: postgresql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
 logging:
-  config: classpath:logback-spring.xml
+  level:
+    com.qcz.qmplatform.module.**.mapper: debug
+
+# 自定义属性
+custom:
+  upload-file-path: file:D:\workspace\file

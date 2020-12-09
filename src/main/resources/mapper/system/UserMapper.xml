@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qcz.qmplatform.module.system.mapper.UserMapper">
+
+    <select id="queryUserByUsername" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
+        select *
+        from sys_user
+        where username like #{username}
+    </select>
+
+    <select id="queryAuthoritiesByUserId" resultType="string">
+        select
+            sp.code
+        from
+            v_sys_permission sp
+                left join sys_role_permission srp on srp.permission_id = sp.permission_id
+        where exists (
+                      select
+                          1
+                      from
+                          sys_user su
+                              left join sys_user_role sur on su.id = sur.user_id
+                      where
+                          sur.role_id = srp.role_id
+                        and su.id = #{userId}
+                  )
+    </select>
+</mapper>

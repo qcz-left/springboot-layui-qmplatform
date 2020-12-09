@@ -1,47 +1,37 @@
-# slv-init-manage
-  基于springboot的初始化管理平台
-## 简介：
-  slv-init-manage是一个极简模式的后台管理。就像我的简介这么极简_^^_
-## 后端技术：
-  springboot2.0，mybatis，redis，shiro
-## 前端技术：
-  layui，vue
-## 模板引擎：
-  thymeleaf
-## 图表组件：
-  echarts
-## 项目结构：
-```
-|-- src
-  |-- main
-    |-- java
-      |-- com
-        |-- qcz
-          |-- qmplatform
-            |-- common                        // 公共类目录
-            |-- main                          // 登录、登出等
-            |-- moudle                        // 业务模块
-            |-- QmplatformApplication.java    // 项目加载入口类
-            |-- *Configurer.java              // 各种配置文件
-  |-- resources                               // 资源文件目录
-    |-- mapper                                // mybatis数据库映射文件
-    |-- static                                // 静态文件
-    |-- templates                             // HTML页面
-    |-- application-dev.yml                   // 开发环境配置文件
-    |-- application-pro.yml                   // 正式环境配置文件
-    |-- application.yml                       // 项目主配置文件
-    |-- logback-spring.xml                    // logback日志配置
-|-- pom.xml
-```
-## 主要功能（极简）
-  - 首页
-  - 系统管理
-    - 用户管理
-    - 菜单管理
-    - 角色管理
-  - 操作日志
-## 功能截图
-  ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/login.jpg)
-  ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/index.jpg)
-  ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/user-list.jpg)
-  ![image](https://github.com/qcz-left/slv-init-manage/raw/master/picture/sysOperateLog-list.jpg)
+# qmplatform
+
+#### 介绍
+微服务是听起来很高大上，但还得结合项目实际情况来思考如何布局，不要一味的寻求微服务架构；
+该项目是一个简单的单体应用，就没有比它更简洁的画面了，基于springboot2.16、mybatis-plus、shiro、layui、freemarker，小系统暂未用到什么缓存、消息队列啥的，因为现在用不着，等要用到了再说吧。
+
+#### 软件架构
+软件架构说明
+后端：springboot+mybatis-plus+shiro
+前端：layui
+模板引擎：freemartker
+数据库：postgresql
+
+没什么高大上的东西，用来练手还是可以的
+
+
+#### 安装教程
+
+哪有啥安装教程，clone下来导入maven工程就开干，记得先调好自己的数据库哈，sql文件也有了
+
+#### 功能说明
+
+系统管理
+    用户管理
+    角色管理
+    组织机构管理
+    菜单管理
+    操作日志
+...
+
+#### 部分截图
+![用户管理](https://images.gitee.com/uploads/images/2020/1208/222224_640405e7_1324727.png "屏幕截图.png")
+![菜单管理](https://images.gitee.com/uploads/images/2020/1208/222251_5db67991_1324727.png "屏幕截图.png")
+![操作日志](https://images.gitee.com/uploads/images/2020/1208/222042_5abd8512_1324727.png "屏幕截图.png")
+
+微服务版本正在开发中...（springcloud、mybatis-plus、oauth2、rabbitmq、vue、element-ui啥的，都是市面上主流的，先列几个关键字吧，搞出来了再发出来请各位看官抽鞭）
+一个人搞心累但快乐着，自勉。
