@@ -4,11 +4,13 @@ package com.qcz.qmplatform.module.system.controller;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
+import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.domain.Organization;
 import com.qcz.qmplatform.module.system.po.OrgTree;
 import com.qcz.qmplatform.module.system.service.OrganizationService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -96,6 +98,7 @@ public class OrganizationController extends BaseController {
      */
     @PostMapping("/addOrg")
     @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增组织机构")
     public ResponseResult<?> addOrgOne(@RequestBody Organization org) {
         return saveOrgOne(org);
@@ -108,6 +111,7 @@ public class OrganizationController extends BaseController {
      */
     @PostMapping("/saveOrgOne")
     @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
     public ResponseResult<?> saveOrgOne(@RequestBody Organization org) {
         if (organizationService.saveOrgOne(org)) {
             return ResponseResult.ok();
@@ -122,6 +126,7 @@ public class OrganizationController extends BaseController {
      */
     @PutMapping("/updateOrg")
     @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改组织机构")
     public ResponseResult<?> updateOrgOne(@RequestBody Organization org) {
         return saveOrgOne(org);
@@ -134,6 +139,7 @@ public class OrganizationController extends BaseController {
      */
     @DeleteMapping("/deleteOrg")
     @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_ORG_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除组织机构")
     public ResponseResult<?> deleteOrg(String orgIds) {
         if (organizationService.deleteOrg(Arrays.asList(orgIds.split(",")))) {

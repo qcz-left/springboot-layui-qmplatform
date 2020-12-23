@@ -107,6 +107,7 @@ public class MenuController extends BaseController {
      */
     @PostMapping("/addPermission")
     @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_MENU_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增一个菜单或权限")
     public ResponseResult<?> addPermission(@RequestBody Permission permission) {
         return savePermissionOne(permission);
@@ -119,6 +120,7 @@ public class MenuController extends BaseController {
      */
     @PutMapping("/updatePermission")
     @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_MENU_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改一个菜单或权限")
     public ResponseResult<?> updatePermission(@RequestBody Permission permission) {
         return savePermissionOne(permission);

@@ -31,7 +31,7 @@ public class UserRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        UserMapper userMapper = (UserMapper) SpringContextUtils.getBean(UserMapper.class);
+        UserMapper userMapper = SpringContextUtils.getBean(UserMapper.class);
         Set<String> authorities = new HashSet<>(userMapper.queryAuthoritiesByUserId(SubjectUtils.getUserId()));
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(authorities);
@@ -43,7 +43,7 @@ public class UserRealm extends AuthorizingRealm {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username = upToken.getUsername();
         String password = SubjectUtils.md5Encrypt(username, new String((char[]) upToken.getCredentials()));
-        UserService userService = (UserService) SpringContextUtils.getBean(UserService.class);
+        UserService userService = SpringContextUtils.getBean(UserService.class);
         User user = userService.findByLoginNameAndPassword(username, password);
         // 账号不存在
         if (user == null) {

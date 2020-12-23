@@ -1,7 +1,7 @@
 package com.qcz.qmplatform.common.bean;
 
 /**
- * 此文件为 Freemarker 模板引擎自动生成，请勿修改
+ * 权限码（此文件为 Freemarker 模板引擎自动生成，请勿修改）
  */
 public class PrivCode {
 

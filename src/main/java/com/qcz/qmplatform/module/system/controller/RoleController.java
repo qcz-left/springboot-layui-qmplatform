@@ -104,6 +104,7 @@ public class RoleController extends BaseController {
      */
     @PostMapping("/addRole")
     @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_ROLE_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增角色")
     public ResponseResult<?> addRoleOne(@RequestBody Role role) {
         return saveRoleOne(role);
@@ -131,6 +132,7 @@ public class RoleController extends BaseController {
      */
     @PutMapping("/updateRoleOne")
     @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_ROLE_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改角色")
     public ResponseResult<?> updateRole(@RequestBody Role role) {
         return saveRoleOne(role);

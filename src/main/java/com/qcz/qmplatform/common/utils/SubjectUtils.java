@@ -27,7 +27,7 @@ public class SubjectUtils {
             String sign = Constant.CURRENT_USER_SIGN + principal;
             Object user = userCache.get(sign);
             if (user == null) {
-                user = ((UserService) SpringContextUtils.getBean(UserService.class)).getById(String.valueOf(principal));
+                user = SpringContextUtils.getBean(UserService.class).getById(String.valueOf(principal));
                 userCache.put(sign, user);
             }
             return (User) user;

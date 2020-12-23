@@ -10,6 +10,7 @@ import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.PageRequest;
 import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
+import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
@@ -19,6 +20,7 @@ import com.qcz.qmplatform.module.archive.domain.Attachment;
 import com.qcz.qmplatform.module.archive.service.AttachmentService;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.domain.User;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -73,6 +75,7 @@ public class AttachmentController extends BaseController {
 
     @PostMapping("/uploadAttachment")
     @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_FILE_UPLOAD)
     @RecordLog(type = OperateType.INSERT, description = "上传文件")
     public ResponseResult<?> uploadAttachment(MultipartFile file, Attachment attachment) throws IOException {
         ResponseResult<Map<String, String>> upload = upload(file);
@@ -92,6 +95,7 @@ public class AttachmentController extends BaseController {
 
     @DeleteMapping("/delAttachment")
     @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_FILE_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除文件")
     public ResponseResult<?> delAttachment(String attachmentIds) {
         QueryWrapper<Attachment> queryWrapper = new QueryWrapper<>();
