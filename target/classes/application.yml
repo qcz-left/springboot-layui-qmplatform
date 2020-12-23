@@ -1,0 +1,67 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /qmplatform
+
+
+spring:
+  profiles:
+    active: pro
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.postgresql.Driver
+    #Spring Boot 默认是不注入这些属性值的，需要自己绑定
+    #druid 数据源专有配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #配置监控统计拦截的filters，stat:监控统计、wall：防御sql注入
+    filters: stat,wall
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  mvc:
+    view:
+      prefix: classpath:/templates/
+      suffix: .ftl
+  mail:
+    host: smtp.163.com
+    port: 25
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            #开启SSL安全连接(有的邮箱不需要,QQ邮箱需要,不需要时改为false)
+            enable: true
+            required: true
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+
+# 分页插件
+pagehelper:
+  helper-dialect: postgresql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+logging:
+  level:
+    com.qcz.qmplatform.module.**.mapper: debug
+
+# 加密秘钥
+jasypt:
+  encryptor:
+    password: qcz

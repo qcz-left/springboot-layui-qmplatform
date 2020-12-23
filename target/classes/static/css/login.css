@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+body {
+	background: #f2f2f2;
+	padding: 110px 0;
+	text-align: center;
+}
+
+.user-login-main {
+	width: 375px;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.user-login-header h2 {
+	margin-bottom: 10px;
+	font-weight: 300;
+	font-size: 30px;
+	color: #000;
+}
+
+.user-login-header p {
+	font-weight: 300;
+	color: #999;
+}
+
+.layui-form {
+	padding: 20px;
+}
+
+.layui-icon-username, .layui-icon-password {
+	position: absolute;
+	left: 1px;
+	top: 1px;
+	width: 38px;
+	line-height: 36px;
+	text-align: center;
+	color: #d2d2d2;
+}
+
+.layui-form-item {
+	position: relative;
+}
+
+.layui-form .layui-input {
+	padding-left: 38px;
+}
+
+.user-login-footer {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	line-height: 30px;
+	padding: 20px;
+	text-align: center;
+	box-sizing: border-box;
+	color: rgba(0, 0, 0, .5);
+}

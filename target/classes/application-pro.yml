@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://111.230.115.170:5432/qmplatform_single
+    username: postgres
+    password: ENC(tibGTUt5F9EwjqahkISo6H0qDL33Vi3k)
+  mail:
+    username: qmplatform@163.com
+    password: ENC(bd/uWOMTkBshrAg0i5dU/35s6jYziLgBNlBIQg/fz6A=)

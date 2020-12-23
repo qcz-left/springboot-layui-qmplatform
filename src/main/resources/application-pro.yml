@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ip:5432/qmplatform_single
+    username: postgres
+    password: ENC(enc_pg_password)
+  mail:
+    username: your_mail_addr@163.com
+    password: ENC(enc_163_password)

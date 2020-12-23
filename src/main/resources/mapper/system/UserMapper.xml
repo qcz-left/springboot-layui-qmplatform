@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qcz.qmplatform.module.system.mapper.UserMapper">
+
+    <select id="queryUserByUsername" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
+        select *
+        from sys_user
+        where username like #{username}
+    </select>
+
+    <select id="queryAuthoritiesByUserId" resultType="string">
+        select
+            sp.code
+        from
+            v_sys_permission sp
+            left join sys_role_permission srp on srp.permission_id = sp.permission_id
+        where
+            sp.code is not null
+            and trim(sp.code) != ''
+            and exists (
+                    select
+                        1
+                    from
+                        sys_user su
+                        left join sys_user_role sur on su.id = sur.user_id
+                    where
+                        sur.role_id = srp.role_id
+                        and su.id = #{userId}
+                  )
+    </select>
+
+    <select id="queryUserList" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
+        select
+            su.*,
+            va1.attr_name as userSexName,
+            va2.attr_name as lockedName
+        from
+            sys_user su
+        left join ( select attr_value, attr_name from v_sys_dict_attr where dict_code = 'user-sex' ) va1 on va1.attr_value = su.user_sex
+        left join ( select attr_value, attr_name from v_sys_dict_attr where dict_code = 'user-status' ) va2 on va2.attr_value = cast(su.locked as varchar)
+        where 1=1
+        <if test="username != null and username != ''">
+            and su.username like concat('%', #{username}, '%')
+        </if>
+        <if test="userSex != null and userSex != ''">
+            and su.user_sex like concat('%', #{userSex}, '%')
+        </if>
+    </select>
+</mapper>
