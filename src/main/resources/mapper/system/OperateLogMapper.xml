@@ -20,7 +20,7 @@
         <if test="operateType != null and operateType != ''">
             and sol.operate_type = #{operateType}
         </if>
-        <if test="operateStatus != null and operateStatus != ''">
+        <if test="operateStatus != null">
             and sol.operate_status = #{operateStatus}
         </if>
         <if test="operateTime_start != null and operateTime_start != ''">

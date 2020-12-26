@@ -27,15 +27,13 @@ layui.use(['table', 'form', 'element', 'layer', 'laydate', 'xmSelect'], function
         radio: true,
         clickClose: true,
         height: 'auto',
-        model: {label: {type: 'text'}},
+        model: {icon: 'hidden'},
         data: []
     })
     CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
         code: 'operate-type'
     }, function (result) {
-        result.data.unshift({name: '请选择', value: ''});
         operateTypeSelect.update({
-            initValue: [''],
             data: result.data
         })
     })
@@ -47,15 +45,13 @@ layui.use(['table', 'form', 'element', 'layer', 'laydate', 'xmSelect'], function
         radio: true,
         clickClose: true,
         height: 'auto',
-        model: {label: {type: 'text'}},
+        model: {icon: 'hidden'},
         data: []
     })
     CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
         code: 'operate-status'
     }, function (result) {
-        result.data.unshift({name: '请选择', value: ''});
         operateStatusSelect.update({
-            initValue: [''],
             data: result.data
         })
     })
