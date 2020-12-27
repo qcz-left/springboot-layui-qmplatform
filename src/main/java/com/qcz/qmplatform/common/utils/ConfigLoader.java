@@ -47,10 +47,28 @@ public class ConfigLoader {
     /**
      * 获取文件下载存放路径
      *
-     * @return 文件上传路径，默认 /opt/web/download/
+     * @return 文件下载路径，默认 /opt/web/download/
      */
     public static String getDownloadFilePath() {
         return getStringConfig("DownloadFilePath", "/opt/web/download/");
+    }
+
+    /**
+     * 获取备份目录
+     *
+     * @return 备份目录，默认 /opt/web/bak/
+     */
+    public static String getBakPath() {
+        return getStringConfig("BakPath", "/opt/web/bak/");
+    }
+
+    /**
+     * 获取数据库备份存放路径
+     *
+     * @return 数据库备份路径，默认 /opt/web/bak/database/
+     */
+    public static String getDataBakPath() {
+        return getStringConfig("DataBakPath", getBakPath() + "database/");
     }
 
 }

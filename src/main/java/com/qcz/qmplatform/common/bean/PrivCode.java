@@ -1,9 +1,14 @@
 package com.qcz.qmplatform.common.bean;
 
 /**
- * 此文件为 Freemarker 模板引擎自动生成，请勿修改
+ * 权限码（此文件为 Freemarker 模板引擎自动生成，请勿修改）
  */
 public class PrivCode {
+
+    /**
+     * 数据备份与恢复
+     */
+    public static final String MENU_CODE_DATA_BAK = "data-bak";
 
     /**
      * 系统管理
@@ -159,5 +164,25 @@ public class PrivCode {
      * 定义字典属性
      */
     public static final String BTN_CODE_DICT_ALLOT = "dict-allot";
+
+    /**
+     * 保存备份策略
+     */
+    public static final String BTN_CODE_DATA_BAK_STRATEGY_SAVE = "data-bak-strategy-save";
+
+    /**
+     * 立即备份
+     */
+    public static final String BTN_CODE_DATA_BAK_SAVE = "data-bak-save";
+
+    /**
+     * 删除备份
+     */
+    public static final String BTN_CODE_DATA_BAK_DELETE = "data-bak-delete";
+
+    /**
+     * 恢复备份
+     */
+    public static final String BTN_CODE_DATA_BAK_RECOVER = "data-bak-recover";
 
 }

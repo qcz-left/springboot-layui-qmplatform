@@ -1,4 +1,6 @@
 <#assign PrivCode = {
+<#--数据备份与恢复-->
+'MENU_CODE_DATA_BAK': 'data-bak',
 <#--系统管理-->
 'MENU_CODE_SYSTEM': 'system',
 <#--测试404-->
@@ -61,6 +63,14 @@
 'BTN_CODE_DICT_ATTR_DELETE': 'dict-attr-delete',
 <#--定义字典属性-->
 'BTN_CODE_DICT_ALLOT': 'dict-allot',
+<#--保存备份策略-->
+'BTN_CODE_DATA_BAK_STRATEGY_SAVE': 'data-bak-strategy-save',
+<#--立即备份-->
+'BTN_CODE_DATA_BAK_SAVE': 'data-bak-save',
+<#--删除备份-->
+'BTN_CODE_DATA_BAK_DELETE': 'data-bak-delete',
+<#--恢复备份-->
+'BTN_CODE_DATA_BAK_RECOVER': 'data-bak-recover',
 <#--无实际意义-->
 'INSTANCE': 'instance'
 }>
