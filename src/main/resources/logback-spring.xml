@@ -51,7 +51,7 @@
         </encoder>
     </appender>
     <logger name="org.springframework" level="info"/>
-    <logger name="org.springframework.web" level="debug"/>
+    <!--<logger name="org.springframework.web" level="debug"/>-->
     <logger name="com.baomidou" level="info"/>
     <logger name="org.mybatis" level="error"/>
     <logger name="com.alibaba.druid" level="error"/>
