@@ -1,4 +1,4 @@
-package com.qcz.qmplatform.module.operation.po;
+package com.qcz.qmplatform.module.operation.pojo;
 
 import com.qcz.qmplatform.common.utils.Arith;
 

@@ -8,7 +8,7 @@ import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.domain.Organization;
-import com.qcz.qmplatform.module.system.po.OrgTree;
+import com.qcz.qmplatform.module.system.pojo.OrgTree;
 import com.qcz.qmplatform.module.system.service.OrganizationService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;

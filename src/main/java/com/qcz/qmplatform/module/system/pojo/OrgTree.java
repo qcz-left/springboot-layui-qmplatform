@@ -1,4 +1,4 @@
-package com.qcz.qmplatform.module.system.po;
+package com.qcz.qmplatform.module.system.pojo;
 
 import com.qcz.qmplatform.common.bean.Tree;
 

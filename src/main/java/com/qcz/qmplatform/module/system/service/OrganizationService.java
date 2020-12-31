@@ -6,7 +6,7 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
 import com.qcz.qmplatform.module.system.domain.Organization;
 import com.qcz.qmplatform.module.system.mapper.OrganizationMapper;
-import com.qcz.qmplatform.module.system.po.OrgTree;
+import com.qcz.qmplatform.module.system.pojo.OrgTree;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

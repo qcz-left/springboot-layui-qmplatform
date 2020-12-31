@@ -2,12 +2,12 @@ package com.qcz.qmplatform.common.utils;
 
 import cn.hutool.system.HostInfo;
 import cn.hutool.system.SystemUtil;
-import com.qcz.qmplatform.module.operation.po.Computer;
-import com.qcz.qmplatform.module.operation.po.Cpu;
-import com.qcz.qmplatform.module.operation.po.Disk;
-import com.qcz.qmplatform.module.operation.po.Mem;
-import com.qcz.qmplatform.module.operation.po.ServerInfo;
-import com.qcz.qmplatform.module.operation.po.SysFile;
+import com.qcz.qmplatform.module.operation.pojo.Computer;
+import com.qcz.qmplatform.module.operation.pojo.Cpu;
+import com.qcz.qmplatform.module.operation.pojo.Disk;
+import com.qcz.qmplatform.module.operation.pojo.Mem;
+import com.qcz.qmplatform.module.operation.pojo.ServerInfo;
+import com.qcz.qmplatform.module.operation.pojo.SysFile;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;

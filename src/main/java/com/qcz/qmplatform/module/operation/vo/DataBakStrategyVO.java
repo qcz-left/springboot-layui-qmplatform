@@ -1,6 +1,6 @@
 package com.qcz.qmplatform.module.operation.vo;
 
-import com.qcz.qmplatform.module.operation.po.DataBakStrategy;
+import com.qcz.qmplatform.module.operation.pojo.DataBakStrategy;
 
 public class DataBakStrategyVO extends DataBakStrategy {
 

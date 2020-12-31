@@ -1,6 +1,4 @@
-package com.qcz.qmplatform.module.operation.po;
-
-import com.qcz.qmplatform.common.utils.Arith;
+package com.qcz.qmplatform.module.operation.pojo;
 
 import java.io.Serializable;
 

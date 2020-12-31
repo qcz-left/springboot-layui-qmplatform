@@ -7,8 +7,8 @@ import com.qcz.qmplatform.common.utils.TreeUtils;
 import com.qcz.qmplatform.module.system.domain.Button;
 import com.qcz.qmplatform.module.system.domain.Menu;
 import com.qcz.qmplatform.module.system.mapper.MenuMapper;
-import com.qcz.qmplatform.module.system.po.MenuTree;
-import com.qcz.qmplatform.module.system.po.Permission;
+import com.qcz.qmplatform.module.system.pojo.MenuTree;
+import com.qcz.qmplatform.module.system.pojo.Permission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
