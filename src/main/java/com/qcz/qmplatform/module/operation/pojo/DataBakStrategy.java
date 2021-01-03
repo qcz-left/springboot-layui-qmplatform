@@ -15,12 +15,25 @@ public class DataBakStrategy implements Serializable {
     /**
      * 剩余磁盘大小多少才进行备份（G）
      */
-    private int limitDiskSpace;
+    private int limitDiskSpace = 20;
 
     /**
      * 备份开关（0：关；1：开）
      */
     private int enable;
+
+    /**
+     * 备份保存天数
+     */
+    private int saveDays = 30;
+
+    public int getSaveDays() {
+        return saveDays;
+    }
+
+    public void setSaveDays(int saveDays) {
+        this.saveDays = saveDays;
+    }
 
     public int getPeriod() {
         return period;

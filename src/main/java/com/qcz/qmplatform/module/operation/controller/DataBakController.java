@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,8 +82,12 @@ public class DataBakController extends BaseController {
         DataBakStrategyVO strategy = new DataBakStrategyVO();
         Map<String, String> iniPro = iniService.getBySec(SECTION);
         if (CollectionUtil.isNotEmpty(iniPro)) {
-            strategy.setEnable(Integer.parseInt(iniPro.get("EnableBak")));
-            int period = Integer.parseInt(iniPro.get("Period"));
+            String enableBak = iniPro.get("EnableBak");
+            strategy.setEnable(StringUtils.isBlank(enableBak) ? 0 : Integer.parseInt(enableBak));
+            String saveDays = iniPro.get("SaveDays");
+            strategy.setSaveDays(StringUtils.isBlank(enableBak) ? 0 : Integer.parseInt(saveDays));
+            String periodStr = iniPro.get("Period");
+            int period = Integer.parseInt(periodStr);
             strategy.setPeriod(period);
             strategy.setWeek1(period & 1);
             strategy.setWeek2(period & 2);
@@ -91,7 +96,8 @@ public class DataBakController extends BaseController {
             strategy.setWeek5(period & 16);
             strategy.setWeek6(period & 32);
             strategy.setWeek7(period & 64);
-            strategy.setLimitDiskSpace(Integer.parseInt(iniPro.get("LimitDiskSpace")));
+            String limitDiskSpace = iniPro.get("LimitDiskSpace");
+            strategy.setLimitDiskSpace(StringUtils.isBlank(limitDiskSpace) ? 20 : Integer.parseInt(limitDiskSpace));
         }
         return ResponseResult.ok(strategy);
     }
@@ -119,6 +125,17 @@ public class DataBakController extends BaseController {
     @RecordLog(type = OperateType.INSERT, description = "立即备份")
     public ResponseResult<?> exeBackup() {
         return dataBakService.exeBackup();
+    }
+
+    /**
+     * 恢复备份
+     */
+    @PostMapping("/recoverDataBak/{dataBakId}")
+    @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_RECOVER)
+    @RecordLog(type = OperateType.UPDATE, description = "恢复备份")
+    public ResponseResult<?> recoverDataBak(@PathVariable String dataBakId) {
+        return dataBakService.recoverDataBak(dataBakId);
     }
 
     @DeleteMapping("/deleteDataBak")

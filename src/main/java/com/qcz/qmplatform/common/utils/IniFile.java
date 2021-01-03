@@ -96,8 +96,15 @@ public final class IniFile {
      * @param fileName the name of the INI file to read
      */
     public IniFile(final String fileName) {
-        if (!new File(fileName).exists()) {
+        File iniFile = new File(fileName);
+        if (!iniFile.exists()) {
             LOGGER.warn("the file does not exist: {}", fileName);
+        } else {
+            try {
+                LOGGER.debug("loaded config ini file: {}", iniFile.getCanonicalFile());
+            } catch (IOException e) {
+                LOGGER.error(null, e);
+            }
         }
         iniFileName = fileName;
     }

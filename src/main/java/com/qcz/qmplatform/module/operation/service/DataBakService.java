@@ -67,7 +67,8 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         iniService.deleteBySec(SECTION);
         return iniService.save(new Ini(SECTION, "EnableBak", String.valueOf(dataBakStrategy.getEnable())))
                 && iniService.save(new Ini(SECTION, "Period", String.valueOf(period)))
-                && iniService.save(new Ini(SECTION, "LimitDiskSpace", String.valueOf(dataBakStrategy.getLimitDiskSpace())));
+                && iniService.save(new Ini(SECTION, "LimitDiskSpace", String.valueOf(dataBakStrategy.getLimitDiskSpace())))
+                && iniService.save(new Ini(SECTION, "SaveDays", String.valueOf(dataBakStrategy.getSaveDays())));
     }
 
     public void scheduleBak(int period) {
@@ -130,15 +131,15 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         Date date = new Date();
         String bakName = "qmplatform_single" + DateUtils.format(date, "yyyyMMddHHmmss") + ".dump";
         String bakFilePath = dataBakPath + bakName;
-        String dumpCmd = "pg_dump -U postgres qmplatform_single -f " + bakFilePath;
-        LOGGER.debug("dump exe shell: " + dumpCmd);
-        LOGGER.debug(RuntimeUtil.execForStr(dumpCmd));
         DataBak dataBak = new DataBak();
         dataBak.setBakId(StringUtils.uuid());
         dataBak.setBakName(bakName);
         dataBak.setBakPath(bakFilePath);
         dataBak.setCreateTime(new Timestamp(date.getTime()));
         if (save(dataBak)) {
+            String dumpCmd = "pg_dump -U postgres -Fc qmplatform_single -f " + bakFilePath;
+            LOGGER.debug("dump exe shell: " + dumpCmd);
+            LOGGER.debug(RuntimeUtil.execForStr(dumpCmd));
             return ResponseResult.ok();
         } else {
             FileUtils.del(bakFilePath);
@@ -154,5 +155,19 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
             FileUtils.del(dataBake.getBakPath());
         }
         return removeByIds(dataBakIds);
+    }
+
+    public ResponseResult<?> recoverDataBak(String dataBakId) {
+        DataBak dataBak = getById(dataBakId);
+        String bakPath = dataBak.getBakPath();
+        if (!new File(bakPath).exists()) {
+            return ResponseResult.error("备份文件不存在！");
+        }
+        String recoverSh = FileUtils.getWebPath() + "/shell/db_bak_recover.sh";
+        if (!new File(recoverSh).exists()) {
+            return ResponseResult.error("备份恢复所需脚本文件缺失！");
+        }
+        LOGGER.debug(RuntimeUtil.execForStr(recoverSh + " " + bakPath));
+        return ResponseResult.ok();
     }
 }

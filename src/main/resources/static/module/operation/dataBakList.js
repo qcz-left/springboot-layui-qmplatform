@@ -61,7 +61,7 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
         let bakName = data.bakName;
         switch (obj.event) {
             case 'recover':
-                recover(bakId)
+                recover(bakId, bakName);
                 break;
             case 'delete':
                 remove([bakId], [bakName]);
@@ -97,10 +97,18 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
     /**
      * 恢复备份
      * @param bakId
+     * @param bakName
      */
-    function recover(bakId) {
-        bakId = bakId || '';
-
+    function recover(bakId, bakName) {
+        top.layer.confirm("是否要从：<span class='text-success'>" + bakName + "</span>，恢复备份？", {
+            title: "警告"
+        }, function () {
+            let index = top.layer.loadingWithText('正在恢复备份，请稍后...');
+            CommonUtil.postAjax(ctx + "/operation/data-bak/recoverDataBak/" + bakId, {}, function (data) {
+                LayerUtil.respMsg(data, "恢复备份成功！", "恢复备份失败！");
+                top.layer.closeAll();
+            })
+        });
     }
 
     function remove(ids, names) {

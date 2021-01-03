@@ -41,7 +41,7 @@ public class ConfigLoader {
      * @return 文件上传路径，默认 /opt/web/file/
      */
     public static String getUploadFilePath() {
-        return getStringConfig("UploadFilePath", "/opt/web/file/");
+        return getStringConfig("UploadFilePath", FileUtils.getWebPath() + "/file/");
     }
 
     /**
@@ -50,7 +50,7 @@ public class ConfigLoader {
      * @return 文件下载路径，默认 /opt/web/download/
      */
     public static String getDownloadFilePath() {
-        return getStringConfig("DownloadFilePath", "/opt/web/download/");
+        return getStringConfig("DownloadFilePath", FileUtils.getWebPath() + "/download/");
     }
 
     /**
@@ -59,7 +59,7 @@ public class ConfigLoader {
      * @return 备份目录，默认 /opt/web/bak/
      */
     public static String getBakPath() {
-        return getStringConfig("BakPath", "/opt/web/bak/");
+        return getStringConfig("BakPath", FileUtils.getWebPath() + "/bak/");
     }
 
     /**

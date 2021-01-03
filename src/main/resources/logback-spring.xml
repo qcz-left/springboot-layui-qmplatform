@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
     <!--设置系统日志目录 -->
-    <property name="APPDIR" value="/apps/logs"/>
+    <property name="APPDIR" value="../logs"/>
     <!--文日志件名 -->
     <property name="LOG_NAME" value="qmplatform"/>
     <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,,,, -->

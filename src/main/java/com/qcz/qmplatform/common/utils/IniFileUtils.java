@@ -10,14 +10,12 @@ public class IniFileUtils {
     /**
      * config.ini配置文件路径
      */
-    private static final String CONFIG_FILE_PATH = "../config.ini";
+    private static final String CONFIG_FILE_PATH = FileUtils.getWebPath() + "/config/config.ini";
 
     private static IniFile configIniFile = new IniFile(CONFIG_FILE_PATH);
 
     /**
      * 获取config.ini配置文件实例
-     *
-     * @return
      */
     public static IniFile getConfigFile() {
         return configIniFile;
