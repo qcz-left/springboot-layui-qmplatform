@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SubjectUtils {
 
-    private static final String PASSWORD_UNCHANGED = "******";
+    public static final String PASSWORD_UNCHANGED = "******";
 
     private static final Map<String, Object> userCache = new ConcurrentHashMap<>();
 

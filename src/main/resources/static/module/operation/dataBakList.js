@@ -16,14 +16,13 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
         toolbar: '#toolbar',
         cols: [[
             {type: 'checkbox'},
-            {field: 'bakName', title: '备份名称', width: '10%', sort: true},
+            {field: 'bakName', title: '备份名称', width: '20%', sort: true},
             {
-                field: 'createTime', title: '创建时间', width: '10%', sort: true, templet: function (row) {
+                field: 'createTime', title: '创建时间', width: '20%', sort: true, templet: function (row) {
                     return new Date(row.createTime).format('yyyy-MM-dd hh:mm:ss.S');
                 }
             },
-            {field: 'bak_path', title: '备份路径', width: '10%'},
-            {field: 'remark', title: '描述', width: '20%'},
+            {field: 'bakPath', title: '备份路径', width: '20%'},
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
         ]]
     });

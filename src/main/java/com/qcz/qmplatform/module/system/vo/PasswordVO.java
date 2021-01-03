@@ -8,7 +8,6 @@ public class PasswordVO implements Serializable {
     /**
      * 原密码
      */
-    @NotBlank(message = "密码不能为空")
     private String password;
 
     /**
@@ -22,6 +21,32 @@ public class PasswordVO implements Serializable {
      */
     @NotBlank(message = "确认密码不能为空")
     private String confirmNewPassword;
+
+    /**
+     * 验证码
+     */
+    private String validateCode;
+
+    /**
+     * 验证方式类型
+     */
+    private int validateType;
+
+    public String getValidateCode() {
+        return validateCode;
+    }
+
+    public void setValidateCode(String validateCode) {
+        this.validateCode = validateCode;
+    }
+
+    public int getValidateType() {
+        return validateType;
+    }
+
+    public void setValidateType(int validateType) {
+        this.validateType = validateType;
+    }
 
     public String getPassword() {
         return password;

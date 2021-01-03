@@ -18,8 +18,8 @@ public class FileUtils extends FileUtil {
     /**
      * 将对象写到文件
      *
-     * @param obj
-     * @param filePath
+     * @param obj      对象
+     * @param filePath 文件路径
      */
     public static void writeObjectToFile(Object obj, String filePath) {
         writeObjectToFile(obj, new File(filePath));
@@ -28,13 +28,21 @@ public class FileUtils extends FileUtil {
     /**
      * 将对象写到文件
      *
-     * @param obj
-     * @param file
+     * @param obj  对象
+     * @param file 文件路径
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void writeObjectToFile(Object obj, File file) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
+            File parentFile = file.getParentFile();
+            if (!parentFile.exists()) {
+                parentFile.mkdirs();
+            }
+            if (!file.exists()) {
+                file.createNewFile();
+            }
             fos = new FileOutputStream(file);
             oos = new ObjectOutputStream(fos);
             oos.writeObject(obj);
@@ -49,20 +57,28 @@ public class FileUtils extends FileUtil {
     /**
      * 从文件里面读取对象
      *
-     * @param filePath
-     * @return
+     * @param filePath 文件路径
+     * @return 对象
      */
-    public static Object readObjectFromFile(String filePath) {
-        return readObjectFromFile(new File(filePath));
+    public static <T> T readObjectFromFile(String filePath, Class<T> clazz) {
+        return readObjectFromFile(new File(filePath), clazz);
     }
 
-    public static Object readObjectFromFile(File file) {
+    @SuppressWarnings("unchecked")
+    public static <T> T readObjectFromFile(File file, Class<T> clazz) {
+        if (!file.exists()) {
+            try {
+                return clazz.newInstance();
+            } catch (Exception e) {
+                LOGGER.error(null, e);
+            }
+        }
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         try {
             fis = new FileInputStream(file);
             ois = new ObjectInputStream(fis);
-            return ois.readObject();
+            return (T) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             LOGGER.error(e.getMessage());
         } finally {

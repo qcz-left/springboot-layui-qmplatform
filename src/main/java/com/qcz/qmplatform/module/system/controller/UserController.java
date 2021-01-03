@@ -1,5 +1,8 @@
 package com.qcz.qmplatform.module.system.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.util.RandomUtil;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -8,16 +11,24 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.constant.Constant;
+import com.qcz.qmplatform.common.utils.CacheUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
+import com.qcz.qmplatform.common.utils.SmsUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.base.BaseController;
+import com.qcz.qmplatform.module.notify.NotifyServiceFactory;
+import com.qcz.qmplatform.module.notify.bean.SmsConfig;
+import com.qcz.qmplatform.module.notify.service.tencent.TencentCloudSmsNotifyService;
+import com.qcz.qmplatform.module.system.assist.ValidateType;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.service.UserService;
 import com.qcz.qmplatform.module.system.vo.CurrentUserInfoVO;
 import com.qcz.qmplatform.module.system.vo.PasswordVO;
 import com.qcz.qmplatform.module.system.vo.UserVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,6 +44,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -49,6 +61,9 @@ import java.util.Map;
 public class UserController extends BaseController {
 
     private static final String PREFIX = "/module/system/";
+
+    @Autowired
+    private StringEncryptor encryptor;
 
     @Autowired
     private UserService userService;
@@ -79,6 +94,15 @@ public class UserController extends BaseController {
     @GetMapping("/personalBasicInfoPage")
     public String personalBasicInfoPage() {
         return PREFIX + "personalBasicInfo";
+    }
+
+    /**
+     * 找回密码
+     */
+    @GetMapping("/retrievePasswordPage")
+    public String retrievePasswordPage(Map<String, Object> root) {
+        root.put(Constant.CURRENT_USER_SIGN, SubjectUtils.getUser());
+        return PREFIX + "retrievePassword";
     }
 
     @GetMapping("/getUser/{userId}")
@@ -172,10 +196,22 @@ public class UserController extends BaseController {
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户密码")
     public ResponseResult<?> changeCurrentUserPwd(@Valid @RequestBody PasswordVO passwordVO) {
         User user = userService.getById(SubjectUtils.getUserId());
-        // 比较原密码是否填写正确
-        if (!user.getPassword().equals(SubjectUtils.md5Encrypt(user.getLoginname(), passwordVO.getPassword()))) {
-            return ResponseResult.error("当前密码填写错误，请重新填写！");
+        int validateType = passwordVO.getValidateType();
+        if (ValidateType.PASSWORD.getType() == validateType) {
+            // 比较原密码是否填写正确
+            if (!user.getPassword().equals(SubjectUtils.md5Encrypt(user.getLoginname(), passwordVO.getPassword()))) {
+                return ResponseResult.error("当前密码填写错误，请重新填写！");
+            }
+        } else if (ValidateType.PHONE_SMS.getType() == validateType) {
+            String cacheCode = CacheUtils.get(user.getPhone());
+            if (StringUtils.isBlank(cacheCode)) {
+                return ResponseResult.error("验证码不存在或已过期，请重新获取！");
+            }
+            if (!StringUtils.equals(cacheCode, passwordVO.getValidateCode())) {
+                return ResponseResult.error("验证码不正确！");
+            }
         }
+
         // 两次密码比较
         if (!StringUtils.equals(passwordVO.getNewPassword(), passwordVO.getConfirmNewPassword())) {
             return ResponseResult.error("两次密码填写不一致，请重新填写！");
@@ -215,5 +251,31 @@ public class UserController extends BaseController {
         return ResponseResult.error();
     }
 
+    /**
+     * 获取手机验证码
+     */
+    @GetMapping("/getValidateCode")
+    @ResponseBody
+    public ResponseResult<?> getValidateCode() {
+        User user = SubjectUtils.getUser();
+        String phone = user.getPhone();
+        if (StringUtils.isBlank(phone)) {
+            return ResponseResult.error("验证码发送失败，无法找到 " + user.getUsername() + " 的手机号码！");
+        }
+        String validateCode = String.valueOf(RandomUtil.randomInt(100000, 1000000));
+        // 缓存时间，分钟
+        long timeout = 5;
+        CacheUtils.put(phone, validateCode, DateUnit.MINUTE.getMillis() * timeout);
+
+        SmsConfig config = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfig.class);
+        config.setSecretKey(encryptor.decrypt(config.getSecretKey()));
+        config.setPhones(CollectionUtil.newArrayList("+86" + phone));
+        Map<String, String> templateParams = new HashMap<>();
+        templateParams.put("1", validateCode);
+        templateParams.put("2", String.valueOf(timeout));
+        config.setTemplateParams(templateParams);
+        NotifyServiceFactory.build(TencentCloudSmsNotifyService.class, config).send();
+        return ResponseResult.ok("验证码已发送到手机：" + phone + "，请注意查收！", null);
+    }
 }
 

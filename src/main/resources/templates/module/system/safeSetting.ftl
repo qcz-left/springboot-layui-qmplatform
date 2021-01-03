@@ -2,6 +2,9 @@
 <html lang="en">
 <#include "/include/include.ftl">
 <style>
+    .layui-form-label {
+        width: 120px;
+    }
     .layui-form-item .layui-input-inline {
         width: 300px;
     }
@@ -13,28 +16,31 @@
         <div class="layui-card-body">
             <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="user-form">
                 <input type="hidden" name="id">
+                <input type="hidden" name="validateType" value="1">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">当前密码</label>
+                    <label class="layui-form-label required">当前密码</label>
                     <div class="layui-input-inline">
                         <input type="password" name="password" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">新密码</label>
+                    <label class="layui-form-label required">新密码</label>
                     <div class="layui-input-inline">
                         <input type="password" id="newPassword" name="newPassword" lay-verify="required|newPassword" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux">密码必须5到12位，且不能出现空格</div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">确认新密码</label>
+                    <label class="layui-form-label required">确认新密码</label>
                     <div class="layui-input-inline">
                         <input type="password" name="confirmNewPassword" lay-verify="required|confirmNewPassword" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
                     <div class="layui-input-block">
                         <button class="layui-btn" lay-submit lay-filter="password-submit">确认修改</button>
+                        <button id="retrievePassword" href="javascript:void(0);" class="layui-btn" style="color: blue; background: unset; font-weight: bold;">找回密码</button>
                     </div>
                 </div>
             </form>
@@ -68,6 +74,17 @@
             return false;
         });
 
+        /**
+         * 找回密码
+         */
+        $("#retrievePassword").click(function () {
+            top.layer.open({
+                type: 2,
+                title: '找回密码',
+                content: ctx + '/user/retrievePasswordPage',
+                area: ['35%', '40%']
+            });
+        });
     });
 </script>
 </body>

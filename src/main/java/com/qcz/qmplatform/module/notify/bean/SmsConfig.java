@@ -37,6 +37,16 @@ public class SmsConfig implements Serializable {
     private String templateID;
 
     /**
+     * 模板参数个数
+     */
+    private int templateParamCnt;
+
+    /**
+     * @see SmsProvider
+     */
+    private int smsProvider;
+
+    /**
      * 模板参数
      */
     private Map<String, String> templateParams;
@@ -45,6 +55,22 @@ public class SmsConfig implements Serializable {
      * 手机号码
      */
     private List<String> phones;
+
+    public int getTemplateParamCnt() {
+        return templateParamCnt;
+    }
+
+    public void setTemplateParamCnt(int templateParamCnt) {
+        this.templateParamCnt = templateParamCnt;
+    }
+
+    public int getSmsProvider() {
+        return smsProvider;
+    }
+
+    public void setSmsProvider(int smsProvider) {
+        this.smsProvider = smsProvider;
+    }
 
     public String getSecretId() {
         return secretId;

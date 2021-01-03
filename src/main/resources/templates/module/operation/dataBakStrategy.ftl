@@ -30,6 +30,14 @@
                 <div class="layui-form-mid">G时不允许备份</div>
             </div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block text-danger">
+                <div class="layui-form-mid">删除</div>
+                <input type="number" name="saveDays" class="layui-input layui-input-inline" style="width: 60px;">
+                <div class="layui-form-mid">天前的备份</div>
+            </div>
+        </div>
         <div class="detail-operator">
             <button type="submit" class="layui-btn layui-btn-normal" lay-submit lay-filter="dataBakStrategy-submit">保存</button>
             <button type="submit" class="layui-btn layui-btn-primary" onclick="closeCurrentIframe()">取消</button>

@@ -4,6 +4,7 @@ import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.pojo.Permission;
@@ -39,7 +40,7 @@ public class LoginController {
         permission.setPermissionType(1);
         permission.setDisplay(1);
         root.put("menuTree", menuService.getMenuTree(permission));
-        root.put("currentUser", SubjectUtils.getUser());
+        root.put(Constant.CURRENT_USER_SIGN, SubjectUtils.getUser());
         return "index";
     }
 

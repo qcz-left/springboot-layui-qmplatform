@@ -7,6 +7,8 @@ import com.qcz.qmplatform.module.notify.service.tencent.TencentCloudSmsNotifySer
 
 public class SmsUtils {
 
+    public static final String DAT_SMS_CONFIG = "../Dat/smsConfig.dat";
+
     public static Class<? extends INotifyService> getNotifyServiceClass(int smsProviderCode) {
         Class<? extends INotifyService> clazz = null;
         if (smsProviderCode == SmsProvider.TENCENT.code()) {

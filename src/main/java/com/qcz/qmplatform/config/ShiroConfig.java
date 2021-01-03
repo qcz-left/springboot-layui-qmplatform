@@ -42,7 +42,6 @@ public class ShiroConfig {
         sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionIdCookie(simpleCookie());
-        sessionManager.setCacheManager(ehCacheManager());
         return sessionManager;
     }
 
