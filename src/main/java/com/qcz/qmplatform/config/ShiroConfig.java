@@ -1,14 +1,14 @@
 package com.qcz.qmplatform.config;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.filter.LoginFilter;
+import com.qcz.qmplatform.module.listen.ShiroSessionListener;
 import com.qcz.qmplatform.module.system.realm.UserRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
 import org.apache.shiro.session.mgt.SessionManager;
-import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.session.mgt.eis.SessionIdGenerator;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -38,11 +38,17 @@ public class ShiroConfig {
     public SessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionIdCookieEnabled(true);
-        sessionManager.setGlobalSessionTimeout(1800000);
-        sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
-        sessionManager.setSessionValidationSchedulerEnabled(true);
+        sessionManager.setGlobalSessionTimeout(1800000L);
         sessionManager.setSessionIdCookie(simpleCookie());
+        sessionManager.setCacheManager(ehCacheManager());
+        sessionManager.setSessionListeners(CollectionUtil.newArrayList(sessionListener()));
+        sessionManager.setSessionValidationInterval(10 * 60 * 1000L);
         return sessionManager;
+    }
+
+    @Bean
+    public ShiroSessionListener sessionListener() {
+        return new ShiroSessionListener();
     }
 
     @Bean
@@ -55,13 +61,6 @@ public class ShiroConfig {
         SimpleCookie simpleCookie = new SimpleCookie();
         simpleCookie.setName("shiro.sesssion");
         return simpleCookie;
-    }
-
-    @Bean
-    public SessionValidationScheduler sessionValidationScheduler() {
-        ExecutorServiceSessionValidationScheduler scheduler = new ExecutorServiceSessionValidationScheduler();
-        scheduler.setInterval(1800000);
-        return scheduler;
     }
 
     @Bean
@@ -103,9 +102,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/favicon.ico", "anon");
         filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
-        filterChainDefinitionMap.put("/**/exportData", "anon");
         filterChainDefinitionMap.put("/**", "authc");
-        Map<String, Filter> loginFilter = new HashMap<>();
+        Map<String, Filter> loginFilter = new HashMap<>(2);
         loginFilter.put("loginFilter", loginFilter());
         shiroFilterFactoryBean.setFilters(loginFilter);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

@@ -106,6 +106,28 @@
             }
             element.tabChange(tabLayFilter, layId);
         }
+
+        let socketUrl = "ws://localhost:8088/qmplatform//socket/validateSession";
+        let socket = new WebSocket(socketUrl);
+        //打开事件
+        socket.onopen = function () {
+            console.log("websocket已打开");
+        };
+        //获得消息事件
+        socket.onmessage = function (msg) {
+            let result = JSON.parse(msg.data);
+            if (result.code === 401) {
+                top.window.location = ctx + "/loginPage?code=" + result.code;
+            }
+        };
+        //关闭事件
+        socket.onclose = function () {
+            console.log("websocket已关闭");
+        };
+        //发生了错误事件
+        socket.onerror = function () {
+            console.log("websocket发生了错误");
+        }
     });
 </script>
 </body>

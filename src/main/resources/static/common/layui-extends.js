@@ -52,13 +52,11 @@ layui.use(["layer", "table"], function () {
          * 带文字的加载提示
          */
         loadingWithText: function (msg, option) {
-            let opt = $.extend(this._defultOption.loadingWithText, option);
-            return this.open({
-                content: "<h1 style='text-align:left;font-size:24px;color:#003366;margin-left:40px;width:500px;font-family: \"Microsoft YaHei\" ! important;'>" + msg + "</h1>",
-                icon: 2,
-                type: 3,
-                shade: 0.2,
-            });
+            option = option || {
+                icon: 16,
+                shade: 0.01
+            };
+            this.msg(msg, option);
         },
         getElementLayerIndex: function (element) {
             return element.closest("div.layui-layer").prop("id").replace("layui-layer", "");

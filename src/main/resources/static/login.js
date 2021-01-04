@@ -6,6 +6,10 @@ layui.use(['form', 'layer'], function () {
         top.location.href = location.href;
     let layer = layui.layer; // 获取layer模块
     let form = layui.form;
+    console.log(code)
+    if (code === '401') {
+        layer.msg("当前会话已过期，请重新登录！", {icon: 0});
+    }
 
     form.on('submit(login)', function (data) {
         // 登录表单提交操作
