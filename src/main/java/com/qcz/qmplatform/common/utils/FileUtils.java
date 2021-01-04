@@ -3,7 +3,6 @@ package com.qcz.qmplatform.common.utils;
 import cn.hutool.core.io.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.system.ApplicationHome;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
@@ -16,6 +15,8 @@ import java.io.ObjectOutputStream;
 public class FileUtils extends FileUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
+
+    public static final String WEB_PATH = getWebPath();
 
     /**
      * 将对象写到文件
@@ -100,24 +101,13 @@ public class FileUtils extends FileUtil {
         return ConfigLoader.getUploadFilePath() + filePath.substring(6);
     }
 
-    public static String getWebPath() {
+    private static String getWebPath() {
         try {
-            String webPath = new ClassPathResource("").getFile().getCanonicalPath();
-            if (webPath.contains(".jar!")) {
-                // TODO
-            }
-            return webPath;
+            return new ClassPathResource("").getFile().getCanonicalPath();
         } catch (IOException e) {
             LOGGER.error(null, e);
         }
-        return "";
-    }
-
-    public static void main(String[] args) throws IOException {
-        ApplicationHome home = new ApplicationHome(FileUtils.class);
-        File jarFile = home.getSource();
-        String parent = jarFile.getParent();
-        System.out.println(parent);
+        return "/";
     }
 
 }

@@ -6,7 +6,7 @@ import cn.hutool.cache.impl.LFUCache;
 public class CacheUtils {
 
     /**
-     * 公用缓存，30分钟,100个容量，最少使用策略
+     * 公用缓存,100个容量，最少使用策略
      */
     private static final LFUCache<String, String> COMMON_CACHE = CacheUtil.newLFUCache(100);
 

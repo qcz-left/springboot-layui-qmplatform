@@ -105,8 +105,8 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
         }, function () {
             let index = top.layer.loadingWithText('正在恢复备份，请稍后...');
             CommonUtil.postAjax(ctx + "/operation/data-bak/recoverDataBak/" + bakId, {}, function (data) {
-                LayerUtil.respMsg(data, "恢复备份成功！", "恢复备份失败！");
                 top.layer.closeAll();
+                LayerUtil.respMsg(data, "恢复备份成功！", "恢复备份失败！");
             })
         });
     }

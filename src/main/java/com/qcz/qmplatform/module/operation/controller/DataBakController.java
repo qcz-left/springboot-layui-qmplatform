@@ -133,7 +133,6 @@ public class DataBakController extends BaseController {
     @PostMapping("/recoverDataBak/{dataBakId}")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_RECOVER)
-    @RecordLog(type = OperateType.UPDATE, description = "恢复备份")
     public ResponseResult<?> recoverDataBak(@PathVariable String dataBakId) {
         return dataBakService.recoverDataBak(dataBakId);
     }

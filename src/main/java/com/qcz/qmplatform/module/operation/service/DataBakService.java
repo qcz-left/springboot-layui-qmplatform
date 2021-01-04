@@ -163,7 +163,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         if (!new File(bakPath).exists()) {
             return ResponseResult.error("备份文件不存在！");
         }
-        String recoverSh = FileUtils.getWebPath() + "/shell/db_bak_recover.sh";
+        String recoverSh = FileUtils.WEB_PATH + "/shell/db_bak_recover.sh";
         if (!new File(recoverSh).exists()) {
             return ResponseResult.error("备份恢复所需脚本文件缺失！");
         }

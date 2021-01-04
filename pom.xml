@@ -202,7 +202,7 @@
                             <mainClass>com.qcz.qmplatform.QmplatformApplication</mainClass>
                         </manifest>
                         <manifestEntries>
-                            <Class-Path>config/</Class-Path>
+                            <Class-Path>./</Class-Path>
                         </manifestEntries>
                     </archive>
                 </configuration>
