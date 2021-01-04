@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
      * 会话过期
      */
     @ExceptionHandler(InvalidSessionException.class)
-    public String errorHandleByCommon(InvalidSessionException ex) {
+    public String sessionTimeout(InvalidSessionException ex) {
         LOGGER.error("The session has expired and will redirect to the login page", ex);
         return "redirect:/loginPage";
     }
