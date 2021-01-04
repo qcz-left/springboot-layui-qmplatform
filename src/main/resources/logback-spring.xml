@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
     <!--设置系统日志目录 -->
-    <property name="APPDIR" value="../logs"/>
+    <property name="APPDIR" value="/opt/web/logs"/>
     <!--文日志件名 -->
     <property name="LOG_NAME" value="qmplatform"/>
     <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,,,, -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <!--<pattern>%d %p (%file:%line\)- %m%n</pattern> -->
             <!--格式化输出：%d:表示日期 %thread:表示线程名 %-5level:级别从左显示5个字符宽度 %msg:日志消息 %n:是换行符 -->
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%class) - %msg%n</pattern>
             <charset>UTF-8</charset>
@@ -33,20 +32,21 @@
         <append>true</append>
         <!-- 日志文件的格式 -->
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>===%d{yyyy-MM-dd HH:mm:ss} %-5level %cyan(%class) - %msg%n</pattern>
+            <!--<pattern>===%d{yyyy-MM-dd HH:mm:ss} %-5level %cyan(%class) - %msg%n</pattern>-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
-        <!-- 此日志文件只记录info级别的 -->
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>info</level>
+        <!-- 日志文件记录级别 -->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>debug</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
-        </filter>
+        </filter>-->
     </appender>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-<!--            <pattern>%d{yyyy-MM-dd HH:mm:ss} %green([%thread]) %highlight(%-5level) %cyan(%class) - %msg%n</pattern>-->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %green([%thread]) %highlight(%-5level)  %cyan(%logger{36}) - %msg%n</pattern>
+            <!--            <pattern>%d{yyyy-MM-dd HH:mm:ss} %green([%thread]) %highlight(%-5level) %cyan(%class) - %msg%n</pattern>-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %green([%thread]) %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -63,11 +63,7 @@
     <logger name="org.apache.shiro" level="warn"/>
     <logger name="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" level="off"/>
 
-    <root level="DEBUG">
-        <appender-ref ref="CONSOLE"/>
-    </root>
-
-    <!--<springProfile name="pro">
+    <springProfile name="pro">
         <root level="DEBUG">
             <appender-ref ref="FILE"/>
         </root>
@@ -78,6 +74,6 @@
         <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
         </root>
-    </springProfile>-->
+    </springProfile>
 
 </configuration>

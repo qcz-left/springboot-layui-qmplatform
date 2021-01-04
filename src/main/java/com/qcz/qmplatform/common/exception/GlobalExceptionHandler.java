@@ -3,6 +3,9 @@ package com.qcz.qmplatform.common.exception;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.ResponseCode;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.session.InvalidSessionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,6 +13,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     private static final String PATH_PREFIX = "/error/";
 
@@ -45,6 +50,15 @@ public class GlobalExceptionHandler {
     public ResponseResult<?> errorHandleByCommon(CommonException ex) {
         ex.printStackTrace();
         return ResponseResult.error(ex.getMessage());
+    }
+
+    /**
+     * 会话过期
+     */
+    @ExceptionHandler(InvalidSessionException.class)
+    public String errorHandleByCommon(InvalidSessionException ex) {
+        LOGGER.error("The session has expired and will redirect to the login page", ex);
+        return "redirect:/loginPage";
     }
 
 }

@@ -103,7 +103,11 @@ public class FileUtils extends FileUtil {
 
     private static String getWebPath() {
         try {
-            return new ClassPathResource("").getFile().getCanonicalPath();
+            String webPath = new ClassPathResource("").getFile().getCanonicalPath();
+            if (webPath.contains("target\\classes")) {
+                return new File("../").getCanonicalPath();
+            }
+            return webPath;
         } catch (IOException e) {
             LOGGER.error(null, e);
         }
