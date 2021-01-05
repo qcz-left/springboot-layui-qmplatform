@@ -5,15 +5,8 @@ layui.config({
     xmSelect: 'xm-select/xm-select',
     dtree: 'dtree/dtree'
 })
-layui.use(["layer", "table"], function () {
+layui.use(["layer"], function () {
     let layer = layui.layer;
-    let table = layui.table;
-
-    $.extend(table.config, {
-        limit: 20,
-        limits: [20, 100, 200],
-        autoSort: false
-    })
     $.extend(layer, {
         _defultOption: {
             success: {

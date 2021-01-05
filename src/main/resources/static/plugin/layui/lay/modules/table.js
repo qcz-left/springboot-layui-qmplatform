@@ -47,11 +47,12 @@
             i.index = ++d.index, i.config = t.extend({}, i.config, d.config, e), i.render()
         };
     F.prototype.config = {
-        limit: 10,
+        limit: 20,
+        limits: [20, 100, 500, 1000],
+        autoSort: false,
         loading: !0,
         cellMinWidth: 60,
         defaultToolbar: ["filter", "exports", "print"],
-        autoSort: !0,
         text: {none: "无数据"}
     }, F.prototype.render = function () {
         var e = this, a = e.config;
