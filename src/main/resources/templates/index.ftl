@@ -107,7 +107,7 @@
             element.tabChange(tabLayFilter, layId);
         }
 
-        let socketUrl = "ws://localhost:8088/qmplatform//socket/validateSession";
+        let socketUrl = "ws://" + window.location.host + ctx + "/socket/validateSession";
         let socket = new WebSocket(socketUrl);
         //打开事件
         socket.onopen = function () {

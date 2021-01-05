@@ -2,6 +2,8 @@ package com.qcz.qmplatform.module.socket;
 
 import com.qcz.qmplatform.common.utils.StringUtils;
 import org.apache.tomcat.websocket.WsSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;
@@ -16,6 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @ServerEndpoint("/socket/validateSession")
 @Component
 public class SessionWebSocketServer {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SessionWebSocketServer.class);
 
     /**
      * 用于存放所有在线客户端
@@ -50,7 +54,7 @@ public class SessionWebSocketServer {
             try {
                 clients.get(id).getBasicRemote().sendText(result);
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("[{}]The WebSocket service sent a failed message!", id);
             }
         }
     }

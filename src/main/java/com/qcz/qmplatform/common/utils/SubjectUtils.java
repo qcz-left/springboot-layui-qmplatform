@@ -5,6 +5,7 @@ import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.util.ByteSource;
 
 import java.util.Map;
@@ -37,7 +38,8 @@ public class SubjectUtils {
 
     public static void setUser(User user) {
         String sign = Constant.CURRENT_USER_SIGN + user.getId();
-        SecurityUtils.getSubject().getSession().setAttribute(sign, user);
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setTimeout(30 * 60 * 1000L);
         userCache.put(sign, user);
     }
 

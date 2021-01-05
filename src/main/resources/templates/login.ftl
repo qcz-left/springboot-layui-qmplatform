@@ -4,7 +4,7 @@
 <#include "/include/include.ftl">
 <link rel="stylesheet" href="${ctx}/static/css/login.css"/>
 <script type="text/javascript">
-    let code = "${RequestParameters["code"]}";
+    let code = "${RequestParameters["code"]!}";
 </script>
 <script type="text/javascript" src="${ctx}/static/login.js"></script>
 <title>Qu管理平台-登录</title>
