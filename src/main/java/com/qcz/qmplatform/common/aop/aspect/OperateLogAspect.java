@@ -121,11 +121,11 @@ public class OperateLogAspect {
                     User formUser = (User) joinPoint.getArgs()[0];
                     String loginname = formUser.getLoginname();
                     String password = formUser.getPassword();
-                    User loginUser = userService.findByLoginNameAndPassword(loginname, SubjectUtils.md5Encrypt(loginname, password));
-                    if (loginUser == null) {
+                    currentUser = userService.findByLoginNameAndPassword(loginname, SubjectUtils.md5Encrypt(loginname, password));
+                    if (currentUser == null) {
                         description = loginname + " 尝试登录系统，但失败了";
                     } else {
-                        description = loginUser.getUsername() + " 进入了系统";
+                        description = currentUser.getUsername() + " 进入了系统";
                     }
                     break;
                 case LOGOUT:
