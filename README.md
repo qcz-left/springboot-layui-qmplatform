@@ -19,25 +19,27 @@
 
 ## 功能说明
 
-系统管理
-    用户管理
-    角色管理
-    组织机构管理
-    菜单管理
-    操作日志
-档案中心
-    文件管理
-运维管理
-    系统运行状态
-    数据库监控
-    字典管理
+系统管理<br>
+&emsp;用户管理<br>
+&emsp;角色管理<br>
+&emsp;组织机构管理<br>
+&emsp;菜单管理<br>
+&emsp;操作日志<br>
+档案中心<br>
+&emsp;文件管理<br>
+运维管理<br>
+&emsp;系统运行状态<br>
+&emsp;数据库监控<br>
+&emsp;字典管理<br>
+&emsp;数据备份与恢复<br>
+&emsp;短信配置<br>
 ...
 
 ## 部分截图
-![用户管理](https://images.gitee.com/uploads/images/2020/1208/222224_640405e7_1324727.png "屏幕截图.png")
-![菜单管理](https://images.gitee.com/uploads/images/2020/1208/222251_5db67991_1324727.png "屏幕截图.png")
-![操作日志](https://images.gitee.com/uploads/images/2020/1208/222042_5abd8512_1324727.png "屏幕截图.png")
+![用户管理](https://images.gitee.com/uploads/images/2021/0105/161613_0cc93fb9_1324727.png "屏幕截图.png")
+![菜单管理](https://images.gitee.com/uploads/images/2021/0105/161659_4018e099_1324727.png "屏幕截图.png")
 ![字典管理](https://images.gitee.com/uploads/images/2020/1220/184611_301f6b03_1324727.png "屏幕截图.png")
+![数据备份与恢复](https://images.gitee.com/uploads/images/2021/0105/161746_276dc720_1324727.png "屏幕截图.png")
 
 ## Jenkins持续集成
 ### 下载Jenkins
