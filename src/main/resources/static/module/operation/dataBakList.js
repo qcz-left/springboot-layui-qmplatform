@@ -18,11 +18,11 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
             {type: 'checkbox'},
             {field: 'bakName', title: '备份名称', width: '20%', sort: true},
             {
-                field: 'createTime', title: '创建时间', width: '20%', sort: true, templet: function (row) {
+                field: 'createTime', title: '创建时间', width: '15%', sort: true, templet: function (row) {
                     return new Date(row.createTime).format('yyyy-MM-dd hh:mm:ss.S');
                 }
             },
-            {field: 'bakPath', title: '备份路径', width: '20%'},
+            {field: 'bakPath', title: '备份路径', width: '30%'},
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
         ]]
     });
