@@ -5,49 +5,85 @@
     .layui-form-label {
         width: 100px;
     }
+
+    .layui-form {
+        margin: 0 auto;
+        max-width: 560px;
+        padding-top: 40px;
+    }
 </style>
 <body class="detail-body">
-<div class="layui-fluid">
-    <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="password-form">
-        <input type="hidden" name="validateType" value="2">
-        <div class="layui-form-item">
-            <label class="layui-form-label">手机号码</label>
-            <div class="layui-input-inline">
-                <input autocomplete="off" class="layui-input" disabled value="${currentUser.phone!''}">
+<div class="layui-fluid" style="padding-top: 40px;">
+    <div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
+        <div carousel-item>
+            <div>
+                <form class="layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">登录名</label>
+                        <div class="layui-input-inline">
+                            <input id="loginName" name="loginName" autocomplete="off" class="layui-input"">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"></label>
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="confirm-loginName">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="password-form">
+                    <input type="hidden" name="validateType" value="2">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号码</label>
+                        <div class="layui-input-inline">
+                            <input id="phone" autocomplete="off" class="layui-input" disabled>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">验证码</label>
+                        <div class="layui-input-inline">
+                            <input lay-verify="required" name="validateCode" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-inline">
+                            <button id="btnCode" class="layui-btn layui-btn-primary">获取验证码</button>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">新密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" id="newPassword" name="newPassword" lay-verify="required|newPassword" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">确认新密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" name="confirmNewPassword" lay-verify="required|confirmNewPassword" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                            <button class="layui-btn" lay-submit lay-filter="password-submit">确认修改</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <form class="layui-form">
+                    修改密码成功，赶快 <a class="text-success" href="${ctx}/loginPage">登录</a> 验证吧！
+                </form>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label required">验证码</label>
-            <div class="layui-input-inline">
-                <input lay-verify="required" name="validateCode" autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-inline">
-                <button id="btnCode" class="layui-btn layui-btn-primary">获取验证码</button>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label required">新密码</label>
-            <div class="layui-input-inline">
-                <input type="password" id="newPassword" name="newPassword" lay-verify="required|newPassword" autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">密码必须5到12位，且不能出现空格</div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label required">确认新密码</label>
-            <div class="layui-input-inline">
-                <input type="password" name="confirmNewPassword" lay-verify="required|confirmNewPassword" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="detail-operator">
-            <button type="submit" class="layui-btn layui-btn-normal" lay-submit lay-filter="password-submit">确认修改</button>
-            <button type="submit" class="layui-btn layui-btn-primary" onclick="closeCurrentIframe()">取消</button>
-        </div>
-    </form>
+    </div>
 </div>
 <script type="text/javascript">
-    layui.use(['form', 'layer'], function () {
+    layui.use(['form', 'layer', 'step'], function () {
         let form = layui.form;
         let layer = layui.layer;
+        let step = layui.step;
+
         // 表单数据校验
         form.verify({
             newPassword: [
@@ -61,20 +97,67 @@
             }
         });
 
+        step.render({
+            elem: '#stepForm',
+            filter: 'stepForm',
+            width: '100%', //设置容器宽度
+            stepWidth: '750px',
+            height: '500px',
+            stepItems: [{
+                title: '填写账号信息'
+            }, {
+                title: '修改密码'
+            }, {
+                title: '修改结果'
+            }]
+        });
+
+        /**
+         * 填写账号，确定下一步
+         */
+        form.on('submit(confirm-loginName)', function (data) {
+            CommonUtil.getAjax(ctx + '/user/noNeedLogin/queryPhoneByName', {
+                name: data.field.loginName
+            }, function (result) {
+                if (result.ok) {
+                    $("#phone").val(result.data);
+                    step.next('#stepForm');
+                } else {
+                    // 未查询到用户信息
+                    layer.error(result.msg || "不存在该账号信息，请重新输入！")
+                }
+            });
+            return false;
+        });
+
+        /**
+         * 修改密码提交结果
+         */
         form.on('submit(password-submit)', function (data) {
             let index = top.layer.load(2);
-            CommonUtil.putAjax(ctx + '/user/changeCurrentUserPwd', data.field, function (result) {
+            data.field.loginname = $("#loginName").val();
+            CommonUtil.putAjax(ctx + '/user/noNeedLogin/changeUserPwd', data.field, function (result) {
                 top.layer.close(index);
                 LayerUtil.respMsg(result, '修改密码成功，请重新登录验证', '修改密码失败', () => {
-                    closeCurrentIframe();
+                    step.next('#stepForm');
                 })
             });
             return false;
         });
 
+        $('.pre').click(function () {
+            step.pre('#stepForm');
+        });
+
+        $('.next').click(function () {
+            step.next('#stepForm');
+        });
+
         $("#btnCode").click(function () {
             let $this = $(this);
-            CommonUtil.getAjax(ctx + '/user/getValidateCode', {}, function (result) {
+            CommonUtil.getAjax(ctx + '/user/noNeedLogin/getValidateCode', {
+                phone: $("#phone").val()
+            }, function (result) {
                 if (result.ok) {
                     layer.success(result.msg);
                     $this.addClass('layui-btn-disabled').attr('disabled', true);

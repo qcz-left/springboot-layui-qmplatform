@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.system.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
@@ -11,7 +12,6 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.CacheUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.SmsUtils;
@@ -21,7 +21,6 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.notify.NotifyServiceFactory;
 import com.qcz.qmplatform.module.notify.bean.SmsConfig;
 import com.qcz.qmplatform.module.notify.service.tencent.TencentCloudSmsNotifyService;
-import com.qcz.qmplatform.module.system.assist.ValidateType;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.service.UserService;
 import com.qcz.qmplatform.module.system.vo.CurrentUserInfoVO;
@@ -99,9 +98,8 @@ public class UserController extends BaseController {
     /**
      * 找回密码
      */
-    @GetMapping("/retrievePasswordPage")
-    public String retrievePasswordPage(Map<String, Object> root) {
-        root.put(Constant.CURRENT_USER_SIGN, SubjectUtils.getUser());
+    @GetMapping("/noNeedLogin/retrievePasswordPage")
+    public String retrievePasswordPage() {
         return PREFIX + "retrievePassword";
     }
 
@@ -132,10 +130,24 @@ public class UserController extends BaseController {
         return ResponseResult.ok();
     }
 
-    @GetMapping("/queryUserByUsername")
+    @GetMapping("/noNeedLogin/queryUserByName")
     @ResponseBody
-    public ResponseResult<UserVO> queryUserByUsername(String username) {
-        return ResponseResult.ok(userService.queryUserByUsername(username));
+    public ResponseResult<UserVO> queryUserByName(String name) {
+        return ResponseResult.ok(userService.queryUserByName(name));
+    }
+
+    @GetMapping("/noNeedLogin/queryPhoneByName")
+    @ResponseBody
+    public ResponseResult<?> queryPhoneByName(String name) {
+        UserVO userVO = userService.queryUserByName(name);
+        if (userVO == null) {
+            return ResponseResult.error("该账号信息不存在！");
+        }
+        String phone = userVO.getPhone();
+        if (StringUtils.isBlank(phone)) {
+            return ResponseResult.error("该账号未设置手机号！");
+        }
+        return ResponseResult.ok("", phone);
     }
 
     /**
@@ -185,6 +197,30 @@ public class UserController extends BaseController {
         return ResponseResult.error();
     }
 
+    @PutMapping("/noNeedLogin/changeUserPwd")
+    @ResponseBody
+    @RecordLog(type = OperateType.UPDATE, description = "找回密码")
+    public ResponseResult<?> changeUserPwd(@Valid @RequestBody PasswordVO passwordVO) {
+        UserVO user = userService.queryUserByName(passwordVO.getLoginname());
+
+        String cacheCode = CacheUtils.get(user.getPhone());
+        if (StringUtils.isBlank(cacheCode)) {
+            return ResponseResult.error("验证码不存在或已过期，请重新获取！");
+        }
+        if (!StringUtils.equals(cacheCode, passwordVO.getValidateCode())) {
+            return ResponseResult.error("验证码不正确！");
+        }
+
+        // 两次密码比较
+        if (!StringUtils.equals(passwordVO.getNewPassword(), passwordVO.getConfirmNewPassword())) {
+            return ResponseResult.error("两次密码填写不一致，请重新填写！");
+        }
+        if (userService.changeUserPwd(passwordVO, user)) {
+            return ResponseResult.ok(user);
+        }
+        return ResponseResult.error();
+    }
+
     /**
      * 修改当前用户密码
      *
@@ -195,21 +231,10 @@ public class UserController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户密码")
     public ResponseResult<?> changeCurrentUserPwd(@Valid @RequestBody PasswordVO passwordVO) {
-        User user = userService.getById(SubjectUtils.getUserId());
-        int validateType = passwordVO.getValidateType();
-        if (ValidateType.PASSWORD.getType() == validateType) {
-            // 比较原密码是否填写正确
-            if (!user.getPassword().equals(SubjectUtils.md5Encrypt(user.getLoginname(), passwordVO.getPassword()))) {
-                return ResponseResult.error("当前密码填写错误，请重新填写！");
-            }
-        } else if (ValidateType.PHONE_SMS.getType() == validateType) {
-            String cacheCode = CacheUtils.get(user.getPhone());
-            if (StringUtils.isBlank(cacheCode)) {
-                return ResponseResult.error("验证码不存在或已过期，请重新获取！");
-            }
-            if (!StringUtils.equals(cacheCode, passwordVO.getValidateCode())) {
-                return ResponseResult.error("验证码不正确！");
-            }
+        User user = SubjectUtils.getUser();
+        // 比较原密码是否填写正确
+        if (!user.getPassword().equals(SubjectUtils.md5Encrypt(user.getLoginname(), passwordVO.getPassword()))) {
+            return ResponseResult.error("当前密码填写错误，请重新填写！");
         }
 
         // 两次密码比较
@@ -217,7 +242,7 @@ public class UserController extends BaseController {
             return ResponseResult.error("两次密码填写不一致，请重新填写！");
         }
         if (userService.changeCurrentUserPwd(passwordVO, user)) {
-            return ResponseResult.ok();
+            return ResponseResult.ok(user);
         }
         return ResponseResult.error();
     }
@@ -254,14 +279,10 @@ public class UserController extends BaseController {
     /**
      * 获取手机验证码
      */
-    @GetMapping("/getValidateCode")
+    @GetMapping("/noNeedLogin/getValidateCode")
     @ResponseBody
-    public ResponseResult<?> getValidateCode() {
-        User user = SubjectUtils.getUser();
-        String phone = user.getPhone();
-        if (StringUtils.isBlank(phone)) {
-            return ResponseResult.error("验证码发送失败，无法找到 " + user.getUsername() + " 的手机号码！");
-        }
+    public ResponseResult<?> getValidateCode(String phone) {
+        Assert.notBlank(phone);
         String validateCode = String.valueOf(RandomUtil.randomInt(100000, 1000000));
         // 缓存时间，分钟
         long timeout = 5;

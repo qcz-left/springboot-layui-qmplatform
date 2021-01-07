@@ -55,8 +55,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         return this.getOne(queryWrapper);
     }
 
-    public UserVO queryUserByUsername(String username) {
-        return baseMapper.queryUserByUsername(username);
+    public UserVO queryUserByName(String username) {
+        return baseMapper.queryUserByName(username);
     }
 
     public boolean insertUser(UserVO user) {
@@ -183,6 +183,17 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public boolean changeCurrentUserPwd(PasswordVO passwordVO, User user) {
         user.setPassword(SubjectUtils.md5Encrypt(user.getLoginname(), passwordVO.getNewPassword()));
         SubjectUtils.setUser(user);
+        return updateById(user);
+    }
+
+    /**
+     * 修改用户密码
+     *
+     * @param passwordVO 密码信息
+     * @param user       当前用户对象
+     */
+    public boolean changeUserPwd(PasswordVO passwordVO, User user) {
+        user.setPassword(SubjectUtils.md5Encrypt(user.getLoginname(), passwordVO.getNewPassword()));
         return updateById(user);
     }
 }

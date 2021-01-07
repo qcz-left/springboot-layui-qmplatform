@@ -15,7 +15,7 @@ import java.util.List;
  * @since 2020-09-03
  */
 public interface UserMapper extends BaseMapper<User> {
-    UserVO queryUserByUsername(String username);
+    UserVO queryUserByName(String username);
 
     List<String> queryAuthoritiesByUserId(String userId);
 

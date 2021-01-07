@@ -3,7 +3,8 @@ layui.config({
 }).extend({
     treetable: 'treetable-lay/treetable',
     xmSelect: 'xm-select/xm-select',
-    dtree: 'dtree/dtree'
+    dtree: 'dtree/dtree',
+    step: 'step-lay/step'
 })
 layui.use(["layer"], function () {
     let layer = layui.layer;

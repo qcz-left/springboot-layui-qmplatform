@@ -6,6 +6,11 @@ import java.io.Serializable;
 public class PasswordVO implements Serializable {
 
     /**
+     * 登录名
+     */
+    private String loginname;
+
+    /**
      * 原密码
      */
     private String password;
@@ -31,6 +36,14 @@ public class PasswordVO implements Serializable {
      * 验证方式类型
      */
     private int validateType;
+
+    public String getLoginname() {
+        return loginname;
+    }
+
+    public void setLoginname(String loginname) {
+        this.loginname = loginname;
+    }
 
     public String getValidateCode() {
         return validateCode;

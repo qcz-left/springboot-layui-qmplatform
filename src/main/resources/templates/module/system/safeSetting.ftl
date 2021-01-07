@@ -40,7 +40,6 @@
                     <label class="layui-form-label"></label>
                     <div class="layui-input-block">
                         <button class="layui-btn" lay-submit lay-filter="password-submit">确认修改</button>
-                        <button id="retrievePassword" href="javascript:void(0);" class="layui-btn" style="color: blue; background: unset; font-weight: bold;">找回密码</button>
                     </div>
                 </div>
             </form>
@@ -74,17 +73,6 @@
             return false;
         });
 
-        /**
-         * 找回密码
-         */
-        $("#retrievePassword").click(function () {
-            top.layer.open({
-                type: 2,
-                title: '找回密码',
-                content: ctx + '/user/retrievePasswordPage',
-                area: ['35%', '40%']
-            });
-        });
     });
 </script>
 </body>

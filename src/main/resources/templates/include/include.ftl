@@ -11,6 +11,7 @@
     <#--dtree-->
     <link rel="stylesheet" href="${ctx}/static/plugin/layui/module/dtree/font/iconfont.css"/>
     <link rel="stylesheet" href="${ctx}/static/plugin/layui/module/dtree/dtree.css"/>
+    <link rel="stylesheet" href="${ctx}/static/plugin/layui/module/step-lay/step.css">
     <#if params??>
         <#list params as item>
             <#if item == "echarts">
