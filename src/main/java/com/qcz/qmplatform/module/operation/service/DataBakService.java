@@ -10,6 +10,7 @@ import com.qcz.qmplatform.common.utils.CronUtils;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
+import com.qcz.qmplatform.common.utils.SystemUtils;
 import com.qcz.qmplatform.module.operation.domain.DataBak;
 import com.qcz.qmplatform.module.operation.mapper.DataBakMapper;
 import com.qcz.qmplatform.module.operation.vo.DataBakStrategyVO;
@@ -105,6 +106,9 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public ResponseResult<?> exeBackup() {
+        if (!SystemUtils.OS.isLinux()) {
+            return ResponseResult.error("非Linux环境不允许备份数据！");
+        }
         String dataBakPath = ConfigLoader.getDataBakPath();
         File file = new File(dataBakPath);
         if (!file.exists()) {

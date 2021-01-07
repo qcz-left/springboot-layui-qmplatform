@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.common.utils;
 
 import cn.hutool.system.HostInfo;
+import cn.hutool.system.OsInfo;
 import cn.hutool.system.SystemUtil;
 import com.qcz.qmplatform.module.operation.pojo.Computer;
 import com.qcz.qmplatform.module.operation.pojo.Cpu;
@@ -28,6 +29,8 @@ public class SystemUtils extends SystemUtil {
     private static final HardwareAbstractionLayer hal = si.getHardware();
 
     private static final int OSHI_WAIT_SECOND = 1000;
+
+    public static final OsInfo OS = new OsInfo();
 
     private SystemUtils() {
 
