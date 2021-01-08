@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.common.utils;
 
+import cn.hutool.cache.impl.TimedCache;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.service.UserService;
@@ -7,9 +8,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.util.ByteSource;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * shiro 工具类，主要用于获取session中的当前人信息及设置当前人信息，以及加密方法
@@ -20,7 +18,7 @@ public class SubjectUtils {
 
     public static final String PASSWORD_UNCHANGED = "******";
 
-    private static final Map<String, Object> userCache = new ConcurrentHashMap<>();
+    private static final TimedCache<String, Object> userCache = CacheUtils.USER_CACHE;
 
     public static User getUser() {
         Object principal = SecurityUtils.getSubject().getPrincipal();
@@ -41,6 +39,7 @@ public class SubjectUtils {
         Session session = SecurityUtils.getSubject().getSession();
         session.setTimeout(30 * 60 * 1000L);
         userCache.put(sign, user);
+        CacheUtils.SESSION_CACHE.put(session.getId().toString(), user);
     }
 
     public static String getUserId() {

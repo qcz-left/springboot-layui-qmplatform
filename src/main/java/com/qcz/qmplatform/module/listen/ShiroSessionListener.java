@@ -3,7 +3,9 @@ package com.qcz.qmplatform.module.listen;
 import cn.hutool.json.JSONUtil;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.ResponseCode;
+import com.qcz.qmplatform.common.utils.CacheUtils;
 import com.qcz.qmplatform.module.socket.SessionWebSocketServer;
+import com.qcz.qmplatform.module.system.domain.User;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionListener;
 import org.slf4j.Logger;
@@ -37,9 +39,11 @@ public class ShiroSessionListener implements SessionListener {
      */
     @Override
     public void onExpiration(Session session) {
-        ResponseResult<?> responseResult = new ResponseResult<>(ResponseCode.UNAUTHORIZED, "会话过期！", null);
-        LOGGER.debug("{}", responseResult);
-        SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), session.getId().toString());
+        String sessionId = session.getId().toString();
+        User user = CacheUtils.SESSION_CACHE.get(sessionId);
+        ResponseResult<?> responseResult = new ResponseResult<>(ResponseCode.UNAUTHORIZED, "会话过期！", user.getUsername());
+        LOGGER.debug("[{}] {}", user.getLoginname(), responseResult);
+        SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), sessionId);
     }
 }
 
