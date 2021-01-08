@@ -77,7 +77,7 @@ layui.use(['treetable', 'table', 'form', 'element', 'layer'], function () {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
-            CommonUtil.deleteAjax(ctx + "/menu/deleteMenu", {
+            CommonUtil.deleteAjax(ctx + "/menu/deletePermission", {
                 permissionIds: CommonUtil.joinMulti(ids)
             }, function (data) {
                 LayerUtil.respMsg(data, null, null, function () {

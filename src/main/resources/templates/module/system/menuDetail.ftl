@@ -23,7 +23,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">权限类型</label>
             <div class="layui-input-block">
-                <select id="permissionType" name="permissionType" disabled>
+                <select id="permissionType" lay-filter="permissionType" name="permissionType" disabled>
                     <option value="1">菜单</option>
                     <option value="2">按钮</option>
                 </select>
@@ -83,20 +83,33 @@
         // 表单数据校验
         form.verify({});
 
-        let detail = {};
+        let detail = {
+            permissionType: '1'
+        };
         if (id) {
             CommonUtil.getSync(ctx + '/menu/getPermissionOne/' + id, {}, function (result) {
                 form.val('menu-form', result.data);
                 detail = result.data;
-                if (detail.permissionType === 1) {
-                    $("#display").removeClass("layui-hide");
-                }
             })
         } else {
             // 新增时放开类型禁用
             $("#permissionType").removeAttr("disabled");
             form.render('select');
         }
+
+        let permissionTypeListen = function(type){
+            if (type == '1') {
+                $("#display").removeClass("layui-hide");
+            } else {
+                $("#display").addClass("layui-hide");
+            }
+        };
+        permissionTypeListen(detail.permissionType);
+
+        // 权限类型选中监听
+        form.on('select(permissionType)', function (data) {
+            permissionTypeListen(data.value);
+        });
 
         // 上级权限数据加载
         let parentIdSelect = xmSelect.render({

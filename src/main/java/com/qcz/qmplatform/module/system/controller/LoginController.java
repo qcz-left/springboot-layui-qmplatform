@@ -6,6 +6,7 @@ import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
+import com.qcz.qmplatform.module.system.assist.PermissionType;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.pojo.Permission;
 import com.qcz.qmplatform.module.system.service.MenuService;
@@ -37,7 +38,7 @@ public class LoginController {
     @GetMapping("/")
     public String index(Map<String, Object> root) {
         Permission permission = new Permission();
-        permission.setPermissionType(1);
+        permission.setPermissionType(PermissionType.MENU.getType());
         permission.setDisplay(1);
         root.put("menuTree", menuService.getMenuTree(permission));
         root.put(Constant.CURRENT_USER_SIGN, SubjectUtils.getUser());

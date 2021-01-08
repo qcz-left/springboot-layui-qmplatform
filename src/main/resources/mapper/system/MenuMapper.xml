@@ -40,7 +40,7 @@
         order by iorder
     </select>
 
-    <select id="getPermissionById" resultType="com.qcz.qmplatform.module.system.pojo.Permission">
+    <select id="getPermissionByIds" resultType="com.qcz.qmplatform.module.system.pojo.Permission">
         select
             permission_id,
             permission_name,
@@ -54,17 +54,19 @@
         from
             v_sys_permission
         where
-            permission_id = #{id}
+            permission_id in
+            <foreach collection="ids" item="id" open="("  separator="," close=")">
+                #{id}
+            </foreach>
     </select>
 
     <delete id="deleteMenuById">
         delete from sys_menu where menu_id in(
             with recursive r as(
-                select menu_id, parent_id from sys_menu where menu_id in(
-                    <foreach collection="menuIds" item="menuId" open="("  separator="," close=")">
-                        #{menuId}
-                    </foreach>
-                )
+                select menu_id, parent_id from sys_menu where menu_id in
+                <foreach collection="menuIds" item="menuId" open="("  separator="," close=")">
+                    #{menuId}
+                </foreach>
                 union all
                 select p.menu_id, p.parent_id from sys_menu p, r where r.menu_id = p.parent_id
             )

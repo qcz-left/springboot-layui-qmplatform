@@ -1,9 +1,11 @@
 package com.qcz.qmplatform.module.system.service;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
+import com.qcz.qmplatform.module.system.assist.PermissionType;
 import com.qcz.qmplatform.module.system.domain.Button;
 import com.qcz.qmplatform.module.system.domain.Menu;
 import com.qcz.qmplatform.module.system.mapper.MenuMapper;
@@ -63,7 +65,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
             parentId = "";
         }
         String permissionName = permission.getPermissionName();
-        if (permissionType == 1) {
+        if (permissionType == PermissionType.MENU.getType()) {
             // 菜单
             Menu menu = new Menu();
             menu.setMenuId(permissionId);
@@ -88,21 +90,34 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
     }
 
     /**
-     * 删除菜单及子菜单和按钮
+     * 删除权限
      *
-     * @param menuIds
-     * @return
+     * @param permissionIds 权限id 集合
      */
-    public boolean deleteMenu(List<String> menuIds) {
-        baseMapper.deleteMenuById(menuIds);
-        QueryWrapper<Button> buttonWrapper = new QueryWrapper<>();
-        buttonWrapper.in("menu_id", menuIds);
-        buttonService.remove(buttonWrapper);
+    public boolean deletePermission(List<String> permissionIds) {
+        List<Permission> permissions = baseMapper.getPermissionByIds(permissionIds);
+        for (Permission permission : permissions) {
+            String permissionId = permission.getPermissionId();
+            if (permission.getPermissionType() == PermissionType.MENU.getType()) {
+                // 删除菜单同时删除按钮
+                QueryWrapper<Button> buttonWrapper = new QueryWrapper<>();
+                buttonWrapper.eq("menu_id", permissionId);
+                buttonService.remove(buttonWrapper);
+
+                baseMapper.deleteById(permissionId);
+            } else {
+                buttonService.removeById(permissionId);
+            }
+        }
         return true;
     }
 
     public Permission getPermissionById(String permissionId) {
-        return baseMapper.getPermissionById(permissionId);
+        List<Permission> permissions = baseMapper.getPermissionByIds(CollectionUtil.newArrayList(permissionId));
+        if (permissions != null && permissions.size() > 0) {
+            return permissions.get(0);
+        }
+        return null;
     }
 
 }

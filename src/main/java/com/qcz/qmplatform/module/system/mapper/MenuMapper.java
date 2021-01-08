@@ -20,7 +20,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     List<MenuTree> selectMenuTree(Permission permission);
 
-    Permission getPermissionById(String id);
+    List<Permission> getPermissionByIds(@Param("ids") List<String> ids);
 
     void deleteMenuById(@Param("menuIds") List<String> menuIds);
 
