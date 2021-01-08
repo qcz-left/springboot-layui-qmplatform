@@ -127,7 +127,6 @@
                 clickExpand: false,
                 expandedKeys: detail.organizationIds,
             },
-            height: 'auto',
             prop: {
                 value: 'id',
                 children: 'childes'

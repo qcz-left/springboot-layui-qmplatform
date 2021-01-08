@@ -87,7 +87,6 @@
             name: 'smsProvider',
             radio: true,
             clickClose: true,
-            height: 'auto',
             model: {icon: 'hidden'},
             data: []
         })

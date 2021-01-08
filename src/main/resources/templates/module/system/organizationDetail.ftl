@@ -78,7 +78,6 @@
                 showLine: false,
                 clickExpand: false
             },
-            height: 'auto',
             prop: {
                 value: 'id',
                 children: 'childes'
