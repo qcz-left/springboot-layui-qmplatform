@@ -5,6 +5,7 @@ import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
+import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.system.assist.PermissionType;
 import com.qcz.qmplatform.module.system.domain.User;
@@ -42,6 +43,7 @@ public class LoginController {
         permission.setDisplay(1);
         root.put("menuTree", menuService.getMenuTree(permission));
         root.put(Constant.CURRENT_USER_SIGN, SubjectUtils.getUser());
+        root.put("maxTabs", ConfigLoader.getMaxTabs());
         return "index";
     }
 

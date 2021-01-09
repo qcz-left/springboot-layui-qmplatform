@@ -71,4 +71,13 @@ public class ConfigLoader {
         return getStringConfig("DataBakPath", getBakPath() + "database/");
     }
 
+    /**
+     * 跳转首页选项卡tab最大显示数
+     *
+     * @return tab最大显示数，默认 10
+     */
+    public static Integer getMaxTabs() {
+        return getIntConfig("MaxTabs", 10);
+    }
+
 }

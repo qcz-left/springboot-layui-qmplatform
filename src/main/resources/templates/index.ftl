@@ -101,6 +101,11 @@
                     content: '<iframe src="' + layHref + '" frameborder="0" id="iframe-body-' + layId + '" style="width: 100%;height: 100%;"></iframe>',
                     id: layId
                 });
+                // 最多展示多少个tab页
+                let $tabLis = $("[lay-filter='main-tab'] ul > li");
+                if ($tabLis.length > ${maxTabs!10}) {
+                    element.tabDelete(tabLayFilter, $tabLis.first().attr("lay-id"));
+                }
             } else {
                 document.getElementById("iframe-body-" + layId).contentWindow.location.reload(true);
             }
