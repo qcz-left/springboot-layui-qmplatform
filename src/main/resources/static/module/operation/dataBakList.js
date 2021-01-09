@@ -9,7 +9,8 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
         elem: '#' + tableId,
         url: ctx + '/operation/data-bak/getDataBakList',
         where: {
-            orderName: 'createTime'
+            orderName: 'createTime',
+            order: 'desc'
         },
         height: 'full-30',
         page: true,
