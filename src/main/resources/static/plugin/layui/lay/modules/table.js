@@ -613,6 +613,14 @@
         return layui.each(l, function (e, l) {
             return l.constructor === Array ? void i++ : void (l[d.config.checkName] && (t++, a.push(d.clearCacheKey(l))))
         }), {data: a, isAll: !!l.length && t === l.length - i}
+    }, d.selectAll = function (e) {
+        var t = 0, i = 0, a = [], l = d.cache[e] || [];
+        layui.each(l, function (e, l) {
+            return l.constructor === Array ? void i++ : void ((t++, a.push(d.clearCacheKey(l))))
+        });
+        return a;
+    }, d.insert = function (o, data) {
+        o.config.data.push(data);
     }, d.exportFile = function (e, t, i) {
         var a = this;
         t = t || d.clearCacheKey(d.cache[e]), i = i || "csv";

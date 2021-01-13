@@ -1,0 +1,87 @@
+package com.qcz.qmplatform.module.notify.vo;
+
+import com.qcz.qmplatform.module.notify.bean.SmsProvider;
+import com.qcz.qmplatform.module.notify.bean.TemplateParam;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class SmsConfigVO implements Serializable {
+    /**
+     * 秘钥id
+     */
+    private String secretId;
+
+    /**
+     * 秘钥
+     */
+    private String secretKey;
+
+    /**
+     * 短信应用id
+     */
+    private String appId;
+
+    /**
+     * 短信签名
+     */
+    private String sign;
+
+    /**
+     * @see SmsProvider
+     */
+    private int smsProvider;
+
+    /**
+     * 模板参数列表
+     */
+    private List<TemplateParam> templateParams;
+
+    public String getSecretId() {
+        return secretId;
+    }
+
+    public void setSecretId(String secretId) {
+        this.secretId = secretId;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    public int getSmsProvider() {
+        return smsProvider;
+    }
+
+    public void setSmsProvider(int smsProvider) {
+        this.smsProvider = smsProvider;
+    }
+
+    public List<TemplateParam> getTemplateParams() {
+        return templateParams;
+    }
+
+    public void setTemplateParams(List<TemplateParam> templateParams) {
+        this.templateParams = templateParams;
+    }
+}

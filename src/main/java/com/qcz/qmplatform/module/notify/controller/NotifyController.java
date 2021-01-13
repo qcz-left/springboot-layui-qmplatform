@@ -4,7 +4,7 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.SmsUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
-import com.qcz.qmplatform.module.notify.bean.SmsConfig;
+import com.qcz.qmplatform.module.notify.vo.SmsConfigVO;
 import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,24 +33,24 @@ public class NotifyController {
 
     @GetMapping("/getSmsConfig")
     @ResponseBody
-    public ResponseResult<SmsConfig> getSmsConfig() {
-        SmsConfig smsConfig = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfig.class);
-        smsConfig.setSecretKey(SubjectUtils.PASSWORD_UNCHANGED);
-        return ResponseResult.ok(smsConfig);
+    public ResponseResult<SmsConfigVO> getSmsConfig() {
+        SmsConfigVO smsConfigVO = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfigVO.class);
+        smsConfigVO.setSecretKey(SubjectUtils.PASSWORD_UNCHANGED);
+        return ResponseResult.ok(smsConfigVO);
     }
 
     @PostMapping("/saveSmsConfig")
     @ResponseBody
-    public ResponseResult<?> saveSmsConfig(@RequestBody SmsConfig smsConfig) {
-        String secretKey = smsConfig.getSecretKey();
+    public ResponseResult<?> saveSmsConfig(@RequestBody SmsConfigVO smsConfigVO) {
+        String secretKey = smsConfigVO.getSecretKey();
         String encSecretKey;
         if (SubjectUtils.passwordChanged(secretKey)) {
             encSecretKey = encryptor.encrypt(secretKey);
         } else {
-            encSecretKey = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfig.class).getSecretKey();
+            encSecretKey = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfigVO.class).getSecretKey();
         }
-        smsConfig.setSecretKey(encSecretKey);
-        FileUtils.writeObjectToFile(smsConfig, SmsUtils.DAT_SMS_CONFIG);
+        smsConfigVO.setSecretKey(encSecretKey);
+        FileUtils.writeObjectToFile(smsConfigVO, SmsUtils.DAT_SMS_CONFIG);
         return ResponseResult.ok();
     }
 
