@@ -8,6 +8,15 @@ import java.util.Date;
 public class DateUtils extends DateUtil {
 
     public static Timestamp getCurrTimestamp() {
-        return new Timestamp(new Date().getTime());
+        return timestamp(new Date());
     }
+
+    public static Timestamp timestamp(Date date) {
+        return timestamp(date.getTime());
+    }
+
+    public static Timestamp timestamp(long time) {
+        return new Timestamp(time);
+    }
+
 }

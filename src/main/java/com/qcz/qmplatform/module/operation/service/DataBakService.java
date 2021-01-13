@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -125,7 +124,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         if (StringUtils.isNotBlank(saveDays)) {
             QueryWrapper<DataBak> dataBakQueryWrapper = new QueryWrapper<>();
             long beforeDaySeconds = DateUtils.currentSeconds() - Integer.parseInt(saveDays) * 24 * 60 * 60;
-            dataBakQueryWrapper.le("create_time", new Timestamp(beforeDaySeconds * 1000L));
+            dataBakQueryWrapper.le("create_time", DateUtils.timestamp(beforeDaySeconds * 1000L));
             List<DataBak> needDelDataBakes = list(dataBakQueryWrapper);
             for (DataBak needDelDataBake : needDelDataBakes) {
                 FileUtils.del(needDelDataBake.getBakPath());
@@ -139,7 +138,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         dataBak.setBakId(StringUtils.uuid());
         dataBak.setBakName(bakName);
         dataBak.setBakPath(bakFilePath);
-        dataBak.setCreateTime(new Timestamp(date.getTime()));
+        dataBak.setCreateTime(DateUtils.timestamp(date));
         if (save(dataBak)) {
             String dumpCmd = "pg_dump -U postgres -Fc qmplatform_single -f " + bakFilePath;
             LOGGER.debug("dump exe shell: " + dumpCmd);
