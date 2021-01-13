@@ -45,7 +45,7 @@ public class ShiroConfig {
         sessionManager.setSessionIdCookie(simpleCookie());
         sessionManager.setCacheManager(ehCacheManager());
         sessionManager.setSessionListeners(CollectionUtil.newArrayList(sessionListener()));
-        sessionManager.setSessionValidationInterval(10 * 60 * 1000L);
+        sessionManager.setSessionValidationInterval(5 * 60 * 1000L);
         return sessionManager;
     }
 
