@@ -18,18 +18,18 @@ public class SubjectUtils {
 
     public static final String PASSWORD_UNCHANGED = "******";
 
-    private static final TimedCache<String, Object> userCache = CacheUtils.USER_CACHE;
+    private static final TimedCache<String, User> userCache = CacheUtils.USER_CACHE;
 
     public static User getUser() {
         Object principal = SecurityUtils.getSubject().getPrincipal();
         if (principal != null) {
             String sign = Constant.CURRENT_USER_SIGN + principal;
-            Object user = userCache.get(sign);
+            User user = userCache.get(sign);
             if (user == null) {
                 user = SpringContextUtils.getBean(UserService.class).getById(String.valueOf(principal));
                 userCache.put(sign, user);
             }
-            return (User) user;
+            return user;
         }
         return null;
     }
@@ -55,6 +55,10 @@ public class SubjectUtils {
 
         Object result = new SimpleHash(Constant.SUBJECT_ALGORITHM_NAME_MD5, password, salt, Constant.SUBJECT_HASHTERATIONS);
         return result.toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(md5Encrypt("admin", "admin"));
     }
 
     /**

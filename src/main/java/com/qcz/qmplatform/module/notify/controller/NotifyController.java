@@ -45,7 +45,7 @@ public class NotifyController {
         String secretKey = smsConfig.getSecretKey();
         String encSecretKey;
         if (SubjectUtils.passwordChanged(secretKey)) {
-            encSecretKey = encryptor.encrypt(smsConfig.getSecretKey());
+            encSecretKey = encryptor.encrypt(secretKey);
         } else {
             encSecretKey = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfig.class).getSecretKey();
         }

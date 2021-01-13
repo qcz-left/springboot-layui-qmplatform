@@ -13,7 +13,10 @@ public class CacheUtils {
      */
     private static final LFUCache<String, String> COMMON_CACHE = CacheUtil.newLFUCache(100);
 
-    public static final TimedCache<String, Object> USER_CACHE = CacheUtil.newTimedCache(DateUnit.HOUR.getMillis() * 2);
+    /**
+     * 在线用户信息缓存 currentUser+userId -> com.qcz.qmplatform.module.system.domain.User
+     */
+    public static final TimedCache<String, User> USER_CACHE = CacheUtil.newTimedCache(DateUnit.HOUR.getMillis() * 2);
 
     /**
      * shiro 会话id 对应的用户信息
