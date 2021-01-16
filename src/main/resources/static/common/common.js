@@ -259,6 +259,49 @@ const CommonUtil = {
             result += split + array[i];
         }
         return result.substring(1);
+    },
+
+    /**
+     * 对象数组转化为 key->value 的Object对象
+     * @param array
+     * @param key
+     * @param value
+     */
+    covertFromArray: function (array, key, value) {
+        let obj = {};
+        for (let i = 0; i < array.length; i++) {
+            let item = array[i];
+            obj[item[key]] = item[value];
+        }
+        return obj;
+    },
+
+    /**
+     * 从数据种移除指定数据
+     * @param array
+     * @param key
+     * @param value
+     */
+    removeArrayItem: function (array, key, value) {
+        if (value.constructor === Array) {
+            for (let i = 0; i < value.length; i++) {
+                const index = array.findIndex(text => text[key] == value[i]);
+                array.splice(index, 1);
+            }
+        } else {
+            const index = array.findIndex(text => text[key] == value);
+            array.splice(index, 1);
+        }
+    },
+
+    getTemplateTypeName: function (type) {
+        if (type == 1) {
+            return TemplateType.VALIDATE_CODE;
+        } else if (type == 2) {
+            return TemplateType.ALARM;
+        } else if (type == 3) {
+            return TemplateType.NOTIFY;
+        }
     }
 
 }

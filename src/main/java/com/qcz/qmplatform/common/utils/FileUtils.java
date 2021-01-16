@@ -91,6 +91,33 @@ public class FileUtils extends FileUtil {
         return null;
     }
 
+    public static Object readObjectFromFile(String filePath) {
+        return readObjectFromFile(new File(filePath));
+    }
+
+    public static Object readObjectFromFile(File file) {
+        if (!file.exists()) {
+            try {
+                return new Object();
+            } catch (Exception e) {
+                LOGGER.error(null, e);
+            }
+        }
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        try {
+            fis = new FileInputStream(file);
+            ois = new ObjectInputStream(fis);
+            return ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            LOGGER.error(e.getMessage());
+        } finally {
+            CloseUtils.close(ois);
+            CloseUtils.close(fis);
+        }
+        return null;
+    }
+
     /**
      * 获取真实文件路径
      *

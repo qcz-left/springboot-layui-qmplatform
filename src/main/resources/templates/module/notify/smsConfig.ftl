@@ -50,22 +50,13 @@
             </div>
             <div class="layui-card-header">短信模板列表</div>
             <div class="layui-card-body">
-                <script type="text/html" id="toolbar">
-                    <div class="layui-btn-container">
-                        <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
-                    </div>
-                </script>
-                <script type="text/html" id="templateName">
-                    <select>
-                        <option value="">请选择一个城市</option>
-                        <option value="010">北京</option>
-                        <option value="021">上海</option>
-                        <option value="0571">杭州</option>
-                    </select>
-                </script>
                 <script type="text/html" id="operator">
                     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
                 </script>
+                <div class="layui-inline" id="templateType" style="width: 150px;"></div>
+                <div class="layui-inline">
+                    <button class="layui-btn layui-btn-sm" id="btnAdd"><i class="layui-icon layui-icon-addition"></i>选择模板添加</button>
+                </div>
                 <table class="layui-hide" id="template-list-tab" lay-filter="template"></table>
             </div>
         </div>
@@ -111,31 +102,55 @@
         let tableId = 'template-list-tab';
         let tableIns = table.render({
             elem: '#' + tableId,
-            data: detail.templateParams || [],
-            toolbar: '#toolbar',
-            defaultToolbar: [],
+            data: Object.values(detail.templateParams) || [],
             cols: [[
                 {type: 'numbers'},
-                {field: 'templateName', title: '模板名称', width: '20%', edit: true, templet: '#templateName'},
+                {
+                    field: 'templateType', title: '模板名称', width: '20%', templet: function (row) {
+                        return CommonUtil.getTemplateTypeName(row.templateType);
+                    }
+                },
                 {field: 'templateID', title: '模板ID', width: '20%', edit: true},
                 {field: 'paramCnt', title: '参数个数', width: '20%', edit: true},
                 {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
             ]]
         });
-        table.on('toolbar(template)', function (obj) {
-            switch (obj.event) {
-                case 'add':
-                    table.insert(obj, {});
-                    tableIns.reload();
-                    break;
+
+        // 短信模板类型
+        let templateTypeData = getTemplateTypeData();
+        CommonUtil.removeArrayItem(templateTypeData, 'value', CommonUtil.getAttrFromArray(table.selectAll(tableId), 'templateType'));
+        let templateTypeSelect = xmSelect.render({
+            el: '#templateType',
+            radio: true,
+            clickClose: true,
+            model: {icon: 'hidden', label: {type: 'text'}},
+            initValue: [templateTypeData[0].value],
+            data: templateTypeData
+        });
+        $('#btnAdd').click(function () {
+            let selectType = templateTypeSelect.getValue('valueStr');
+            if (!selectType) {
+                top.layer.warning('请选择模板类型！');
+                return;
             }
+            let allData = table.selectAll(tableId);
+            allData.push({
+                templateType: selectType
+            });
+            tableIns.reload({
+                data: allData
+            });
+            // 同步移除模板类型下拉数据
+            reloadTemplateType();
         });
         // 操作监听事件
         table.on('tool(template)', function (obj) {
             switch (obj.event) {
                 case 'delete':
-                    top.layer.confirm('确定要删除吗？', function(index){
+                    top.layer.confirm('确定要删除吗？', function (index) {
                         obj.del();
+                        // 同步移除模板类型下拉数据
+                        reloadTemplateType();
                         top.layer.close(index);
                     });
                     break;
@@ -144,13 +159,44 @@
 
         form.on('submit(sms-submit)', function (data) {
             top.layer.load(2);
-            data.field.templateParams = table.selectAll(tableId);
+            let selectAll = table.selectAll(tableId);
+            let templateParams = {};
+            for (let i = 0; i < selectAll.length; i++) {
+                let item = selectAll[i];
+                templateParams[item.templateType] = item;
+            }
+            data.field.templateParams = templateParams;
             CommonUtil.postAjax(ctx + '/notify/saveSmsConfig', data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE);
             });
             return false;
         });
+
+        function getTemplateTypeData() {
+            return [{
+                name: TemplateType.VALIDATE_CODE/* 验证码 */,
+                value: 1
+            }, {
+                name: TemplateType.ALARM/* 告警 */,
+                value: 2
+            }, {
+                name: TemplateType.NOTIFY/* 广播通知 */,
+                value: 3
+            }];
+        }
+
+        /**
+         * 更新模板类型下拉框数据
+         */
+        function reloadTemplateType() {
+            let templateTypeData = getTemplateTypeData();
+            CommonUtil.removeArrayItem(templateTypeData, 'value', CommonUtil.getAttrFromArray(table.selectAll(tableId), 'templateType'));
+            templateTypeSelect.update({
+                initValue: templateTypeData.length > 0 ? [templateTypeData[0].value] : [],
+                data: templateTypeData
+            });
+        }
 
     });
 </script>

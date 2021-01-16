@@ -5,8 +5,12 @@ import com.qcz.qmplatform.module.notify.bean.TemplateParam;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public class SmsConfigVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 秘钥id
      */
@@ -35,7 +39,7 @@ public class SmsConfigVO implements Serializable {
     /**
      * 模板参数列表
      */
-    private List<TemplateParam> templateParams;
+    private Map<Integer, TemplateParam> templateParams;
 
     public String getSecretId() {
         return secretId;
@@ -77,11 +81,11 @@ public class SmsConfigVO implements Serializable {
         this.smsProvider = smsProvider;
     }
 
-    public List<TemplateParam> getTemplateParams() {
+    public Map<Integer, TemplateParam> getTemplateParams() {
         return templateParams;
     }
 
-    public void setTemplateParams(List<TemplateParam> templateParams) {
+    public void setTemplateParams(Map<Integer, TemplateParam> templateParams) {
         this.templateParams = templateParams;
     }
 }

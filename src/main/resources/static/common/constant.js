@@ -83,3 +83,13 @@ const Msg = {
      */
     AT_LEAST_CHOOSE_ONE: '请至少选择一条数据！'
 };
+
+/**
+ * 短信模板类型
+ * @type {{}}
+ */
+const TemplateType = {
+    VALIDATE_CODE: '验证码',
+    ALARM: '告警',
+    NOTIFY: '广播通知'
+}

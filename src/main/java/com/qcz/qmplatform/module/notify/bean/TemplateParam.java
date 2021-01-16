@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class TemplateParam implements Serializable {
     /**
-     * 模板名称
+     * 模板类型
      */
-    private String templateName;
+    private int templateType;
 
     /**
-     * 模板名称
+     * 模板ID
      */
     private String templateID;
 
@@ -18,12 +18,12 @@ public class TemplateParam implements Serializable {
      */
     private int paramCnt;
 
-    public String getTemplateName() {
-        return templateName;
+    public int getTemplateType() {
+        return templateType;
     }
 
-    public void setTemplateName(String templateName) {
-        this.templateName = templateName;
+    public void setTemplateType(int templateType) {
+        this.templateType = templateType;
     }
 
     public String getTemplateID() {

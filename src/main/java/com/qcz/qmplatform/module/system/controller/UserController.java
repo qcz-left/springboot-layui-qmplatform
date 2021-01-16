@@ -20,7 +20,8 @@ import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.notify.NotifyServiceFactory;
 import com.qcz.qmplatform.module.notify.bean.SmsConfig;
-import com.qcz.qmplatform.module.notify.service.tencent.TencentCloudSmsNotifyService;
+import com.qcz.qmplatform.module.notify.bean.TemplateType;
+import com.qcz.qmplatform.module.notify.vo.SmsConfigVO;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.service.UserService;
 import com.qcz.qmplatform.module.system.vo.CurrentUserInfoVO;
@@ -287,16 +288,21 @@ public class UserController extends BaseController {
         // 缓存时间，分钟
         long timeout = 5;
         CacheUtils.put(phone, validateCode, DateUnit.MINUTE.getMillis() * timeout);
-
-        SmsConfig config = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfig.class);
-        config.setSecretKey(encryptor.decrypt(config.getSecretKey()));
+        SmsConfigVO smsConfigVO = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfigVO.class);
+        SmsConfig config = new SmsConfig();
+        config.setAppId(smsConfigVO.getAppId());
+        config.setSecretId(smsConfigVO.getSecretId());
+        config.setSecretKey(encryptor.decrypt(smsConfigVO.getSecretKey()));
+        config.setSign(smsConfigVO.getSign());
         config.setPhones(CollectionUtil.newArrayList("+86" + phone));
+        config.setTemplateID(smsConfigVO.getTemplateParams().get(TemplateType.VALIDATE_CODE.type()).getTemplateID());
         Map<String, String> templateParams = new HashMap<>();
         templateParams.put("1", validateCode);
         templateParams.put("2", String.valueOf(timeout));
         config.setTemplateParams(templateParams);
-        NotifyServiceFactory.build(TencentCloudSmsNotifyService.class, config).send();
+        NotifyServiceFactory.build(SmsUtils.getNotifyServiceClass(smsConfigVO.getSmsProvider()), config).send();
         return ResponseResult.ok("验证码已发送到手机：" + phone + "，请注意查收！", null);
     }
+
 }
 
