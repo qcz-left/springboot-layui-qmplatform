@@ -4,7 +4,6 @@ import com.qcz.qmplatform.module.notify.bean.SmsProvider;
 import com.qcz.qmplatform.module.notify.bean.TemplateParam;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 public class SmsConfigVO implements Serializable {

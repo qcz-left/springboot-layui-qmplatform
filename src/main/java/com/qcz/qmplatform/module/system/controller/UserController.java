@@ -288,8 +288,11 @@ public class UserController extends BaseController {
         // 缓存时间，分钟
         long timeout = 5;
         CacheUtils.put(phone, validateCode, DateUnit.MINUTE.getMillis() * timeout);
+        // 从文件中获取短信配置相关参数
         SmsConfigVO smsConfigVO = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfigVO.class);
+        // 设置短信参数
         SmsConfig config = new SmsConfig();
+        config.setSmsProvider(smsConfigVO.getSmsProvider());
         config.setAppId(smsConfigVO.getAppId());
         config.setSecretId(smsConfigVO.getSecretId());
         config.setSecretKey(encryptor.decrypt(smsConfigVO.getSecretKey()));
@@ -300,7 +303,8 @@ public class UserController extends BaseController {
         templateParams.put("1", validateCode);
         templateParams.put("2", String.valueOf(timeout));
         config.setTemplateParams(templateParams);
-        NotifyServiceFactory.build(SmsUtils.getNotifyServiceClass(smsConfigVO.getSmsProvider()), config).send();
+        // 发送
+        NotifyServiceFactory.build(config).send();
         return ResponseResult.ok("验证码已发送到手机：" + phone + "，请注意查收！", null);
     }
 
