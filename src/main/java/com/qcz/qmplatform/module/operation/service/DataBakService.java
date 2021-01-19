@@ -120,15 +120,17 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
             return ResponseResult.error("磁盘空间不足 " + limitDiskSpace + " G，不允许备份！");
         }
         // 删除 day 天前的备份
-        String saveDays = bakStrategy.get("saveDays");
+        String saveDays = bakStrategy.get("SaveDays");
         if (StringUtils.isNotBlank(saveDays)) {
             QueryWrapper<DataBak> dataBakQueryWrapper = new QueryWrapper<>();
             long beforeDaySeconds = DateUtils.currentSeconds() - Integer.parseInt(saveDays) * 24 * 60 * 60;
             dataBakQueryWrapper.le("create_time", DateUtils.timestamp(beforeDaySeconds * 1000L));
             List<DataBak> needDelDataBakes = list(dataBakQueryWrapper);
+            // 删除数据库记录和对应备份文件
             for (DataBak needDelDataBake : needDelDataBakes) {
                 FileUtils.del(needDelDataBake.getBakPath());
             }
+            remove(dataBakQueryWrapper);
         }
         // 备份
         Date date = new Date();
