@@ -140,7 +140,7 @@
             tableIns.reload({
                 data: allData
             });
-            // 同步移除模板类型下拉数据
+            // 同步更新模板类型下拉数据
             reloadTemplateType();
         });
         // 操作监听事件
@@ -149,7 +149,7 @@
                 case 'delete':
                     top.layer.confirm('确定要删除吗？', function (index) {
                         obj.del();
-                        // 同步移除模板类型下拉数据
+                        // 同步更新模板类型下拉数据
                         reloadTemplateType();
                         top.layer.close(index);
                     });

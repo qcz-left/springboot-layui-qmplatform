@@ -277,7 +277,7 @@ const CommonUtil = {
     },
 
     /**
-     * 从数据种移除指定数据
+     * 从数组中移除指定数据
      * @param array
      * @param key
      * @param value
