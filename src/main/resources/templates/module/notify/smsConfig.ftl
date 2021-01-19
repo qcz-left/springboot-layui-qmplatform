@@ -143,9 +143,11 @@
 
         // 操作监听事件
         table.on('edit(template)', function (obj) {
-            obj.data.paramCnt = CommonUtil.removeNotStr(obj.data.paramCnt);
-            obj.update(obj.data);
-            tableIns.reload();
+            if (obj.field === 'paramCnt') {
+                obj.data.paramCnt = CommonUtil.removeNotStr(obj.data.paramCnt);
+                obj.update(obj.data);
+                tableIns.reload();
+            }
         });
 
         table.on('tool(template)', function (obj) {
