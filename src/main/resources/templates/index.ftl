@@ -48,7 +48,7 @@
 
 </div>
 <link>
-<link rel="stylesheet" href="${ctx}/static/index.css"/>
+<link rel="stylesheet" href="${ctx}/static/css/index.css"/>
 <script>
     layui.use(['element', 'upload'], function () {
         let element = layui.element;
