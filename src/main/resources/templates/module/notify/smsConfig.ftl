@@ -102,7 +102,7 @@
         let tableId = 'template-list-tab';
         let tableIns = table.render({
             elem: '#' + tableId,
-            data: Object.values(detail.templateParams) || [],
+            data: Object.values(detail.templateParams || {}),
             cols: [[
                 {type: 'numbers'},
                 {
