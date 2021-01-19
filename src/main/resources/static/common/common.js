@@ -302,6 +302,17 @@ const CommonUtil = {
         } else if (type == 3) {
             return TemplateType.NOTIFY;
         }
+    },
+
+    /**
+     * 移除字符串中的非数字字符
+     */
+    removeNotStr: function (str) {
+        str = str || '';
+        if (str) {
+            str = str.toString().replace(/\D/g, '');
+        }
+        return str;
     }
 
-}
+};

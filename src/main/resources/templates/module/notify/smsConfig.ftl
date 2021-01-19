@@ -117,16 +117,13 @@
         });
 
         // 短信模板类型
-        let templateTypeData = getTemplateTypeData();
-        CommonUtil.removeArrayItem(templateTypeData, 'value', CommonUtil.getAttrFromArray(table.selectAll(tableId), 'templateType'));
         let templateTypeSelect = xmSelect.render({
             el: '#templateType',
             radio: true,
             clickClose: true,
-            model: {icon: 'hidden', label: {type: 'text'}},
-            initValue: [templateTypeData[0].value],
-            data: templateTypeData
+            model: {icon: 'hidden', label: {type: 'text'}}
         });
+        reloadTemplateType();
         $('#btnAdd').click(function () {
             let selectType = templateTypeSelect.getValue('valueStr');
             if (!selectType) {
@@ -143,11 +140,21 @@
             // 同步更新模板类型下拉数据
             reloadTemplateType();
         });
+
         // 操作监听事件
+        table.on('edit(template)', function (obj) {
+            obj.data.paramCnt = CommonUtil.removeNotStr(obj.data.paramCnt);
+            obj.update(obj.data);
+            tableIns.reload();
+        });
+
         table.on('tool(template)', function (obj) {
             switch (obj.event) {
                 case 'delete':
-                    top.layer.confirm('确定要删除吗？', function (index) {
+                    top.layer.confirm('确定要删除吗？', {
+                        title: "警告",
+                        skin: "my-layer-danger"
+                    }, function (index) {
                         obj.del();
                         // 同步更新模板类型下拉数据
                         reloadTemplateType();
