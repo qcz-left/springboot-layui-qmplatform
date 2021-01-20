@@ -1,14 +1,10 @@
 package com.qcz.qmplatform.common.utils;
 
-import cn.hutool.core.io.IoUtil;
-import com.alibaba.druid.support.json.JSONUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -46,39 +42,6 @@ public class HttpServletUtils {
             }
         }
         return params;
-    }
-
-    /**
-     * 只解析request里面的param参数，此方法常用于分页额外请求参数
-     *
-     * @param request HttpServletRequest
-     * @return map对象
-     */
-    @SuppressWarnings("unchecked")
-    public static Map<String, Object> parseRequestByParam(HttpServletRequest request) {
-        Map<String, Object> params = new HashMap<>();
-        String param = request.getParameter("param");
-        if (param == null) {
-            throw new NullPointerException("HttpServletRequest对象中没有发现名为param的参数！");
-        }
-        if (!StringUtils.isBlank(param)) {
-            params = (Map<String, Object>) JSONUtils.parse(param);
-        }
-        return params;
-    }
-
-    public static String getJsonParam(HttpServletRequest request) {
-        BufferedReader reader = null;
-        try {
-            reader = request.getReader();
-            String read = IoUtil.read(reader);
-            return read;
-        } catch (IOException ex) {
-            log.error("there was an error parsing the Request Body parameter", ex);
-        } finally {
-            CloseUtils.close(reader);
-        }
-        return "{}";
     }
 
     /**
@@ -149,7 +112,7 @@ public class HttpServletUtils {
         return null;
     }
 
-    public static List<Inet4Address> getLocalIp4AddressFromNetworkInterface() throws SocketException {
+    private static List<Inet4Address> getLocalIp4AddressFromNetworkInterface() throws SocketException {
         List<Inet4Address> addresses = new ArrayList<>(1);
         Enumeration e = NetworkInterface.getNetworkInterfaces();
         if (e == null) {

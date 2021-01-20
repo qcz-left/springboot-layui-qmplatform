@@ -113,7 +113,6 @@ public class UserController extends BaseController {
     @GetMapping("/getUserList")
     @ResponseBody
     public ResponseResult<PageResult> getUserList(PageRequest pageRequest, User user, boolean export) {
-        System.out.println("export:" + export);
         if (!export) {
             PageResultHelper.startPage(pageRequest);
         }

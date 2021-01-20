@@ -116,3 +116,28 @@ function openCommonForm(table, tableId, title, url, area, isTop) {
         layer.open(options);
     }
 }
+
+function toUrlParam(param, key) {
+    let paramStr = "";
+    if (param instanceof String || param instanceof Number || param instanceof Boolean) {
+        paramStr += "&" + key + "=" + encodeURIComponent(param);
+    } else {
+        $.each(param, function (i) {
+            let k = key == null ? i : key + (param instanceof Array ? "[" + i + "]" : "." + i);
+            paramStr += '&' + toUrlParam(this, k);
+        });
+    }
+    return paramStr.substr(1);
+}
+
+function getColNames(tableIns) {
+    let colNames = [];
+    let cols = tableIns.config.cols[0];
+    for (let i = 0; i < cols.length; i++) {
+        let item = cols[i];
+        if (item.excel) {
+            colNames.push(item.title);
+        }
+    }
+    return colNames;
+}

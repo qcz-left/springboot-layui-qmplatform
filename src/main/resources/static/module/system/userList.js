@@ -20,11 +20,11 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
         },
         cols: [[
             {type: 'checkbox'},
-            {field: 'username', title: '用户名', width: '10%', sort: true},
-            {field: 'loginname', title: '登录名', width: '10%', sort: true},
-            {field: 'userSexName', title: '性别', width: '10%'},
-            {field: 'phone', title: '电话', width: '20%'},
-            {field: 'emailAddr', title: '邮箱', width: '20%', sort: true},
+            {field: 'username', title: '用户名', excel: true, width: '10%', sort: true},
+            {field: 'loginname', title: '登录名', excel: true, width: '10%', sort: true},
+            {field: 'userSexName', title: '性别', excel: true, width: '10%'},
+            {field: 'phone', title: '电话', excel: true, width: '20%'},
+            {field: 'emailAddr', title: '邮箱', excel: true, width: '20%', sort: true},
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
         ]]
     });
@@ -52,12 +52,13 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
                 remove(groupAttrs[0], groupAttrs[1]);
                 break;
             case OperateType.EXPORT:
-                console.log(tableIns);
-                let param = form.val('user-search');
-                param.queryUrl = tableIns.config.url;
-                param.export = true;
-                param.generateName = "用户管理.xlsx";
-                CommonUtil.postAjax(ctx + '/user/export', param);
+                let exportParam = {
+                    queryParam: form.val('user-search'),
+                    queryUrl: tableIns.config.url,
+                    colNames: getColNames(tableIns),
+                    generateName: "用户管理.xls"
+                };
+                location.href = ctx + '/export?' + toUrlParam(exportParam);
                 break;
         }
     });

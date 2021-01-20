@@ -1,6 +1,8 @@
 package com.qcz.qmplatform.module.base;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 导出参数
@@ -15,9 +17,35 @@ public class ExportParamVo implements Serializable {
     private String queryUrl;
 
     /**
+     * 查询参数
+     */
+    private Map<String, Object> queryParam;
+
+    /**
      * 生成的文件名称
      */
     private String generateName;
+
+    /**
+     * 列头
+     */
+    private List<String> colNames;
+
+    public List<String> getColNames() {
+        return colNames;
+    }
+
+    public void setColNames(List<String> colNames) {
+        this.colNames = colNames;
+    }
+
+    public Map<String, Object> getQueryParam() {
+        return queryParam;
+    }
+
+    public void setQueryParam(Map<String, Object> queryParam) {
+        this.queryParam = queryParam;
+    }
 
     public String getQueryUrl() {
         return queryUrl;

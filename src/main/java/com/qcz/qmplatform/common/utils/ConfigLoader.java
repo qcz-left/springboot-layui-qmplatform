@@ -45,12 +45,12 @@ public class ConfigLoader {
     }
 
     /**
-     * 获取文件下载存放路径
+     * 获取临时目录
      *
-     * @return 文件下载路径，默认 /opt/web/download/
+     * @return 默认 /opt/web/tmp/
      */
-    public static String getDownloadFilePath() {
-        return getStringConfig("DownloadFilePath", FileUtils.WEB_PATH + "/download/");
+    public static String getTmpPath() {
+        return getStringConfig("TmpPath", FileUtils.WEB_PATH + "/tmp/");
     }
 
     /**

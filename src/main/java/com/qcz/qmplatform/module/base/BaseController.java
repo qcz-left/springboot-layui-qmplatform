@@ -1,12 +1,12 @@
 package com.qcz.qmplatform.module.base;
 
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
-import com.qcz.qmplatform.common.bean.PageResult;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
@@ -19,21 +19,26 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+@Controller
 public class BaseController {
 
     protected static Logger logger = null;
@@ -88,8 +93,6 @@ public class BaseController {
     @DeleteMapping("/deleteFile")
     @ResponseBody
     public ResponseResult<?> deleteFile(String filePath) {
-        String uploadFilePath = ConfigLoader.getUploadFilePath();
-        logger.info("file storage path: {}", uploadFilePath);
         FileUtils.del(FileUtils.getRealFilePath(filePath));
         return ResponseResult.ok();
     }
@@ -97,22 +100,32 @@ public class BaseController {
     /**
      * 导出
      */
-    @PostMapping("/export")
-    @ResponseBody
-    public ResponseResult<?> export(@RequestBody ExportParamVo exportParamVo, HttpServletRequest request) {
-        String httpUrl = HttpServletUtils.getLocalIpAddress() + ":" + request.getServerPort() + exportParamVo.getQueryUrl();
+    @RequestMapping("/export")
+    public void export(ExportParamVo exportParam, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String httpUrl = HttpServletUtils.getLocalIpAddress() + ":" + request.getServerPort() + exportParam.getQueryUrl();
         HttpRequest httpRequest = HttpUtil.createGet(httpUrl);
-        httpRequest.form("export", true);
+
+        Map<String, Object> param = exportParam.getQueryParam();
+        param.put("export", true);
+
+        httpRequest.form(param);
         httpRequest.header(HttpHeaders.COOKIE, request.getHeader(HttpHeaders.COOKIE));
-        HttpResponse response = httpRequest.execute();
-        String body = response.body();
-        ResponseResult queryResp = JSONUtil.toBean(body, ResponseResult.class);
-        BigExcelWriter writer = ExcelUtil.getBigWriter(exportParamVo.getGenerateName());
+        HttpResponse httpResponse = httpRequest.execute();
+        String body = httpResponse.body();
+        Map<String, Object> queryResp = JSONUtil.toBean(body, Map.class);
+
+        ExcelWriter writer = ExcelUtil.getWriter();
         // 一次性写出内容，使用默认样式
-        writer.write(((PageResult) queryResp.getData()).getList());
-        // 关闭writer，释放内存
+        writer.write((List<?>) ((Map<?, ?>) queryResp.get("data")).get("list"), true);
+
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", new String(exportParam.getGenerateName().getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1)));
+
+        ServletOutputStream out = response.getOutputStream();
+
+        writer.flush(out, true);
         writer.close();
-        return ResponseResult.ok();
+        IoUtil.close(out);
     }
 
 }
