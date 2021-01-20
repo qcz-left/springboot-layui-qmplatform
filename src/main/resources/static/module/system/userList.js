@@ -1,16 +1,20 @@
 layui.use(['table', 'form', 'element', 'layer'], function () {
     let table = layui.table;
     let form = layui.form;
-    let element = layui.element;
     let layer = layui.layer;
     let tableId = 'user-list-tab';
     let layFilter = 'user';
-    table.render({
+    let tableIns = table.render({
         elem: '#' + tableId,
         url: ctx + '/user/getUserList',
         height: 'full-80',
         page: true,
         toolbar: '#toolbar',
+        defaultToolbar: ['filter', {
+            title: '导出',
+            layEvent: OperateType.EXPORT,
+            icon: 'layui-icon-export'
+        }, 'print'],
         where: {
             orderName: 'username'
         },
@@ -34,7 +38,6 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
 
     // 头工具栏监听事件
     table.on('toolbar(' + layFilter + ')', function (obj) {
-        let data = obj.data;
         switch (obj.event) {
             case 'add':
                 open();
@@ -46,7 +49,15 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
                     return;
                 }
                 let groupAttrs = CommonUtil.groupAttrFromArray(checked, ['id', 'username']);
-                remove(groupAttrs[0], groupAttrs[1])
+                remove(groupAttrs[0], groupAttrs[1]);
+                break;
+            case OperateType.EXPORT:
+                console.log(tableIns);
+                let param = form.val('user-search');
+                param.queryUrl = tableIns.config.url;
+                param.export = true;
+                param.generateName = "用户管理.xlsx";
+                CommonUtil.postAjax(ctx + '/user/export', param);
                 break;
         }
     });
@@ -56,7 +67,7 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
         let data = obj.data;
         switch (obj.event) {
             case 'edit':
-                open(data.id)
+                open(data.id);
                 break;
             case 'delete':
                 remove([data.id], [data.username]);

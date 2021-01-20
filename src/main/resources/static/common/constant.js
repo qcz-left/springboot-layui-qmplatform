@@ -3,7 +3,7 @@ const Password = {
      * 未改变的密码标识
      */
     UN_CHANGED_PASSWORD: '******'
-}
+};
 
 /**
  * 状态类型
@@ -92,4 +92,30 @@ const TemplateType = {
     VALIDATE_CODE: '验证码',
     ALARM: '告警',
     NOTIFY: '广播通知'
-}
+};
+
+/**
+ * 操作类型
+ */
+const OperateType = {
+    /**
+     * 添加
+     */
+    ADD: 'add',
+    /**
+     * 编辑
+     */
+    EDIT: 'edit',
+    /**
+     * 删除
+     */
+    DELETE: 'delete',
+    /**
+     * 导出
+     */
+    EXPORT: 'export',
+    /**
+     * 导入
+     */
+    IMPORT: 'import'
+};
