@@ -144,7 +144,7 @@
         // 操作监听事件
         table.on('edit(template)', function (obj) {
             if (obj.field === 'paramCnt') {
-                obj.data.paramCnt = CommonUtil.removeNotStr(obj.data.paramCnt);
+                obj.data.paramCnt = CommonUtil.removeNotNumStr(obj.data.paramCnt);
                 obj.update(obj.data);
                 tableIns.reload();
             }
