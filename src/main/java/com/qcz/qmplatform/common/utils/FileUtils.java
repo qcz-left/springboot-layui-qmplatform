@@ -125,7 +125,10 @@ public class FileUtils extends FileUtil {
      * @return the real path of file
      */
     public static String getRealFilePath(String filePath) {
-        return ConfigLoader.getUploadFilePath() + filePath.substring(6);
+        if (StringUtils.containsAny(filePath, "/file/")) {
+            return ConfigLoader.getUploadFilePath() + filePath.substring(6);
+        }
+        return filePath;
     }
 
     private static String getWebPath() {
