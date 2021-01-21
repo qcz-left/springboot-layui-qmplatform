@@ -1,7 +1,7 @@
 # qmplatform
 
 ## 介绍
-该项目是一个简单的单体应用，就没有比它更简洁的画面了，基于springboot2.16、mybatis-plus、shiro、layui、freemarker，实现了maven打包jar加密，防止反编译，加载外部第三方库、加载外部配置文件，缩减jar包体积，高效部署，集成Jenkins持续部署配置，提交代码自动部署流程。小系统暂未用到什么缓存、消息队列啥的，因为现在用不着，等要用到了再说吧。
+该项目是一个简单的单体应用，就没有比它更简洁的画面了，基于springboot2.16、mybatis-plus、shiro、layui、freemarker，实现了maven打包jar加密，防止反编译，加载外部第三方库、加载外部配置文件，缩减jar包体积，高效部署，集成websocket，简易可动态添加的定时任务，集成Jenkins持续部署配置，提交代码自动部署流程。
 
 ## 软件架构
 软件架构说明
@@ -73,5 +73,4 @@ Jenkins服务器上创建一个jenkins账号：useradd jenkins，并生成公钥
 远程ssh服务器配置：<br/>
 ![远程ssh服务器配置](https://images.gitee.com/uploads/images/2020/1218/154040_dd220a4f_1324727.png "屏幕截图.png")
 ## 其它
-微服务版本正在开发中...（springcloud、mybatis-plus、oauth2、rabbitmq、vue、element-ui啥的，都是市面上主流的，先列几个关键字吧，搞出来了再发出来请各位看官抽鞭）
-一个人搞心累但快乐着，自勉。
+微服务版本正在开发中...
