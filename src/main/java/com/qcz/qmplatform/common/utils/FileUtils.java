@@ -119,6 +119,23 @@ public class FileUtils extends FileUtil {
     }
 
     /**
+     * 如果文件不存在就创建，如果父目录不存在也一并创建
+     */
+    public static void createIfNotExists(File file) {
+        if (!file.exists()) {
+            File parentFile = file.getParentFile();
+            if (!parentFile.exists()) {
+                parentFile.mkdirs();
+            }
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                LOGGER.error(null, e);
+            }
+        }
+    }
+
+    /**
      * 获取真实文件路径
      *
      * @param filePath 以/file/开头的虚拟文件路径

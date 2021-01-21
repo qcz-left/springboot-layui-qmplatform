@@ -12,6 +12,7 @@ import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -23,14 +24,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -101,7 +102,8 @@ public class BaseController {
      * 导出
      */
     @RequestMapping("/export")
-    public void export(ExportParamVo exportParam, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @ResponseBody
+    public ResponseResult<?> export(@RequestBody ExportParamVo exportParam, HttpServletRequest request) throws IOException {
         String httpUrl = HttpServletUtils.getLocalIpAddress() + ":" + request.getServerPort() + exportParam.getQueryUrl();
         HttpRequest httpRequest = HttpUtil.createGet(httpUrl);
 
@@ -115,17 +117,36 @@ public class BaseController {
         Map<String, Object> queryResp = JSONUtil.toBean(body, Map.class);
 
         ExcelWriter writer = ExcelUtil.getWriter();
+        // 只写入有列头的数据
+        writer.setOnlyAlias(true);
+        Map<String, String> colNames = exportParam.getColNames();
+        for (String key : colNames.keySet()) {
+            writer.addHeaderAlias(key, colNames.get(key));
+        }
+        List<Map<String, Object>> rows = (List<Map<String, Object>>) ((Map<String, Object>) queryResp.get("data")).get("list");
+        exportFormat(rows);
         // 一次性写出内容，使用默认样式
-        writer.write((List<?>) ((Map<?, ?>) queryResp.get("data")).get("list"), true);
+        writer.write(rows);
 
-        response.setContentType("application/vnd.ms-excel;charset=utf-8");
-        response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", new String(exportParam.getGenerateName().getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1)));
+        String tmpFilePath = ConfigLoader.getDeleteTmpPath() + StringUtils.uuid() + exportParam.getGenerateName();
+        File tmpFile = new File(tmpFilePath);
+        FileUtils.createIfNotExists(tmpFile);
 
-        ServletOutputStream out = response.getOutputStream();
-
+        FileOutputStream out = new FileOutputStream(tmpFile);
         writer.flush(out, true);
         writer.close();
         IoUtil.close(out);
+
+        return ResponseResult.ok(null, tmpFilePath);
+    }
+
+    /**
+     * 格式化导出数据
+     *
+     * @param rows 导出数据
+     */
+    protected void exportFormat(List<Map<String, Object>> rows) {
+
     }
 
 }

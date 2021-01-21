@@ -54,6 +54,15 @@ public class ConfigLoader {
     }
 
     /**
+     * 获取可删除的临时目录
+     *
+     * @return 默认 /opt/web/tmp/delete/
+     */
+    public static String getDeleteTmpPath() {
+        return getStringConfig("DeleteTmpPath", getTmpPath() + "delete/");
+    }
+
+    /**
      * 获取备份目录
      *
      * @return 备份目录，默认 /opt/web/bak/

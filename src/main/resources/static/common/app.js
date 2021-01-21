@@ -131,12 +131,12 @@ function toUrlParam(param, key) {
 }
 
 function getColNames(tableIns) {
-    let colNames = [];
+    let colNames = {};
     let cols = tableIns.config.cols[0];
     for (let i = 0; i < cols.length; i++) {
         let item = cols[i];
         if (item.excel) {
-            colNames.push(item.title);
+            colNames[item.field] = item.title;
         }
     }
     return colNames;

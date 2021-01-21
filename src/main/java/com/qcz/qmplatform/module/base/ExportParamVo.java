@@ -1,7 +1,6 @@
 package com.qcz.qmplatform.module.base;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,13 +28,13 @@ public class ExportParamVo implements Serializable {
     /**
      * 列头
      */
-    private List<String> colNames;
+    private Map<String, String> colNames;
 
-    public List<String> getColNames() {
+    public Map<String, String> getColNames() {
         return colNames;
     }
 
-    public void setColNames(List<String> colNames) {
+    public void setColNames(Map<String, String> colNames) {
         this.colNames = colNames;
     }
 

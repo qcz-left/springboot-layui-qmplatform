@@ -58,7 +58,12 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
                     colNames: getColNames(tableIns),
                     generateName: "用户管理.xls"
                 };
-                location.href = ctx + '/export?' + toUrlParam(exportParam);
+
+                CommonUtil.postAjax(ctx + '/user/export', exportParam, function (result) {
+                    if (result.ok) {
+                        location.href = ctx + '/downloadFile?filePath=' + encodeURIComponent(result.data);
+                    }
+                });
                 break;
         }
     });
