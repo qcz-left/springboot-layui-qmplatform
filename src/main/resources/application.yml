@@ -1,8 +1,15 @@
 server:
-  port: 8088
+  port: 443
+  http-port: 80
   servlet:
     context-path: /qmplatform
-
+  ssl:
+    enabled: true
+    key-alias: tomcat_https
+    key-store: classpath:tomcat_https.keystore
+    key-password: 123456
+    key-store-password: charon
+    key-store-type: JKS
 
 spring:
   profiles:
