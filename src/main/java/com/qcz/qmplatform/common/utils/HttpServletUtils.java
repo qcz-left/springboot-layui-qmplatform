@@ -51,7 +51,16 @@ public class HttpServletUtils {
      * @return the full request url
      */
     public static String getFullRequestUrl(HttpServletRequest request) {
-        return getLocalIpAddress() + ":" + request.getServerPort() + request.getContextPath();
+        return getServerPath(request) + request.getContextPath();
+    }
+
+    /**
+     * 获取 请求协议+ip+port
+     *
+     * @param request the request
+     */
+    public static String getServerPath(HttpServletRequest request) {
+        return request.getScheme() + "://" + getLocalIpAddress() + ":" + request.getServerPort();
     }
 
     /**

@@ -8,6 +8,7 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
@@ -50,14 +51,19 @@ public class BaseController {
 
     @PostMapping("/upload")
     @ResponseBody
-    public ResponseResult<Map<String, String>> upload(MultipartFile file) throws IOException {
+    public ResponseResult<Map<String, String>> upload(MultipartFile file) {
         File targetFileFolder = new File(ConfigLoader.getUploadFilePath());
         if (!targetFileFolder.exists()) {
             targetFileFolder.mkdirs();
         }
         String fileName = DateUtils.format(new Date(), "yyyyMMddhhmmss") + "_" + file.getOriginalFilename();
-        File targetFile = new File(targetFileFolder.getCanonicalFile(), fileName);
-        file.transferTo(targetFile);
+        File targetFile = null;
+        try {
+            targetFile = new File(targetFileFolder.getCanonicalFile(), fileName);
+            file.transferTo(targetFile);
+        } catch (IOException e) {
+            throw new CommonException("Failed to upload file!", e);
+        }
         Map<String, String> response = new HashMap<>();
         response.put("fileName", fileName);
         response.put("filePath", "/file/" + fileName);
@@ -70,7 +76,7 @@ public class BaseController {
      * @param filePath 文件路径
      */
     @GetMapping("/downloadFile")
-    public ResponseEntity<InputStreamResource> downloadFile(String filePath) throws IOException {
+    public ResponseEntity<InputStreamResource> downloadFile(String filePath) {
         FileSystemResource file = new FileSystemResource(FileUtils.getRealFilePath(filePath));
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -78,12 +84,16 @@ public class BaseController {
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
 
-        return ResponseEntity
-                .ok()
-                .headers(headers)
-                .contentLength(file.contentLength())
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .body(new InputStreamResource(file.getInputStream()));
+        try {
+            return ResponseEntity
+                    .ok()
+                    .headers(headers)
+                    .contentLength(file.contentLength())
+                    .contentType(MediaType.parseMediaType("application/octet-stream"))
+                    .body(new InputStreamResource(file.getInputStream()));
+        } catch (IOException e) {
+            throw new CommonException("Failed to download file!", e);
+        }
     }
 
     /**
@@ -103,39 +113,44 @@ public class BaseController {
      */
     @RequestMapping("/export")
     @ResponseBody
-    public ResponseResult<?> export(@RequestBody ExportParamVo exportParam, HttpServletRequest request) throws IOException {
-        String httpUrl = HttpServletUtils.getLocalIpAddress() + ":" + request.getServerPort() + exportParam.getQueryUrl();
-        HttpRequest httpRequest = HttpUtil.createGet(httpUrl);
+    public ResponseResult<?> export(@RequestBody ExportParamVo exportParam, HttpServletRequest request) {
+        String tmpFilePath = null;
+        try {
+            String httpUrl = HttpServletUtils.getServerPath(request) + exportParam.getQueryUrl();
+            HttpRequest httpRequest = HttpUtil.createGet(httpUrl);
 
-        Map<String, Object> param = exportParam.getQueryParam();
-        param.put("export", true);
+            Map<String, Object> param = exportParam.getQueryParam();
+            param.put("export", true);
 
-        httpRequest.form(param);
-        httpRequest.header(HttpHeaders.COOKIE, request.getHeader(HttpHeaders.COOKIE));
-        HttpResponse httpResponse = httpRequest.execute();
-        String body = httpResponse.body();
-        Map<String, Object> queryResp = JSONUtil.toBean(body, Map.class);
+            httpRequest.form(param);
+            httpRequest.header(HttpHeaders.COOKIE, request.getHeader(HttpHeaders.COOKIE));
+            HttpResponse httpResponse = httpRequest.execute();
+            String body = httpResponse.body();
+            Map<String, Object> queryResp = JSONUtil.toBean(body, Map.class);
 
-        ExcelWriter writer = ExcelUtil.getWriter();
-        // 只写入有列头的数据
-        writer.setOnlyAlias(true);
-        Map<String, String> colNames = exportParam.getColNames();
-        for (String key : colNames.keySet()) {
-            writer.addHeaderAlias(key, colNames.get(key));
+            ExcelWriter writer = ExcelUtil.getWriter();
+            // 只写入有列头的数据
+            writer.setOnlyAlias(true);
+            Map<String, String> colNames = exportParam.getColNames();
+            for (String key : colNames.keySet()) {
+                writer.addHeaderAlias(key, colNames.get(key));
+            }
+            List<Map<String, Object>> rows = (List<Map<String, Object>>) ((Map<String, Object>) queryResp.get("data")).get("list");
+            exportFormat(rows);
+            // 一次性写出内容，使用默认样式
+            writer.write(rows);
+
+            tmpFilePath = ConfigLoader.getDeleteTmpPath() + StringUtils.uuid() + exportParam.getGenerateName();
+            File tmpFile = new File(tmpFilePath);
+            FileUtils.createIfNotExists(tmpFile);
+
+            FileOutputStream out = new FileOutputStream(tmpFile);
+            writer.flush(out, true);
+            writer.close();
+            IoUtil.close(out);
+        } catch (Exception e) {
+            throw new CommonException("Failed to export file！", e);
         }
-        List<Map<String, Object>> rows = (List<Map<String, Object>>) ((Map<String, Object>) queryResp.get("data")).get("list");
-        exportFormat(rows);
-        // 一次性写出内容，使用默认样式
-        writer.write(rows);
-
-        String tmpFilePath = ConfigLoader.getDeleteTmpPath() + StringUtils.uuid() + exportParam.getGenerateName();
-        File tmpFile = new File(tmpFilePath);
-        FileUtils.createIfNotExists(tmpFile);
-
-        FileOutputStream out = new FileOutputStream(tmpFile);
-        writer.flush(out, true);
-        writer.close();
-        IoUtil.close(out);
 
         return ResponseResult.ok(null, tmpFilePath);
     }
