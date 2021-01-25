@@ -114,7 +114,7 @@ public class BaseController {
     @RequestMapping("/export")
     @ResponseBody
     public ResponseResult<?> export(@RequestBody ExportParamVo exportParam, HttpServletRequest request) {
-        String tmpFilePath = null;
+        String tmpFilePath;
         try {
             String httpUrl = HttpServletUtils.getServerPath(request) + exportParam.getQueryUrl();
             HttpRequest httpRequest = HttpUtil.createGet(httpUrl);
