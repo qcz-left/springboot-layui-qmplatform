@@ -112,7 +112,7 @@
             element.tabChange(tabLayFilter, layId);
         }
 
-        let socketUrl = "ws://" + window.location.host + ctx + "/socket/validateSession";
+        let socketUrl = (window.location.protocol === "https:" ? "wss" : "ws") + "://" + window.location.host + ctx + "/socket/validateSession";
         let socket = new WebSocket(socketUrl);
         //打开事件
         socket.onopen = function () {
