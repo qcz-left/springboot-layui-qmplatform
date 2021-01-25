@@ -57,7 +57,7 @@ public class BaseController {
             targetFileFolder.mkdirs();
         }
         String fileName = DateUtils.format(new Date(), "yyyyMMddhhmmss") + "_" + file.getOriginalFilename();
-        File targetFile = null;
+        File targetFile;
         try {
             targetFile = new File(targetFileFolder.getCanonicalFile(), fileName);
             file.transferTo(targetFile);
