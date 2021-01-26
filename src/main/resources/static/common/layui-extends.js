@@ -29,18 +29,18 @@ layui.use(["layer"], function () {
          */
         success: function (msg, option) {
             let opt = $.extend(this._defultOption.success, option);
-            this.msg(msg, opt);
+            return this.msg(msg, opt);
         },
         /**
          * 错误提示，需要手动关闭
          */
         error: function (msg, option) {
             let opt = $.extend(this._defultOption.error, option);
-            this.msg(msg, opt);
+            return this.msg(msg, opt);
         },
         warning: function (msg, option) {
             let opt = $.extend(this._defultOption.warning, option);
-            this.msg(msg, opt);
+            return this.msg(msg, opt);
         },
         /**
          * 带文字的加载提示
@@ -50,7 +50,7 @@ layui.use(["layer"], function () {
                 icon: 16,
                 shade: 0.01
             };
-            this.msg(msg, option);
+            return this.msg(msg, option);
         },
         getElementLayerIndex: function (element) {
             return element.closest("div.layui-layer").prop("id").replace("layui-layer", "");
