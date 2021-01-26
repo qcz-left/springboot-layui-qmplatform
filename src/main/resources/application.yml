@@ -13,7 +13,7 @@ server:
 
 spring:
   profiles:
-    active: pro
+    active: dev
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver
@@ -72,3 +72,7 @@ logging:
 jasypt:
   encryptor:
     password: qcz
+
+# 自定义属性
+custom:
+  database: qmplatform_single

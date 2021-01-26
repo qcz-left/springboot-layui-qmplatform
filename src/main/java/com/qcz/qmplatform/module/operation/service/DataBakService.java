@@ -20,6 +20,7 @@ import com.qcz.qmplatform.module.system.service.IniService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -47,6 +48,9 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
     private static final String SECTION = "DataBak";
 
     private static final String SCHEDULE_ID = "dataBak";
+
+    @Value("${custom.database}")
+    private String database;
 
     @Autowired
     private IniService iniService;
@@ -135,7 +139,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         }
         // 备份
         Date date = new Date();
-        String bakName = "qmplatform_single" + DateUtils.format(date, DatePattern.PURE_DATETIME_PATTERN) + ".dump";
+        String bakName = database + DateUtils.format(date, DatePattern.PURE_DATETIME_PATTERN) + ".dump";
         String bakFilePath = dataBakPath + bakName;
         DataBak dataBak = new DataBak();
         dataBak.setBakId(StringUtils.uuid());
@@ -143,7 +147,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         dataBak.setBakPath(bakFilePath);
         dataBak.setCreateTime(DateUtils.timestamp(date));
         if (save(dataBak)) {
-            String dumpCmd = "pg_dump -U postgres -Fc qmplatform_single -f " + bakFilePath;
+            String dumpCmd = "pg_dump -U postgres -Fc " + database + " -f " + bakFilePath;
             LOGGER.debug("dump exe shell: " + dumpCmd);
             LOGGER.debug(RuntimeUtil.execForStr(dumpCmd));
             return ResponseResult.ok();
@@ -173,7 +177,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         if (!new File(recoverSh).exists()) {
             return ResponseResult.error("备份恢复所需脚本文件缺失！");
         }
-        LOGGER.debug(RuntimeUtil.execForStr(recoverSh + " " + bakPath));
+        LOGGER.debug(RuntimeUtil.execForStr(StringUtils.format("{} {} {}", recoverSh, bakPath, database)));
         return ResponseResult.ok();
     }
 }
