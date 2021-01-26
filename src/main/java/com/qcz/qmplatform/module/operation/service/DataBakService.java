@@ -147,7 +147,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         dataBak.setBakPath(bakFilePath);
         dataBak.setCreateTime(DateUtils.timestamp(date));
         if (save(dataBak)) {
-            String dumpCmd = "pg_dump -U postgres -Fc " + database + " -f " + bakFilePath;
+            String dumpCmd = StringUtils.format("pg_dump -U postgres -Fc {} -f {}", database, bakFilePath);
             LOGGER.debug("dump exe shell: " + dumpCmd);
             LOGGER.debug(RuntimeUtil.execForStr(dumpCmd));
             return ResponseResult.ok();
