@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseResult<?> errorHandleBy500(Exception ex) {
-        ex.printStackTrace();
+        LOGGER.error(ex.getMessage(), ex);
         return new ResponseResult<>(ResponseCode.INTERNAL_SERVER_ERROR, "服务器好像出现错误了，请联系管理员！", null);
     }
 
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseBody
     public ResponseResult<?> errorHandleByPermission(UnauthorizedException ex) {
-        ex.printStackTrace();
+        LOGGER.error(ex.getMessage(), ex);
         return new ResponseResult<>(ResponseCode.PERMISSION_DENIED, "没有该资源权限！", null);
     }
 
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(CommonException.class)
     public ResponseResult<?> errorHandleByCommon(CommonException ex) {
-        ex.printStackTrace();
+        LOGGER.error(ex.getMessage(), ex);
         return ResponseResult.error(ex.getMessage());
     }
 
