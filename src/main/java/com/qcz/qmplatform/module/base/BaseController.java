@@ -45,11 +45,7 @@ import java.util.Objects;
 @Controller
 public class BaseController {
 
-    protected static Logger logger = null;
-
-    public BaseController() {
-        logger = LoggerFactory.getLogger(this.getClass());
-    }
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostMapping("/upload")
     @ResponseBody
