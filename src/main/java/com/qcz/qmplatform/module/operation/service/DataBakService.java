@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.operation.service;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.util.RuntimeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -45,7 +46,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
      */
     private static final String SECTION = "DataBak";
 
-    public static final String SCHEDULE_ID = "dataBak";
+    private static final String SCHEDULE_ID = "dataBak";
 
     @Autowired
     private IniService iniService;
@@ -134,7 +135,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         }
         // 备份
         Date date = new Date();
-        String bakName = "qmplatform_single" + DateUtils.format(date, "yyyyMMddHHmmss") + ".dump";
+        String bakName = "qmplatform_single" + DateUtils.format(date, DatePattern.PURE_DATETIME_PATTERN) + ".dump";
         String bakFilePath = dataBakPath + bakName;
         DataBak dataBak = new DataBak();
         dataBak.setBakId(StringUtils.uuid());

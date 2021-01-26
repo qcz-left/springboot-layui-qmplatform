@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.base;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
@@ -39,6 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 public class BaseController {
@@ -53,10 +55,8 @@ public class BaseController {
     @ResponseBody
     public ResponseResult<Map<String, String>> upload(MultipartFile file) {
         File targetFileFolder = new File(ConfigLoader.getUploadFilePath());
-        if (!targetFileFolder.exists()) {
-            targetFileFolder.mkdirs();
-        }
-        String fileName = DateUtils.format(new Date(), "yyyyMMddhhmmss") + "_" + file.getOriginalFilename();
+        FileUtils.createDirIfNotExists(targetFileFolder);
+        String fileName = DateUtils.format(new Date(), DatePattern.PURE_DATETIME_PATTERN) + "_" + file.getOriginalFilename();
         File targetFile;
         try {
             targetFile = new File(targetFileFolder.getCanonicalFile(), fileName);
@@ -80,7 +80,7 @@ public class BaseController {
         FileSystemResource file = new FileSystemResource(FileUtils.getRealFilePath(filePath));
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", new String(file.getFilename().getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1)));
+        headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", new String(Objects.requireNonNull(file.getFilename()).getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1)));
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
 
@@ -126,7 +126,7 @@ public class BaseController {
             httpRequest.header(HttpHeaders.COOKIE, request.getHeader(HttpHeaders.COOKIE));
             HttpResponse httpResponse = httpRequest.execute();
             String body = httpResponse.body();
-            Map<String, Object> queryResp = JSONUtil.toBean(body, Map.class);
+            Map queryResp = JSONUtil.toBean(body, Map.class);
 
             ExcelWriter writer = ExcelUtil.getWriter();
             // 只写入有列头的数据
@@ -135,7 +135,7 @@ public class BaseController {
             for (String key : colNames.keySet()) {
                 writer.addHeaderAlias(key, colNames.get(key));
             }
-            List<Map<String, Object>> rows = (List<Map<String, Object>>) ((Map<String, Object>) queryResp.get("data")).get("list");
+            List rows = (List) ((Map) queryResp.get("data")).get("list");
             exportFormat(rows);
             // 一次性写出内容，使用默认样式
             writer.write(rows);
@@ -160,7 +160,7 @@ public class BaseController {
      *
      * @param rows 导出数据
      */
-    protected void exportFormat(List<Map<String, Object>> rows) {
+    protected void exportFormat(List rows) {
 
     }
 

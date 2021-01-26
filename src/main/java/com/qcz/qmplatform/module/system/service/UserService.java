@@ -147,6 +147,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public CurrentUserInfoVO getCurrentUserInfo() {
         CurrentUserInfoVO currentUserInfoVO = new CurrentUserInfoVO();
         User user = SubjectUtils.getUser();
+        assert user != null;
         currentUserInfoVO.setLoginname(user.getLoginname());
         currentUserInfoVO.setUsername(user.getUsername());
         currentUserInfoVO.setEmailAddr(user.getEmailAddr());

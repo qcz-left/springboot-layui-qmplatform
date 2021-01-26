@@ -36,7 +36,7 @@ public class ButtonService extends ServiceImpl<ButtonMapper, Button> {
         return updateById(button);
     }
 
-    public boolean saveButtonOne(Button button) {
+    protected boolean saveButtonOne(Button button) {
         if (StringUtils.isBlank(button.getButtonId())) {
             return addButtonOne(button);
         }

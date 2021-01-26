@@ -42,9 +42,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -117,6 +117,11 @@ public class UserController extends BaseController {
             PageResultHelper.startPage(pageRequest);
         }
         return ResponseResult.ok(PageResultHelper.parseResult(userService.getUserList(user)));
+    }
+
+    @Override
+    protected void exportFormat(List rows) {
+
     }
 
     /**
@@ -235,6 +240,7 @@ public class UserController extends BaseController {
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户密码")
     public ResponseResult<?> changeCurrentUserPwd(@Valid @RequestBody PasswordVO passwordVO) {
         User user = SubjectUtils.getUser();
+        assert user != null;
         // 比较原密码是否填写正确
         if (!user.getPassword().equals(SubjectUtils.md5Encrypt(user.getLoginname(), passwordVO.getPassword()))) {
             return ResponseResult.error("当前密码填写错误，请重新填写！");
@@ -254,7 +260,7 @@ public class UserController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "更换用户头像")
-    public ResponseResult<?> uploadUserImg(MultipartFile file) throws IOException {
+    public ResponseResult<?> uploadUserImg(MultipartFile file) {
         ResponseResult<Map<String, String>> upload = upload(file);
         // 将文件路径保存到数据库
         if (upload.isOk()) {

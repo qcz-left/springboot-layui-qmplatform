@@ -39,12 +39,16 @@ public class ButtonController extends BaseController {
     @Autowired
     private ButtonService buttonService;
 
+    @GetMapping("/buttonListPage")
+    public String buttonListPage() {
+        return PREFIX + "buttonList";
+    }
+
     /**
      * 获取按钮列表
      *
      * @param pageRequest 分页请求
      * @param button      请求参数
-     * @return
      */
     @GetMapping("/getButtonList")
     @ResponseBody
@@ -60,7 +64,7 @@ public class ButtonController extends BaseController {
      * @param buttonId 按钮id
      * @return ResponseResult<Button>
      */
-    @GetMapping("/getButtonOne/{menuId}")
+    @GetMapping("/getButtonOne/{buttonId}")
     @ResponseBody
     public ResponseResult<Button> getButtonOne(@PathVariable String buttonId) {
         return ResponseResult.ok(buttonService.getById(buttonId));
@@ -85,7 +89,6 @@ public class ButtonController extends BaseController {
      * 修改按钮信息
      *
      * @param button 按钮表单信息
-     * @return
      */
     @PutMapping("/updateButtonOne")
     @ResponseBody
@@ -100,7 +103,6 @@ public class ButtonController extends BaseController {
      * 删除按钮信息
      *
      * @param permissionIds 按钮id数组
-     * @return
      */
     @DeleteMapping("/deleteButton")
     @ResponseBody

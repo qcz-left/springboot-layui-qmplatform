@@ -136,6 +136,15 @@ public class FileUtils extends FileUtil {
     }
 
     /**
+     * 如果文件夹不存在就创建
+     */
+    public static void createDirIfNotExists(File file) {
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+    }
+
+    /**
      * 获取真实文件路径
      *
      * @param filePath 以/file/开头的虚拟文件路径

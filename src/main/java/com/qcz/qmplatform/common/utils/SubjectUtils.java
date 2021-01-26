@@ -64,7 +64,7 @@ public class SubjectUtils {
     /**
      * 密码是否发生变化
      *
-     * @param pwd
+     * @param pwd the password
      */
     public static boolean passwordChanged(String pwd) {
         return !StringUtils.equals(PASSWORD_UNCHANGED, pwd);
