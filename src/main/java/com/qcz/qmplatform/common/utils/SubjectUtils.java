@@ -1,6 +1,10 @@
 package com.qcz.qmplatform.common.utils;
 
 import cn.hutool.cache.impl.TimedCache;
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.symmetric.AES;
+import cn.hutool.crypto.symmetric.DES;
+import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.service.UserService;
@@ -19,6 +23,10 @@ public class SubjectUtils {
     public static final String PASSWORD_UNCHANGED = "******";
 
     private static final TimedCache<String, User> userCache = CacheUtils.USER_CACHE;
+
+    private static final AES AES = SecureUtil.aes(SecureUtil.generateKey(SymmetricAlgorithm.AES.getValue()).getEncoded());
+
+    private static final DES DES = SecureUtil.des();
 
     public static User getUser() {
         Object principal = SecurityUtils.getSubject().getPrincipal();
@@ -55,10 +63,6 @@ public class SubjectUtils {
 
         Object result = new SimpleHash(Constant.SUBJECT_ALGORITHM_NAME_MD5, password, salt, Constant.SUBJECT_HASHTERATIONS);
         return result.toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(md5Encrypt("admin", "admin"));
     }
 
     /**
