@@ -1,23 +1,26 @@
 package com.qcz.qmplatform.common.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.hutool.setting.Setting;
 
 public class IniFileUtils {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(IniFileUtils.class);
 
     /**
      * config.ini配置文件路径
      */
     private static final String CONFIG_FILE_PATH = FileUtils.WEB_PATH + "/config/config.ini";
 
-    private static IniFile configIniFile = new IniFile(CONFIG_FILE_PATH);
+    private static Setting configIniFile;
+
+    static {
+        configIniFile = new Setting(CONFIG_FILE_PATH);
+        configIniFile.autoLoad(true);
+    }
 
     /**
      * 获取config.ini配置文件实例
      */
-    public static IniFile getConfigFile() {
+    public static Setting getConfigFile() {
         return configIniFile;
     }
+
 }

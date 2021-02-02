@@ -1,18 +1,15 @@
 package com.qcz.qmplatform.common.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.hutool.setting.Setting;
 
 public class ConfigLoader {
 
-    private static final Logger logger = LoggerFactory.getLogger(ConfigLoader.class);
+    private static final Setting configFile = IniFileUtils.getConfigFile();
 
-    private static final IniFile configFile = IniFileUtils.getConfigFile();
-
-    private static final String SECTION_COMMON = "Common";
+    private static final String GROUP_COMMON = "Common";
 
     private static String getStringConfig(String propertyName, String defaultValue) {
-        return configFile.getStringProperty(SECTION_COMMON, propertyName, defaultValue);
+        return configFile.getStr(propertyName, GROUP_COMMON, defaultValue);
     }
 
     private static String getStringConfig(String propertyName) {
@@ -20,7 +17,7 @@ public class ConfigLoader {
     }
 
     private static Long getLongConfig(String propertyName, Long defaultValue) {
-        return configFile.getLongProperty(SECTION_COMMON, propertyName, defaultValue);
+        return configFile.getLong(propertyName, GROUP_COMMON, defaultValue);
     }
 
     private static Long getLongConfig(String propertyName) {
@@ -28,7 +25,7 @@ public class ConfigLoader {
     }
 
     private static Integer getIntConfig(String propertyName, Integer defaultValue) {
-        return configFile.getIntegerProperty(SECTION_COMMON, propertyName, defaultValue);
+        return configFile.getInt(propertyName, GROUP_COMMON, defaultValue);
     }
 
     private static Integer getIntConfig(String propertyName) {
