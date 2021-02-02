@@ -50,9 +50,8 @@
 <link>
 <link rel="stylesheet" href="${ctx}/static/css/index.css"/>
 <script>
-    layui.use(['element', 'upload'], function () {
+    layui.use(['element'], function () {
         let element = layui.element;
-        let upload = layui.upload;
         let tabLayFilter = 'main-tab';
         let classLayuiThis = 'layui-this';
         // 监听菜单导航点击
