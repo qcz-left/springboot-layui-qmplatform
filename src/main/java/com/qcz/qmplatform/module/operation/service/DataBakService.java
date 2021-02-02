@@ -141,15 +141,17 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         Date date = new Date();
         String bakName = database + DateUtils.format(date, DatePattern.PURE_DATETIME_PATTERN) + ".dump";
         String bakFilePath = dataBakPath + bakName;
+
+        String dumpCmd = StringUtils.format("pg_dump -U postgres -Fc {} -f {}", database, bakFilePath);
+        LOGGER.debug("dump exe shell: " + dumpCmd);
+        LOGGER.debug(RuntimeUtil.execForStr(dumpCmd));
+
         DataBak dataBak = new DataBak();
         dataBak.setBakId(StringUtils.uuid());
         dataBak.setBakName(bakName);
         dataBak.setBakPath(bakFilePath);
         dataBak.setCreateTime(DateUtils.timestamp(date));
         if (save(dataBak)) {
-            String dumpCmd = StringUtils.format("pg_dump -U postgres -Fc {} -f {}", database, bakFilePath);
-            LOGGER.debug("dump exe shell: " + dumpCmd);
-            LOGGER.debug(RuntimeUtil.execForStr(dumpCmd));
             return ResponseResult.ok();
         } else {
             FileUtils.del(bakFilePath);
