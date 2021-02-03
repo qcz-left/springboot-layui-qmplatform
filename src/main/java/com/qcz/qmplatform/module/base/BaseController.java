@@ -15,6 +15,7 @@ import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
+import org.apache.poi.ss.usermodel.Font;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -125,11 +126,19 @@ public class BaseController {
             Map queryResp = JSONUtil.toBean(body, Map.class);
 
             ExcelWriter writer = ExcelUtil.getWriter();
+
+            // 设置字体
+            Font font = writer.createFont();
+            font.setFontHeight((short) 300);
+            writer.getStyleSet().setFont(font, false);
+
             // 只写入有列头的数据
             writer.setOnlyAlias(true);
-            Map<String, String> colNames = exportParam.getColNames();
+            Map<String, ExportColumn> colNames = exportParam.getColNames();
+            int columnIndex = 0;
             for (String key : colNames.keySet()) {
-                writer.addHeaderAlias(key, colNames.get(key));
+                writer.setColumnWidth(columnIndex++, colNames.get(key).getWidth());
+                writer.addHeaderAlias(key, colNames.get(key).getTitle());
             }
             List rows = (List) ((Map) queryResp.get("data")).get("list");
             exportFormat(rows);

@@ -28,13 +28,13 @@ public class ExportParamVo implements Serializable {
     /**
      * 列头
      */
-    private Map<String, String> colNames;
+    private Map<String, ExportColumn> colNames;
 
-    public Map<String, String> getColNames() {
+    public Map<String, ExportColumn> getColNames() {
         return colNames;
     }
 
-    public void setColNames(Map<String, String> colNames) {
+    public void setColNames(Map<String, ExportColumn> colNames) {
         this.colNames = colNames;
     }
 

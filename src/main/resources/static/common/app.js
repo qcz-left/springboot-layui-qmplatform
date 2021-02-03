@@ -136,7 +136,10 @@ function getColNames(tableIns) {
     for (let i = 0; i < cols.length; i++) {
         let item = cols[i];
         if (item.excel) {
-            colNames[item.field] = item.title;
+            colNames[item.field] = {
+                title: item.title,
+                width: item.exportWidth || 25
+            };
         }
     }
     return colNames;
