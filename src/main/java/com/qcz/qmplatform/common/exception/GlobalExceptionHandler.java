@@ -16,8 +16,6 @@ public class GlobalExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    private static final String PATH_PREFIX = "/error/";
-
     /**
      * 服务器异常500
      */
@@ -39,8 +37,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public String errorHandleBy404(NoHandlerFoundException ex) {
-        return PATH_PREFIX + "404";
+    public String errorHandleBy404() {
+        return "/error/404";
     }
 
     /**

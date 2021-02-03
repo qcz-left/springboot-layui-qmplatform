@@ -5,7 +5,6 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
@@ -35,7 +34,6 @@ import java.util.Map;
  * @since 2020-09-03
  */
 @Service
-@Module("用户管理")
 public class UserService extends ServiceImpl<UserMapper, User> {
 
     @Autowired
