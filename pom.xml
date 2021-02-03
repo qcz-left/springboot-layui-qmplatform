@@ -27,7 +27,7 @@
         <servlet-api.version>2.5</servlet-api.version>
         <hutool.version>4.5.11</hutool.version>
         <pagehelper-starter.version>1.2.5</pagehelper-starter.version>
-        <shiro.version>1.5.3</shiro.version>
+        <shiro.version>1.7.1</shiro.version>
         <commons-io.version>1.3.2</commons-io.version>
         <tencentcloud.version>3.1.160</tencentcloud.version>
         <aliyun-sdk.version>4.5.3</aliyun-sdk.version>
@@ -91,13 +91,14 @@
         <!--shiro-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
+            <artifactId>shiro-all</artifactId>
             <version>${shiro.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>${shiro.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.shiro</groupId>
+                    <artifactId>shiro-quartz</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.mingsoft</groupId>
@@ -106,7 +107,7 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.shiro</groupId>
-                    <artifactId>shiro-quartz</artifactId>
+                    <artifactId>shiro-all</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
