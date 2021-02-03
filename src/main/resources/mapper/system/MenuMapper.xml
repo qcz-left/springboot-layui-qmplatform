@@ -24,6 +24,17 @@
         <if test="display != null and display != ''">
             and display = #{display}
         </if>
+        <if test="userId != null and userId != ''">
+            and exists (
+                select 1 from sys_role_permission srp
+                where vsp.permission_id = srp.permission_id
+                and exists (
+                    select 1 from sys_user_role sur
+                    where srp.role_id = sur.role_id
+                    and sur.user_id = #{userId}
+                )
+            )
+        </if>
         <if test="permissionId != null and permissionId != ''">
             and not exists(
                 select permission_id from (

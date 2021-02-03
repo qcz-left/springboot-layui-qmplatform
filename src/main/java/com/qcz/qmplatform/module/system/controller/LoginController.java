@@ -9,8 +9,8 @@ import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.system.assist.PermissionType;
 import com.qcz.qmplatform.module.system.domain.User;
-import com.qcz.qmplatform.module.system.pojo.Permission;
 import com.qcz.qmplatform.module.system.service.MenuService;
+import com.qcz.qmplatform.module.system.vo.PermissionVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -38,11 +38,13 @@ public class LoginController {
 
     @GetMapping("/")
     public String index(Map<String, Object> root) {
-        Permission permission = new Permission();
+        User currUser = SubjectUtils.getUser();
+        PermissionVO permission = new PermissionVO();
         permission.setPermissionType(PermissionType.MENU.getType());
         permission.setDisplay(1);
+        permission.setUserId(currUser.getId());
         root.put("menuTree", menuService.getMenuTree(permission));
-        root.put(Constant.CURRENT_USER_SIGN, SubjectUtils.getUser());
+        root.put(Constant.CURRENT_USER_SIGN, currUser);
         root.put("maxTabs", ConfigLoader.getMaxTabs());
         return "index";
     }

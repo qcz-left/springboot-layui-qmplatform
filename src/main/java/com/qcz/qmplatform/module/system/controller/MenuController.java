@@ -10,6 +10,7 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.pojo.MenuTree;
 import com.qcz.qmplatform.module.system.pojo.Permission;
 import com.qcz.qmplatform.module.system.service.MenuService;
+import com.qcz.qmplatform.module.system.vo.PermissionVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,7 +74,7 @@ public class MenuController extends BaseController {
      */
     @RequestMapping("/getMenuList")
     @ResponseBody
-    public ResponseResult<List<MenuTree>> getMenuList(Permission permission) {
+    public ResponseResult<List<MenuTree>> getMenuList(PermissionVO permission) {
         List<MenuTree> menuList = menuService.getMenuList(permission);
         return ResponseResult.ok(menuList);
     }
@@ -85,7 +86,7 @@ public class MenuController extends BaseController {
      */
     @GetMapping("/getMenuTree")
     @ResponseBody
-    public ResponseResult<List<MenuTree>> getMenuTree(Permission permission) {
+    public ResponseResult<List<MenuTree>> getMenuTree(PermissionVO permission) {
         return ResponseResult.ok(menuService.getMenuTree(permission));
     }
 

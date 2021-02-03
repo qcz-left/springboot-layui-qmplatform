@@ -11,6 +11,7 @@ import com.qcz.qmplatform.module.system.domain.Menu;
 import com.qcz.qmplatform.module.system.mapper.MenuMapper;
 import com.qcz.qmplatform.module.system.pojo.MenuTree;
 import com.qcz.qmplatform.module.system.pojo.Permission;
+import com.qcz.qmplatform.module.system.vo.PermissionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +31,11 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
     @Autowired
     private ButtonService buttonService;
 
-    public List<MenuTree> getMenuTree(Permission permission) {
+    public List<MenuTree> getMenuTree(PermissionVO permission) {
         return TreeUtils.buildTree(getMenuList(permission));
     }
 
-    public List<MenuTree> getMenuList(Permission permission) {
+    public List<MenuTree> getMenuList(PermissionVO permission) {
         return baseMapper.selectMenuTree(permission);
     }
 
