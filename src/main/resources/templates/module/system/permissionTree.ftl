@@ -51,6 +51,10 @@
             elem: '#permissionTree',
             data: permissionData,
             checkbar: true,
+            menubar: true,
+            menubarTips: {
+                group: ["moveDown", "moveUp", "checkAll", "unCheckAll"]
+            },
             checkbarType: "all",
             response: {
                 title: "name",		//节点名称
