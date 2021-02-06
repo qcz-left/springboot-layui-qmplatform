@@ -9,7 +9,7 @@
     <script type="text/javascript" src="${ctx}/static/plugin/layui/layui.js"></script>
     <script type="text/javascript" src="${ctx}/static/common/layui-extends.js"></script>
     <#--dtree-->
-    <link rel="stylesheet" href="${ctx}/static/plugin/layui/module/dtree/font/iconfont.css"/>
+    <link rel="stylesheet" href="${ctx}/static/plugin/layui/module/dtree/font/dtreefont.css"/>
     <link rel="stylesheet" href="${ctx}/static/plugin/layui/module/dtree/dtree.css"/>
     <link rel="stylesheet" href="${ctx}/static/plugin/layui/module/step-lay/step.css">
     <#if params??>
