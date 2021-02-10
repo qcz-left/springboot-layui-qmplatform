@@ -135,7 +135,11 @@ function getColNames(tableIns) {
     let cols = tableIns.config.cols[0];
     for (let i = 0; i < cols.length; i++) {
         let item = cols[i];
-        if (item.excel) {
+        let excelAble;
+        if (typeof item.excel == "undefined") {
+            excelAble = true;
+        }
+        if (excelAble) {
             colNames[item.field] = {
                 title: item.title,
                 width: item.exportWidth || 25

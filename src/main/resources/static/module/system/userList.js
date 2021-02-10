@@ -20,12 +20,13 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
         },
         cols: [[
             {type: 'checkbox'},
-            {field: 'username', title: '用户名', excel: true, width: '10%', sort: true},
-            {field: 'loginname', title: '登录名', excel: true, width: '10%', sort: true},
-            {field: 'userSexName', title: '性别', excel: true, width: '10%'},
-            {field: 'phone', title: '电话', excel: true, width: '20%'},
-            {field: 'emailAddr', title: '邮箱', excel: true, width: '20%', sort: true},
-            {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
+            {field: 'username', title: '用户名', width: '10%', sort: true},
+            {field: 'loginname', title: '登录名', width: '10%', sort: true},
+            {field: 'userSexName', title: '性别', width: '10%'},
+            {field: 'phone', title: '电话', width: '20%'},
+            {field: 'emailAddr', title: '邮箱', width: '20%', sort: true},
+            {field: 'lockedName', title: '状态', width: '10%'},
+            {fixed: 'right', title: '操作', excel: false, align: 'center', templet: '#operator'}
         ]]
     });
 

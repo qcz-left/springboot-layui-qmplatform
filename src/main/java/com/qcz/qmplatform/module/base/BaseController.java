@@ -14,7 +14,6 @@ import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
-import com.qcz.qmplatform.common.utils.StringUtils;
 import org.apache.poi.ss.usermodel.Font;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,7 +144,7 @@ public class BaseController {
             // 一次性写出内容，使用默认样式
             writer.write(rows);
 
-            tmpFilePath = ConfigLoader.getDeleteTmpPath() + StringUtils.uuid() + exportParam.getGenerateName();
+            tmpFilePath = ConfigLoader.getDeleteTmpPath() + DateUtils.format(new Date(), DatePattern.PURE_DATETIME_MS_FORMAT) + "_" + exportParam.getGenerateName();
             File tmpFile = new File(tmpFilePath);
             FileUtils.createIfNotExists(tmpFile);
 
