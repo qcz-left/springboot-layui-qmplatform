@@ -70,6 +70,7 @@
         // 上级权限数据加载
         let parentIdSelect = xmSelect.render({
             el: '#parentId',
+            name: 'parentId',
             radio: true,
             clickClose: true,//选中关闭
             tree: {
@@ -95,10 +96,6 @@
 
         form.on('submit(org-submit)', function (data) {
             layer.load(2);
-            let parentIds = parentIdSelect.getValue();
-            if (parentIds.length > 0) {
-                data.field.parentId = parentIds[0].id;
-            }
             CommonUtil.postOrPut(id, ctx + '/organization/' + (id ? 'updateOrg' : 'addOrg'), data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {

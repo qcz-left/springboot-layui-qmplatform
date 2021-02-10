@@ -119,6 +119,7 @@
         // 短信模板类型
         let templateTypeSelect = xmSelect.render({
             el: '#templateType',
+            name: 'templateType',
             radio: true,
             clickClose: true,
             model: {icon: 'hidden', label: {type: 'text'}}

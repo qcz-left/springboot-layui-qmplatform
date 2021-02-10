@@ -120,6 +120,7 @@
         // 组织机构数据加载
         let organizationIdsSelect = xmSelect.render({
             el: '#organizationIds',
+            name: 'organizationIds',
             tree: {
                 strict: false,
                 show: true,
@@ -143,6 +144,7 @@
         // 角色数据加载
         let roleIdsSelect = xmSelect.render({
             el: '#roleIds',
+            name: 'roleIds',
             prop: {
                 value: 'roleId',
                 name: 'roleName'
@@ -161,6 +163,7 @@
         // 性别数据加载
         let userSexSelect = xmSelect.render({
             el: '#userSex',
+            name: 'userSex',
             radio: true,
             clickClose: true,
             model: {label: {type: 'text'}},
@@ -175,9 +178,10 @@
             })
         })
 
-        // 性别数据加载
+        // 账号状态数据加载
         let lockedSelect = xmSelect.render({
             el: '#locked',
+            name: 'locked',
             radio: true,
             clickClose: true,
             model: {label: {type: 'text'}},
@@ -196,8 +200,6 @@
             layer.load(2);
             data.field.roleIds = roleIdsSelect.getValue('value');
             data.field.organizationIds = organizationIdsSelect.getValue('value');
-            data.field.userSex = userSexSelect.getValue('valueStr');
-            data.field.locked = lockedSelect.getValue('valueStr');
             CommonUtil.postOrPut(id, ctx + (id ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
