@@ -36,7 +36,8 @@ CREATE TABLE "public"."ope_data_bak" (
   "bak_name" varchar(50) COLLATE "pg_catalog"."default",
   "bak_path" varchar(100) COLLATE "pg_catalog"."default",
   "create_time" timestamp(6),
-  "remark" varchar(500) COLLATE "pg_catalog"."default"
+  "remark" varchar(500) COLLATE "pg_catalog"."default",
+  "file_size" int8
 )
 ;
 COMMENT ON COLUMN "public"."ope_data_bak"."bak_id" IS '备份主键id';
@@ -44,6 +45,7 @@ COMMENT ON COLUMN "public"."ope_data_bak"."bak_name" IS '备份名称';
 COMMENT ON COLUMN "public"."ope_data_bak"."bak_path" IS '备份路径';
 COMMENT ON COLUMN "public"."ope_data_bak"."create_time" IS '创建时间';
 COMMENT ON COLUMN "public"."ope_data_bak"."remark" IS '备注';
+COMMENT ON COLUMN "public"."ope_data_bak"."file_size" IS '备份文件长度，单位：字节';
 COMMENT ON TABLE "public"."ope_data_bak" IS '数据备份';
 
 -- ----------------------------

@@ -151,6 +151,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         dataBak.setBakName(bakName);
         dataBak.setBakPath(bakFilePath);
         dataBak.setCreateTime(DateUtils.timestamp(date));
+        dataBak.setFileSize(FileUtils.size(FileUtils.file(bakFilePath)));
         if (save(dataBak)) {
             return ResponseResult.ok();
         } else {

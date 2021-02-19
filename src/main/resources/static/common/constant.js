@@ -1,3 +1,10 @@
+const Common = {
+    /**
+     * -
+     */
+    NULL: '-'
+};
+
 const Password = {
     /**
      * 未改变的密码标识

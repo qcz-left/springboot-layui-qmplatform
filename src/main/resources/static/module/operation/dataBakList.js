@@ -24,6 +24,15 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
                 }
             },
             {field: 'bakPath', title: '备份路径', width: '30%'},
+            {
+                field: 'fileSize', title: '备份大小', width: '10%', templet: function (row) {
+                    let byteSize = row.fileSize;
+                    if (!byteSize) {
+                        return Common.NULL;
+                    }
+                    return CommonUtil.convertByte(byteSize);
+                }
+            },
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
         ]]
     });

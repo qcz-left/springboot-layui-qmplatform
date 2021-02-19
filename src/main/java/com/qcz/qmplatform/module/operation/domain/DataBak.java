@@ -53,6 +53,20 @@ public class DataBak implements Serializable {
     @TableField("remark")
     private String remark;
 
+    /**
+     * 备份文件大小（字节）
+     */
+    @TableField("file_size")
+    private long fileSize;
+
+    public long getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+    }
+
     public String getBakId() {
         return bakId;
     }
