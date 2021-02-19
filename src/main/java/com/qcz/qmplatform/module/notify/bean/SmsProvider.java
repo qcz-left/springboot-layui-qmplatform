@@ -29,4 +29,15 @@ public enum SmsProvider {
     public int code() {
         return code;
     }
+
+    public static SmsProvider valueOf(int code) {
+        SmsProvider[] smsProviders = values();
+        for (SmsProvider smsProvider : smsProviders) {
+            if (smsProvider.code == code) {
+                return smsProvider;
+            }
+        }
+
+        return null;
+    }
 }

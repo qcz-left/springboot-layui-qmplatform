@@ -11,12 +11,14 @@ public class SmsUtils {
 
     public static Class<? extends INotifyService> getNotifyServiceClass(int smsProviderCode) {
         Class<? extends INotifyService> clazz = null;
-        if (smsProviderCode == SmsProvider.TENCENT.code()) {
+        SmsProvider smsProvider = SmsProvider.valueOf(smsProviderCode);
+        if (smsProvider == SmsProvider.TENCENT) {
             clazz = TencentCloudSmsNotifyService.class;
-        } else if (smsProviderCode == SmsProvider.ALI.code()) {
+        } else if (smsProvider == SmsProvider.ALI) {
             clazz = AliyunSmsNotifyService.class;
         }
 
         return clazz;
     }
+
 }
