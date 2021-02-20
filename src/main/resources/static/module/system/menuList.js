@@ -33,6 +33,7 @@ layui.use(['treetable', 'table', 'form', 'element', 'layer'], function () {
                     }
                 },
                 {field: 'linkUrl', title: 'URL', width: '20%'},
+                {field: 'iorder', title: '排序', width: '10%'},
                 {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
             ]]
         });
