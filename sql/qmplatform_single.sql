@@ -1911,3 +1911,51 @@ ALTER TABLE "public"."sys_user_role" ADD CONSTRAINT "uk_sys_user_role" UNIQUE ("
 -- Primary Key structure for table tbl_attachment
 -- ----------------------------
 ALTER TABLE "public"."tbl_attachment" ADD CONSTRAINT "attachment_pkey" PRIMARY KEY ("attachment_id");
+
+CREATE OR REPLACE FUNCTION "public"."casc_org"(VARIADIC "org_id" _varchar)
+  RETURNS SETOF "public"."sys_organization" AS $BODY$
+	declare
+	ids_str varchar;
+	findAllQuery text;
+	BEGIN
+	for i in array_lower($1,1)..array_upper($1,1) loop
+		ids_str := concat(ids_str, '''', $1[i], '''', ',');
+  end loop;
+	ids_str := substr(ids_str, 0, length(ids_str));
+	-- raise notice '%', ids_str;
+
+	findAllQuery := 'with recursive r as(
+			select * from sys_organization where organization_id in(' || ids_str || ')
+			union all
+			select p.* from sys_organization p, r where r.organization_id = p.parent_id
+	)
+	select distinct * from r';
+
+	RETURN QUERY EXECUTE findAllQuery;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100
+  ROWS 1000CREATE OR REPLACE FUNCTION "public"."casc_org"(VARIADIC "org_id" _varchar)
+  RETURNS SETOF "public"."sys_organization" AS $BODY$
+	declare
+	ids_str varchar;
+	findAllQuery text;
+	BEGIN
+	for i in array_lower($1,1)..array_upper($1,1) loop
+		ids_str := concat(ids_str, '''', $1[i], '''', ',');
+  end loop;
+	ids_str := substr(ids_str, 0, length(ids_str));
+	-- raise notice '%', ids_str;
+
+	findAllQuery := 'with recursive r as(
+			select * from sys_organization where organization_id in(' || ids_str || ')
+			union all
+			select p.* from sys_organization p, r where r.organization_id = p.parent_id
+	)
+	select distinct * from r';
+
+	RETURN QUERY EXECUTE findAllQuery;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100
+  ROWS 1000;

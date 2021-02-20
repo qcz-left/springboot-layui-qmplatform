@@ -23,6 +23,7 @@ import com.qcz.qmplatform.module.notify.bean.SmsConfig;
 import com.qcz.qmplatform.module.notify.bean.TemplateType;
 import com.qcz.qmplatform.module.notify.vo.SmsConfigVO;
 import com.qcz.qmplatform.module.system.domain.User;
+import com.qcz.qmplatform.module.system.qo.UserQO;
 import com.qcz.qmplatform.module.system.service.UserService;
 import com.qcz.qmplatform.module.system.vo.CurrentUserInfoVO;
 import com.qcz.qmplatform.module.system.vo.PasswordVO;
@@ -110,11 +111,15 @@ public class UserController extends BaseController {
         return userService.getUserOne(userId);
     }
 
-    @GetMapping("/getUserList")
+    @RequestMapping("/getUserList")
     @ResponseBody
-    public ResponseResult<PageResult> getUserList(PageRequest pageRequest, User user, boolean export) {
+    public ResponseResult<PageResult> getUserList(PageRequest pageRequest, UserQO user, boolean export) {
         if (!export) {
             PageResultHelper.startPage(pageRequest);
+        }
+        String organizationIdsStr = user.getOrganizationIdsStr();
+        if (StringUtils.isNotBlank(organizationIdsStr)) {
+            user.setOrganizationIds(CollectionUtil.newArrayList(organizationIdsStr.split(",")));
         }
         return ResponseResult.ok(PageResultHelper.parseResult(userService.getUserList(user)));
     }

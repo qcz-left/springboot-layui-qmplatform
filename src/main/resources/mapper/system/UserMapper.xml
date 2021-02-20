@@ -32,10 +32,13 @@
     <select id="queryUserList" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
         select
             su.*,
+            string_agg ( so.organization_name, ',' ) as organization_name,
             va1.attr_name as userSexName,
             va2.attr_name as lockedName
         from
             sys_user su
+        left join sys_user_organization suo on su.id = suo.user_id
+        left join sys_organization so on suo.organization_id = so.organization_id
         left join ( select attr_value, attr_name from v_sys_dict_attr where dict_code = 'user-sex' ) va1 on va1.attr_value = su.user_sex
         left join ( select attr_value, attr_name from v_sys_dict_attr where dict_code = 'user-status' ) va2 on va2.attr_value = cast(su.locked as varchar)
         where 1=1
@@ -45,5 +48,18 @@
         <if test="userSex != null and userSex != ''">
             and su.user_sex like concat('%', #{userSex}, '%')
         </if>
+        <if test="organizationIds != null">
+            and suo.organization_id in(
+                select organization_id from casc_org(
+                    <foreach collection="organizationIds" item="organizationId" separator=",">
+                        #{organizationId}
+                    </foreach>
+                )
+            )
+        </if>
+        group by
+            su.id,
+            usersexname,
+            lockedname
     </select>
 </mapper>

@@ -14,6 +14,16 @@ public class UserVO extends User {
 
     private String lockedName;
 
+    private String organizationName;
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
+    }
+
     public String getUserSexName() {
         return userSexName;
     }

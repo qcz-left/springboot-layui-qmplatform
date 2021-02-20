@@ -1,9 +1,33 @@
-layui.use(['table', 'form', 'element', 'layer'], function () {
+layui.use(['table', 'form', 'element', 'layer', 'xmSelect'], function () {
     let table = layui.table;
     let form = layui.form;
     let layer = layui.layer;
+    let xmSelect = layui.xmSelect;
     let tableId = 'user-list-tab';
     let layFilter = 'user';
+
+    // 组织机构数据加载
+    let organizationIdsSelect = xmSelect.render({
+        el: '#organizationIdsStr',
+        name: 'organizationIdsStr',
+        tree: {
+            strict: false,
+            show: true,
+            showLine: false,
+            clickExpand: false
+        },
+        prop: {
+            value: 'id',
+            children: 'childes'
+        },
+        data: []
+    });
+    CommonUtil.getAjax(ctx + '/organization/getOrgTree', {}, function (result) {
+        organizationIdsSelect.update({
+            data: result.data
+        })
+    });
+
     let tableIns = table.render({
         elem: '#' + tableId,
         url: ctx + '/user/getUserList',
@@ -22,10 +46,11 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
             {type: 'checkbox'},
             {field: 'username', title: '用户名', width: '10%', sort: true},
             {field: 'loginname', title: '登录名', width: '10%', sort: true},
-            {field: 'userSexName', title: '性别', width: '10%'},
-            {field: 'phone', title: '电话', width: '20%'},
-            {field: 'emailAddr', title: '邮箱', width: '20%', sort: true},
-            {field: 'lockedName', title: '状态', width: '10%'},
+            {field: 'userSexName', title: '性别', width: '5%'},
+            {field: 'phone', title: '电话', width: '10%'},
+            {field: 'emailAddr', title: '邮箱', width: '10%', sort: true},
+            {field: 'lockedName', title: '状态', width: '5%'},
+            {field: 'organizationName', title: '所属部门', width: '30%'},
             {fixed: 'right', title: '操作', excel: false, align: 'center', templet: '#operator'}
         ]]
     });

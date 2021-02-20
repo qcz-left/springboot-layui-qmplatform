@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qcz.qmplatform.module.system.domain.User;
+import com.qcz.qmplatform.module.system.qo.UserQO;
 import com.qcz.qmplatform.module.system.vo.UserVO;
 
 import java.util.List;
@@ -19,5 +20,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     List<String> queryAuthoritiesByUserId(String userId);
 
-    List<UserVO> queryUserList(User user);
+    List<UserVO> queryUserList(UserQO user);
 }

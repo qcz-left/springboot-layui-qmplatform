@@ -15,6 +15,7 @@ import com.qcz.qmplatform.module.system.domain.UserRole;
 import com.qcz.qmplatform.module.system.mapper.UserMapper;
 import com.qcz.qmplatform.module.system.mapper.UserOrganizationMapper;
 import com.qcz.qmplatform.module.system.mapper.UserRoleMapper;
+import com.qcz.qmplatform.module.system.qo.UserQO;
 import com.qcz.qmplatform.module.system.vo.CurrentUserInfoVO;
 import com.qcz.qmplatform.module.system.vo.PasswordVO;
 import com.qcz.qmplatform.module.system.vo.UserVO;
@@ -42,7 +43,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     @Autowired
     private UserRoleMapper userRoleMapper;
 
-    public List<UserVO> getUserList(User user) {
+    public List<UserVO> getUserList(UserQO user) {
         return baseMapper.queryUserList(user);
     }
 

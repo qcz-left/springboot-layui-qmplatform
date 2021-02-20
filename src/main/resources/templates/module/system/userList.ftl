@@ -10,19 +10,27 @@
             <span class="search-where">
                 <div class="layui-inline">
                     <label class="layui-form-label">用户名</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <input type="text" name="username" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-inline">
                     <label class="layui-form-label">性别</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <select name="userSex">
                             <option value=""></option>
                             <option value="1">男</option>
                             <option value="2">女</option>
                         </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">所属部门</label>
+                    <input type="checkbox" name="organizationExact" lay-skin="primary" title="精确" value="1">
+                    <div class="layui-input-inline">
+                        <div id="organizationIdsStr"></div>
                     </div>
                 </div>
             </span>
