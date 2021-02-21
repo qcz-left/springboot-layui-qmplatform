@@ -74,10 +74,7 @@
     <delete id="deleteMenuById">
         delete from sys_menu where menu_id in(
             with recursive r as(
-                select menu_id, parent_id from sys_menu where menu_id in
-                <foreach collection="menuIds" item="menuId" open="("  separator="," close=")">
-                    #{menuId}
-                </foreach>
+                select menu_id, parent_id from sys_menu where menu_id = #{menuId}
                 union all
                 select p.menu_id, p.parent_id from sys_menu p, r where r.menu_id = p.parent_id
             )

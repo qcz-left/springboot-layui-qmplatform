@@ -46,4 +46,8 @@ public class ButtonService extends ServiceImpl<ButtonMapper, Button> {
     public boolean deleteButton(List<String> buttonIds) {
         return removeByIds(buttonIds);
     }
+
+    public void deleteButtonByMenuId(String menuId) {
+        baseMapper.deleteButtonByMenuId(menuId);
+    }
 }

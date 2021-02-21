@@ -23,6 +23,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     List<Permission> getPermissionByIds(@Param("ids") List<String> ids);
 
-    void deleteMenuById(@Param("menuIds") List<String> menuIds);
+    void deleteMenuById(@Param("menuId") String menuId);
 
 }

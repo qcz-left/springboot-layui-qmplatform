@@ -1,7 +1,6 @@
 package com.qcz.qmplatform.module.system.service;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
@@ -101,11 +100,9 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
             String permissionId = permission.getPermissionId();
             if (permission.getPermissionType() == PermissionType.MENU.getType()) {
                 // 删除菜单同时删除按钮
-                QueryWrapper<Button> buttonWrapper = new QueryWrapper<>();
-                buttonWrapper.eq("menu_id", permissionId);
-                buttonService.remove(buttonWrapper);
+                buttonService.deleteButtonByMenuId(permissionId);
 
-                baseMapper.deleteById(permissionId);
+                baseMapper.deleteMenuById(permissionId);
             } else {
                 buttonService.removeById(permissionId);
             }
