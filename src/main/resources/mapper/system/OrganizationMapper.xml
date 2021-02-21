@@ -25,4 +25,22 @@
         </if>
         order by iorder
     </select>
+
+    <select id="selectCascOrgIds" resultType="string">
+        select organization_id from casc_org(
+        <foreach collection="organizationIds" item="organizationId" separator=",">
+            #{organizationId}
+        </foreach>
+        )
+    </select>
+
+    <delete id="deleteOrgById">
+        delete from sys_organization where organization_id in(
+            select organization_id from casc_org(
+            <foreach collection="organizationIds" item="organizationId" separator=",">
+                #{organizationId}
+            </foreach>
+            )
+        )
+    </delete>
 </mapper>

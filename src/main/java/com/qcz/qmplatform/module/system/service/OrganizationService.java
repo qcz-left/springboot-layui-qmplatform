@@ -1,12 +1,15 @@
 package com.qcz.qmplatform.module.system.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
 import com.qcz.qmplatform.module.system.domain.Organization;
+import com.qcz.qmplatform.module.system.domain.UserOrganization;
 import com.qcz.qmplatform.module.system.mapper.OrganizationMapper;
 import com.qcz.qmplatform.module.system.pojo.OrgTree;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +24,9 @@ import java.util.List;
  */
 @Service
 public class OrganizationService extends ServiceImpl<OrganizationMapper, Organization> {
+
+    @Autowired
+    private UserOrganizationService userOrganizationService;
 
     public List<OrgTree> getOrgList(Organization organization) {
         return baseMapper.selectOrgTree(organization);
@@ -41,7 +47,13 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
     }
 
     public boolean deleteOrg(List<String> orgIds) {
-        return removeByIds(orgIds);
+        List<String> cascOrgIds = baseMapper.selectCascOrgIds(orgIds);
+        removeByIds(cascOrgIds);
+        // 删除关联部门信息
+        QueryWrapper<UserOrganization> deleteWrapper = new QueryWrapper<>();
+        deleteWrapper.in("organization_id", cascOrgIds);
+        userOrganizationService.remove(deleteWrapper);
+        return true;
     }
 
     public boolean saveOrgOne(Organization org) {
