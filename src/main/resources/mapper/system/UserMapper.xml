@@ -50,11 +50,20 @@
         </if>
         <if test="organizationIds != null">
             and suo.organization_id in(
-                select organization_id from casc_org(
+            <choose>
+                <when test="organizationExact == 0">
+                    select organization_id from casc_org(
                     <foreach collection="organizationIds" item="organizationId" separator=",">
                         #{organizationId}
                     </foreach>
-                )
+                    )
+                </when>
+                <otherwise>
+                    <foreach collection="organizationIds" item="organizationId" separator=",">
+                        #{organizationId}
+                    </foreach>
+                </otherwise>
+            </choose>
             )
         </if>
         group by

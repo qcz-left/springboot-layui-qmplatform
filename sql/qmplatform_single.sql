@@ -20,7 +20,7 @@
 -- Sequence structure for sys_user_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."sys_user_id_seq";
-CREATE SEQUENCE "public"."sys_user_id_seq" 
+CREATE SEQUENCE "public"."sys_user_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -298,7 +298,7 @@ INSERT INTO "public"."sys_operate_log" VALUES ('0737767e-3230-4e45-aaae-a0f51680
 INSERT INTO "public"."sys_operate_log" VALUES ('d035b9b8-941c-41e3-a2d5-6665a6703fe5', 1, '登录系统', NULL, NULL, '2020-12-07 21:48:20.525', '/login', '', '127.0.0.1', 1, '');
 INSERT INTO "public"."sys_operate_log" VALUES ('df2e7fd7-bb81-441d-8905-23ac8fa71a89', 1, '登录系统', NULL, NULL, '2020-12-07 22:17:57.233', '/login', '', '127.0.0.1', 1, '');
 INSERT INTO "public"."sys_operate_log" VALUES ('4fa8a674-9778-48ad-bc91-28338d2e96e4', 1, '登录系统', NULL, NULL, '2020-12-07 22:20:09.628', '/login', '', '127.0.0.1', 1, '');
-INSERT INTO "public"."sys_operate_log" VALUES ('2c057297-d871-4bf4-8a36-3b544725e970', 4, '用户管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-07 22:20:56.355', '/user/updateUser', '修改用户', '127.0.0.1', 0, 'java.lang.Exception:org.springframework.dao.DuplicateKeyException: 
+INSERT INTO "public"."sys_operate_log" VALUES ('2c057297-d871-4bf4-8a36-3b544725e970', 4, '用户管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-07 22:20:56.355', '/user/updateUser', '修改用户', '127.0.0.1', 0, 'java.lang.Exception:org.springframework.dao.DuplicateKeyException:
 ### Error updating database.  Cause: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "unique_loginname"
   详细：Key (loginname)=(为首的发生) already exists.
 ### The error may exist in com/qcz/qmplatform/module/system/mapper/UserMapper.java (best guess)
@@ -997,7 +997,7 @@ INSERT INTO "public"."sys_operate_log" VALUES ('6d96db79-b182-4c3d-a6d8-6ce692ec
 INSERT INTO "public"."sys_operate_log" VALUES ('f9c55c48-2d47-441a-a1cb-b0f83c024661', 3, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 12:18:20.242', '/operation/dict-attr/addDictAttr', '新增字典属性', '127.0.0.1', 1, NULL);
 INSERT INTO "public"."sys_operate_log" VALUES ('27e4ab30-d6a4-4ec1-94db-0f9151c696fd', 1, '登录系统', NULL, NULL, '2020-12-20 12:24:44.407', '/login', '系统管理员 进入了系统', '127.0.0.1', 1, NULL);
 INSERT INTO "public"."sys_operate_log" VALUES ('e88bd371-99bb-4661-ba2c-26899efc005a', 3, '字典管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 14:10:25.928', '/operation/dict/addDict', '新增字典', '127.0.0.1', 1, NULL);
-INSERT INTO "public"."sys_operate_log" VALUES ('33334085-af28-4ee7-99c2-58d88859f6e5', 5, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 12:25:30.427', '/operation/dict-attr/deleteDictAttr', '删除字典属性', '127.0.0.1', 0, 'java.lang.Exception:org.springframework.jdbc.BadSqlGrammarException: 
+INSERT INTO "public"."sys_operate_log" VALUES ('33334085-af28-4ee7-99c2-58d88859f6e5', 5, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 12:25:30.427', '/operation/dict-attr/deleteDictAttr', '删除字典属性', '127.0.0.1', 0, 'java.lang.Exception:org.springframework.jdbc.BadSqlGrammarException:
 ### Error updating database.  Cause: org.postgresql.util.PSQLException: ERROR: operator does not exist: smallint = character varying
   建议：No operator matches the given name and argument types. You might need to add explicit type casts.
   位置：65
@@ -1126,7 +1126,7 @@ INSERT INTO "public"."sys_operate_log" VALUES ('a4d828de-c1f5-4800-ad23-0be5e234
 INSERT INTO "public"."sys_operate_log" VALUES ('021f4732-c5ea-4ccd-9760-1920dc197855', 3, '字典管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 17:04:08.121', '/operation/dict-attr/addDictAttr', '新增字典属性', '127.0.0.1', 1, NULL);
 INSERT INTO "public"."sys_operate_log" VALUES ('d0debcb7-27ef-40f9-9b92-c715a767918d', 3, '字典管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 17:04:14.002', '/operation/dict-attr/addDictAttr', '新增字典属性', '127.0.0.1', 1, NULL);
 INSERT INTO "public"."sys_operate_log" VALUES ('74531b99-0a56-495f-9228-c1b18784425e', 1, '登录系统', NULL, NULL, '2020-12-20 17:44:21.325', '/login', '系统管理员 进入了系统', '127.0.0.1', 1, NULL);
-INSERT INTO "public"."sys_operate_log" VALUES ('1936165f-09a8-4de3-9744-27d4d6ed0d20', 4, '字典管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 18:11:25.448', '/operation/dict/updateDict', '修改字典', '127.0.0.1', 0, 'java.lang.Exception:org.springframework.dao.DuplicateKeyException: 
+INSERT INTO "public"."sys_operate_log" VALUES ('1936165f-09a8-4de3-9744-27d4d6ed0d20', 4, '字典管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 18:11:25.448', '/operation/dict/updateDict', '修改字典', '127.0.0.1', 0, 'java.lang.Exception:org.springframework.dao.DuplicateKeyException:
 ### Error updating database.  Cause: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "uq_dict_code"
   详细：Key (dict_code)=(user-status) already exists.
 ### The error may exist in com/qcz/qmplatform/module/operation/mapper/DictMapper.java (best guess)
@@ -1139,7 +1139,7 @@ INSERT INTO "public"."sys_operate_log" VALUES ('1936165f-09a8-4de3-9744-27d4d6ed
   详细：Key (dict_code)=(user-status) already exists.; nested exception is org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint ');
 INSERT INTO "public"."sys_operate_log" VALUES ('cbb36f20-eac0-461f-937f-f4b6d19f5092', 4, '数据备份与恢复', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-26 23:28:42.741', '/operation/data-bak/saveDataBakStrategy', '调整数据备份策略', '127.0.0.1', 1, NULL);
 INSERT INTO "public"."sys_operate_log" VALUES ('ce07cbb8-a83e-4f1d-8383-a44130249fb7', 1, '登录系统', NULL, NULL, '2020-12-27 00:04:27.007', '/login', '系统管理员 进入了系统', '127.0.0.1', 1, NULL);
-INSERT INTO "public"."sys_operate_log" VALUES ('0c3ee308-6478-482d-bb0c-8d789061ca26', 4, '字典管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 18:14:38.191', '/operation/dict/updateDict', '修改字典', '127.0.0.1', 0, 'java.lang.Exception:org.springframework.dao.DuplicateKeyException: 
+INSERT INTO "public"."sys_operate_log" VALUES ('0c3ee308-6478-482d-bb0c-8d789061ca26', 4, '字典管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 18:14:38.191', '/operation/dict/updateDict', '修改字典', '127.0.0.1', 0, 'java.lang.Exception:org.springframework.dao.DuplicateKeyException:
 ### Error updating database.  Cause: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "uq_dict_code"
   详细：Key (dict_code)=(user-status) already exists.
 ### The error may exist in com/qcz/qmplatform/module/operation/mapper/DictMapper.java (best guess)
@@ -1913,29 +1913,6 @@ ALTER TABLE "public"."sys_user_role" ADD CONSTRAINT "uk_sys_user_role" UNIQUE ("
 ALTER TABLE "public"."tbl_attachment" ADD CONSTRAINT "attachment_pkey" PRIMARY KEY ("attachment_id");
 
 CREATE OR REPLACE FUNCTION "public"."casc_org"(VARIADIC "org_id" _varchar)
-  RETURNS SETOF "public"."sys_organization" AS $BODY$
-	declare
-	ids_str varchar;
-	findAllQuery text;
-	BEGIN
-	for i in array_lower($1,1)..array_upper($1,1) loop
-		ids_str := concat(ids_str, '''', $1[i], '''', ',');
-  end loop;
-	ids_str := substr(ids_str, 0, length(ids_str));
-	-- raise notice '%', ids_str;
-
-	findAllQuery := 'with recursive r as(
-			select * from sys_organization where organization_id in(' || ids_str || ')
-			union all
-			select p.* from sys_organization p, r where r.organization_id = p.parent_id
-	)
-	select distinct * from r';
-
-	RETURN QUERY EXECUTE findAllQuery;
-END$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100
-  ROWS 1000CREATE OR REPLACE FUNCTION "public"."casc_org"(VARIADIC "org_id" _varchar)
   RETURNS SETOF "public"."sys_organization" AS $BODY$
 	declare
 	ids_str varchar;
