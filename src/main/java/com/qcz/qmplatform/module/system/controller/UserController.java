@@ -12,6 +12,7 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.CacheUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.SmsUtils;
@@ -317,8 +318,14 @@ public class UserController extends BaseController {
         templateParams.put("2", String.valueOf(timeout));
         config.setTemplateParams(templateParams);
         // 发送
-        NotifyServiceFactory.build(config).send();
-        return ResponseResult.ok("验证码已发送到手机：" + phone + "，请注意查收！", null);
+        String code = NotifyServiceFactory.build(config).send();
+        Map<String, String> retData = new HashMap<>(4);
+        retData.put("code", code);
+        retData.put("phone", phone);
+        if (StringUtils.equalsIgnoreCase(code, Constant.OK)) {
+            return ResponseResult.ok(retData);
+        }
+        return ResponseResult.error(retData);
     }
 
 }

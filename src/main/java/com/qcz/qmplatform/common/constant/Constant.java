@@ -10,4 +10,6 @@ public class Constant {
     public static final int SUBJECT_HASHTERATIONS = 0x400;// 加密次数1024
 
     public static final String CURRENT_USER_SIGN = "currentUser";// 当前登录人标识
+
+    public static final String OK = "ok";
 }

@@ -25,7 +25,7 @@ public class TencentCloudSmsNotifyService implements INotifyService {
     private SmsConfig smsConfig;
 
     @Override
-    public void send() {
+    public String send() {
         try {
             /* 必要步骤：
              * 实例化一个认证对象，入参需要传入腾讯云账户密钥对 secretId 和 secretKey
@@ -105,12 +105,11 @@ public class TencentCloudSmsNotifyService implements INotifyService {
             // 输出 JSON 格式的字符串回包
             LOGGER.info(SendSmsResponse.toJsonString(res));
 
-            // 可以取出单个值，您可以通过官网接口文档或跳转到 response 对象的定义处查看返回字段的定义
-            LOGGER.info(res.getRequestId());
-
+            return res.getSendStatusSet()[0].getCode();
         } catch (TencentCloudSDKException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override

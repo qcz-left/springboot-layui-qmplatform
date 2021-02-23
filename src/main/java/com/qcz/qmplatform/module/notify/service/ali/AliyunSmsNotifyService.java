@@ -1,44 +1,52 @@
 package com.qcz.qmplatform.module.notify.service.ali;
 
 import cn.hutool.json.JSONUtil;
-import com.aliyuncs.CommonRequest;
-import com.aliyuncs.CommonResponse;
-import com.aliyuncs.DefaultAcsClient;
-import com.aliyuncs.IAcsClient;
-import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.http.MethodType;
-import com.aliyuncs.profile.DefaultProfile;
+import com.aliyun.dysmsapi20170525.Client;
+import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
+import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
+import com.aliyun.dysmsapi20170525.models.SendSmsResponseBody;
+import com.aliyun.teaopenapi.models.Config;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.notify.bean.SmsConfig;
 import com.qcz.qmplatform.module.notify.service.INotifyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 阿里云短信服务
  */
 public class AliyunSmsNotifyService implements INotifyService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AliyunSmsNotifyService.class);
+
     private SmsConfig smsConfig;
 
     @Override
-    public void send() {
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", smsConfig.getSecretId(), smsConfig.getSecretKey());
-        IAcsClient client = new DefaultAcsClient(profile);
-
-        CommonRequest request = new CommonRequest();
-        request.setSysMethod(MethodType.POST);
-        request.setSysDomain(smsConfig.getEndpoint());
-        request.setSysVersion("2017-05-25");
-        request.setSysAction("SendSms");
-        request.putQueryParameter("RegionId", "cn-hangzhou");
-        request.putQueryParameter("PhoneNumbers", smsConfig.getPhones().get(0));
-        request.putQueryParameter("SignName", smsConfig.getSign());
-        request.putQueryParameter("TemplateCode", smsConfig.getTemplateID());
-        request.putQueryParameter("TemplateParam", JSONUtil.toJsonStr(smsConfig.getTemplateParams()));
+    public String send() {
+        Config config = new Config()
+                // 您的AccessKey ID
+                .setAccessKeyId(smsConfig.getSecretId())
+                // 您的AccessKey Secret
+                .setAccessKeySecret(smsConfig.getSecretKey());
+        // 访问的域名
+        config.endpoint = StringUtils.blankToDefault(smsConfig.getEndpoint(), "dysmsapi.aliyuncs.com");
+        Client client;
         try {
-            CommonResponse response = client.getCommonResponse(request);
-            System.out.println(response.getData());
-        } catch (ClientException e) {
-            e.printStackTrace();
+            client = new Client(config);
+            SendSmsRequest sendSmsRequest = new SendSmsRequest()
+                    .setPhoneNumbers(smsConfig.getPhones().get(0))
+                    .setSignName(smsConfig.getSign())
+                    .setTemplateCode(smsConfig.getTemplateID())
+                    .setTemplateParam(JSONUtil.toJsonStr(smsConfig.getTemplateParams()));
+            SendSmsResponse sendSmsResponse = client.sendSms(sendSmsRequest);
+            SendSmsResponseBody body = sendSmsResponse.getBody();
+            LOGGER.info(JSONUtil.toJsonStr(body));
+            return body.getCode();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
         }
+
+        return null;
     }
 
     @Override

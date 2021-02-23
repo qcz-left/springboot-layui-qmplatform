@@ -9,8 +9,10 @@ public interface INotifyService {
 
     /**
      * 发送
+     *
+     * @return 状态码code
      */
-    void send();
+    String send();
 
     /**
      * 设置短信网关参数，大多可以从控制台界面获取

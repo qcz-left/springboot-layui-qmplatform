@@ -158,8 +158,9 @@
             CommonUtil.getAjax(ctx + '/user/noNeedLogin/getValidateCode', {
                 phone: $("#phone").val()
             }, function (result) {
+                let data = result.data;
                 if (result.ok) {
-                    layer.success(result.msg);
+                    layer.success('验证码已发送到手机：' + data.phone + '，请注意查收！');
                     $this.addClass('layui-btn-disabled').attr('disabled', true);
                     let time = 60;
                     let interval = window.setInterval(function () {
@@ -170,6 +171,13 @@
                             window.clearInterval(interval);
                         }
                     }, 1000);
+                } else {
+                    layer.alert('验证码发送失败！错误码：<p class="text-danger">' + data.code + '</p>', {
+                        icon: 2,
+                        title: null,
+                        btn: [],
+                        offset: '30px'
+                    });
                 }
             })
         });
