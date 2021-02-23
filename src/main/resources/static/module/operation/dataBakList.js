@@ -100,7 +100,7 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
             formType: 2,
             title: '请填写备份描述'
         }, function(val, index){
-            layer.close(index);
+            top.layer.close(index);
             let backIndex = top.layer.loadingWithText('正在备份，请稍后...');
             CommonUtil.postAjax(ctx + '/operation/data-bak/exeBackup', {
                 remark: val
