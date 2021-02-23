@@ -3,6 +3,7 @@ package com.qcz.qmplatform.common.aop.aspect;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
+import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -74,7 +75,7 @@ public class OperateLogAspect {
                 insertOperateLog(1, currentUser, null, requestUrl, ipAddress, joinPoint);
             });
         } catch (Exception e) {// 原逻辑程序有异常，这里抛回
-            throw new Exception(e);
+            throw new CommonException(e.getMessage(), e);
         }
         return proceed;
     }
