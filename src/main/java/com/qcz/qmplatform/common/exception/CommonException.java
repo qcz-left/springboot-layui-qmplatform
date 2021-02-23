@@ -2,9 +2,6 @@ package com.qcz.qmplatform.common.exception;
 
 public class CommonException extends RuntimeException {
 
-    public CommonException() {
-    }
-
     public CommonException(String message) {
         super(message);
     }

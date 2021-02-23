@@ -123,8 +123,8 @@ public class DataBakController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "立即备份")
-    public ResponseResult<?> exeBackup() {
-        return dataBakService.exeBackup();
+    public ResponseResult<?> exeBackup(@RequestBody DataBak dataBak) {
+        return dataBakService.exeBackup(dataBak.getRemark());
     }
 
     /**

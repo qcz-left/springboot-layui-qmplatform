@@ -17,13 +17,13 @@ public class GlobalExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
-     * 服务器异常500
+     * 自定义异常
      */
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(CommonException.class)
     @ResponseBody
-    public ResponseResult<?> errorHandleBy500(Exception ex) {
+    public ResponseResult<?> errorHandleByCommon(Exception ex) {
         LOGGER.error(ex.getMessage(), ex);
-        return new ResponseResult<>(ResponseCode.INTERNAL_SERVER_ERROR, "服务器好像出现错误了，请联系管理员！", null);
+        return ResponseResult.error(ex.getMessage());
     }
 
     /**
@@ -42,15 +42,6 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 自定义异常
-     */
-    @ExceptionHandler(CommonException.class)
-    public ResponseResult<?> errorHandleByCommon(CommonException ex) {
-        LOGGER.error(ex.getMessage(), ex);
-        return ResponseResult.error(ex.getMessage());
-    }
-
-    /**
      * 会话过期
      */
     @ExceptionHandler(InvalidSessionException.class)
@@ -59,4 +50,13 @@ public class GlobalExceptionHandler {
         return "redirect:/loginPage";
     }
 
+    /**
+     * 服务器异常500
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public ResponseResult<?> errorHandleBy500(Exception ex) {
+        LOGGER.error(ex.getMessage(), ex);
+        return new ResponseResult<>(ResponseCode.INTERNAL_SERVER_ERROR, "服务器好像出现错误了，请联系管理员！", null);
+    }
 }

@@ -23,7 +23,7 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
                     return new Date(row.createTime).format('yyyy-MM-dd hh:mm:ss.S');
                 }
             },
-            {field: 'bakPath', title: '备份路径', width: '30%'},
+            // {field: 'bakPath', title: '备份路径', width: '30%'},
             {
                 field: 'fileSize', title: '备份大小', width: '10%', templet: function (row) {
                     let byteSize = row.fileSize;
@@ -33,6 +33,7 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
                     return CommonUtil.convertByte(byteSize);
                 }
             },
+            {field: 'remark', title: '备份描述', width: '30%'},
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
         ]]
     });
@@ -95,12 +96,20 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
      * 立即备份
      */
     function backup() {
-        let index = top.layer.loadingWithText('正在备份，请稍后...');
-        CommonUtil.postAjax(ctx + '/operation/data-bak/exeBackup', {}, function (result) {
-            LayerUtil.respMsg(result, null, null, function () {
-                tableReload();
+        top.layer.prompt({
+            formType: 2,
+            title: '请填写备份描述'
+        }, function(val, index){
+            layer.close(index);
+            let backIndex = top.layer.loadingWithText('正在备份，请稍后...');
+            CommonUtil.postAjax(ctx + '/operation/data-bak/exeBackup', {
+                remark: val
+            }, function (result) {
+                LayerUtil.respMsg(result, null, null, function () {
+                    tableReload();
+                });
+                top.layer.close(backIndex);
             });
-            top.layer.close(index);
         });
     }
 
@@ -113,7 +122,7 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
         top.layer.confirm("是否要从：<span class='text-success'>" + bakName + "</span>，恢复备份？", {
             title: "警告"
         }, function () {
-            let index = top.layer.loadingWithText('正在恢复备份，请稍后...');
+            top.layer.loadingWithText('正在恢复备份，请稍后...');
             CommonUtil.postAjax(ctx + "/operation/data-bak/recoverDataBak/" + bakId, {}, function (data) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(data, "恢复备份成功！", "恢复备份失败！");

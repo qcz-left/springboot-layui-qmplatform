@@ -102,14 +102,16 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
             periodList.add("7");
         }
         pattern += CollectionUtil.join(periodList, ",");
-        CronUtils.schedule(SCHEDULE_ID, pattern, () -> LOGGER.debug("schedule data bak exe result[{}]: {}", DateUtils.now(), exeBackup()));
+        CronUtils.schedule(SCHEDULE_ID, pattern, () -> LOGGER.debug("schedule data bak exe result[{}]: {}", DateUtils.now(), exeBackup("系统自动备份")));
     }
 
     /**
      * 数据备份
+     *
+     * @param bakRemark 备份描述
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public ResponseResult<?> exeBackup() {
+    public ResponseResult<?> exeBackup(String bakRemark) {
         if (!SystemUtils.OS.isLinux()) {
             return ResponseResult.error("非Linux环境不允许备份数据！");
         }
@@ -152,6 +154,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         dataBak.setBakPath(bakFilePath);
         dataBak.setCreateTime(DateUtils.timestamp(date));
         dataBak.setFileSize(FileUtils.size(FileUtils.file(bakFilePath)));
+        dataBak.setRemark(bakRemark);
         if (save(dataBak)) {
             return ResponseResult.ok();
         } else {
