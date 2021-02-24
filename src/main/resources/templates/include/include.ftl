@@ -18,6 +18,12 @@
                 <script type="text/javascript" src="${ctx}/static/plugin/echarts3.3.2/echarts.min.js"></script>
             <#elseif item == "error">
             <link rel="stylesheet" href="${ctx}/static/error/error.css"/>
+            <#elseif item == "jqgrid">
+            <#--jqgrid-->
+            <link rel="stylesheet" href="${ctx}/static/plugin/jqgrid/css/css/ui-lightness/jquery-ui-1.8.16.custom.css"/>
+            <link rel="stylesheet" href="${ctx}/static/plugin/jqgrid/css/ui.jqgrid.css"/>
+                <script type="text/javascript" src="${ctx}/static/plugin/jqgrid/js/i18n/grid.locale-cn.js"></script>
+                <script type="text/javascript" src="${ctx}/static/plugin/jqgrid/js/jquery.jqGrid.src.js"></script>
             </#if>
         </#list>
     </#if>
