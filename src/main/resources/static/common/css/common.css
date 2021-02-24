@@ -97,23 +97,15 @@ body .my-layer-warm .layui-layer-btn0 {
 }
 
 .ui-jqgrid-labels {
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .ui-jqgrid tr.jqgrow td {
     font-family: "宋体"
 }
 
-.ui-jqgrid {
-    height: 97%;
-}
-
 .ui-jqgrid .ui-jqgrid-view {
     height: 100%;
-}
-
-.ui-jqgrid .ui-jqgrid-pager {
-    bottom: 39px;
 }
 
 .ui-jqgrid .ui-jqgrid-htable thead th, .ui-jqgrid tr.ui-row-ltr td {
