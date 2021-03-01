@@ -25,4 +25,5 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     void deleteMenuById(@Param("menuId") String menuId);
 
+    int validatePermissionCode(@Param("permissionId") String permissionId, @Param("code") String code);
 }

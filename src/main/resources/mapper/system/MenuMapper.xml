@@ -71,6 +71,13 @@
             </foreach>
     </select>
 
+    <select id="validatePermissionCode" resultType="int">
+        select count(1) from v_sys_permission where code = #{code}
+        <if test=" permissionId != null and permissionId != ''">
+            and permission_id != #{permissionId}
+        </if>
+    </select>
+
     <delete id="deleteMenuById">
         delete from sys_menu where menu_id in(
             with recursive r as(

@@ -45,9 +45,9 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">权限码</label>
+            <label class="layui-form-label required">权限码</label>
             <div class="layui-input-block">
-                <input type="text" name="code" class="layui-input">
+                <input type="text" name="code" class="layui-input" lay-verify="required|code">
             </div>
         </div>
         <div class="layui-form-item">
@@ -81,7 +81,23 @@
         let layer = layui.layer;
         let xmSelect = layui.xmSelect;
         // 表单数据校验
-        form.verify({});
+        form.verify({
+            code: function (value) {
+                if (!/^[A-Za-z0-9_-]+$/.test(value)) {
+                    return '权限码由英文字母、数字、“-”、“_”中的一种或多种组成';
+                }
+                let valid;
+                CommonUtil.getSync(ctx + '/menu/validatePermissionCode', {
+                    permissionId: id,
+                    code: value
+                }, function (result) {
+                    valid = result.ok;
+                });
+                if (!valid) {
+                    return '权限码已存在，请重新输入';
+                }
+            }
+        });
 
         let detail = {
             permissionType: '1'
@@ -97,7 +113,7 @@
             form.render('select');
         }
 
-        let permissionTypeListen = function(type){
+        let permissionTypeListen = function (type) {
             if (type == '1') {
                 $("#display").removeClass("layui-hide");
             } else {

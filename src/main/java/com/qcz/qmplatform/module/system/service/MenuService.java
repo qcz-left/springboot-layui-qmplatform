@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.system.service;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
@@ -118,4 +119,8 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         return null;
     }
 
+    public boolean validatePermissionCode(String permissionId, String code) {
+        Assert.notBlank(code);
+        return baseMapper.validatePermissionCode(permissionId, code) == 0;
+    }
 }

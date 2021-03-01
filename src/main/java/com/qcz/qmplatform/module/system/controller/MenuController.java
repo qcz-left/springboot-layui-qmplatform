@@ -102,6 +102,22 @@ public class MenuController extends BaseController {
     }
 
     /**
+     * 验证权限码唯一性
+     *
+     * @param permissionId 权限id
+     * @param code         权限码
+     * @return
+     */
+    @GetMapping("/validatePermissionCode")
+    @ResponseBody
+    public ResponseResult<?> validatePermissionCode(String permissionId, String code) {
+        if (!menuService.validatePermissionCode(permissionId, code)) {
+            return ResponseResult.error();
+        }
+        return ResponseResult.ok();
+    }
+
+    /**
      * 添加权限信息
      *
      * @param permission 权限表单信息
