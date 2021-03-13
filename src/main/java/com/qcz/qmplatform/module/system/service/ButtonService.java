@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.system.service;
 
+import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -28,7 +29,7 @@ public class ButtonService extends ServiceImpl<ButtonMapper, Button> {
     }
 
     public boolean addButtonOne(Button button) {
-        button.setButtonId(StringUtils.uuid());
+        button.setButtonId(IdUtil.randomUUID());
         return save(button);
     }
 
