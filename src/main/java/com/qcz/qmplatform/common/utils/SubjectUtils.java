@@ -31,11 +31,11 @@ public class SubjectUtils {
     public static User getUser() {
         Object principal = SecurityUtils.getSubject().getPrincipal();
         if (principal != null) {
-            String sign = Constant.CURRENT_USER_SIGN + principal;
-            User user = userCache.get(sign);
+            String principalStr = principal.toString();
+            User user = userCache.get(principalStr);
             if (user == null) {
                 user = SpringContextUtils.getBean(UserService.class).getById(String.valueOf(principal));
-                userCache.put(sign, user);
+                userCache.put(principalStr, user);
             }
             return user;
         }
@@ -43,10 +43,9 @@ public class SubjectUtils {
     }
 
     public static void setUser(User user) {
-        String sign = Constant.CURRENT_USER_SIGN + user.getId();
         Session session = SecurityUtils.getSubject().getSession();
         session.setTimeout(30 * 60 * 1000L);
-        userCache.put(sign, user);
+        userCache.put(user.getId(), user);
         CacheUtils.SESSION_CACHE.put(session.getId().toString(), user);
     }
 
