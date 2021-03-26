@@ -21,6 +21,9 @@
                     </dd>
                 </dl>
             </li>
+            <li class="layui-nav-item">
+                <a href="" class="layui-icon layui-icon-notice"><span class="layui-badge">9</span></a>
+            </li>
             <li class="layui-nav-item"><a href="${ctx}/logout">退出</a></li>
             <li class="layui-nav-item">
                 <div id="choose-color"></div>

@@ -4,7 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 消息通知
@@ -13,10 +18,27 @@ import javax.websocket.server.ServerEndpoint;
 @Component
 public class NotifyWebSocketServer extends BaseWebSocketServer {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(NotifyWebSocketServer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NotifyWebSocketServer.class);
 
-    public static void sendMsg(String result, String id) {
+    /**
+     * 用于存放所有在线客户端
+     */
+    private static final Map<String, Session> clients = new ConcurrentHashMap<>();
 
+    public static void sendMsg(String result, Session session) {
+        try {
+            session.getBasicRemote().sendText(result);
+        } catch (IOException e) {
+            LOGGER.error("[{}]The WebSocket service sent a failed message!", session.getId());
+        }
     }
 
+    @Override
+    public Map<String, Session> getClients() {
+        return clients;
+    }
+
+    public static Collection<Session> getSessions() {
+        return clients.values();
+    }
 }

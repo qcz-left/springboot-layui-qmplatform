@@ -1,2 +1,3 @@
 [com.qcz.qmplatform.module.sche]
 DeleteTmpFileSchedule.run = */30 * * * *
+SyncMessageSchedule.run = */1 * * * *
