@@ -2,6 +2,10 @@ package com.qcz.qmplatform.module.system.mapper;
 
 import com.qcz.qmplatform.module.system.domain.Message;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -12,5 +16,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-03-26
  */
 public interface MessageMapper extends BaseMapper<Message> {
+
+    List<Map<String, Long>> selectTypeCount(@Param("read") int read, @Param("receiver") String receiver);
 
 }

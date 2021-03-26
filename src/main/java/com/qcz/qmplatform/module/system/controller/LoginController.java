@@ -10,6 +10,7 @@ import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.system.assist.PermissionType;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.service.MenuService;
+import com.qcz.qmplatform.module.system.service.MessageService;
 import com.qcz.qmplatform.module.system.vo.PermissionVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -34,7 +35,9 @@ public class LoginController {
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
-    private MenuService menuService;
+    MenuService menuService;
+    @Autowired
+    MessageService messageService;
 
     @GetMapping("/")
     public String index(Map<String, Object> root) {
@@ -42,10 +45,12 @@ public class LoginController {
         PermissionVO permission = new PermissionVO();
         permission.setPermissionType(PermissionType.MENU.getType());
         permission.setDisplay(1);
-        permission.setUserId(currUser.getId());
+        String userId = currUser.getId();
+        permission.setUserId(userId);
         root.put("menuTree", menuService.getMenuTree(permission));
         root.put(Constant.CURRENT_USER_SIGN, currUser);
         root.put("maxTabs", ConfigLoader.getMaxTabs());
+        root.put("messageCount", messageService.selectNoReadCount(userId));
         return "index";
     }
 

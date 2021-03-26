@@ -22,7 +22,9 @@
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="" class="layui-icon layui-icon-notice"><span class="layui-badge">9</span></a>
+                <a href="" class="layui-icon layui-icon-notice">
+                    <span id="messageCount" class="layui-badge<#if messageCount.all == 0> hide</#if>">${messageCount.all}</span>
+                </a>
             </li>
             <li class="layui-nav-item"><a href="${ctx}/logout">退出</a></li>
             <li class="layui-nav-item">
@@ -135,6 +137,22 @@
         socket.onerror = function () {
             console.log("websocket发生了错误");
         }
+
+        /*
+         * 系统消息
+         */
+        let socketMessageUrl = CommonUtil.getWsProtocol() + "://" + window.location.host + ctx + "/socket/notify";
+        let socketMessage = new WebSocket(socketMessageUrl);
+        //获得消息事件
+        socketMessage.onmessage = function (msg) {
+            let result = JSON.parse(msg.data);
+            let all = result.all;
+            if (all > 0) {
+                $("#messageCount").text(all).show();
+            } else {
+                $("#messageCount").hide();
+            }
+        };
     });
 </script>
 </body>
