@@ -3,6 +3,7 @@ package com.qcz.qmplatform.module.system.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
@@ -59,7 +60,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     public boolean insertUser(UserVO user) {
-        String userId = StringUtils.uuid();
+        String userId = IdUtil.randomUUID();
         user.setId(userId);
         user.setCreateTime(DateUtils.getCurrTimestamp());
         user.setCreateUserId(SubjectUtils.getUserId());

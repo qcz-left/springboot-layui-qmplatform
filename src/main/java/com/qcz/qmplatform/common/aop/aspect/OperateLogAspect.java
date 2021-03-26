@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.common.aop.aspect;
 
+import cn.hutool.core.util.IdUtil;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -144,7 +145,7 @@ public class OperateLogAspect {
         }
         OperateLog log = new OperateLog();
         log.setOperateModule(moduleName);
-        log.setLogId(StringUtils.uuid());
+        log.setLogId(IdUtil.randomUUID());
         if (currentUser != null) {
             log.setOperateUserId(currentUser.getId());
             log.setOperateUserName(currentUser.getUsername());
