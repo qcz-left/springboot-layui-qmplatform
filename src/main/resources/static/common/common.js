@@ -334,5 +334,12 @@ const CommonUtil = {
             return sizeStr.substring(0, len) + sizeStr.substr(len + 3, 2);
         }
         return sizeStr;
+    },
+
+    /**
+     * 获取websocket协议
+     */
+    getWsProtocol: function () {
+        return window.location.protocol === "https:" ? "wss" : "ws";
     }
 };

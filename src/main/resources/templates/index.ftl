@@ -111,11 +111,11 @@
             element.tabChange(tabLayFilter, layId);
         }
 
-        let socketUrl = (window.location.protocol === "https:" ? "wss" : "ws") + "://" + window.location.host + ctx + "/socket/validateSession";
+        let socketUrl = CommonUtil.getWsProtocol() + "://" + window.location.host + ctx + "/socket/validateSession";
         let socket = new WebSocket(socketUrl);
         //打开事件
         socket.onopen = function () {
-            console.log("websocket已打开");
+
         };
         //获得消息事件
         socket.onmessage = function (msg) {
@@ -126,7 +126,7 @@
         };
         //关闭事件
         socket.onclose = function () {
-            console.log("websocket已关闭");
+
         };
         //发生了错误事件
         socket.onerror = function () {
