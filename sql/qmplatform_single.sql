@@ -101,6 +101,9 @@ INSERT INTO "public"."sys_button" VALUES ('cc2cbb01-f42f-4272-b02a-4c74484ca62a'
 INSERT INTO "public"."sys_button" VALUES ('37778f44-615d-4d69-bf8a-99ff0bafef40', '立即备份', '0ec94352-4ea3-4f59-961c-38ca6779d714', 'data-bak-save', 0, '');
 INSERT INTO "public"."sys_button" VALUES ('8c9768b7-3574-471b-bd51-6bd6188f24b5', '删除备份', '0ec94352-4ea3-4f59-961c-38ca6779d714', 'data-bak-delete', 0, '');
 INSERT INTO "public"."sys_button" VALUES ('44d656f2-86eb-4326-ad12-935ca160551d', '恢复备份', '0ec94352-4ea3-4f59-961c-38ca6779d714', 'data-bak-recover', 0, '');
+INSERT INTO "public"."sys_button" VALUES ('94c6fe0d-5c7f-42cd-85fe-60f6c096e230', '系统通知-删除', 'e3a24ef6-134f-498a-aa11-54a184de3b70', 'message-delete', 0, '');
+INSERT INTO "public"."sys_button" VALUES ('dd5db615-6b1a-4bfe-9e45-45b008d73e90', '系统通知-设置已读', 'e3a24ef6-134f-498a-aa11-54a184de3b70', 'message-set-read', 0, '');
+
 
 -- ----------------------------
 -- Table structure for sys_dict
@@ -130,6 +133,8 @@ INSERT INTO "public"."sys_dict" VALUES ('a500f79b-5e4c-4dfb-8dae-d837587847d9', 
 INSERT INTO "public"."sys_dict" VALUES ('778223bf-498d-4625-a1f2-6cf9769291c8', '操作类型', '操作日志-操作类型', 5, 'operate-type');
 INSERT INTO "public"."sys_dict" VALUES ('8ab45963-e454-4aed-a76e-1104fa97e1fa', '操作状态', '操作日志-操作状态', 10, 'operate-status');
 INSERT INTO "public"."sys_dict" VALUES ('bdcef397-ddad-4656-8044-8d96774fd639', '短信提供商', '短信配置', 20, 'sms-provider');
+INSERT INTO "public"."sys_dict" VALUES ('3f9b60cf-dfcf-4e45-8cca-0925361bbed7', '系统消息类型', '', NULL, 'message-type');
+
 
 -- ----------------------------
 -- Table structure for sys_dict_attr
@@ -168,6 +173,9 @@ INSERT INTO "public"."sys_dict_attr" VALUES ('成功', '1', '8ab45963-e454-4aed-
 INSERT INTO "public"."sys_dict_attr" VALUES ('失败', '0', '8ab45963-e454-4aed-a76e-1104fa97e1fa', 'fa408d46-918c-4663-84ad-aacf48cae2ff');
 INSERT INTO "public"."sys_dict_attr" VALUES ('腾讯云', '1', 'bdcef397-ddad-4656-8044-8d96774fd639', '14413e2e-fd8d-4e42-8c31-4a30d74dc539');
 INSERT INTO "public"."sys_dict_attr" VALUES ('阿里云', '2', 'bdcef397-ddad-4656-8044-8d96774fd639', '4f203b9b-1bb8-4cdd-849c-54208048856c');
+INSERT INTO "public"."sys_dict_attr" VALUES ('告警', '1', '3f9b60cf-dfcf-4e45-8cca-0925361bbed7', 'aa31a862-9fdf-4513-af09-b7ce4f9b58f6');
+INSERT INTO "public"."sys_dict_attr" VALUES ('通知提醒', '2', '3f9b60cf-dfcf-4e45-8cca-0925361bbed7', 'fbe26946-463c-4d45-960e-f28f105788a2');
+
 
 -- ----------------------------
 -- Table structure for sys_ini
@@ -236,6 +244,8 @@ INSERT INTO "public"."sys_menu" VALUES ('e843dfa8-e868-4a83-aa35-215cbfbfd643', 
 INSERT INTO "public"."sys_menu" VALUES ('80345dc4-cc15-405b-a371-82e50b64fcd9', '系统运行状态', 1, 'system-status', 'layui-icon-website', '/server/infoPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 INSERT INTO "public"."sys_menu" VALUES ('428493a8-5e23-4e64-a24c-78e61b3ed854', '字典管理', 4, 'dict', 'layui-icon-tips', '/operation/dict/dictListPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 INSERT INTO "public"."sys_menu" VALUES ('bd8cae46-b3bc-48e1-bc6d-c623493fe64c', '短信配置', 50, 'sms', '', '/notify/smsConfigPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
+INSERT INTO "public"."sys_menu" VALUES ('e3a24ef6-134f-498a-aa11-54a184de3b70', '未知菜单', 0, 'unknown', '', '', '', 1);
+
 
 -- ----------------------------
 -- Table structure for sys_operate_log
@@ -1774,6 +1784,41 @@ COMMENT ON COLUMN "public"."tbl_attachment"."upload_user_name" IS '上传人名�
 COMMENT ON COLUMN "public"."tbl_attachment"."upload_time" IS '上传时间';
 COMMENT ON COLUMN "public"."tbl_attachment"."description" IS '附件说明';
 COMMENT ON TABLE "public"."tbl_attachment" IS '文件';
+
+-- ----------------------------
+-- Table structure for sys_message
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."sys_message";
+CREATE TABLE "public"."sys_message" (
+  "message_id" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "content" text COLLATE "pg_catalog"."default",
+  "type" int2,
+  "create_time" timestamp(6),
+  "read" int2 DEFAULT 0,
+  "sender" varchar(50) COLLATE "pg_catalog"."default",
+  "receiver" varchar(50) COLLATE "pg_catalog"."default"
+)
+;
+COMMENT ON COLUMN "public"."sys_message"."message_id" IS '系统通知信息id';
+COMMENT ON COLUMN "public"."sys_message"."content" IS '消息内容';
+COMMENT ON COLUMN "public"."sys_message"."type" IS '消息类型';
+COMMENT ON COLUMN "public"."sys_message"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."sys_message"."read" IS '是否已读';
+COMMENT ON COLUMN "public"."sys_message"."sender" IS '发送方';
+COMMENT ON COLUMN "public"."sys_message"."receiver" IS '接收方';
+COMMENT ON TABLE "public"."sys_message" IS '系统消息';
+
+-- ----------------------------
+-- Records of sys_message
+-- ----------------------------
+INSERT INTO "public"."sys_message" VALUES ('2', 'test', 1, '2021-03-26 16:31:28', 0, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f');
+INSERT INTO "public"."sys_message" VALUES ('1', 'test1', 1, '2021-03-26 16:31:11', 1, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f');
+INSERT INTO "public"."sys_message" VALUES ('3', 'test3', 2, '2021-03-26 16:31:39', 1, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f');
+
+-- ----------------------------
+-- Primary Key structure for table sys_message
+-- ----------------------------
+ALTER TABLE "public"."sys_message" ADD CONSTRAINT "sys_message_pkey" PRIMARY KEY ("message_id");
 
 -- ----------------------------
 -- Records of tbl_attachment

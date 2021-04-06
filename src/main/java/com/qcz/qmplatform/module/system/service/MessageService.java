@@ -1,8 +1,10 @@
 package com.qcz.qmplatform.module.system.service;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.module.system.domain.Message;
 import com.qcz.qmplatform.module.system.mapper.MessageMapper;
+import com.qcz.qmplatform.module.system.vo.MessageVO;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -19,6 +21,10 @@ import java.util.Map;
  */
 @Service
 public class MessageService extends ServiceImpl<MessageMapper, Message> {
+
+    public List<MessageVO> getList(Message message) {
+        return baseMapper.selectList(message);
+    }
 
     /**
      * 查询接收人的未读的通知数
@@ -37,6 +43,18 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
         }
         res.put("all", sum);
         return res;
+    }
+
+    /**
+     * 设置消息已读
+     *
+     * @param messageIds 消息id
+     */
+    public boolean setHasRead(String[] messageIds) {
+        UpdateWrapper<Message> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.in("message_id", messageIds);
+        updateWrapper.set("read", 1);
+        return this.update(updateWrapper);
     }
 
 }

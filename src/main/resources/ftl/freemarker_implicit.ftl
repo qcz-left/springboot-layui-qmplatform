@@ -73,3 +73,7 @@
 [#-- @ftlvariable name="PrivCode.BTN_CODE_DATA_BAK_DELETE" type="java.lang.String" --]
 [#--恢复备份--]
 [#-- @ftlvariable name="PrivCode.BTN_CODE_DATA_BAK_RECOVER" type="java.lang.String" --]
+[#--系统通知-删除--]
+[#-- @ftlvariable name="PrivCode.BTN_CODE_MESSAGE_DELETE" type="java.lang.String" --]
+[#--系统通知-设置已读--]
+[#-- @ftlvariable name="PrivCode.BTN_CODE_MESSAGE_SET_READ" type="java.lang.String" --]

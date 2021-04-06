@@ -185,4 +185,14 @@ public class PrivCode {
      */
     public static final String BTN_CODE_DATA_BAK_RECOVER = "data-bak-recover";
 
+    /**
+     * 系统通知-删除
+     */
+    public static final String BTN_CODE_MESSAGE_DELETE = "message-delete";
+
+    /**
+     * 系统通知-设置已读
+     */
+    public static final String BTN_CODE_MESSAGE_SET_READ = "message-set-read";
+
 }

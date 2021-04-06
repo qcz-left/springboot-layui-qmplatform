@@ -15,4 +15,21 @@
             type
     </select>
 
+    <select id="selectList" resultType="com.qcz.qmplatform.module.system.vo.MessageVO">
+        select
+            sm.*,
+            va.attr_name typeName,
+            su.username senderName,
+            su2.username receiverName
+        from
+            sys_message sm
+            left join sys_user su on sm.sender = su.id
+            left join sys_user su2 on sm.receiver = su2.id
+            left join ( select attr_value, attr_name from v_sys_dict_attr where dict_code = 'message-type' ) va on va.attr_value = cast(sm.type as varchar)
+        where 1=1
+        <if test="content != null and content != ''">
+            and content like concat('%', #{content}, '%')
+        </if>
+    </select>
+
 </mapper>

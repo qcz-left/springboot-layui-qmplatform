@@ -22,8 +22,8 @@
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="" class="layui-icon layui-icon-notice">
-                    <span id="messageCount" class="layui-badge<#if messageCount.all == 0> hide</#if>">${messageCount.all}</span>
+                <a href="javascript:void(0);" class="layui-icon layui-icon-notice" lay-id="message" lay-href="${ctx}/system/message/messageListPage" lay-title="系统通知">
+                    <span id="messageCount" style="left: 30px;" class="layui-badge<#if messageCount.all == 0> hide</#if>">${messageCount.all}</span>
                 </a>
             </li>
             <li class="layui-nav-item"><a href="${ctx}/logout">退出</a></li>
@@ -101,7 +101,7 @@
             let layHref = elem.attr("lay-href");
             if ($(".layui-tab li[lay-id=" + layId + "]").length === 0) {
                 element.tabAdd(tabLayFilter, {
-                    title: elem.text(),
+                    title: elem.attr("lay-title") || elem.text(),
                     content: '<iframe src="' + layHref + '" frameborder="0" id="iframe-body-' + layId + '" style="width: 100%;height: 100%;"></iframe>',
                     id: layId
                 });
@@ -136,7 +136,7 @@
         //发生了错误事件
         socket.onerror = function () {
             console.log("websocket发生了错误");
-        }
+        };
 
         /*
          * 系统消息
