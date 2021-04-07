@@ -19,6 +19,7 @@ import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+import org.apache.shiro.SecurityUtils;
 
 import java.lang.reflect.Method;
 import java.util.Properties;
@@ -61,7 +62,10 @@ public class MybatisInterceptor implements Interceptor {
         if (authQuery == null) {
             return invocation.proceed();
         }
-
+        // 系统超级管理员无需过滤
+        if (SecurityUtils.getSubject().hasRole("system-admin")) {
+            return invocation.proceed();
+        }
         Object parameter = args[PARAM_OBJ_INDEX];
         BoundSql boundSql;
         CacheKey cacheKey;
@@ -77,7 +81,7 @@ public class MybatisInterceptor implements Interceptor {
         }
 
         String sql = boundSql.getSql();
-        sql = StringUtils.format("select * from ({}) as tmp where {} = '{}'", sql, authQuery.userField(), SubjectUtils.getUserId());
+        sql = StringUtils.format("select * from ({}) as tmp where {} = '{}'", sql, authQuery.userColumn(), SubjectUtils.getUserId());
         MappedStatement newMappedStatement = setCurrentSql(ms, boundSql, sql);
 
         return executor.query(newMappedStatement, parameter, rowBounds, resultHandler, cacheKey, boundSql);

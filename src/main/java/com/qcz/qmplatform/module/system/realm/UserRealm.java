@@ -1,9 +1,11 @@
 package com.qcz.qmplatform.module.system.realm;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.qcz.qmplatform.common.utils.SpringContextUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.mapper.UserMapper;
+import com.qcz.qmplatform.module.system.mapper.UserRoleMapper;
 import com.qcz.qmplatform.module.system.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -32,9 +34,15 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         UserMapper userMapper = SpringContextUtils.getBean(UserMapper.class);
-        Set<String> authorities = new HashSet<>(userMapper.queryAuthoritiesByUserId(SubjectUtils.getUserId()));
+        UserRoleMapper userRoleMapper = SpringContextUtils.getBean(UserRoleMapper.class);
+
+        String userId = SubjectUtils.getUserId();
+        Set<String> authorities = new HashSet<>(userMapper.queryAuthoritiesByUserId(userId));
+        Set<String> roles = new HashSet<>(CollectionUtil.getFieldValues(userRoleMapper.getRoleByUserId(userId), "roleSign", String.class));
+
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(authorities);
+        info.addRoles(roles);
         return info;
     }
 

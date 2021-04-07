@@ -17,6 +17,6 @@ public @interface AuthQuery {
     /**
      * 用户id字段
      */
-    String userField();
+    String userColumn() default "user_id";
 
 }

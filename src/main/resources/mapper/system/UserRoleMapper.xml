@@ -4,6 +4,7 @@
     <select id="getRoleByUserId" resultType="com.qcz.qmplatform.module.system.domain.Role">
         SELECT
 			sr.role_id,
+			sr.role_sign,
 			sr.role_name
 		FROM
 			sys_user_role sur
