@@ -86,4 +86,13 @@ public class ConfigLoader {
         return getIntConfig("MaxTabs", 10);
     }
 
+    /**
+     * 临时文件最大存放时间
+     *
+     * @return 默认 半个小时
+     */
+    public static Long getTmpFileMaxLifeTime() {
+        return getLongConfig("TmpFileMaxLifeTime", 1800000L);
+    }
+
 }
