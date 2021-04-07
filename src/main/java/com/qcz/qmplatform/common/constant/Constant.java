@@ -12,4 +12,9 @@ public class Constant {
     public static final String CURRENT_USER_SIGN = "currentUser";// 当前登录人标识
 
     public static final String OK = "ok";
+
+    /**
+     * 系统超级管理员角色标识
+     */
+    public static final String SYSTEM_ADMIN = "system-admin";
 }

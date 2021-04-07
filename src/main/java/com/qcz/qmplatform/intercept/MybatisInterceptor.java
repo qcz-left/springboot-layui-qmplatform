@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.intercept;
 
 import cn.hutool.core.util.ReflectUtil;
+import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import org.apache.ibatis.cache.CacheKey;
@@ -54,16 +55,15 @@ public class MybatisInterceptor implements Interceptor {
         String methodName = id.substring(id.lastIndexOf(".") + 1);
         final Class<?> clazz = Class.forName(className);
         Method method = ReflectUtil.getMethodByName(clazz, methodName);
-        AuthQuery authQuery;
         if (method == null) {
             return invocation.proceed();
         }
-        authQuery = method.getAnnotation(AuthQuery.class);
+        AuthQuery authQuery = method.getAnnotation(AuthQuery.class);
         if (authQuery == null) {
             return invocation.proceed();
         }
         // 系统超级管理员无需过滤
-        if (SecurityUtils.getSubject().hasRole("system-admin")) {
+        if (SecurityUtils.getSubject().hasRole(Constant.SYSTEM_ADMIN)) {
             return invocation.proceed();
         }
         Object parameter = args[PARAM_OBJ_INDEX];
