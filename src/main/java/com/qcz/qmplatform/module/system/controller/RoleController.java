@@ -98,6 +98,21 @@ public class RoleController extends BaseController {
     }
 
     /**
+     * 校验角色标识唯一
+     *
+     * @param roleSign 角色标识
+     * @param roleId   角色ID
+     */
+    @GetMapping("/validateRoleSign")
+    @ResponseBody
+    public ResponseResult<?> validateRoleSign(String roleSign, String roleId) {
+        if (!roleService.validateRoleSign(roleSign, roleId)) {
+            return ResponseResult.error("登录名已存在！", roleSign);
+        }
+        return ResponseResult.ok();
+    }
+
+    /**
      * 添加角色
      *
      * @param role 角色信息
@@ -130,7 +145,7 @@ public class RoleController extends BaseController {
      *
      * @param role 角色信息
      */
-    @PutMapping("/updateRoleOne")
+    @PutMapping("/updateRole")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_ROLE_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改角色")

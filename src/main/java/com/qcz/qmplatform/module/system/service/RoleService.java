@@ -1,11 +1,13 @@
 package com.qcz.qmplatform.module.system.service;
 
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.system.domain.Role;
 import com.qcz.qmplatform.module.system.domain.RolePermission;
+import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,5 +73,19 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
 
     public List<String> getRolePermission(String roleId) {
         return baseMapper.getPermissionIdsByRoleId(roleId);
+    }
+
+    /**
+     * 校验角色标识唯一
+     *
+     * @param roleSign 角色标识
+     * @param roleId   角色ID
+     */
+    public boolean validateRoleSign(String roleSign, String roleId) {
+        Assert.notBlank(roleSign);
+        QueryWrapper<Role> wrapper = new QueryWrapper<>();
+        wrapper.ne(StringUtils.isNotBlank(roleId), "role_id", roleId);
+        wrapper.eq("role_sign", roleSign);
+        return baseMapper.selectCount(wrapper) == 0;
     }
 }

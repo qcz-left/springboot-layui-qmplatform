@@ -14,7 +14,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">标识</label>
             <div class="layui-input-block">
-                <input type="text" name="roleSign" lay-verify="required" placeholder="请输入标识" class="layui-input">
+                <input type="text" name="roleSign" lay-verify="required|roleSign" placeholder="请输入标识" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -35,7 +35,20 @@
         let form = layui.form;
         let layer = layui.layer;
         // 表单数据校验
-        form.verify({});
+        form.verify({
+            roleSign: function (value) {
+                let valid;
+                CommonUtil.getSync(ctx + '/role/validateRoleSign', {
+                    roleSign: value,
+                    roleId: id
+                }, function (result) {
+                    valid = result.ok;
+                });
+                if (!valid) {
+                    return '角色标识已存在，请更换一个！';
+                }
+            }
+        });
 
         if (id) {
             CommonUtil.getSync(ctx + '/role/getRoleOne/' + id, {}, function (result) {
