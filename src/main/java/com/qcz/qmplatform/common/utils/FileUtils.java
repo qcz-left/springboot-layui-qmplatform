@@ -135,6 +135,10 @@ public class FileUtils extends FileUtil {
         }
     }
 
+    public static void createIfNotExists(String filePath) {
+        createIfNotExists(file(filePath));
+    }
+
     /**
      * 如果文件夹不存在就创建
      */
@@ -142,6 +146,10 @@ public class FileUtils extends FileUtil {
         if (!file.exists()) {
             file.mkdirs();
         }
+    }
+
+    public static void createDirIfNotExists(String dirPath) {
+        createDirIfNotExists(file(dirPath));
     }
 
     /**

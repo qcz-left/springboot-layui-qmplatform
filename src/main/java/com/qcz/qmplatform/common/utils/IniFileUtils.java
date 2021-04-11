@@ -12,6 +12,7 @@ public class IniFileUtils {
     private static Setting configIniFile;
 
     static {
+        FileUtils.createIfNotExists(CONFIG_FILE_PATH);
         configIniFile = new Setting(CONFIG_FILE_PATH);
         configIniFile.autoLoad(true);
     }
