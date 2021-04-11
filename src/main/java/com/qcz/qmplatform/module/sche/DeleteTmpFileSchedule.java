@@ -17,6 +17,7 @@ public class DeleteTmpFileSchedule {
 
     public void run() {
         String deleteTmpPath = ConfigLoader.getDeleteTmpPath();
+        FileUtils.createDirIfNotExists(deleteTmpPath);
         File[] files = FileUtils.file(deleteTmpPath).listFiles();
         long currentTimeMillis = System.currentTimeMillis();
         for (File file : Objects.requireNonNull(files)) {
