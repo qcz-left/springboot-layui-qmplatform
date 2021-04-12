@@ -32,12 +32,10 @@ public class DeleteTmpFileSchedule {
                 FileUtils.del(file);
             }
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Delete temporary file dir: {}, maximum file life: {} minutes, file details: \n{}",
-                    deleteTmpPath,
-                    tmpFileMaxLifeTime / 60000,
-                    CollectionUtil.join(delFilePaths, ","));
-        }
+        LOGGER.debug("Delete temporary file dir: {}, maximum file life: {} minutes, file details: \n{}",
+                deleteTmpPath,
+                tmpFileMaxLifeTime / 60000,
+                CollectionUtil.join(delFilePaths, ","));
     }
 
 }
