@@ -87,7 +87,7 @@ public class ConfigLoader {
     }
 
     /**
-     * 临时文件最大存放时间
+     * 临时文件最大存放时间，单位：毫秒
      *
      * @return 默认 半个小时
      */
