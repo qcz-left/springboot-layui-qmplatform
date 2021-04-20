@@ -1,14 +1,19 @@
 # qmplatform
 
 ## 介绍
-该项目是一个简单的单体应用，就没有比它更简洁的画面了，基于springboot2.16、mybatis-plus、shiro、layui、freemarker，实现了maven打包jar加密，防止反编译，加载外部第三方库、加载外部配置文件，缩减jar包体积，高效部署，集成websocket，简易可动态添加的定时任务，集成Jenkins持续部署配置，提交代码自动部署流程。
+<br/>1、该项目是一个简单的单体应用，就没有比它更简洁的画面了，基于springboot2.16、mybatis-plus、shiro、layui、freemarker<br/>
+2、实现了maven打包jar加密，防止反编译，加载外部第三方库、加载外部配置文件，缩减jar包体积，高效部署，<br/>
+3、集成websocket，定时检测会话，自动跳转登录页，自动检测系统通知提醒<br/>
+4、简易可动态添加的定时任务<br/>
+5、集成Jenkins持续部署配置，提交代码自动部署流程。<br/>
+6、Mybatis 拦截器实现使用注解控制数据权限<br/>
 
 ## 软件架构
-软件架构说明
-后端：springboot+mybatis-plus+shiro
-前端：layui
-模板引擎：freemartker
-数据库：postgresql
+软件架构说明<br/>
+后端：springboot+mybatis-plus+shiro<br/>
+前端：layui<br/>
+模板引擎：freemartker<br/>
+数据库：postgresql<br/>
 
 没什么高大上的东西，用来练手还是可以的
 
