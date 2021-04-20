@@ -51,6 +51,7 @@
     <logger name="org.apache.http.impl.conn" level="error"/>
     <logger name="org.apache.shiro" level="warn"/>
     <logger name="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" level="off"/>
+    <logger name="com.qcz.qmplatform.module.sche" level="info"/>
 
     <springProfile name="pro">
         <root level="DEBUG">
