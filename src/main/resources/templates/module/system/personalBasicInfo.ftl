@@ -16,14 +16,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">我的角色</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="roleName" readonly class="layui-input">
+                        <input type="text" name="roleName" disabled class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux">修改角色请到系统管理-用户管理页面</div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">登录名</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="loginname" readonly class="layui-input">
+                        <input type="text" name="loginname" disabled class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux">不可修改</div>
                 </div>

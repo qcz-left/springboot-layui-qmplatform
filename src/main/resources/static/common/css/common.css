@@ -144,3 +144,12 @@ body .my-layer-warm .layui-layer-btn0 {
     color: red;
     margin-right: 5px;
 }
+
+[disabled] {
+    color: #d2d2d2!important;
+    cursor: not-allowed!important;
+}
+
+[data-edit=true] {
+    cursor: pointer!important;
+}
