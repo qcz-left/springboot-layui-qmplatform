@@ -23,7 +23,7 @@
         <!-- 日志文件的格式 -->
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--<pattern>===%d{yyyy-MM-dd HH:mm:ss} %-5level %cyan(%class) - %msg%n</pattern>-->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{0}.%M - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
         <!-- 日志文件记录级别 -->
@@ -35,7 +35,7 @@
     </appender>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %green([%thread]) %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
+            <pattern>%d{MM-dd HH:mm:ss} %green([%thread]) %highlight(%-5level) %cyan(%logger{0}.%M) - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
