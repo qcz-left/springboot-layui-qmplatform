@@ -98,7 +98,6 @@ public class LoginController {
         UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginname(), user.getPassword());
         Subject subject = SecurityUtils.getSubject();
         try {
-            subject.getSession().setTimeout(60 * 30 * 1000);
             subject.login(token);
             logger.debug("login success, loginName : {}", user.getLoginname());
             return ResponseResult.ok();

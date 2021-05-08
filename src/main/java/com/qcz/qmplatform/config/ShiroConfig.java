@@ -41,7 +41,7 @@ public class ShiroConfig {
         /**
          * @see com.qcz.qmplatform.common.utils.SubjectUtils.setUser
          */
-//        sessionManager.setGlobalSessionTimeout(1800000L);
+        sessionManager.setGlobalSessionTimeout(1800000L);
         sessionManager.setSessionIdCookie(simpleCookie());
         sessionManager.setCacheManager(ehCacheManager());
         sessionManager.setSessionListeners(CollectionUtil.newArrayList(sessionListener()));
