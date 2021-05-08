@@ -1590,6 +1590,12 @@ COMMENT ON TABLE "public"."sys_role" IS '角色';
 -- Records of sys_role
 -- ----------------------------
 
+INSERT INTO "public"."sys_role"("role_id", "role_name", "role_sign", "remark") VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '系统管理员', 'system-admin', '最高长官');
+INSERT INTO "public"."sys_role"("role_id", "role_name", "role_sign", "remark") VALUES ('67d86434-c302-4924-a75a-dfe5fbc4affd', '测试人员', 'ceshi', '测试人员');
+INSERT INTO "public"."sys_role"("role_id", "role_name", "role_sign", "remark") VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '运维人员', 'web-operations', '运维人员');
+INSERT INTO "public"."sys_role"("role_id", "role_name", "role_sign", "remark") VALUES ('test_tv', 'test_tv', 'test', '');
+
+
 -- ----------------------------
 -- Table structure for sys_role_permission
 -- ----------------------------
