@@ -52,6 +52,10 @@ spring:
             #开启SSL安全连接(有的邮箱不需要,QQ邮箱需要,不需要时改为false)
             enable: true
             required: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 
 mybatis-plus:
   configuration:
