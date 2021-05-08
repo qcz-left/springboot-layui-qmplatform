@@ -38,9 +38,6 @@ public class ShiroConfig {
     public SessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionIdCookieEnabled(true);
-        /**
-         * @see com.qcz.qmplatform.common.utils.SubjectUtils.setUser
-         */
         sessionManager.setGlobalSessionTimeout(1800000L);
         sessionManager.setSessionIdCookie(simpleCookie());
         sessionManager.setCacheManager(ehCacheManager());
