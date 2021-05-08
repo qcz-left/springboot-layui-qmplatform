@@ -27,6 +27,11 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
                     return new Date(row.uploadTime).format('yyyy-MM-dd hh:mm:ss.S');
                 }
             },
+            {
+                field: 'size', title: '文件大小', templet: function (row) {
+                    return CommonUtil.convertByte(row.size);
+                }
+            },
             {field: 'description', title: '文件说明'},
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
         ]]

@@ -94,6 +94,7 @@ public class AttachmentController extends BaseController {
             User currentUser = SubjectUtils.getUser();
             attachment.setUploadUserId(currentUser.getId());
             attachment.setUploadUserName(currentUser.getUsername());
+            attachment.setSize(file.getSize());
             attachmentService.save(attachment);
         }
         return upload;

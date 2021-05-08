@@ -1762,7 +1762,8 @@ CREATE TABLE "public"."tbl_attachment" (
   "upload_user_id" varchar(50) COLLATE "pg_catalog"."default",
   "upload_user_name" varchar(10) COLLATE "pg_catalog"."default",
   "upload_time" timestamp(6),
-  "description" varchar(255) COLLATE "pg_catalog"."default"
+  "description" varchar(255) COLLATE "pg_catalog"."default",
+  "size" int8
 )
 ;
 COMMENT ON COLUMN "public"."tbl_attachment"."attachment_id" IS '附件ID，主键';
@@ -1772,6 +1773,7 @@ COMMENT ON COLUMN "public"."tbl_attachment"."upload_user_id" IS '上传人id';
 COMMENT ON COLUMN "public"."tbl_attachment"."upload_user_name" IS '上传人名称';
 COMMENT ON COLUMN "public"."tbl_attachment"."upload_time" IS '上传时间';
 COMMENT ON COLUMN "public"."tbl_attachment"."description" IS '附件说明';
+COMMENT ON COLUMN "public"."tbl_attachment"."size" IS '附件大小（字节）';
 COMMENT ON TABLE "public"."tbl_attachment" IS '文件';
 
 -- ----------------------------

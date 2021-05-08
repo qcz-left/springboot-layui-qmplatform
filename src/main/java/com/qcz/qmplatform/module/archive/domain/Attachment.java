@@ -62,6 +62,20 @@ public class Attachment implements Serializable {
     @TableField("description")
     private String description;
 
+    /**
+     * 附件大小（单位：字节）
+     */
+    @TableField("size")
+    private long size;
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
+    }
+
     public String getAttachmentId() {
         return attachmentId;
     }
