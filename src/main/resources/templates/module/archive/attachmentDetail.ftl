@@ -14,6 +14,12 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block layui-word-aux">
+                文件大小最大限制：${maxFileSize!'1MB'}
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">文件说明</label>
             <div class="layui-input-block">
                 <textarea class="layui-textarea" id="description" name="description"></textarea>
@@ -30,13 +36,15 @@
         let form = layui.form;
         let layer = layui.layer;
         let upload = layui.upload;
-
+        let maxFileSize = "${maxFileSize!'1MB'}";
+        maxFileSize = maxFileSize.substring(0, maxFileSize.length - 2);
         upload.render({
             elem: '#attachment',
             accept: 'file',
             url: ctx + '/archive/attachment/uploadAttachment',
             auto: false,
             bindAction: '#upload',
+            size: maxFileSize * 1024,// KB
             before: function (obj) {
                 this.data = form.val('attachment-form');
             },

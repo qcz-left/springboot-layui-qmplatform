@@ -23,6 +23,7 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.domain.User;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,13 +55,17 @@ public class AttachmentController extends BaseController {
     @Autowired
     private AttachmentService attachmentService;
 
+    @Value("${spring.servlet.multipart.max-file-size}")
+    private String maxFileSize;
+
     @GetMapping("/attachmentListPage")
     public String attachmentListPage() {
         return PREFIX + "attachmentList";
     }
 
     @GetMapping("/uploadPage")
-    public String uploadPage() {
+    public String uploadPage(Map<String, Object> root) {
+        root.put("maxFileSize", maxFileSize);
         return PREFIX + "attachmentDetail";
     }
 
