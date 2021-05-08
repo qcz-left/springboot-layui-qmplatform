@@ -15,18 +15,6 @@
  Date: 20/01/2021 08:44:40
 */
 
-
--- ----------------------------
--- Sequence structure for sys_user_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sys_user_id_seq";
-CREATE SEQUENCE "public"."sys_user_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 3
-CACHE 1;
-
 -- ----------------------------
 -- Table structure for ope_data_bak
 -- ----------------------------
@@ -47,15 +35,6 @@ COMMENT ON COLUMN "public"."ope_data_bak"."create_time" IS '创建时间';
 COMMENT ON COLUMN "public"."ope_data_bak"."remark" IS '备注';
 COMMENT ON COLUMN "public"."ope_data_bak"."file_size" IS '备份文件长度，单位：字节';
 COMMENT ON TABLE "public"."ope_data_bak" IS '数据备份';
-
--- ----------------------------
--- Records of ope_data_bak
--- ----------------------------
-INSERT INTO "public"."ope_data_bak" VALUES ('4c42b74a-5f00-4f32-8a2b-35f2580ab13d', 'qmplatform_single20210103223026.dump', '/opt/web/bak/database/qmplatform_single20210103223026.dump', '2021-01-03 22:30:26.712', NULL);
-INSERT INTO "public"."ope_data_bak" VALUES ('e25325da-230d-46c6-b57b-092844e49d24', 'qmplatform_single20210104010000.dump', '/opt/web/bak/database/qmplatform_single20210104010000.dump', '2021-01-04 01:00:00.144', NULL);
-INSERT INTO "public"."ope_data_bak" VALUES ('9904d28b-47c1-4fe6-b208-38c9970a51b7', 'qmplatform_single20210105010000.dump', '/opt/web/bak/database/qmplatform_single20210105010000.dump', '2021-01-05 01:00:00.294', NULL);
-INSERT INTO "public"."ope_data_bak" VALUES ('ac91ef3b-67e7-4188-890d-3c6f8e97104d', 'qmplatform_single20210106010000.dump', '/opt/web/bak/database/qmplatform_single20210106010000.dump', '2021-01-06 01:00:00.033', NULL);
-INSERT INTO "public"."ope_data_bak" VALUES ('35cedc30-3b85-4674-946c-ea146f329cc1', 'qmplatform_single20210107010000.dump', '/opt/web/bak/database/qmplatform_single20210107010000.dump', '2021-01-07 01:00:00.129', NULL);
 
 -- ----------------------------
 -- Table structure for sys_button
@@ -1875,11 +1854,6 @@ CREATE VIEW "public"."v_sys_dict_attr" AS  SELECT sd.dict_code,
     sda.attr_id
    FROM (sys_dict sd
      LEFT JOIN sys_dict_attr sda ON (((sd.dict_id)::text = (sda.dict_id)::text)));
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-SELECT setval('"public"."sys_user_id_seq"', 22, true);
 
 -- ----------------------------
 -- Primary Key structure for table ope_data_bak
