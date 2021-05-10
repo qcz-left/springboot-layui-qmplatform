@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.system.service;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.module.system.domain.Message;
@@ -32,16 +33,32 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
      * @param receiver 接收人id
      */
     public Map<String, Long> selectNoReadCount(String receiver) {
-        Map<String, Long> res = new HashMap<>();
+        return selectNoReadCount(CollectionUtil.newArrayList(receiver)).get(receiver);
+    }
 
-        List<Map<String, Long>> typeCounts = baseMapper.selectTypeCount(0, receiver);
-        long sum = 0;
-        for (Map<String, Long> typeCount : typeCounts) {
-            Long count = typeCount.get("count");
-            res.put(String.valueOf(typeCount.get("type")), count);
-            sum += count;
+    /**
+     * 根据接收人ID集合查询未读
+     *
+     * @param receivers 接收人ID集合
+     * @return userId -> type count
+     */
+    public Map<String, Map<String, Long>> selectNoReadCount(List<String> receivers) {
+        Map<String, Map<String, Long>> res = new HashMap<>();
+        for (String receiver : receivers) {
+            Map<String, Long> def = new HashMap<>();
+            def.put("all", 0L);
+            res.put(receiver, def);
         }
-        res.put("all", sum);
+
+        List<Map<String, Object>> typeCounts = baseMapper.selectTypeCountByUserIds(0, receivers);
+        for (Map<String, Object> typeCount : typeCounts) {
+            String receiver = (String) typeCount.get("receiver");
+            Long count = (Long) typeCount.get("count");
+
+            Map<String, Long> receiverTypeCount = res.get(receiver);
+            receiverTypeCount.put(String.valueOf(typeCount.get("type")), count);
+            receiverTypeCount.put("all", receiverTypeCount.get("all") + count);
+        }
         return res;
     }
 

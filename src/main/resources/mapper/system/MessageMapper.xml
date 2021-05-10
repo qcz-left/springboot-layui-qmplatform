@@ -15,6 +15,25 @@
             type
     </select>
 
+    <select id="selectTypeCountByUserIds" resultType="map">
+        select
+            type,
+            receiver,
+            count(1) as count
+        from
+            sys_message
+        where
+            read = #{read}
+        and receiver in(
+            <foreach collection="receivers" item="receiver" separator=",">
+                #{receiver}
+            </foreach>
+        )
+        group by
+            type,
+            receiver
+    </select>
+
     <select id="selectList" resultType="com.qcz.qmplatform.module.system.vo.MessageVO">
         select
             sm.*,
