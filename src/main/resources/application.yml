@@ -69,10 +69,6 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
-logging:
-  level:
-    com.qcz.qmplatform.module.**.mapper: debug
-
 # 加密秘钥
 jasypt:
   encryptor:
