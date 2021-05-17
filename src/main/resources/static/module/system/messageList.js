@@ -12,8 +12,8 @@ layui.use(['table', 'form'], function () {
         toolbar: '#toolbar',
         defaultToolbar: [],
         where: {
-            orderName: 'createTime',
-            order: 'desc'
+            orderName: 'read,createTime',
+            order: 'asc,desc'
         },
         cols: [[
             {type: 'checkbox'},
