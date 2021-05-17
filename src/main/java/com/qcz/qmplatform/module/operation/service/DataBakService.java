@@ -17,6 +17,7 @@ import com.qcz.qmplatform.common.utils.SystemUtils;
 import com.qcz.qmplatform.module.operation.domain.DataBak;
 import com.qcz.qmplatform.module.operation.mapper.DataBakMapper;
 import com.qcz.qmplatform.module.operation.vo.DataBakStrategyVO;
+import com.qcz.qmplatform.module.system.assist.IniDefine;
 import com.qcz.qmplatform.module.system.domain.Ini;
 import com.qcz.qmplatform.module.system.service.IniService;
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
     /**
      * sys_ini配置属性组
      */
-    private static final String SECTION = "DataBak";
+    private static final String SECTION = IniDefine.DATA_BAK;
 
     private static final String SCHEDULE_ID = "dataBak";
 
@@ -72,10 +73,10 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         }
 
         iniService.deleteBySec(SECTION);
-        return iniService.save(new Ini(SECTION, "EnableBak", String.valueOf(dataBakStrategy.getEnable())))
-                && iniService.save(new Ini(SECTION, "Period", String.valueOf(period)))
-                && iniService.save(new Ini(SECTION, "LimitDiskSpace", String.valueOf(dataBakStrategy.getLimitDiskSpace())))
-                && iniService.save(new Ini(SECTION, "SaveDays", String.valueOf(dataBakStrategy.getSaveDays())));
+        return iniService.save(new Ini(SECTION, IniDefine.DataBak.ENABLE_BAK, String.valueOf(dataBakStrategy.getEnable())))
+                && iniService.save(new Ini(SECTION, IniDefine.DataBak.PERIOD, String.valueOf(period)))
+                && iniService.save(new Ini(SECTION, IniDefine.DataBak.LIMIT_DISK_SPACE, String.valueOf(dataBakStrategy.getLimitDiskSpace())))
+                && iniService.save(new Ini(SECTION, IniDefine.DataBak.SAVE_DAYS, String.valueOf(dataBakStrategy.getSaveDays())));
     }
 
     public void scheduleBak(int period) {
@@ -123,13 +124,13 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
             file.mkdirs();
         }
         Map<String, String> bakStrategy = iniService.getBySec(SECTION);
-        int limitDiskSpace = Integer.parseInt(bakStrategy.get("LimitDiskSpace"));
+        int limitDiskSpace = Integer.parseInt(bakStrategy.get(IniDefine.DataBak.LIMIT_DISK_SPACE));
         if (file.getTotalSpace() < limitDiskSpace * 1024 * 2024 * 1024L) {
             // 备份文件目录所在磁盘空间不足
             return ResponseResult.error("磁盘空间不足 " + limitDiskSpace + " G，不允许备份！");
         }
         // 删除 day 天前的备份
-        String saveDays = bakStrategy.get("SaveDays");
+        String saveDays = bakStrategy.get(IniDefine.DataBak.SAVE_DAYS);
         if (StringUtils.isNotBlank(saveDays)) {
             QueryWrapper<DataBak> dataBakQueryWrapper = new QueryWrapper<>();
             long beforeDaySeconds = DateUtils.currentSeconds() - Integer.parseInt(saveDays) * 24 * 60 * 60;

@@ -16,6 +16,7 @@ import com.qcz.qmplatform.module.operation.domain.DataBak;
 import com.qcz.qmplatform.module.operation.service.DataBakService;
 import com.qcz.qmplatform.module.operation.vo.DataBakStrategyVO;
 import com.qcz.qmplatform.module.operation.vo.DataBakVO;
+import com.qcz.qmplatform.module.system.assist.IniDefine;
 import com.qcz.qmplatform.module.system.service.IniService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class DataBakController extends BaseController {
     /**
      * sys_ini配置属性组
      */
-    private static final String SECTION = "DataBak";
+    private static final String SECTION = IniDefine.DATA_BAK;
 
     @Autowired
     private DataBakService dataBakService;
@@ -82,11 +83,11 @@ public class DataBakController extends BaseController {
         DataBakStrategyVO strategy = new DataBakStrategyVO();
         Map<String, String> iniPro = iniService.getBySec(SECTION);
         if (CollectionUtil.isNotEmpty(iniPro)) {
-            String enableBak = iniPro.get("EnableBak");
+            String enableBak = iniPro.get(IniDefine.DataBak.ENABLE_BAK);
             strategy.setEnable(StringUtils.isBlank(enableBak) ? 0 : Integer.parseInt(enableBak));
-            String saveDays = iniPro.get("SaveDays");
+            String saveDays = iniPro.get(IniDefine.DataBak.SAVE_DAYS);
             strategy.setSaveDays(StringUtils.isBlank(enableBak) ? 0 : Integer.parseInt(saveDays));
-            String periodStr = iniPro.get("Period");
+            String periodStr = iniPro.get(IniDefine.DataBak.PERIOD);
             int period = Integer.parseInt(periodStr);
             strategy.setPeriod(period);
             strategy.setWeek1(period & 1);
@@ -96,7 +97,7 @@ public class DataBakController extends BaseController {
             strategy.setWeek5(period & 16);
             strategy.setWeek6(period & 32);
             strategy.setWeek7(period & 64);
-            String limitDiskSpace = iniPro.get("LimitDiskSpace");
+            String limitDiskSpace = iniPro.get(IniDefine.DataBak.LIMIT_DISK_SPACE);
             strategy.setLimitDiskSpace(StringUtils.isBlank(limitDiskSpace) ? 20 : Integer.parseInt(limitDiskSpace));
         }
         return ResponseResult.ok(strategy);
