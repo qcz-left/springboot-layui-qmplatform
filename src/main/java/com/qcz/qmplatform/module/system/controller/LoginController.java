@@ -127,13 +127,14 @@ public class LoginController {
         int currLoginErrorTimes = loginRecordService.getLoginErrorTimes(loginname, clientIp);
         Map<String, String> loginStrategy = iniService.getBySec(IniDefine.LOGIN_STRATEGY);
         int codeAtErrorTimes = Integer.parseInt(loginStrategy.get(IniDefine.LoginStrategy.CODE_AT_ERROR_TIMES));
+        int lockAtErrorTimes = Integer.parseInt(loginStrategy.get(IniDefine.LoginStrategy.LOCK_AT_ERROR_TIMES));
         // 是否开启验证码校验
         boolean enableCode = "1".equals(loginStrategy.get(IniDefine.LoginStrategy.ENABLE));
         if (enableCode) {
-            if (currLoginErrorTimes >= Integer.parseInt(loginStrategy.get(IniDefine.LoginStrategy.LOCK_AT_ERROR_TIMES))) {
+            if (currLoginErrorTimes >= lockAtErrorTimes) {
                 // 账号被锁定
                 userService.lockAccount(loginname);
-                loginRecordService.addRemark(loginname, clientIp, "账号登录错误次数达到" + currLoginErrorTimes + "次，已被锁定");
+                loginRecordService.addRemark(loginname, clientIp, "账号登录错误次数达到" + lockAtErrorTimes + "次，已被锁定");
             } else {
                 String validateCode = passwordVO.getValidateCode();
                 if (StringUtils.isBlank(validateCode)) {

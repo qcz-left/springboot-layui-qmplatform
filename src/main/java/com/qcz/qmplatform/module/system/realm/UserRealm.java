@@ -58,15 +58,15 @@ public class UserRealm extends AuthorizingRealm {
             throw new UnknownAccountException("不存在该账号");
         }
 
+        // 账号被锁定
+        if (user.getLocked() == 1) {
+            throw new LockedAccountException("账号已被锁定,请联系管理员");
+        }
         // 密码错误
         if (!password.equals(user.getPassword())) {
             throw new IncorrectCredentialsException("密码错误");
         }
 
-        // 账号被锁定
-        if (user.getLocked() == 1) {
-            throw new LockedAccountException("账号已被锁定,请联系管理员");
-        }
         // 盐值
         ByteSource credentialsSalt = ByteSource.Util.bytes(username);
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getId(), password, credentialsSalt, getName());
