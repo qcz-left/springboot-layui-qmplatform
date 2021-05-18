@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.operation.domain.LoginRecord;
 import com.qcz.qmplatform.module.operation.mapper.LoginRecordMapper;
 import com.qcz.qmplatform.module.operation.vo.LoginStrategyVO;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -31,6 +33,27 @@ public class LoginRecordService extends ServiceImpl<LoginRecordMapper, LoginReco
 
     @Autowired
     IniService iniService;
+
+    /**
+     * 获取策略信息
+     */
+    public LoginStrategyVO getStrategy() {
+        Map<String, String> loginStrategy = iniService.getBySec(IniDefine.LOGIN_STRATEGY);
+        LoginStrategyVO loginStrategyVO = new LoginStrategyVO();
+        String codeAtErrorTimes = loginStrategy.get(IniDefine.LoginStrategy.CODE_AT_ERROR_TIMES);
+        if (!StringUtils.isBlank(codeAtErrorTimes)) {
+            loginStrategyVO.setCodeAtErrorTimes(Integer.parseInt(codeAtErrorTimes));
+        }
+        String lockAtErrorTimes = loginStrategy.get(IniDefine.LoginStrategy.LOCK_AT_ERROR_TIMES);
+        if (!StringUtils.isBlank(lockAtErrorTimes)) {
+            loginStrategyVO.setLockAtErrorTimes(Integer.parseInt(lockAtErrorTimes));
+        }
+        String enable = loginStrategy.get(IniDefine.LoginStrategy.ENABLE);
+        if (!StringUtils.isBlank(enable)) {
+            loginStrategyVO.setEnable(Integer.parseInt(enable));
+        }
+        return loginStrategyVO;
+    }
 
     /**
      * 保存登录策略

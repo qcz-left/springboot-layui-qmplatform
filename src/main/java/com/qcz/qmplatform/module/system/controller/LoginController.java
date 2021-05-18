@@ -13,7 +13,7 @@ import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.operation.service.LoginRecordService;
-import com.qcz.qmplatform.module.system.assist.IniDefine;
+import com.qcz.qmplatform.module.operation.vo.LoginStrategyVO;
 import com.qcz.qmplatform.module.system.assist.PermissionType;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.service.IniService;
@@ -125,11 +125,11 @@ public class LoginController {
         Map<String, Object> result = new HashMap<>();
         // 当前登录错误次数
         int currLoginErrorTimes = loginRecordService.getLoginErrorTimes(loginname, clientIp);
-        Map<String, String> loginStrategy = iniService.getBySec(IniDefine.LOGIN_STRATEGY);
-        int codeAtErrorTimes = Integer.parseInt(loginStrategy.get(IniDefine.LoginStrategy.CODE_AT_ERROR_TIMES));
-        int lockAtErrorTimes = Integer.parseInt(loginStrategy.get(IniDefine.LoginStrategy.LOCK_AT_ERROR_TIMES));
+        LoginStrategyVO loginStrategy = loginRecordService.getStrategy();
+        int codeAtErrorTimes = loginStrategy.getCodeAtErrorTimes();
+        int lockAtErrorTimes = loginStrategy.getLockAtErrorTimes();
         // 是否开启验证码校验
-        boolean enableCode = "1".equals(loginStrategy.get(IniDefine.LoginStrategy.ENABLE));
+        boolean enableCode = loginStrategy.getEnable() == 1;
         if (enableCode) {
             if (currLoginErrorTimes >= lockAtErrorTimes) {
                 // 账号被锁定

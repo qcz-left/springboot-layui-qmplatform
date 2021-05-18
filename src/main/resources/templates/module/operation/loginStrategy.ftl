@@ -14,7 +14,7 @@
             <label class="layui-form-label"></label>
             <div class="layui-input-block">
                 <div class="layui-form-mid">登录失败超过</div>
-                <input type="number" name="codeAtErrorTimes" value="${loginStrategy.codeAtErrorTimes!''}" class="layui-input layui-input-inline" style="width: 60px;">
+                <input type="number" name="codeAtErrorTimes" class="layui-input layui-input-inline" style="width: 60px;">
                 <div class="layui-form-mid">次时需要填写验证码</div>
             </div>
         </div>
@@ -22,7 +22,7 @@
             <label class="layui-form-label"></label>
             <div class="layui-input-block">
                 <div class="layui-form-mid">密码认证失败超过</div>
-                <input type="number" name="lockAtErrorTimes" value="${loginStrategy.lockAtErrorTimes!''}" class="layui-input layui-input-inline" style="width: 60px;">
+                <input type="number" name="lockAtErrorTimes" class="layui-input layui-input-inline" style="width: 60px;">
                 <div class="layui-form-mid">次时锁定账号</div>
             </div>
         </div>
@@ -35,6 +35,10 @@
 <script type="text/javascript">
     layui.use(['form'], function () {
         let form = layui.form;
+
+        CommonUtil.getSync(ctx + '/operation/loginRecord/getLoginStrategy', {}, function (result) {
+            form.val('loginStrategy-form', result.data);
+        });
 
         form.on('submit(loginStrategy-submit)', function (data) {
             let index = layer.load(2);

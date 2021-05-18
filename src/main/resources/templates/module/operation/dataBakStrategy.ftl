@@ -51,7 +51,7 @@
 
         CommonUtil.getSync(ctx + '/operation/data-bak/getDataBakStrategy', {}, function (result) {
             form.val('dataBakStrategy-form', result.data);
-        })
+        });
 
         form.on('submit(dataBakStrategy-submit)', function (data) {
             let index = layer.load(2);
