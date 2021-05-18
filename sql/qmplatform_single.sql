@@ -1655,10 +1655,9 @@ INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'a9238df4-ca79-4ddb-afc9-74e01b808200');
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '985cf497-f3f0-4bea-8844-70fdc3ab4cde');
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'dd0268c3-1f3b-44f0-b94b-5d8df387019f');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b555a066-c76d-4b8f-a834-4998cc000711');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'e36040a7-f7cb-42f8-a55f-0a6f6e138958');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '9fd14f03-ecf3-4d8c-8026-9b922734b30e');
-
+INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b5ee5991-a01f-4978-bd58-3e71dcd163c6');
+INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '15d0b9e4-7630-4826-975d-18d409bae421');
+INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '5ef5be70-684a-4a65-b2ae-ba95bb4bc4df');
 
 -- ----------------------------
 -- Table structure for sys_user
