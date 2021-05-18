@@ -82,6 +82,8 @@ INSERT INTO "public"."sys_button" VALUES ('8c9768b7-3574-471b-bd51-6bd6188f24b5'
 INSERT INTO "public"."sys_button" VALUES ('44d656f2-86eb-4326-ad12-935ca160551d', '恢复备份', '0ec94352-4ea3-4f59-961c-38ca6779d714', 'data-bak-recover', 0, '');
 INSERT INTO "public"."sys_button" VALUES ('94c6fe0d-5c7f-42cd-85fe-60f6c096e230', '系统通知-删除', 'e3a24ef6-134f-498a-aa11-54a184de3b70', 'message-delete', 0, '');
 INSERT INTO "public"."sys_button" VALUES ('dd5db615-6b1a-4bfe-9e45-45b008d73e90', '系统通知-设置已读', 'e3a24ef6-134f-498a-aa11-54a184de3b70', 'message-set-read', 0, '');
+INSERT INTO "public"."sys_button" VALUES ('15d0b9e4-7630-4826-975d-18d409bae421', '保存登录策略', 'b5ee5991-a01f-4978-bd58-3e71dcd163c6', 'login-strategy-save', 0, '');
+INSERT INTO "public"."sys_button" VALUES ('5ef5be70-684a-4a65-b2ae-ba95bb4bc4df', '删除登录错误记录', 'b5ee5991-a01f-4978-bd58-3e71dcd163c6', 'login-record-delete', 0, '');
 
 
 -- ----------------------------
@@ -224,6 +226,8 @@ INSERT INTO "public"."sys_menu" VALUES ('80345dc4-cc15-405b-a371-82e50b64fcd9', 
 INSERT INTO "public"."sys_menu" VALUES ('428493a8-5e23-4e64-a24c-78e61b3ed854', '字典管理', 4, 'dict', 'layui-icon-tips', '/operation/dict/dictListPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 INSERT INTO "public"."sys_menu" VALUES ('bd8cae46-b3bc-48e1-bc6d-c623493fe64c', '短信配置', 50, 'sms', '', '/notify/smsConfigPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 INSERT INTO "public"."sys_menu" VALUES ('e3a24ef6-134f-498a-aa11-54a184de3b70', '未知菜单', 0, 'unknown', '', '', '', 1);
+INSERT INTO "public"."sys_menu" VALUES ('b5ee5991-a01f-4978-bd58-3e71dcd163c6', '登录错误记录', 0, 'login-record', '', '/operation/loginRecord/loginRecordListPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
+
 
 
 -- ----------------------------
@@ -1651,6 +1655,10 @@ INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'a9238df4-ca79-4ddb-afc9-74e01b808200');
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '985cf497-f3f0-4bea-8844-70fdc3ab4cde');
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'dd0268c3-1f3b-44f0-b94b-5d8df387019f');
+INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b555a066-c76d-4b8f-a834-4998cc000711');
+INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'e36040a7-f7cb-42f8-a55f-0a6f6e138958');
+INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '9fd14f03-ecf3-4d8c-8026-9b922734b30e');
+
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -1814,6 +1822,32 @@ ALTER TABLE "public"."sys_message" ADD CONSTRAINT "sys_message_pkey" PRIMARY KEY
 -- ----------------------------
 -- Records of tbl_attachment
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for ope_login_record
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."ope_login_record";
+CREATE TABLE "public"."ope_login_record" (
+  "record_id" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "login_name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "error_times" int2,
+  "last_login_time" timestamp(6),
+  "last_login_ip" varchar(20) COLLATE "pg_catalog"."default",
+  "remark" text COLLATE "pg_catalog"."default"
+)
+;
+COMMENT ON COLUMN "public"."ope_login_record"."record_id" IS '记录id';
+COMMENT ON COLUMN "public"."ope_login_record"."login_name" IS '登录名';
+COMMENT ON COLUMN "public"."ope_login_record"."error_times" IS '登录错误次数';
+COMMENT ON COLUMN "public"."ope_login_record"."last_login_time" IS '最近登录时间';
+COMMENT ON COLUMN "public"."ope_login_record"."last_login_ip" IS '最近登录IP';
+COMMENT ON COLUMN "public"."ope_login_record"."remark" IS '备注';
+COMMENT ON TABLE "public"."ope_login_record" IS '账号登录系统记录';
+
+-- ----------------------------
+-- Primary Key structure for table ope_login_record
+-- ----------------------------
+ALTER TABLE "public"."ope_login_record" ADD CONSTRAINT "ope_login_record_pkey" PRIMARY KEY ("record_id");
 
 -- ----------------------------
 -- View structure for v_sys_permission

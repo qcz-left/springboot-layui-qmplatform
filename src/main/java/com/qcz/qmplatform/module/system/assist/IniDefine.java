@@ -10,6 +10,11 @@ public interface IniDefine {
      */
     String DATA_BAK = "DataBak";
 
+    /**
+     * 登录策略
+     */
+    String LOGIN_STRATEGY = "LoginStrategy";
+
     interface DataBak {
         /**
          * 开启备份（0：关闭，1：开启）
@@ -29,4 +34,19 @@ public interface IniDefine {
         String SAVE_DAYS = "SaveDays";
     }
 
+    interface LoginStrategy {
+        /**
+         * 是否开启（0：关闭，1：开启）
+         */
+        String ENABLE = "Enable";
+        /**
+         * 登录错误超过多少次时需要填写验证码
+         */
+        String CODE_AT_ERROR_TIMES = "CodeAtErrorTimes";
+
+        /**
+         * 密码认证失败超过多少次时锁定账号
+         */
+        String LOCK_AT_ERROR_TIMES = "LockAtErrorTimes";
+    }
 }

@@ -16,16 +16,36 @@ layui.use(['form', 'layer'], function () {
         });
     }
 
+    /**
+     * 加载验证码
+     */
+    let loadCode = function() {
+        $("#codeDiv").show();
+        $("#user-login-code").attr("lay-verify", "required");
+        form.render(null, 'validateCode');
+        $("#codeImg").attr("src", ctx + "/noNeedLogin/getLoginCode");
+    };
+    $("#codeImg").click(function () {
+        $(this).attr("src", ctx + "/noNeedLogin/getLoginCode?v=" + new Date().getTime());
+    });
+
     form.on('submit(login)', function (data) {
         // 登录表单提交操作
         layer.loadingWithText("正在努力登录...");
         CommonUtil.postAjax(ctx + "/login", data.field, function (response) {
             layer.closeAll("loading");
             if (!response.ok) {
+                if (response.data && response.data['needCode']) {
+                    loadCode();
+                    if ($("#codeImg").attr("src")) {
+                        $("#codeImg").click();
+                    }
+                }
                 layer.error(response.msg);
             } else {
                 top.location.href = ctx;
             }
         });
     });
+
 });

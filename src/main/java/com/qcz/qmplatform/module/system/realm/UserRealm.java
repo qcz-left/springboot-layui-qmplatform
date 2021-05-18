@@ -3,10 +3,10 @@ package com.qcz.qmplatform.module.system.realm;
 import cn.hutool.core.collection.CollectionUtil;
 import com.qcz.qmplatform.common.utils.SpringContextUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
-import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.mapper.UserMapper;
 import com.qcz.qmplatform.module.system.mapper.UserRoleMapper;
 import com.qcz.qmplatform.module.system.service.UserService;
+import com.qcz.qmplatform.module.system.vo.UserVO;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -52,15 +52,15 @@ public class UserRealm extends AuthorizingRealm {
         String username = upToken.getUsername();
         String password = SubjectUtils.md5Encrypt(username, new String((char[]) upToken.getCredentials()));
         UserService userService = SpringContextUtils.getBean(UserService.class);
-        User user = userService.findByLoginNameAndPassword(username, password);
+        UserVO user = userService.queryUserByName(username);
         // 账号不存在
         if (user == null) {
-            throw new UnknownAccountException("账号或密码不正确");
+            throw new UnknownAccountException("不存在该账号");
         }
 
         // 密码错误
         if (!password.equals(user.getPassword())) {
-            throw new IncorrectCredentialsException("账号或密码不正确");
+            throw new IncorrectCredentialsException("密码错误");
         }
 
         // 账号被锁定

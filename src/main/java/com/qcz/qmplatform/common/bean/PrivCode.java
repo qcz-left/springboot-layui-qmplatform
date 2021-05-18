@@ -31,11 +31,6 @@ public class PrivCode {
     public static final String MENU_CODE_OPERATE = "operate";
 
     /**
-     * 图标管理
-     */
-    public static final String MENU_CODE_ICON = "icon";
-
-    /**
      * 用户管理
      */
     public static final String MENU_CODE_USER = "user";
@@ -84,6 +79,31 @@ public class PrivCode {
      * 字典管理
      */
     public static final String MENU_CODE_DICT = "dict";
+
+    /**
+     * 短信配置
+     */
+    public static final String MENU_CODE_SMS = "sms";
+
+    /**
+     * 图标管理
+     */
+    public static final String MENU_CODE_ICON = "icon";
+
+    /**
+     * Demo
+     */
+    public static final String MENU_CODE_DEMO = "demo";
+
+    /**
+     * 未知菜单
+     */
+    public static final String MENU_CODE_UNKNOWN = "unknown";
+
+    /**
+     * 登录错误记录
+     */
+    public static final String MENU_CODE_LOGIN_RECORD = "login-record";
 
     /**
      * 删除用户
@@ -194,5 +214,15 @@ public class PrivCode {
      * 系统通知-设置已读
      */
     public static final String BTN_CODE_MESSAGE_SET_READ = "message-set-read";
+
+    /**
+     * 保存登录策略
+     */
+    public static final String BTN_CODE_LOGIN_STRATEGY_SAVE = "login-strategy-save";
+
+    /**
+     * 删除登录错误记录
+     */
+    public static final String BTN_CODE_LOGIN_RECORD_DELETE = "login-record-delete";
 
 }

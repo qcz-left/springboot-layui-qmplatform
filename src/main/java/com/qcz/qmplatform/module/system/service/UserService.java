@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -196,5 +197,15 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public boolean changeUserPwd(PasswordVO passwordVO, User user) {
         user.setPassword(SubjectUtils.md5Encrypt(user.getLoginname(), passwordVO.getNewPassword()));
         return updateById(user);
+    }
+
+    /**
+     * 锁定账号
+     */
+    public void lockAccount(String loginName) {
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.set("locked", 1);
+        updateWrapper.eq("loginname", loginName);
+        this.update(updateWrapper);
     }
 }

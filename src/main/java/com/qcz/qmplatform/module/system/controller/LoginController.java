@@ -1,19 +1,30 @@
 package com.qcz.qmplatform.module.system.controller;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.ShearCaptcha;
+import cn.hutool.captcha.generator.RandomGenerator;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
+import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
+import com.qcz.qmplatform.module.operation.service.LoginRecordService;
+import com.qcz.qmplatform.module.system.assist.IniDefine;
 import com.qcz.qmplatform.module.system.assist.PermissionType;
 import com.qcz.qmplatform.module.system.domain.User;
+import com.qcz.qmplatform.module.system.service.IniService;
 import com.qcz.qmplatform.module.system.service.MenuService;
 import com.qcz.qmplatform.module.system.service.MessageService;
+import com.qcz.qmplatform.module.system.service.UserService;
+import com.qcz.qmplatform.module.system.vo.PasswordVO;
 import com.qcz.qmplatform.module.system.vo.PermissionVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -26,18 +37,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @Module("身份认证")
 public class LoginController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     MenuService menuService;
     @Autowired
     MessageService messageService;
+    @Autowired
+    LoginRecordService loginRecordService;
+    @Autowired
+    IniService iniService;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/")
     public String index(Map<String, Object> root) {
@@ -89,21 +111,58 @@ public class LoginController {
     /**
      * 登录操作
      *
-     * @param user 前台传进参数，包含用户名和密码
+     * @param passwordVO 前台传进参数，包含用户名和密码等
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     @RecordLog(type = OperateType.LOGIN)
-    public ResponseResult<?> login(@RequestBody User user) {
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginname(), user.getPassword());
-        Subject subject = SecurityUtils.getSubject();
+    public ResponseResult<?> login(@RequestBody PasswordVO passwordVO, HttpServletRequest request) {
+        String loginname = passwordVO.getLoginname();
+        UsernamePasswordToken token = new UsernamePasswordToken(loginname, passwordVO.getPassword());
+
+        String clientIp = HttpServletUtils.getIpAddress(request);
+
+        Map<String, Object> result = new HashMap<>();
+        // 当前登录错误次数
+        int currLoginErrorTimes = loginRecordService.getLoginErrorTimes(loginname, clientIp);
+        Map<String, String> loginStrategy = iniService.getBySec(IniDefine.LOGIN_STRATEGY);
+        int codeAtErrorTimes = Integer.parseInt(loginStrategy.get(IniDefine.LoginStrategy.CODE_AT_ERROR_TIMES));
+        // 是否开启验证码校验
+        boolean enableCode = "1".equals(loginStrategy.get(IniDefine.LoginStrategy.ENABLE));
+        if (enableCode) {
+            if (currLoginErrorTimes >= Integer.parseInt(loginStrategy.get(IniDefine.LoginStrategy.LOCK_AT_ERROR_TIMES))) {
+                // 账号被锁定
+                userService.lockAccount(loginname);
+                loginRecordService.addRemark(loginname, clientIp, "账号登录错误次数达到" + currLoginErrorTimes + "次，已被锁定");
+            } else {
+                String validateCode = passwordVO.getValidateCode();
+                if (StringUtils.isBlank(validateCode)) {
+                    if (currLoginErrorTimes >= codeAtErrorTimes) {
+                        // 需要输入验证码
+                        result.put("needCode", true);
+                        return ResponseResult.error("该账号输入密码错误次数过多，需要输入验证码", result);
+                    }
+                } else if (!validateCode.equals(request.getSession().getAttribute("validateCode"))) {
+                    return ResponseResult.error("验证码输入错误！");
+                }
+            }
+        }
         try {
+            Subject subject = SecurityUtils.getSubject();
             subject.login(token);
-            logger.debug("login success, loginName : {}", user.getLoginname());
+            if (currLoginErrorTimes > 0) {
+                // 清空当前账号错误次数
+                loginRecordService.clearLoginRecord(loginname, clientIp);
+            }
+            LOGGER.debug("login success, loginName : {}", loginname);
             return ResponseResult.ok();
+        } catch (IncorrectCredentialsException e) {
+            // 密码错误
+            loginRecordService.increaseErrorTimes(loginname, clientIp);
+            result.put("needCode", enableCode && currLoginErrorTimes + 1 >= codeAtErrorTimes);
+            return ResponseResult.error(e.getMessage(), result);
         } catch (AuthenticationException e) {
-            logger.debug("login fail : " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.error("login fail : " + e.getMessage());
             return ResponseResult.error(e.getMessage());
         }
     }
@@ -118,9 +177,24 @@ public class LoginController {
         if (subject.isAuthenticated()) {
             Object user = subject.getPrincipal();
             subject.logout();
-            logger.debug("logout : {}", user);
+            LOGGER.debug("logout : {}", user);
         }
         return "redirect:/loginPage";
     }
 
+    /**
+     * 获取登录的图形验证码
+     */
+    @RequestMapping("/noNeedLogin/getLoginCode")
+    public void getLoginCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        RandomGenerator randomGenerator = new RandomGenerator("0123456789", 4);
+        ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(100, 38);
+        captcha.setGenerator(randomGenerator);
+        //图形验证码写出，可以写出到文件，也可以写出到流
+        ServletOutputStream outputStream = response.getOutputStream();
+        captcha.write(outputStream);
+        String code = captcha.getCode();
+        request.getSession().setAttribute("validateCode", code);
+        outputStream.close();
+    }
 }

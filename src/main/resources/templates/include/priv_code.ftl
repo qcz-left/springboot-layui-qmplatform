@@ -9,8 +9,6 @@
 'MENU_CODE_CESHI500': 'ceshi500',
 <#--操作日志-->
 'MENU_CODE_OPERATE': 'operate',
-<#--图标管理-->
-'MENU_CODE_ICON': 'icon',
 <#--用户管理-->
 'MENU_CODE_USER': 'user',
 <#--菜单管理-->
@@ -31,6 +29,16 @@
 'MENU_CODE_SYSTEM_STATUS': 'system-status',
 <#--字典管理-->
 'MENU_CODE_DICT': 'dict',
+<#--短信配置-->
+'MENU_CODE_SMS': 'sms',
+<#--图标管理-->
+'MENU_CODE_ICON': 'icon',
+<#--Demo-->
+'MENU_CODE_DEMO': 'demo',
+<#--未知菜单-->
+'MENU_CODE_UNKNOWN': 'unknown',
+<#--登录错误记录-->
+'MENU_CODE_LOGIN_RECORD': 'login-record',
 <#--删除用户-->
 'BTN_CODE_USER_DELETE': 'user-delete',
 <#--保存用户-->
@@ -75,6 +83,10 @@
 'BTN_CODE_MESSAGE_DELETE': 'message-delete',
 <#--系统通知-设置已读-->
 'BTN_CODE_MESSAGE_SET_READ': 'message-set-read',
+<#--保存登录策略-->
+'BTN_CODE_LOGIN_STRATEGY_SAVE': 'login-strategy-save',
+<#--删除登录错误记录-->
+'BTN_CODE_LOGIN_RECORD_DELETE': 'login-record-delete',
 <#--无实际意义-->
 'INSTANCE': 'instance'
 }>

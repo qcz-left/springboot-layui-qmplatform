@@ -71,7 +71,7 @@ public class GenerateCode {
 		strategy.setSuperControllerClass("com.qcz.qmplatform.module.base.BaseController");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix("tbl_");
+        strategy.setTablePrefix("ope_");
         strategy.setEntityTableFieldAnnotationEnable(true);
         mpg.setStrategy(strategy);
 
