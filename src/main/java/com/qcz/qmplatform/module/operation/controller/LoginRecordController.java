@@ -30,7 +30,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/operation/loginRecord")
 @Module("登录错误记录")
-public class LoginRecordConttoller extends BaseController {
+public class LoginRecordController extends BaseController {
 
     private static final String PREFIX = "/module/operation/";
 
@@ -76,7 +76,7 @@ public class LoginRecordConttoller extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_LOGIN_RECORD_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除登录错误记录")
-    public ResponseResult deleteLoginRecord(String recordIds) {
+    public ResponseResult<?> deleteLoginRecord(String recordIds) {
         if (loginRecordService.deleteLoginRecord(Arrays.asList(recordIds.split(",")))) {
             return ResponseResult.ok();
         }
