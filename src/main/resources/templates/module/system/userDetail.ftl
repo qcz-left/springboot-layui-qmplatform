@@ -92,7 +92,7 @@
                     userId: id
                 }, function (result) {
                     valid = result.ok;
-                })
+                });
                 if (!valid) {
                     return '登录名已存在，请重新输入！';
                 }

@@ -125,7 +125,7 @@
         //获得消息事件
         socket.onmessage = function (msg) {
             let result = JSON.parse(msg.data);
-            if (result.code === 401) {
+            if (result.code === 402) {
                 top.window.location = ctx + "/loginPage?code=" + result.code;
             }
         };

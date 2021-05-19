@@ -2,10 +2,20 @@
  * app 内置方法
  */
 $(function () {
+    $.ajaxSetup({
+        cache: false,
+        complete: function(xhr) {
+            console.log(xhr.responseJSON);
+            // 会话过期跳转到登录页面
+            if(xhr.responseJSON.code === 402){
+                top.window.location = ctx + "/loginPage?code=402";
+            }
+        }
+    });
     $(".closeNowLayer").click(function () {
         closeCurrentIframe();
     });
-})
+});
 // 对Date的扩展，将 Date 转化为指定格式的String
 // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
 // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)

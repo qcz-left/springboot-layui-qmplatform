@@ -15,6 +15,10 @@ public enum ResponseCode {
      */
     UNAUTHORIZED(401),
     /**
+     * 已认证，会话过期
+     */
+    AUTHORIZED_EXPIRE(402),
+    /**
      * 没有权限
      */
     PERMISSION_DENIED(403),

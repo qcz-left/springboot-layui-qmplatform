@@ -29,11 +29,11 @@ public class LoginFilter extends FormAuthenticationFilter {
             resp.setCharacterEncoding("UTF-8");
             resp.setContentType("application/json");
             ResponseResult<?> resultData = new ResponseResult<>();
-            resultData.setCode(ResponseCode.ERROR.code());
-            resultData.setMsg("登录认证失效,请重新登录!");
+            resultData.setCode(ResponseCode.AUTHORIZED_EXPIRE.code());
+            resultData.setMsg("登录认证失效，请重新登录!");
             resp.getWriter().write(JSONUtil.toJsonStr(resultData));
         } else {
-            resp.sendRedirect(contextPath + "/loginPage");
+            resp.sendRedirect(contextPath + "/loginPage?code=402");
         }
         return false;
     }
