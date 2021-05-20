@@ -2,15 +2,6 @@
  * app 内置方法
  */
 $(function () {
-    $.ajaxSetup({
-        cache: false,
-        complete: function(xhr) {
-            // 会话过期跳转到登录页面
-            if(xhr.responseJSON.code === 402){
-                top.window.location = ctx + "/loginPage?code=402";
-            }
-        }
-    });
     $(".closeNowLayer").click(function () {
         closeCurrentIframe();
     });

@@ -2,7 +2,6 @@ package com.qcz.qmplatform.config;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.qcz.qmplatform.common.constant.Constant;
-import com.qcz.qmplatform.filter.LoginFilter;
 import com.qcz.qmplatform.module.listen.ShiroSessionListener;
 import com.qcz.qmplatform.module.system.realm.UserRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -20,10 +19,7 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.Filter;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
@@ -95,6 +91,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setSuccessUrl("/");
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setLoginUrl("/loginPage");
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/loginPage", "anon");
@@ -104,9 +101,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/**/noNeedLogin/**", "anon");
         filterChainDefinitionMap.put("/**", "authc");
-        Map<String, Filter> loginFilter = new HashMap<>(2);
-        loginFilter.put("loginFilter", loginFilter());
-        shiroFilterFactoryBean.setFilters(loginFilter);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
@@ -123,11 +117,6 @@ public class ShiroConfig {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
-    }
-
-    @Bean
-    public LoginFilter loginFilter() {
-        return new LoginFilter();
     }
 
 }
