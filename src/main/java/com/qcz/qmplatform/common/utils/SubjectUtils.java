@@ -34,7 +34,7 @@ public class SubjectUtils {
             User user = userCache.get(principalStr);
             if (user == null) {
                 user = SpringContextUtils.getBean(UserService.class).getById(String.valueOf(principal));
-                userCache.put(principalStr, user);
+                setUser(user);
             }
             return user;
         }

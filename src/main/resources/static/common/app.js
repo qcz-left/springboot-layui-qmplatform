@@ -5,7 +5,6 @@ $(function () {
     $.ajaxSetup({
         cache: false,
         complete: function(xhr) {
-            console.log(xhr.responseJSON);
             // 会话过期跳转到登录页面
             if(xhr.responseJSON.code === 402){
                 top.window.location = ctx + "/loginPage?code=402";
