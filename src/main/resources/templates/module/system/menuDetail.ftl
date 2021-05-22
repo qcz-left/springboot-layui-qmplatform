@@ -50,13 +50,13 @@
                 <input type="text" name="code" class="layui-input" lay-verify="required|code">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div id="icon" class="layui-form-item layui-hide">
             <label class="layui-form-label">图标</label>
             <div class="layui-input-block">
                 <input type="text" name="icon" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div id="linkUrl" class="layui-form-item layui-hide">
             <label class="layui-form-label">URL</label>
             <div class="layui-input-block">
                 <input type="text" name="linkUrl" class="layui-input">
@@ -114,10 +114,11 @@
         }
 
         let permissionTypeListen = function (type) {
+            let $trigger = $("#display,#icon,#linkUrl");
             if (type == '1') {
-                $("#display").removeClass("layui-hide");
+                $trigger.removeClass("layui-hide");
             } else {
-                $("#display").addClass("layui-hide");
+                $trigger.addClass("layui-hide");
             }
         };
         permissionTypeListen(detail.permissionType);
