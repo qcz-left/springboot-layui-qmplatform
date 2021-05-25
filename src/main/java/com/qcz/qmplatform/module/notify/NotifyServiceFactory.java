@@ -3,6 +3,7 @@ package com.qcz.qmplatform.module.notify;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.SmsUtils;
 import com.qcz.qmplatform.module.notify.bean.SmsConfig;
+import com.qcz.qmplatform.module.notify.bean.SmsProvider;
 import com.qcz.qmplatform.module.notify.service.INotifyService;
 
 public class NotifyServiceFactory {
@@ -16,7 +17,7 @@ public class NotifyServiceFactory {
                 if (smsProvider <= 0) {
                     throw new CommonException("必须指定一个短信提供商！");
                 }
-                notifyServiceClass = SmsUtils.getNotifyServiceClass(smsProvider);
+                notifyServiceClass = SmsUtils.getNotifyServiceClass(SmsProvider.valueOf(smsProvider));
             } else {
                 notifyServiceClass = clazz;
             }
