@@ -9,9 +9,8 @@ public class SmsUtils {
 
     public static final String DAT_SMS_CONFIG = FileUtils.WEB_PATH + "/Dat/smsConfig.dat";
 
-    public static Class<? extends INotifyService> getNotifyServiceClass(int smsProviderCode) {
+    public static Class<? extends INotifyService> getNotifyServiceClass(SmsProvider smsProvider) {
         Class<? extends INotifyService> clazz = null;
-        SmsProvider smsProvider = SmsProvider.valueOf(smsProviderCode);
         if (smsProvider == SmsProvider.TENCENT) {
             clazz = TencentCloudSmsNotifyService.class;
         } else if (smsProvider == SmsProvider.ALI) {
