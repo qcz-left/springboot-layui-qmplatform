@@ -4,22 +4,21 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RuntimeUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.constant.ResponseCode;
 import com.qcz.qmplatform.common.exception.CommonException;
-import com.qcz.qmplatform.common.utils.ConfigLoader;
-import com.qcz.qmplatform.common.utils.CronUtils;
-import com.qcz.qmplatform.common.utils.DateUtils;
-import com.qcz.qmplatform.common.utils.FileUtils;
-import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.common.utils.SystemUtils;
+import com.qcz.qmplatform.common.utils.*;
 import com.qcz.qmplatform.module.operation.domain.DataBak;
 import com.qcz.qmplatform.module.operation.mapper.DataBakMapper;
 import com.qcz.qmplatform.module.operation.vo.DataBakStrategyVO;
+import com.qcz.qmplatform.module.socket.SessionWebSocketServer;
 import com.qcz.qmplatform.module.system.assist.IniDefine;
 import com.qcz.qmplatform.module.system.domain.Ini;
 import com.qcz.qmplatform.module.system.service.IniService;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,6 +186,10 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
             return ResponseResult.error("备份恢复所需脚本文件缺失！");
         }
         LOGGER.debug(RuntimeUtil.execForStr(StringUtils.format("{} {} {}", recoverSh, bakPath, database)));
-        return ResponseResult.ok();
+        // 退出重新登录
+        ResponseResult<?> responseResult = new ResponseResult<>(ResponseCode.DATA_BAK_RECOVER, null, null);
+        SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), SecurityUtils.getSubject().getSession().getId().toString());
+        SecurityUtils.getSubject().logout();
+        return responseResult;
     }
 }

@@ -191,7 +191,7 @@ const CommonUtil = {
      * @returns {boolean}
      */
     respSuccess: function (res) {
-        return res.code === 200 || res.code === 201;
+        return res.code === 200 || res.code === 405;
     },
 
     /**

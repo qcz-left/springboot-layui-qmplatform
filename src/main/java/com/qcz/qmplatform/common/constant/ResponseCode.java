@@ -27,6 +27,10 @@ public enum ResponseCode {
      */
     NOT_FOUND(404),
     /**
+     * 数据备份恢复成功
+     */
+    DATA_BAK_RECOVER(405),
+    /**
      * 服务器内部错误
      */
     INTERNAL_SERVER_ERROR(500);

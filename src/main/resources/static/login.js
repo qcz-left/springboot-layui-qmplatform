@@ -7,9 +7,20 @@ layui.use(['form', 'layer'], function () {
     let layer = layui.layer; // 获取layer模块
     let form = layui.form;
 
-    if (code === '402') {
-        layer.alert("当前会话已过期，请重新登录！", {
-            icon: 0,
+    let expire = code === '402';
+    let dataBakRecover = code === '405';
+    if (expire || dataBakRecover) {
+        let msg;
+        let icon;
+        if (expire) {
+            icon = 0;
+            msg = "当前会话已过期，请重新登录！";
+        } else if (dataBakRecover) {
+            icon = 1;
+            msg = "恢复备份成功，请重新登录！";
+        }
+        layer.alert(msg, {
+            icon: icon,
             title: null,
             btn: [],
             offset: '30px'
