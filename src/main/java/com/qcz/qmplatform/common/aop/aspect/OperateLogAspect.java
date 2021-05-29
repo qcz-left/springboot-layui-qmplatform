@@ -12,6 +12,7 @@ import com.qcz.qmplatform.module.system.domain.OperateLog;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.mapper.OperateLogMapper;
 import com.qcz.qmplatform.module.system.service.UserService;
+import com.qcz.qmplatform.module.system.vo.PasswordVO;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -119,7 +120,7 @@ public class OperateLogAspect {
             switch (type) {
                 case LOGIN:
                     moduleName = "登录系统";
-                    User formUser = (User) joinPoint.getArgs()[0];
+                    PasswordVO formUser = (PasswordVO) joinPoint.getArgs()[0];
                     String loginname = formUser.getLoginname();
                     String password = formUser.getPassword();
                     currentUser = userService.findByLoginNameAndPassword(loginname, SubjectUtils.md5Encrypt(loginname, password));
