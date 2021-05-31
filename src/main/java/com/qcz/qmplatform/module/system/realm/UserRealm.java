@@ -49,10 +49,10 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
-        String username = upToken.getUsername();
-        String password = SubjectUtils.md5Encrypt(username, new String((char[]) upToken.getCredentials()));
+        String loginName = upToken.getUsername();
+        String password = SubjectUtils.md5Encrypt(loginName, new String((char[]) upToken.getCredentials()));
         UserService userService = SpringContextUtils.getBean(UserService.class);
-        UserVO user = userService.queryUserByName(username);
+        UserVO user = userService.queryUserByName(loginName);
         // 账号不存在
         if (user == null) {
             throw new UnknownAccountException("不存在该账号");
@@ -68,7 +68,7 @@ public class UserRealm extends AuthorizingRealm {
         }
 
         // 盐值
-        ByteSource credentialsSalt = ByteSource.Util.bytes(username);
+        ByteSource credentialsSalt = ByteSource.Util.bytes(loginName);
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getId(), password, credentialsSalt, getName());
         SubjectUtils.setUser(user);
         return info;

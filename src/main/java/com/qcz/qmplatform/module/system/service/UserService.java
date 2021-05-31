@@ -56,8 +56,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         return this.getOne(queryWrapper);
     }
 
-    public UserVO queryUserByName(String username) {
-        return baseMapper.queryUserByName(username);
+    public UserVO queryUserByName(String loginName) {
+        return baseMapper.queryUserByName(loginName);
     }
 
     public boolean insertUser(UserVO user) {

@@ -5,7 +5,7 @@
     <select id="queryUserByName" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
         select *
         from sys_user
-        where loginname like #{name}
+        where loginname like #{loginName}
     </select>
 
     <select id="queryAuthoritiesByUserId" resultType="string">
