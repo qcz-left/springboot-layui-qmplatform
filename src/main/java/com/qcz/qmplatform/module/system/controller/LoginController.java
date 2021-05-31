@@ -27,9 +27,11 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -116,6 +118,7 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     @RecordLog(type = OperateType.LOGIN)
+    @Retryable(value = {PSQLException.class})
     public ResponseResult<?> login(@RequestBody PasswordVO passwordVO, HttpServletRequest request) {
         String loginname = passwordVO.getLoginname();
         UsernamePasswordToken token = new UsernamePasswordToken(loginname, passwordVO.getPassword());
