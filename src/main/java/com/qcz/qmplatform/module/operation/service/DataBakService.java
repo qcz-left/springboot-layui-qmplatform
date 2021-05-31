@@ -10,7 +10,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.ResponseCode;
 import com.qcz.qmplatform.common.exception.CommonException;
-import com.qcz.qmplatform.common.utils.*;
+import com.qcz.qmplatform.common.utils.ConfigLoader;
+import com.qcz.qmplatform.common.utils.CronUtils;
+import com.qcz.qmplatform.common.utils.DateUtils;
+import com.qcz.qmplatform.common.utils.FileUtils;
+import com.qcz.qmplatform.common.utils.StringUtils;
+import com.qcz.qmplatform.common.utils.SubjectUtils;
+import com.qcz.qmplatform.common.utils.SystemUtils;
 import com.qcz.qmplatform.module.operation.domain.DataBak;
 import com.qcz.qmplatform.module.operation.mapper.DataBakMapper;
 import com.qcz.qmplatform.module.operation.vo.DataBakStrategyVO;
@@ -189,7 +195,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         // 退出重新登录
         ResponseResult<?> responseResult = new ResponseResult<>(ResponseCode.DATA_BAK_RECOVER, null, null);
         SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), SecurityUtils.getSubject().getSession().getId().toString());
-        SecurityUtils.getSubject().logout();
+        SubjectUtils.removeUser();
         return responseResult;
     }
 }

@@ -177,12 +177,7 @@ public class LoginController {
     @RequestMapping(value = "/logout")
     @RecordLog(type = OperateType.LOGOUT)
     public String logout() {
-        Subject subject = SecurityUtils.getSubject();
-        if (subject.isAuthenticated()) {
-            Object user = subject.getPrincipal();
-            subject.logout();
-            LOGGER.debug("logout : {}", user);
-        }
+        SubjectUtils.removeUser();
         return "redirect:/loginPage";
     }
 
