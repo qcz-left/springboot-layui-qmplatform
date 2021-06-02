@@ -8,11 +8,6 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * shiro 工具类，主要用于获取session中的当前人信息及设置当前人信息，以及加密方法
- *
- * @author quchangzhong
- */
 public class SubjectUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SubjectUtils.class);
