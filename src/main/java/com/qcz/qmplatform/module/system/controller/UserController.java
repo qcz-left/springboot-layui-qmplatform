@@ -31,7 +31,6 @@ import com.qcz.qmplatform.module.system.vo.CurrentUserInfoVO;
 import com.qcz.qmplatform.module.system.vo.PasswordVO;
 import com.qcz.qmplatform.module.system.vo.UserVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,9 +63,6 @@ import java.util.Map;
 public class UserController extends BaseController {
 
     private static final String PREFIX = "/module/system/";
-
-    @Autowired
-    private StringEncryptor encryptor;
 
     @Autowired
     private UserService userService;
@@ -310,7 +306,7 @@ public class UserController extends BaseController {
         config.setSmsProvider(smsConfigVO.getSmsProvider());
         config.setAppId(smsConfigVO.getAppId());
         config.setSecretId(smsConfigVO.getSecretId());
-        config.setSecretKey(encryptor.decrypt(smsConfigVO.getSecretKey()));
+        config.setSecretKey(SecureUtils.aesDecrypt(smsConfigVO.getSecretKey()));
         config.setSign(smsConfigVO.getSign());
         config.setPhones(CollectionUtil.newArrayList("+86" + phone));
         config.setTemplateID(smsConfigVO.getTemplateParams().get(TemplateType.VALIDATE_CODE.type()).getTemplateID());
