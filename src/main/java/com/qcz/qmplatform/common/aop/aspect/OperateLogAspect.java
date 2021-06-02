@@ -7,6 +7,7 @@ import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.system.domain.OperateLog;
 import com.qcz.qmplatform.module.system.domain.User;
@@ -123,7 +124,7 @@ public class OperateLogAspect {
                     PasswordVO formUser = (PasswordVO) joinPoint.getArgs()[0];
                     String loginname = formUser.getLoginname();
                     String password = formUser.getPassword();
-                    currentUser = userService.findByLoginNameAndPassword(loginname, SubjectUtils.md5Encrypt(loginname, password));
+                    currentUser = userService.findByLoginNameAndPassword(loginname, SecureUtils.simpleMD5(loginname, password));
                     if (currentUser == null) {
                         description = loginname + " 尝试登录系统，但失败了";
                     } else {

@@ -15,6 +15,7 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.CacheUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
+import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.SmsUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
@@ -248,7 +249,7 @@ public class UserController extends BaseController {
         User user = SubjectUtils.getUser();
         assert user != null;
         // 比较原密码是否填写正确
-        if (!user.getPassword().equals(SubjectUtils.md5Encrypt(user.getLoginname(), passwordVO.getPassword()))) {
+        if (!user.getPassword().equals(SecureUtils.simpleMD5(user.getLoginname(), passwordVO.getPassword()))) {
             return ResponseResult.error("当前密码填写错误，请重新填写！");
         }
 

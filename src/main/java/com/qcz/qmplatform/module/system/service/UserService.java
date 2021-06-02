@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
+import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.system.domain.Role;
@@ -66,7 +67,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         user.setCreateTime(DateUtils.getCurrTimestamp());
         user.setCreateUserId(SubjectUtils.getUserId());
         if (StringUtils.isNotBlank(user.getPassword())) {
-            user.setPassword(SubjectUtils.md5Encrypt(user.getLoginname(), user.getPassword()));
+            user.setPassword(SecureUtils.simpleMD5(user.getLoginname(), user.getPassword()));
         }
         insertUserRole(userId, user.getRoleIds());
         insertUserOrg(userId, user.getOrganizationIds());
@@ -85,8 +86,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         // 处理密码
         String newPwd;
         String password = user.getPassword();
-        if (SubjectUtils.passwordChanged(password)) {
-            newPwd = SubjectUtils.md5Encrypt(user.getLoginname(), password);
+        if (SecureUtils.passwordChanged(password)) {
+            newPwd = SecureUtils.simpleMD5(user.getLoginname(), password);
         } else {
             newPwd = getById(user.getId()).getPassword();
         }
@@ -183,7 +184,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * @param user       当前用户对象
      */
     public boolean changeCurrentUserPwd(PasswordVO passwordVO, User user) {
-        user.setPassword(SubjectUtils.md5Encrypt(user.getLoginname(), passwordVO.getNewPassword()));
+        user.setPassword(SecureUtils.simpleMD5(user.getLoginname(), passwordVO.getNewPassword()));
         SubjectUtils.setUser(user);
         return updateById(user);
     }
@@ -195,7 +196,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * @param user       当前用户对象
      */
     public boolean changeUserPwd(PasswordVO passwordVO, User user) {
-        user.setPassword(SubjectUtils.md5Encrypt(user.getLoginname(), passwordVO.getNewPassword()));
+        user.setPassword(SecureUtils.simpleMD5(user.getLoginname(), passwordVO.getNewPassword()));
         return updateById(user);
     }
 

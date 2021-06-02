@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.system.realm;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.SpringContextUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.system.mapper.UserMapper;
@@ -50,7 +51,7 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String loginName = upToken.getUsername();
-        String password = SubjectUtils.md5Encrypt(loginName, new String((char[]) upToken.getCredentials()));
+        String password = SecureUtils.simpleMD5(loginName, new String((char[]) upToken.getCredentials()));
         UserService userService = SpringContextUtils.getBean(UserService.class);
         UserVO user = userService.queryUserByName(loginName);
         // 账号不存在
@@ -75,7 +76,7 @@ public class UserRealm extends AuthorizingRealm {
     }
 
     public static void main(String[] args) {
-        System.out.println(SubjectUtils.md5Encrypt("admin", "admin"));
+        System.out.println(SecureUtils.simpleMD5("admin", "admin"));
     }
 
 }

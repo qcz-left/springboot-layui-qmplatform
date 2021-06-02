@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.notify.controller;
 
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.FileUtils;
+import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.SmsUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.notify.vo.SmsConfigVO;
@@ -35,7 +36,7 @@ public class NotifyController {
     @ResponseBody
     public ResponseResult<SmsConfigVO> getSmsConfig() {
         SmsConfigVO smsConfigVO = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfigVO.class);
-        smsConfigVO.setSecretKey(SubjectUtils.PASSWORD_UNCHANGED);
+        smsConfigVO.setSecretKey(SecureUtils.PASSWORD_UNCHANGED);
         return ResponseResult.ok(smsConfigVO);
     }
 
@@ -44,7 +45,7 @@ public class NotifyController {
     public ResponseResult<?> saveSmsConfig(@RequestBody SmsConfigVO smsConfigVO) {
         String secretKey = smsConfigVO.getSecretKey();
         String encSecretKey;
-        if (SubjectUtils.passwordChanged(secretKey)) {
+        if (SecureUtils.passwordChanged(secretKey)) {
             encSecretKey = encryptor.encrypt(secretKey);
         } else {
             encSecretKey = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfigVO.class).getSecretKey();
