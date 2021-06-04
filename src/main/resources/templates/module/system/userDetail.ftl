@@ -201,6 +201,7 @@
             layer.load(2);
             data.field.roleIds = roleIdsSelect.getValue('value');
             data.field.organizationIds = organizationIdsSelect.getValue('value');
+            data.field.password = rsaEncrypt(data.field.password);
             CommonUtil.postOrPut(id, ctx + (id ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {

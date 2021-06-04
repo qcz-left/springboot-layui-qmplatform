@@ -64,6 +64,7 @@
 
         form.on('submit(password-submit)', function (data) {
             top.layer.load(2);
+            data.field.password = rsaEncrypt(data.field.password);
             CommonUtil.putAjax(ctx + '/user/changeCurrentUserPwd', data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, '修改密码成功，请重新登录验证', '修改密码失败', () => {

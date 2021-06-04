@@ -176,6 +176,7 @@
                 templateParams[item.templateType] = item;
             }
             data.field.templateParams = templateParams;
+            data.field.secretKey = rsaEncrypt(data.field.secretKey);
             CommonUtil.postAjax(ctx + '/notify/saveSmsConfig', data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE);

@@ -1,7 +1,6 @@
 package com.qcz.qmplatform.filter;
 
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.json.JSONUtil;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 
@@ -13,15 +12,18 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RequestWrapper extends HttpServletRequestWrapper {
 
-    private static Pattern ENC_PATTERN = Pattern.compile("^(ENC\\().*\\)$");
+    private static final String ENC_REG = "ENC\\([a-zA-Z0-9\\+/=]+\\)";
 
-    private HttpServletRequest request;
+    private static final Pattern ENC_PATTERN = Pattern.compile(ENC_REG);
+
+    private final HttpServletRequest request;
 
     public RequestWrapper(HttpServletRequest servletRequest) {
         super(servletRequest);
@@ -73,17 +75,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         stream = request.getInputStream();
         body = IoUtil.read(stream, StandardCharsets.UTF_8);
         body = URLDecoder.decode(body, StandardCharsets.UTF_8.name());
-        // RSA参数解密
-        Map<String, String> paramMap = JSONUtil.toBean(body, Map.class);
-        Map<String, String> newParamMap = new HashMap<>();
-        for (String key : paramMap.keySet()) {
-            String value = paramMap.get(key);
-            if (!StringUtils.isBlank(value)) {
-                value = stripENC(value);
-            }
-            newParamMap.put(key, value);
-        }
-        body = stripXSS(JSONUtil.toJsonStr(newParamMap));
+        body = stripXSS(stripENC(body));
 
         byte[] buffer;
         buffer = body.getBytes(StandardCharsets.UTF_8);
@@ -113,9 +105,18 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         };
     }
 
-    private static String stripENC(String value) {
-        if (ENC_PATTERN.matcher(value).matches()) {
-            return SecureUtils.rsaDecrypt(value.substring(4, value.length() - 1));
+    private String stripENC(String value) {
+        Matcher matcher = ENC_PATTERN.matcher(value);
+        List<String> matches = new ArrayList<>();
+        while (matcher.find()) {
+            String group = matcher.group();
+            matches.add(SecureUtils.rsaDecrypt(group.substring(4, group.length() - 1)));
+        }
+        if (!matches.isEmpty()) {
+            value = value.replaceAll(ENC_REG, "{}");
+            for (String match : matches) {
+                value = StringUtils.format(value, match);
+            }
         }
         return value;
     }

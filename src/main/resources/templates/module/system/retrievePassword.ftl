@@ -136,6 +136,8 @@
         form.on('submit(password-submit)', function (data) {
             let index = top.layer.load(2);
             data.field.loginname = $("#loginName").val();
+            data.field.newPassword = rsaEncrypt(data.field.newPassword);
+            data.field.confirmNewPassword = rsaEncrypt(data.field.confirmNewPassword);
             CommonUtil.putAjax(ctx + '/user/noNeedLogin/changeUserPwd', data.field, function (result) {
                 top.layer.close(index);
                 LayerUtil.respMsg(result, '修改密码成功，请重新登录验证', '修改密码失败', () => {
