@@ -12,8 +12,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -107,16 +105,9 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
     private String stripENC(String value) {
         Matcher matcher = ENC_PATTERN.matcher(value);
-        List<String> matches = new ArrayList<>();
         while (matcher.find()) {
             String group = matcher.group();
-            matches.add(SecureUtils.rsaDecrypt(group.substring(4, group.length() - 1)));
-        }
-        if (!matches.isEmpty()) {
-            value = value.replaceAll(ENC_REG, "{}");
-            for (String match : matches) {
-                value = StringUtils.format(value, match);
-            }
+            value = value.replaceFirst(ENC_REG, SecureUtils.rsaDecrypt(group.substring(4, group.length() - 1)));
         }
         return value;
     }
