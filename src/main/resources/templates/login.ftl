@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
-<#assign params = ["layui"]>
+<#assign params = ["jsencrypt"]>
 <#include "/include/include.ftl">
 <link rel="stylesheet" href="${ctx}/static/css/login.css"/>
 <script type="text/javascript">
     let code = "${RequestParameters["code"]!}";
+    top.rsaPublicKey = "${rsaPublicKey!}";
 </script>
 <script type="text/javascript" src="${ctx}/static/login.js"></script>
 <title>Qu管理平台-登录</title>

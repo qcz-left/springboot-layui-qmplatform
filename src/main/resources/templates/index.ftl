@@ -55,6 +55,7 @@
 <link>
 <link rel="stylesheet" href="${ctx}/static/css/index.css"/>
 <script>
+    top.rsaPublicKey = "${rsaPublicKey!}";
     layui.use(['element'], function () {
         let element = layui.element;
         let tabLayFilter = 'main-tab';

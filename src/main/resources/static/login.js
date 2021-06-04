@@ -39,8 +39,10 @@ layui.use(['form', 'layer'], function () {
     $("#codeImg").click(function () {
         $(this).attr("src", ctx + "/noNeedLogin/getLoginCode?v=" + new Date().getTime());
     });
-
     form.on('submit(login)', function (data) {
+        console.log(data.field.password)
+        data.field.password = rsaEncrypt(data.field.password);
+        console.log(data.field.password)
         // 登录表单提交操作
         layer.loadingWithText("正在努力登录...");
         CommonUtil.postAjax(ctx + "/login", data.field, function (response) {

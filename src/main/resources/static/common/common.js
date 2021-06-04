@@ -24,7 +24,7 @@ const CommonUtil = {
             type: AjaxType.POST,
             url: _url,
             async: typeof (_async) == "undefined" ? true : _async,
-            data: JSON.stringify(_data),
+            data: encodeURIComponent(JSON.stringify(_data)),
             contentType: 'application/json;charset=UTF-8',
             success: function (msg) {
                 if (_success && typeof _success == "function") {
@@ -76,7 +76,7 @@ const CommonUtil = {
         $.ajax({
             type: AjaxType.PUT,
             url: _url,
-            data: JSON.stringify(_data),
+            data: encodeURIComponent(JSON.stringify(_data)),
             contentType: 'application/json;charset=UTF-8',
             success: function (msg) {
                 if (_success && typeof _success == "function") {
@@ -102,7 +102,7 @@ const CommonUtil = {
         $.ajax({
             type: AjaxType.PATCH,
             url: _url,
-            data: JSON.stringify(_data),
+            data: encodeURIComponent(JSON.stringify(_data)),
             contentType: 'application/json;charset=UTF-8',
             success: function (msg) {
                 if (_success && typeof _success == "function") {
@@ -121,7 +121,7 @@ const CommonUtil = {
         $.ajax({
             type: _isPut ? AjaxType.PUT : AjaxType.POST,
             url: _url,
-            data: JSON.stringify(_data),
+            data: encodeURIComponent(JSON.stringify(_data)),
             contentType: 'application/json;charset=UTF-8',
             success: function (msg) {
                 if (_success && typeof _success == "function") {

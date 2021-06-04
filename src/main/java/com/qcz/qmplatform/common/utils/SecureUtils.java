@@ -115,4 +115,9 @@ public class SecureUtils {
         return !StringUtils.equals(PASSWORD_UNCHANGED, pwd);
     }
 
+    public static void main(String[] args) {
+        System.out.println(rsaEncrypt("admin"));
+        System.out.println(rsaDecrypt("jd3psue/o5gMVJcG2WgeInibQlLBR2ddYh+w3sI/UdQHywwwbhiPw9ZrmQgENbuJjfLOCoT9G7ffBFcpndXSSq0Xui9QUqo+wlzhsRmkJBEK0K5/6G2bqZwEYLUtvtOYNaF1U1P5pnj41mBJCstgCTi2XArGycrsZSZTdPGjiZA="));
+    }
+
 }

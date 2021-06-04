@@ -34,9 +34,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
@@ -75,6 +75,7 @@ public class LoginController {
         root.put(Constant.CURRENT_USER_SIGN, currUser);
         root.put("maxTabs", ConfigLoader.getMaxTabs());
         root.put("messageCount", messageService.selectNoReadCount(userId));
+        root.put("rsaPublicKey", ConfigLoader.getRsaPublicKey());
         return "index";
     }
 
@@ -82,7 +83,8 @@ public class LoginController {
      * 进入到登录页面
      */
     @GetMapping("/loginPage")
-    public String loginPage() {
+    public String loginPage(Map<String, Object> root) {
+        root.put("rsaPublicKey", ConfigLoader.getRsaPublicKey());
         return "login";
     }
 
@@ -115,7 +117,7 @@ public class LoginController {
      *
      * @param passwordVO 前台传进参数，包含用户名和密码等
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping("/login")
     @ResponseBody
     @RecordLog(type = OperateType.LOGIN)
     @Retryable(value = {PSQLException.class})

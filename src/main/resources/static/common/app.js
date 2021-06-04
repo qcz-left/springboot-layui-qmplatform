@@ -23,7 +23,18 @@ Date.prototype.format = function (fmt) { // author: meizz
     for (var k in o)
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
-}
+};
+
+String.prototype.format = function () {
+    if (arguments.length == 0) {
+        return this;
+    }
+    let s = this;
+    for (let i = 0; i < arguments.length; i++) {
+        s = s.replace(new RegExp("\\{" + i + "\\}", "g"), arguments[i]);
+    }
+    return s;
+};
 
 function closeCurrentIframe() {
     var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
@@ -147,4 +158,13 @@ function getColNames(tableIns) {
         }
     }
     return colNames;
+}
+
+/**
+ * RSA参数加密
+ */
+function rsaEncrypt(data) {
+    let encrypt = new JSEncrypt();
+    encrypt.setPublicKey(top.rsaPublicKey);
+    return "ENC({0})".format(encrypt.encrypt(data));
 }
