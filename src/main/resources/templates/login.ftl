@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<#assign params = ["jsencrypt"]>
 <#include "/include/include.ftl">
 <link rel="stylesheet" href="${ctx}/static/css/login.css"/>
 <script type="text/javascript">

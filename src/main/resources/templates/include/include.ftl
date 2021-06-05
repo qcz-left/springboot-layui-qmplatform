@@ -18,8 +18,6 @@
                 <script type="text/javascript" src="${ctx}/static/plugin/echarts3.3.2/echarts.min.js"></script>
             <#elseif item == "error">
             <link rel="stylesheet" href="${ctx}/static/error/error.css"/>
-            <#elseif item == "jsencrypt">
-                <script type="text/javascript" src="${ctx}/static/plugin/jsencrypt/jsencrypt.min.js"></script>
             <#elseif item == "jqgrid">
             <#--jqgrid-->
             <link rel="stylesheet" href="${ctx}/static/plugin/jqgrid/css/css/ui-lightness/jquery-ui-1.8.16.custom.css"/>
@@ -35,4 +33,5 @@
     <script type="text/javascript" src="${ctx}/static/common/common.js"></script>
     <script type="text/javascript" src="${ctx}/static/common/app.js"></script>
     <script type="text/javascript" src="${ctx}/static/common/layer-util.js"></script>
+    <script type="text/javascript" src="${ctx}/static/plugin/jsencrypt/jsencrypt.min.js"></script>
 </head>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<#assign params = ["jsencrypt"]>
 <#include "/include/include.ftl">
 <body class="detail-body">
 <div class="layui-fluid">
