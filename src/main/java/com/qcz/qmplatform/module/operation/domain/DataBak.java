@@ -1,14 +1,11 @@
 package com.qcz.qmplatform.module.operation.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * <p>
