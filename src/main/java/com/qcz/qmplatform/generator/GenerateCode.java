@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -53,6 +54,7 @@ public class GenerateCode {
         gc.setAuthor("quchangzhong");
         gc.setOpen(false);
         gc.setServiceImplName("%sService");
+        gc.setDateType(DateType.TIME_PACK);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
