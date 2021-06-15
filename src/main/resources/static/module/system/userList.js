@@ -85,10 +85,10 @@ layui.use(['table', 'form', 'element', 'layer', 'xmSelect'], function () {
                     generateName: "用户管理.xls"
                 };
                 let index = top.layer.loadingWithText("正在导出数据到Excel，请稍后...");
-                CommonUtil.postAjax(ctx + '/user/export', exportParam, function (result) {
+                CommonUtil.postAjax(ctx + '/user/generateExportFile', exportParam, function (result) {
                     top.layer.close(index);
                     if (result.ok) {
-                        location.href = ctx + '/downloadFile?filePath=' + encodeURIComponent(result.data);
+                        location.href = ctx + '/downloadExportFile?filePath=' + encodeURIComponent(result.data);
                     }
                 });
                 break;

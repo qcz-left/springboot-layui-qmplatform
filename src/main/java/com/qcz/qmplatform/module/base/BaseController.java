@@ -32,7 +32,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -105,9 +107,9 @@ public class BaseController {
     }
 
     /**
-     * 导出
+     * 生成导出临时文件
      */
-    @RequestMapping("/export")
+    @RequestMapping("/generateExportFile")
     @ResponseBody
     public ResponseResult<?> export(@RequestBody ExportParamVo exportParam, HttpServletRequest request) {
         String tmpFilePath;
@@ -153,10 +155,31 @@ public class BaseController {
             writer.close();
             IoUtil.close(out);
         } catch (Exception e) {
-            throw new CommonException("Failed to export file！", e);
+            throw new CommonException("Failed to generate export file！", e);
         }
 
         return ResponseResult.ok(null, tmpFilePath);
+    }
+
+    /**
+     * 下载导出文件后删除
+     *
+     * @param filePath 导出文件路径
+     */
+    @GetMapping("/downloadExportFile")
+    public void downloadExportFile(String filePath, HttpServletResponse response) {
+        File file = FileUtils.file(FileUtils.getRealFilePath(filePath));
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(file);
+            response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", new String(file.getName().getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1)));
+            IoUtil.copy(in, response.getOutputStream());
+        } catch (Exception e) {
+            logger.error("Failed to download export file！", e);
+        } finally {
+            IoUtil.close(in);
+            FileUtils.del(file);
+        }
     }
 
     /**
