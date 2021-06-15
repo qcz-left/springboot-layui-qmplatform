@@ -145,6 +145,10 @@ body .my-layer-warm .layui-layer-btn0 {
     margin-right: 5px;
 }
 
+.layui-form div[disabled] {
+    line-height: 38px;
+}
+
 [disabled] {
     color: #d2d2d2!important;
     cursor: not-allowed!important;

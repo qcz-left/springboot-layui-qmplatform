@@ -126,7 +126,7 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
             CommonUtil.postAjax(ctx + "/operation/data-bak/recoverDataBak/" + bakId, {}, function (data) {
                 top.layer.closeAll();
                 if (!CommonUtil.respSuccess(data)) {
-                    top.layer.error("恢复备份失败！");
+                    top.layer.error(data.msg || "恢复备份失败！");
                 }
             })
         });
