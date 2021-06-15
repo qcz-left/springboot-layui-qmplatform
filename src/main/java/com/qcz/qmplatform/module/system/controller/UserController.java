@@ -7,18 +7,9 @@ import cn.hutool.core.util.RandomUtil;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
-import com.qcz.qmplatform.common.bean.PageRequest;
-import com.qcz.qmplatform.common.bean.PageResult;
-import com.qcz.qmplatform.common.bean.PageResultHelper;
-import com.qcz.qmplatform.common.bean.PrivCode;
-import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.bean.*;
 import com.qcz.qmplatform.common.constant.Constant;
-import com.qcz.qmplatform.common.utils.CacheUtils;
-import com.qcz.qmplatform.common.utils.FileUtils;
-import com.qcz.qmplatform.common.utils.SecureUtils;
-import com.qcz.qmplatform.common.utils.SmsUtils;
-import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.common.utils.SubjectUtils;
+import com.qcz.qmplatform.common.utils.*;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.notify.NotifyServiceFactory;
 import com.qcz.qmplatform.module.notify.bean.SmsConfig;
@@ -33,20 +24,12 @@ import com.qcz.qmplatform.module.system.vo.UserVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -120,11 +103,6 @@ public class UserController extends BaseController {
             user.setOrganizationIds(CollectionUtil.newArrayList(organizationIdsStr.split(",")));
         }
         return ResponseResult.ok(PageResultHelper.parseResult(userService.getUserList(user)));
-    }
-
-    @Override
-    protected void exportFormat(List rows) {
-
     }
 
     /**

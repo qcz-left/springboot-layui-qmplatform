@@ -88,7 +88,7 @@ layui.use(['table', 'form', 'element', 'layer', 'xmSelect'], function () {
                 CommonUtil.postAjax(ctx + '/user/export', exportParam, function (result) {
                     top.layer.close(index);
                     if (result.ok) {
-                        location.href = ctx + '/downloadFile?filePath=' + encodeURIComponent(result.data);
+                        location.href = ctx + '/user/downloadFile?filePath=' + encodeURIComponent(result.data);
                     }
                 });
                 break;
