@@ -18,6 +18,8 @@ public class FileUtils extends FileUtil {
 
     public static final String WEB_PATH = getWebPath();
 
+    public static final String PATH_PRE = "/file/";
+
     /**
      * 将对象写到文件
      *
@@ -159,7 +161,7 @@ public class FileUtils extends FileUtil {
      * @return the real path of file
      */
     public static String getRealFilePath(String filePath) {
-        if (StringUtils.startWith(filePath, "/file/")) {
+        if (StringUtils.startWith(filePath, PATH_PRE)) {
             return ConfigLoader.getUploadFilePath() + filePath.substring(6);
         }
         return filePath;

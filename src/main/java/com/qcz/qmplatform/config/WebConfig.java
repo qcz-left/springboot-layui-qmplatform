@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.config;
 
 import com.qcz.qmplatform.common.utils.ConfigLoader;
+import com.qcz.qmplatform.common.utils.FileUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -18,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**/*.ftl").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/templates/");
         registry.addResourceHandler("/static/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/static/");
-        registry.addResourceHandler("/file/**").addResourceLocations("file:" + ConfigLoader.getUploadFilePath());
+        registry.addResourceHandler(FileUtils.PATH_PRE + "**").addResourceLocations("file:" + ConfigLoader.getUploadFilePath());
     }
 
 }

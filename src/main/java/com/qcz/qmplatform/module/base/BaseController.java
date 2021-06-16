@@ -62,7 +62,7 @@ public class BaseController {
         }
         Map<String, String> response = new HashMap<>();
         response.put("fileName", fileName);
-        response.put("filePath", "/file/" + fileName);
+        response.put("filePath", FileUtils.PATH_PRE + fileName);
         return ResponseResult.ok(response);
     }
 
