@@ -161,6 +161,16 @@ const CommonUtil = {
         });
     },
 
+    exportExcel: function(exportParam) {
+        let index = top.layer.loadingWithText("正在导出数据到Excel，请稍后...");
+        CommonUtil.postAjax(ctx + '/generateExportFile', exportParam, function (result) {
+            top.layer.close(index);
+            if (result.ok) {
+                window.location = ctx + '/downloadFile?filePath=' + encodeURIComponent(result.data);
+            }
+        });
+    },
+
     /**
      * js动态导入static静态文件（js、css）
      * resourceNames ：资源名称，多个以逗号“,”隔开（如：'layui,vue'）

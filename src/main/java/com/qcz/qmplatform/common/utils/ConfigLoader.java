@@ -141,11 +141,21 @@ public class ConfigLoader {
         return getStringConfig(GROUP_SECURE, "RsaPrivateKey", "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALapMkxgEifauTxb99EUp32SZlR3vb60ZCDmjJAv8n3HgXI0oUVtwxqnMPHjfUenBaez/ZscfWWjEDt+iOmwcIDHMDju/mdVs6Yh27EtpqGlzP0TTEcrA4ClfAX8JUn/mW4FpEtBBia6b1a98x63qEj+OX5d8Ym4e7yTd4DdvLo7AgMBAAECgYA0/kp68QZjbKgAFHiFvrXHDyHEEMdKXCCOkQSn0llKV4a9IPrG30zS3z2qd8MBdjoESQpjJXVV9uR/Njs3fTpuDI9ENlsFbMcpH7T2VvTF4tfUkqJLrNG1bWy88iuHlg3s+gyoh95qj0FpQwvVNZu5y2T1ST9yJr4mNjEUKcuP1QJBAN/dNN45FOhNtDLuEO26VyHL8qWt9mmS/2V6Yv4mVop/dn0etutlW+TD7tOvEQpp8tU4yHICC81Se6zjpbuKF4UCQQDQ4dAJ3E0sHAxutwq0cKHLk47zAls+HK5CPvXz25WEY8iVkROjKXQ+nbL/kk9nEcPRKoxGOsA7yy/kE3iJnNa/AkEAvUBYrXU8Q5dNO7EfBpp9hsjP/Viv9FidKMDqZ0kp6DQRi30nzqEFqsQpZzOdCFzBOZijfB5Ws+GDRIm/VmhLsQJBANADEBnBuVhj1j2rKo3mXDlPCNwXTKXeCesOp//gfFUKyYWoo9WoQorYoJjCKzCJEGgL5wVJHIZvIZIPkcn41iECQGcPx8wUsEcx4oEr9fPQCM6nqJSP0vDm28vM0aOyQwoP8O9Oehvq7wk9GI4aY+YfzHA2S2utb/cSRp0rSmY46gc=");
     }
 
+    /**
+     * 获取密码字段，多个用“,”符号隔开，
+     */
     public static List<String> getPwdFields() {
         String pwdFields = getStringConfig("PwdFields", "password,pwd,secretKey");
         if (StringUtils.isBlank(pwdFields)) {
             return new ArrayList<>(0);
         }
         return CollectionUtil.newArrayList(pwdFields.split(","));
+    }
+
+    /**
+     * 开启保存临时导出文件
+     */
+    public static boolean enableSaveTmpExportFile() {
+        return "1".equals(getStringConfig("EnableSaveTmpExportFile", "0"));
     }
 }
