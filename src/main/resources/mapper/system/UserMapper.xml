@@ -32,7 +32,7 @@
     <select id="queryUserList" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
         select
             su.*,
-            string_agg ( so.organization_name, ',' ) as organization_name,
+            coalesce(string_agg( so.organization_name, ',' ), '') as organization_name,
             va1.attr_name as userSexName,
             va2.attr_name as lockedName
         from
