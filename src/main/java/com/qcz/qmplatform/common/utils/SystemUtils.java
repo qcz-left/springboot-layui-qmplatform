@@ -3,7 +3,12 @@ package com.qcz.qmplatform.common.utils;
 import cn.hutool.system.HostInfo;
 import cn.hutool.system.OsInfo;
 import cn.hutool.system.SystemUtil;
-import com.qcz.qmplatform.module.operation.pojo.*;
+import com.qcz.qmplatform.module.operation.pojo.Computer;
+import com.qcz.qmplatform.module.operation.pojo.Cpu;
+import com.qcz.qmplatform.module.operation.pojo.Disk;
+import com.qcz.qmplatform.module.operation.pojo.Mem;
+import com.qcz.qmplatform.module.operation.pojo.ServerInfo;
+import com.qcz.qmplatform.module.operation.pojo.SysFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import oshi.SystemInfo;
@@ -16,8 +21,18 @@ import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
 
-import java.net.*;
-import java.util.*;
+import java.net.DatagramSocket;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Objects;
+import java.util.Properties;
 
 import static oshi.hardware.CentralProcessor.TickType;
 
