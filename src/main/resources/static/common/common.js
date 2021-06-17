@@ -166,7 +166,7 @@ const CommonUtil = {
         CommonUtil.postAjax(ctx + '/generateExportFile', exportParam, function (result) {
             top.layer.close(index);
             if (result.ok) {
-                window.location = ctx + '/downloadFile?filePath=' + encodeURIComponent(result.data);
+                window.location = ctx + '/downloadExportFile?filePath=' + encodeURIComponent(result.data);
             }
         });
     },
