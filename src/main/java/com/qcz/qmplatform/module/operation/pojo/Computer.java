@@ -13,6 +13,10 @@ public class Computer implements Serializable {
      */
     private String computerIp;
     /**
+     * mac地址
+     */
+    private String computerMac;
+    /**
      * 操作系统名称
      */
     private String osName;
@@ -24,6 +28,38 @@ public class Computer implements Serializable {
      * 所在目录
      */
     private String userDir;
+    /**
+     * 上次启动时间
+     */
+    private String lastStartTime;
+    /**
+     * 运行时长
+     */
+    private String runTime;
+
+    public String getComputerMac() {
+        return computerMac;
+    }
+
+    public void setComputerMac(String computerMac) {
+        this.computerMac = computerMac;
+    }
+
+    public String getLastStartTime() {
+        return lastStartTime;
+    }
+
+    public void setLastStartTime(String lastStartTime) {
+        this.lastStartTime = lastStartTime;
+    }
+
+    public String getRunTime() {
+        return runTime;
+    }
+
+    public void setRunTime(String runTime) {
+        this.runTime = runTime;
+    }
 
     public String getComputerName() {
         return computerName;
@@ -67,12 +103,15 @@ public class Computer implements Serializable {
 
     @Override
     public String toString() {
-        return "Sys{" +
+        return "Computer{" +
                 "computerName='" + computerName + '\'' +
                 ", computerIp='" + computerIp + '\'' +
+                ", computerMac='" + computerMac + '\'' +
                 ", osName='" + osName + '\'' +
                 ", osArch='" + osArch + '\'' +
                 ", userDir='" + userDir + '\'' +
+                ", lastStartTime='" + lastStartTime + '\'' +
+                ", runTime='" + runTime + '\'' +
                 '}';
     }
 }

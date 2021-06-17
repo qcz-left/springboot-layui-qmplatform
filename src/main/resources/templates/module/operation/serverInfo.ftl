@@ -17,11 +17,15 @@
                         <tbody>
                         <tr>
                             <td>计算机名称：${computer.computerName!''}</td>
-                            <td>计算机地址：${computer.computerIp!''}</td>
+                            <td>计算机地址：${computer.computerIp!''} / ${computer.computerMac!''}</td>
                         </tr>
                         <tr>
                             <td>系统名称：${computer.osName!''}</td>
                             <td>系统类型：${computer.osArch!''}</td>
+                        </tr>
+                        <tr>
+                            <td>上次启动时间：${computer.lastStartTime!''}</td>
+                            <td>运行时长：${computer.runTime!''}</td>
                         </tr>
                         </tbody>
                     </table>

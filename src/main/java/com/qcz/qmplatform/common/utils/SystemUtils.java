@@ -3,32 +3,34 @@ package com.qcz.qmplatform.common.utils;
 import cn.hutool.system.HostInfo;
 import cn.hutool.system.OsInfo;
 import cn.hutool.system.SystemUtil;
-import com.qcz.qmplatform.module.operation.pojo.Computer;
-import com.qcz.qmplatform.module.operation.pojo.Cpu;
-import com.qcz.qmplatform.module.operation.pojo.Disk;
-import com.qcz.qmplatform.module.operation.pojo.Mem;
-import com.qcz.qmplatform.module.operation.pojo.ServerInfo;
-import com.qcz.qmplatform.module.operation.pojo.SysFile;
+import com.qcz.qmplatform.module.operation.pojo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;
 import oshi.hardware.HardwareAbstractionLayer;
+import oshi.hardware.NetworkIF;
 import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
+import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.net.*;
+import java.util.*;
 
 import static oshi.hardware.CentralProcessor.TickType;
 
 public class SystemUtils extends SystemUtil {
 
-    private static final SystemInfo si = new SystemInfo();
-    private static final HardwareAbstractionLayer hal = si.getHardware();
+    private static final Logger LOGGER = LoggerFactory.getLogger(SystemUtils.class);
 
-    private static final int OSHI_WAIT_SECOND = 1000;
+    private static final SystemInfo SI = new SystemInfo();
+    private static final HardwareAbstractionLayer LAYER = SI.getHardware();
+    private static final OperatingSystem OPERATING_SYSTEM = SI.getOperatingSystem();
+    private static final HardwareAbstractionLayer HARDWARE = SI.getHardware();
+
+    private static final int WAIT_SECOND = 1000;
 
     public static final OsInfo OS = new OsInfo();
 
@@ -51,7 +53,7 @@ public class SystemUtils extends SystemUtil {
      * 内存信息
      */
     public static Mem getMem() {
-        GlobalMemory memory = hal.getMemory();
+        GlobalMemory memory = LAYER.getMemory();
         Mem mem = new Mem();
         long total = memory.getTotal();
         long available = memory.getAvailable();
@@ -70,8 +72,8 @@ public class SystemUtils extends SystemUtil {
         Disk disk = new Disk();
         long totalDisk = 0, freeDisk = 0, usedDisk = 0;
         List<SysFile> sysFiles = new ArrayList<>();
-        FileSystem fileSystem = si.getOperatingSystem().getFileSystem();
-        OSFileStore[] fsArray = fileSystem.getFileStores();
+        FileSystem fileSystem = SI.getOperatingSystem().getFileSystem();
+        List<OSFileStore> fsArray = fileSystem.getFileStores();
         for (OSFileStore fs : fsArray) {
             long free = fs.getUsableSpace();
             long total = fs.getTotalSpace();
@@ -102,9 +104,9 @@ public class SystemUtils extends SystemUtil {
      */
     public static Cpu getCpu() {
         // CPU信息
-        CentralProcessor processor = hal.getProcessor();
+        CentralProcessor processor = LAYER.getProcessor();
         long[] prevTicks = processor.getSystemCpuLoadTicks();
-        Util.sleep(OSHI_WAIT_SECOND);
+        Util.sleep(WAIT_SECOND);
         long[] ticks = processor.getSystemCpuLoadTicks();
         long nice = ticks[CentralProcessor.TickType.NICE.getIndex()] - prevTicks[TickType.NICE.getIndex()];
         long irq = ticks[TickType.IRQ.getIndex()] - prevTicks[TickType.IRQ.getIndex()];
@@ -133,11 +135,162 @@ public class SystemUtils extends SystemUtil {
         HostInfo hostInfo = getHostInfo();
         Computer computer = new Computer();
         computer.setComputerName(hostInfo.getName());
-        computer.setComputerIp(hostInfo.getAddress());
+        computer.setComputerIp(getHostIp());
+        computer.setComputerMac(getHostMac());
         computer.setOsName(props.getProperty("os.name"));
         computer.setOsArch(props.getProperty("os.arch"));
         computer.setUserDir(props.getProperty("user.dir"));
+        computer.setLastStartTime(getLastStartTime());
+        computer.setRunTime(getRunTime());
         return computer;
+    }
+
+    /**
+     * 最近启动时间
+     */
+    public static String getLastStartTime() {
+        return DateUtils.format(new Date(OPERATING_SYSTEM.getSystemBootTime() * 1000L), "yyyy-MM-dd HH:mm:ss");
+    }
+
+    /**
+     * 运行时长
+     *
+     * @param dayUnit  单位：天
+     * @param hourUnit 单位：小时
+     * @param minUnit  单位：分钟
+     */
+    public static String getRunTime(String dayUnit, String hourUnit, String minUnit) {
+        long systemUptime = OPERATING_SYSTEM.getSystemUptime();// 秒
+        if (systemUptime < 60) {
+            return systemUptime + "秒";
+        } else if (systemUptime < 3600) {
+            return systemUptime / 60 + minUnit;
+        } else if (systemUptime < 86400) {// 3600 * 60
+            return systemUptime / 3600 + hourUnit + systemUptime % 3600 / 60 + minUnit;
+        } else {
+            long hourOrMin = systemUptime % 86400;
+            String hourOrMinWithUnit;
+            if (hourOrMin > 3600) {
+                hourOrMinWithUnit = hourOrMin / 3600 + hourUnit;
+            } else {
+                hourOrMinWithUnit = hourOrMin / 60 + minUnit;
+            }
+            return systemUptime / 86400 + dayUnit + hourOrMinWithUnit;
+        }
+    }
+
+    /**
+     * 运行时长（单位默认 天、小时分钟）
+     */
+    public static String getRunTime() {
+        return getRunTime("天", "小时", "分钟");
+    }
+
+    /**
+     * 主机ip
+     */
+    public static String getHostIp() {
+        return Objects.requireNonNull(getLocalIp4Address()).getHostAddress();
+    }
+
+    /**
+     * 主机mac
+     */
+    public static String getHostMac() {
+        for (NetworkIF networkIF : HARDWARE.getNetworkIFs()) {
+            if (!networkIF.isKnownVmMacAddr()) {
+                return networkIF.getMacaddr();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 主机mac
+     */
+    public static List<String> getHostMacs() {
+        List<String> macs = new ArrayList<>();
+        for (NetworkIF networkIF : HARDWARE.getNetworkIFs()) {
+            macs.add(networkIF.getMacaddr());
+        }
+        return macs;
+    }
+
+    /**
+     * 主机名
+     */
+    public static String getHostName() {
+        return OPERATING_SYSTEM.getNetworkParams().getHostName();
+    }
+
+    public static Inet4Address getLocalIp4Address() {
+        List<Inet4Address> ipByNi = null;
+        try {
+            ipByNi = getLocalIp4AddressFromNetworkInterface();
+            if (ipByNi.size() != 1) {
+                final Inet4Address ipBySocketOpt = getIpBySocket();
+                if (ipBySocketOpt != null) {
+                    return ipBySocketOpt;
+                } else {
+                    return ipByNi.isEmpty() ? null : ipByNi.get(0);
+                }
+            }
+        } catch (SocketException e) {
+            LOGGER.error("getLocalIp4Address failed.", e);
+        }
+        return Objects.requireNonNull(ipByNi).get(0);
+    }
+
+    private static Inet4Address getIpBySocket() throws SocketException {
+        try (final DatagramSocket socket = new DatagramSocket()) {
+            socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+            if (socket.getLocalAddress() instanceof Inet4Address) {
+                return (Inet4Address) socket.getLocalAddress();
+            }
+        } catch (UnknownHostException e) {
+            LOGGER.error("getIpBySocket failed.", e);
+        }
+        return null;
+    }
+
+    public static List<Inet4Address> getLocalIp4AddressFromNetworkInterface() throws SocketException {
+        List<Inet4Address> addresses = new ArrayList<>(1);
+        Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
+        if (e == null) {
+            return addresses;
+        }
+        while (e.hasMoreElements()) {
+            NetworkInterface n = e.nextElement();
+            if (!isValidInterface(n)) {
+                continue;
+            }
+            Enumeration<InetAddress> ee = n.getInetAddresses();
+            while (ee.hasMoreElements()) {
+                InetAddress i = ee.nextElement();
+                if (isValidAddress(i)) {
+                    addresses.add((Inet4Address) i);
+                }
+            }
+        }
+        return addresses;
+    }
+
+    /**
+     * 过滤回环网卡、点对点网卡、非活动网卡、虚拟网卡并要求网卡名字是eth或ens开头
+     *
+     * @param ni 网卡
+     * @return 如果满足要求则true，否则false
+     */
+    private static boolean isValidInterface(NetworkInterface ni) throws SocketException {
+        return !ni.isLoopback() && !ni.isPointToPoint() && ni.isUp() && !ni.isVirtual()
+                && (ni.getName().startsWith("eth") || ni.getName().startsWith("ens"));
+    }
+
+    /**
+     * 判断是否是IPv4，并且内网地址并过滤回环地址.
+     */
+    private static boolean isValidAddress(InetAddress address) {
+        return address instanceof Inet4Address && address.isSiteLocalAddress() && !address.isLoopbackAddress();
     }
 
     /**
@@ -161,5 +314,9 @@ public class SystemUtils extends SystemUtil {
         } else {
             return String.format("%d B", size);
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getComputer());
     }
 }
