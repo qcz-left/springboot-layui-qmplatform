@@ -35,6 +35,7 @@
 档案中心<br>
 &emsp;文件管理<br>
 运维管理<br>
+&emsp;登录错误记录<br>
 &emsp;系统运行状态<br>
 &emsp;数据库监控<br>
 &emsp;字典管理<br>
@@ -43,10 +44,10 @@
 ...
 
 ## 部分截图
-![用户管理](https://images.gitee.com/uploads/images/2021/0105/161613_0cc93fb9_1324727.png "屏幕截图.png")
-![菜单管理](https://images.gitee.com/uploads/images/2021/0105/161659_4018e099_1324727.png "屏幕截图.png")
-![字典管理](https://images.gitee.com/uploads/images/2020/1220/184611_301f6b03_1324727.png "屏幕截图.png")
-![数据备份与恢复](https://images.gitee.com/uploads/images/2021/0105/161746_276dc720_1324727.png "屏幕截图.png")
+![用户管理](https://images.gitee.com/uploads/images/2021/0618/104038_527377b2_1324727.png "屏幕截图.png")
+![菜单管理](https://images.gitee.com/uploads/images/2021/0618/104133_562b8ecb_1324727.png "屏幕截图.png")
+![字典管理](https://images.gitee.com/uploads/images/2021/0618/104203_d08474d8_1324727.png "屏幕截图.png")
+![数据备份与恢复](https://images.gitee.com/uploads/images/2021/0618/104231_b0f4176e_1324727.png "屏幕截图.png")
 
 ## Jenkins持续集成
 ### 下载Jenkins
