@@ -150,10 +150,33 @@ body .my-layer-warm .layui-layer-btn0 {
 }
 
 [disabled] {
-    color: #d2d2d2!important;
-    cursor: not-allowed!important;
+    color: #d2d2d2 !important;
+    cursor: not-allowed !important;
 }
 
 [data-edit=true] {
-    cursor: pointer!important;
+    cursor: pointer !important;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px transparent;
+    -webkit-box-shadow: inset 0 0 6px transparent;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    background-color: transparent;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+    background-color: #7E7E7E;
 }
