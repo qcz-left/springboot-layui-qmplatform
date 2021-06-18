@@ -1,6 +1,6 @@
 package com.qcz.qmplatform.common.utils;
 
-import cn.hutool.system.HostInfo;
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.system.OsInfo;
 import cn.hutool.system.SystemUtil;
 import com.qcz.qmplatform.module.operation.pojo.Computer;
@@ -147,9 +147,8 @@ public class SystemUtils extends SystemUtil {
      */
     public static Computer getComputer() {
         Properties props = System.getProperties();
-        HostInfo hostInfo = getHostInfo();
         Computer computer = new Computer();
-        computer.setComputerName(hostInfo.getName());
+        computer.setComputerName(getHostName());
         computer.setComputerIp(getHostIp());
         computer.setComputerMac(getHostMac());
         computer.setOsName(props.getProperty("os.name"));
@@ -164,7 +163,7 @@ public class SystemUtils extends SystemUtil {
      * 最近启动时间
      */
     public static String getLastStartTime() {
-        return DateUtils.format(new Date(OPERATING_SYSTEM.getSystemBootTime() * 1000L), "yyyy-MM-dd HH:mm:ss");
+        return DateUtils.format(new Date(OPERATING_SYSTEM.getSystemBootTime() * 1000L), DatePattern.NORM_DATETIME_PATTERN);
     }
 
     /**
