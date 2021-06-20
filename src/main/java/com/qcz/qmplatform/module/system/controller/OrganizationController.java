@@ -48,6 +48,16 @@ public class OrganizationController extends BaseController {
         return PREFIX + "organizationList";
     }
 
+    @GetMapping("/orgManagePage")
+    public String orgManagePage() {
+        return PREFIX + "orgManage";
+    }
+
+    @GetMapping("/orgDetailPage")
+    public String orgDetailPage() {
+        return PREFIX + "orgDetail";
+    }
+
     @GetMapping("/organizationDetailPage")
     public String organizationDetailPage() {
         return PREFIX + "organizationDetail";
