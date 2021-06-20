@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -54,8 +55,25 @@ public class OrganizationController extends BaseController {
     }
 
     @GetMapping("/orgDetailPage")
-    public String orgDetailPage() {
+    public String orgDetailPage(Map<String, Object> root, boolean leaf) {
+        root.put("leaf", leaf);
         return PREFIX + "orgDetail";
+    }
+
+    @GetMapping("/baseInfoPage")
+    public String baseInfoPage(Map<String, Object> root, boolean leaf) {
+        root.put("leaf", leaf);
+        return PREFIX + "orgBaseInfo";
+    }
+
+    @GetMapping("/deptManagePage")
+    public String deptManagePage() {
+        return PREFIX + "orgDeptManage";
+    }
+
+    @GetMapping("/userManagePage")
+    public String userManagePage() {
+        return PREFIX + "orgUserManage";
     }
 
     @GetMapping("/organizationDetailPage")
@@ -88,6 +106,17 @@ public class OrganizationController extends BaseController {
     @ResponseBody
     public ResponseResult<List<OrgTree>> getOrgTree(Organization organization) {
         return ResponseResult.ok(organizationService.getOrgTree(organization));
+    }
+
+    /**
+     * 获取组织机构
+     *
+     * @param organization 请求参数
+     */
+    @GetMapping("/getOrgUserTree")
+    @ResponseBody
+    public ResponseResult<List<OrgTree>> getOrgUserTree(Organization organization) {
+        return ResponseResult.ok(organizationService.getOrgUserTree(organization));
     }
 
     /**

@@ -19,6 +19,8 @@ public interface OrganizationMapper extends BaseMapper<Organization> {
 
     List<OrgTree> selectOrgTree(Organization organization);
 
+    List<OrgTree> selectOrgUserTree(Organization organization);
+
     List<String> selectCascOrgIds(@Param("organizationIds") List<String> organizationIds);
 
     void deleteOrgById(@Param("organizationIds") List<String> organizationIds);

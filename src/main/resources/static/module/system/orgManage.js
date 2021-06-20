@@ -5,7 +5,7 @@ layui.use(['dtree', 'table', 'form', 'element'], function () {
     let element = layui.element;
 
     let orgData = [];
-    CommonUtil.getSync(ctx + '/organization/getOrgTree', {}, function (result) {
+    CommonUtil.getSync(ctx + '/organization/getOrgUserTree', {}, function (result) {
         orgData = result.data;
     })
     // 树代码示例

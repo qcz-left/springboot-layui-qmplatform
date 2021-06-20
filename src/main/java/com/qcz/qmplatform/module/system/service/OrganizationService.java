@@ -33,6 +33,10 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
         return baseMapper.selectOrgTree(organization);
     }
 
+    public List<OrgTree> getOrgUserTree(Organization organization) {
+        return TreeUtils.buildTree(baseMapper.selectOrgUserTree(organization));
+    }
+
     public List<OrgTree> getOrgTree(Organization organization) {
         return TreeUtils.buildTree(getOrgList(organization));
     }
