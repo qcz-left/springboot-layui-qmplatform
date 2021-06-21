@@ -55,14 +55,14 @@ public class OrganizationController extends BaseController {
     }
 
     @GetMapping("/orgDetailPage")
-    public String orgDetailPage(Map<String, Object> root, boolean leaf) {
-        root.put("leaf", leaf);
+    public String orgDetailPage(Map<String, Object> root, boolean isDept) {
+        root.put("isDept", isDept);
         return PREFIX + "orgDetail";
     }
 
     @GetMapping("/baseInfoPage")
-    public String baseInfoPage(Map<String, Object> root, boolean leaf) {
-        root.put("leaf", leaf);
+    public String baseInfoPage(Map<String, Object> root, boolean isDept) {
+        root.put("isDept", isDept);
         return PREFIX + "orgBaseInfo";
     }
 

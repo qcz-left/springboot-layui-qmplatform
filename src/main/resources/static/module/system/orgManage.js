@@ -1,60 +1,45 @@
 layui.use(['dtree', 'table', 'form', 'element'], function () {
     let dtree = layui.dtree;
-    let table = layui.table;
-    let form = layui.form;
-    let element = layui.element;
 
     let orgData = [];
     CommonUtil.getSync(ctx + '/organization/getOrgUserTree', {}, function (result) {
         orgData = result.data;
-    })
+    });
+    function buildData(data) {
+        // 重新构造数据结构
+        for (let i = 0; i < data.length; i++) {
+            let item = data[i];
+            if (item.itype === 1) {
+                item['iconClass'] = "dtree-icon-fenzhijigou";
+            } else {
+                item['iconClass'] = "dtree-icon-yonghu";
+            }
+            if (item.hasChild) {
+                buildData(item.childes);
+            }
+        }
+    }
+    buildData(orgData);
     // 树代码示例
     let orgTree = dtree.render({
         elem: "#orgTree",
-        data: orgData,
         method: "get",
+        data: orgData,
+        dataStyle: "layuiStyle",
         skin: "laySimple",
-        iframeLoad: "all",
-        useIframe: true,  //启用iframe
-        iframeElem: "#orgContent",  // iframe的ID
-        iframeUrl: ctx + "/organization/orgDetailPage", // iframe路由到的地址
+        record: true,
+        ficon: "8",
         response: {
-            title: "name",		//节点名称
-            childName: "childes"	//子节点名称
+            title: "name", //节点名称
+            childName: "childes" //子节点名称
         },
         done: function () {
             dtree.click(orgTree, orgData[0].id);
         }
     });
-    /** 获取本页面url中的参数值 */
-    let getUrlParam = function (name) {
-        let url = location.search;
-        url = url.substring(url.indexOf("?"));
-        if (url.indexOf("?") != -1) {
-            let str = url.substr(1);
-            let strs = str.split("&");
-            for (let i = 0; i < strs.length; i++) {
-                if (name == strs[i].split("=")[0]) {
-                    return unescape(strs[i].split("=")[1]);
-                }
-            }
-        }
-        return "";
-    }
-    let nodeId = getUrlParam("nodeId"),
-        parentId = getUrlParam("parentId"),
-        context = decodeURI(getUrlParam("context")),  // 注意，此处对context做了一次转码
-        leaf = getUrlParam("leaf"),
-        level = getUrlParam("level"),
-        spread = getUrlParam("spread")
-    // 赋值
-    form.val("show_form", {
-        "nodeId": nodeId,
-        "parentId": parentId,
-        "context": context,
-        "leaf": leaf,
-        "level": level,
-        "spread": spread
+    // 绑定节点的单击事件
+    dtree.on("node('orgTree')", function (obj) {
+        let param = obj.param;
+        $("#orgContent").attr("src", "{0}?nodeId={1}&isDept={2}".format(ctx + "/organization/orgDetailPage", param.nodeId, param.recordData.itype === 1));
     });
-    form.render(); //刷新表单
 });

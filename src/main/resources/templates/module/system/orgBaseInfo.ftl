@@ -8,23 +8,25 @@
 
     .layui-form-item .layui-input-block {
         margin-left: 130px;
+        width: 35%;
     }
+
 </style>
 <body>
 <div class="layui-fluid">
     <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="org-form">
-        <#if !leaf>
+        <#if isDept>
             <input type="hidden" name="organizationId">
             <div class="layui-form-item">
-                <label class="layui-form-label required">组织机构名称</label>
+                <label class="layui-form-label required">部门名称</label>
                 <div class="layui-input-block">
-                    <input type="text" name="organizationName" lay-verify="required" placeholder="请输入组织机构名称" class="layui-input">
+                    <input type="text" name="organizationName" lay-verify="required" placeholder="请输入部门名称" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label required">组织机构编码</label>
+                <label class="layui-form-label required">部门编码</label>
                 <div class="layui-input-block">
-                    <input type="text" name="organizationCode" lay-verify="required" placeholder="请输入组织机构编码" class="layui-input">
+                    <input type="text" name="organizationCode" lay-verify="required" placeholder="请输入部门编码" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -85,7 +87,7 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">组织机构</label>
+                <label class="layui-form-label">部门</label>
                 <div class="layui-input-block">
                     <div id="organizationIds"></div>
                 </div>
@@ -127,10 +129,56 @@
         let form = layui.form;
         let xmSelect = layui.xmSelect;
 
-        let leaf = ${RequestParameters["leaf"]};
+        let isDept = ${RequestParameters["isDept"]};
         let nodeId = '${RequestParameters["nodeId"]}';
 
-        if (leaf) {
+        if (isDept) {
+            // 部门
+            let detail = {};
+            if (nodeId) {
+                CommonUtil.getSync(ctx + '/organization/getOrgOne/' + nodeId, {}, function (result) {
+                    form.val('org-form', result.data);
+                    detail = result.data;
+                })
+            }
+
+            // 上级权限数据加载
+            let parentIdSelect = xmSelect.render({
+                el: '#parentId',
+                name: 'parentId',
+                radio: true,
+                clickClose: true,//选中关闭
+                tree: {
+                    strict: false,
+                    show: true,
+                    showLine: false,
+                    clickExpand: false
+                },
+                prop: {
+                    value: 'id',
+                    children: 'childes'
+                },
+                data: []
+            });
+            CommonUtil.getAjax(ctx + '/organization/getOrgTree', {
+                organizationId: nodeId
+            }, function (result) {
+                parentIdSelect.update({
+                    initValue: [detail.parentId],
+                    data: result.data
+                })
+            });
+
+            form.on('submit(org-submit)', function (data) {
+                let index = top.layer.load(2);
+                CommonUtil.postOrPut(nodeId, ctx + '/organization/' + (nodeId ? 'updateOrg' : 'addOrg'), data.field, function (result) {
+                    top.layer.close(index);
+                    parent.parent.location.reload(true);
+                    LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE)
+                });
+                return false;
+            });
+        } else {
             // 用户
             form.verify({
                 loginname: function (value) {
@@ -165,7 +213,7 @@
                 $("#loginname").removeAttr("disabled");
             }
 
-            // 组织机构数据加载
+            // 部门数据加载
             let organizationIdsSelect = xmSelect.render({
                 el: '#organizationIds',
                 name: 'organizationIds',
@@ -181,13 +229,13 @@
                     children: 'childes'
                 },
                 data: []
-            })
+            });
             CommonUtil.getAjax(ctx + '/organization/getOrgTree', {}, function (result) {
                 organizationIdsSelect.update({
                     initValue: detail.organizationIds,
                     data: result.data
                 })
-            })
+            });
 
             // 角色数据加载
             let roleIdsSelect = xmSelect.render({
@@ -198,7 +246,7 @@
                     name: 'roleName'
                 },
                 data: []
-            })
+            });
             CommonUtil.getAjax(ctx + '/role/getRoleList', {
                 limit: 9999
             }, function (result) {
@@ -206,7 +254,7 @@
                     initValue: detail.roleIds,
                     data: result.data.list
                 })
-            })
+            });
 
             // 性别数据加载
             let userSexSelect = xmSelect.render({
@@ -216,7 +264,7 @@
                 clickClose: true,
                 model: {label: {type: 'text'}},
                 data: []
-            })
+            });
             CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
                 code: 'user-sex'
             }, function (result) {
@@ -224,7 +272,7 @@
                     initValue: [detail.userSex],
                     data: result.data
                 })
-            })
+            });
 
             // 账号状态数据加载
             let lockedSelect = xmSelect.render({
@@ -234,7 +282,7 @@
                 clickClose: true,
                 model: {label: {type: 'text'}},
                 data: []
-            })
+            });
             CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
                 code: 'user-status'
             }, function (result) {
@@ -242,7 +290,7 @@
                     initValue: [detail.locked],
                     data: result.data
                 })
-            })
+            });
 
             form.on('submit(org-submit)', function (data) {
                 let index = top.layer.load(2);
@@ -251,51 +299,7 @@
                 data.field.password = rsaEncrypt(data.field.password);
                 CommonUtil.postOrPut(nodeId, ctx + (nodeId ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
                     top.layer.close(index);
-                    LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE)
-                });
-                return false;
-            });
-        } else {
-            // 部门
-            let detail = {};
-            if (nodeId) {
-                CommonUtil.getSync(ctx + '/organization/getOrgOne/' + nodeId, {}, function (result) {
-                    form.val('org-form', result.data);
-                    detail = result.data;
-                })
-            }
-
-            // 上级权限数据加载
-            let parentIdSelect = xmSelect.render({
-                el: '#parentId',
-                name: 'parentId',
-                radio: true,
-                clickClose: true,//选中关闭
-                tree: {
-                    strict: false,
-                    show: true,
-                    showLine: false,
-                    clickExpand: false
-                },
-                prop: {
-                    value: 'id',
-                    children: 'childes'
-                },
-                data: []
-            })
-            CommonUtil.getAjax(ctx + '/organization/getOrgTree', {
-                organizationId: nodeId
-            }, function (result) {
-                parentIdSelect.update({
-                    initValue: [detail.parentId],
-                    data: result.data
-                })
-            })
-
-            form.on('submit(org-submit)', function (data) {
-                let index = top.layer.load(2);
-                CommonUtil.postOrPut(nodeId, ctx + '/organization/' + (nodeId ? 'updateOrg' : 'addOrg'), data.field, function (result) {
-                    top.layer.close(index);
+                    parent.parent.location.reload(true);
                     LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE)
                 });
                 return false;
