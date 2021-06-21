@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">组织机构</label>
+            <label class="layui-form-label">部门</label>
             <div class="layui-input-block">
                 <div id="organizationIds"></div>
             </div>
@@ -78,7 +78,7 @@
     </form>
 </div>
 <script type="text/javascript">
-    let id = "${RequestParameters["id"]}";
+    let id = "${RequestParameters["id"]!}";
     layui.use(['form', 'layer', 'xmSelect'], function () {
         let form = layui.form;
         let layer = layui.layer;
@@ -117,7 +117,7 @@
             $("#loginname").removeAttr("disabled");
         }
 
-        // 组织机构数据加载
+        // 部门数据加载
         let organizationIdsSelect = xmSelect.render({
             el: '#organizationIds',
             name: 'organizationIds',

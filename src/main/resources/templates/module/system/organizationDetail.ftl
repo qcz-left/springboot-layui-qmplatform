@@ -15,15 +15,15 @@
     <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="org-form">
         <input type="hidden" name="organizationId">
         <div class="layui-form-item">
-            <label class="layui-form-label required">组织机构名称</label>
+            <label class="layui-form-label required">部门名称</label>
             <div class="layui-input-block">
-                <input type="text" name="organizationName" lay-verify="required" placeholder="请输入组织机构名称" class="layui-input">
+                <input type="text" name="organizationName" lay-verify="required" placeholder="请输入部门名称" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label required">组织机构编码</label>
+            <label class="layui-form-label required">部门编码</label>
             <div class="layui-input-block">
-                <input type="text" name="organizationCode" lay-verify="required" placeholder="请输入组织机构编码" class="layui-input">
+                <input type="text" name="organizationCode" lay-verify="required" placeholder="请输入部门编码" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -51,7 +51,7 @@
     </form>
 </div>
 <script type="text/javascript">
-    let id = "${RequestParameters["id"]}";
+    let id = "${RequestParameters["id"]!}";
     layui.use(['form', 'layer', 'xmSelect'], function () {
         let form = layui.form;
         let layer = layui.layer;

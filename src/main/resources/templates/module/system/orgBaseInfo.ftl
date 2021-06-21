@@ -119,7 +119,6 @@
         </#if>
         <div class="detail-operator">
             <button type="submit" class="layui-btn layui-btn-normal" lay-submit lay-filter="org-submit">保存</button>
-            <button type="submit" class="layui-btn layui-btn-primary" onclick="closeCurrentIframe()">取消</button>
         </div>
     </form>
 </div>
