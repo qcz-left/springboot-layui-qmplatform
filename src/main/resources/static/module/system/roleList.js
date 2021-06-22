@@ -1,8 +1,5 @@
-layui.use(['table', 'form', 'element', 'layer'], function () {
+layui.use(['table'], function () {
     let table = layui.table;
-    let form = layui.form;
-    let element = layui.element;
-    let layer = layui.layer;
     let tableId = 'role-list-tab';
     let layFilter = 'role';
     table.render({
@@ -32,7 +29,7 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
             case 'delete':
                 let checked = table.checkStatus(tableId).data;
                 if (checked.length === 0) {
-                    layer.warning(Msg.AT_LEAST_CHOOSE_ONE);
+                    top.layer.warning(Msg.AT_LEAST_CHOOSE_ONE);
                     return;
                 }
                 let groupAttrs = CommonUtil.groupAttrFromArray(checked, ['roleId', 'roleName']);

@@ -1,8 +1,6 @@
-layui.use(['table', 'form', 'element', 'layer', 'laydate', 'xmSelect'], function () {
+layui.use(['table', 'form', 'laydate', 'xmSelect'], function () {
     let table = layui.table;
     let form = layui.form;
-    let element = layui.element;
-    let layer = layui.layer;
     let laydate = layui.laydate;
     let xmSelect = layui.xmSelect;
     let tableId = 'log-list-tab';
@@ -62,10 +60,10 @@ layui.use(['table', 'form', 'element', 'layer', 'laydate', 'xmSelect'], function
         url: ctx + '/operate-log/getLogList',
         page: true,
         where: {
-            orderName: 'operateTime',
-            order: 'desc',
             operateTime_start: yestDate
         },
+        orderName: 'operateTime',
+        order: 'desc',
         cols: [[
             {type: 'numbers'},
             {field: 'operateModule', title: '操作模块', width: '10%', sort: true},

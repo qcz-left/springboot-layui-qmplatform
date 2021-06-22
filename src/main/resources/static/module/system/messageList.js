@@ -11,10 +11,8 @@ layui.use(['table', 'form'], function () {
         page: true,
         toolbar: '#toolbar',
         defaultToolbar: [],
-        where: {
-            orderName: 'read,createTime',
-            order: 'asc,desc'
-        },
+        orderName: 'read,createTime',
+        order: 'asc,desc',
         cols: [[
             {type: 'checkbox'},
             {field: 'typeName', title: '类型', width: '10%', sort: false},
@@ -102,9 +100,6 @@ layui.use(['table', 'form'], function () {
         table.reload(tableId, {
             page: {
                 curr: 1
-            },
-            done: function () {
-                this.where = {};
             },
             where: form.val('message-search')
         });

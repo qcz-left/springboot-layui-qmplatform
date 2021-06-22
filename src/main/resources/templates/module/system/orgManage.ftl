@@ -7,6 +7,11 @@
         height: 100%;
         background: radial-gradient(#98b3b1, transparent);
     }
+
+    #orgTree {
+        overflow: auto;
+        height: 100%;
+    }
 </style>
 <body>
 <div class="layui-col-xs2">

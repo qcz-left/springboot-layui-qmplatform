@@ -92,12 +92,16 @@ function reloadFrame() {
  */
 function sortEventListen(layuiTable, layFilter, tableId) {
     layuiTable.on('sort(' + layFilter + ')', function (obj) { // 注：tool是工具条事件名，data-table是table原始容器的属性
+        let config = layuiTable.getConfig(tableId);
+        let where = config.where;
+        delete where['orderName'];
+        delete where['order'];
+        if (obj.type) {
+            where['orderName'] = obj.field;
+            where['order'] = obj.type;
+        }
         layuiTable.reload(tableId, {
-            initSort: obj,
-            where: { // 请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
-                orderName: obj.field,
-                order: obj.type
-            }
+            where: where
         });
     });
 }

@@ -712,6 +712,10 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
         params['orderName'] = options.orderName;
         params['order'] = options.order;
       }
+      if (options.initSort && options.initSort['type']) {
+        params['orderName'] = options.initSort['field'];
+        params['order'] = options.initSort['type'];
+      }
 
       //参数
       var data = $.extend(params, options.where);
@@ -1939,6 +1943,9 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
   };
   table.insert = function (o, data) {
     o.config.data.push(data);
+  };
+  table.getConfig = function(tableId) {
+    return getThisTableConfig(tableId);
   };
   //获取表格当前页的所有行数据
   table.getData = function(id){

@@ -132,9 +132,6 @@ layui.use(['table', 'form', 'element', 'layer', 'xmSelect'], function () {
             page: {
                 curr: 1
             },
-            done: function () {
-                this.where = {};
-            },
             where: form.val('user-search')
         });
     }

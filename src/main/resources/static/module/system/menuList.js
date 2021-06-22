@@ -1,9 +1,6 @@
-layui.use(['treetable', 'table', 'form', 'element', 'layer'], function () {
+layui.use(['treetable', 'table'], function () {
     let treetable = layui.treetable;
     let table = layui.table;
-    let form = layui.form;
-    let element = layui.element;
-    let layer = layui.layer;
     let tableId = 'menu-list-tab';
     let layFilter = 'menu';
     window.tableReload = function () {
@@ -39,7 +36,6 @@ layui.use(['treetable', 'table', 'form', 'element', 'layer'], function () {
         });
     }
     tableReload();
-    sortEventListen(table, layFilter, tableId);
 
     // 头工具栏监听事件
     table.on('toolbar(' + layFilter + ')', function (obj) {

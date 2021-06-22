@@ -8,12 +8,12 @@
 
     .layui-tab {
         margin: unset;
-        padding: 10px 0;
+        padding-top: 10px;
         height: -webkit-fill-available;
     }
 
     .layui-tab-content {
-        height: calc(100% - 51px);
+        height: calc(100% - 71px);
     }
 </style>
 <body>

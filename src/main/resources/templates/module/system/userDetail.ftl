@@ -43,9 +43,13 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">部门</label>
-            <div class="layui-input-block">
-                <div id="organizationIds"></div>
-            </div>
+            <#if RequestParameters["parentId"]??>
+                <div class="layui-form-mid layui-word-aux">${RequestParameters["parentName"]!}</div>
+            <#else>
+                <div class="layui-input-block">
+                    <div id="organizationIds"></div>
+                </div>
+            </#if>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">角色</label>
@@ -79,6 +83,7 @@
 </div>
 <script type="text/javascript">
     let id = "${RequestParameters["id"]!}";
+    let parentId = "${RequestParameters["parentId"]!}";
     layui.use(['form', 'layer', 'xmSelect'], function () {
         let form = layui.form;
         let layer = layui.layer;
@@ -117,29 +122,32 @@
             $("#loginname").removeAttr("disabled");
         }
 
-        // 部门数据加载
-        let organizationIdsSelect = xmSelect.render({
-            el: '#organizationIds',
-            name: 'organizationIds',
-            tree: {
-                strict: false,
-                show: true,
-                showLine: false,
-                clickExpand: false,
-                expandedKeys: detail.organizationIds,
-            },
-            prop: {
-                value: 'id',
-                children: 'childes'
-            },
-            data: []
-        })
-        CommonUtil.getAjax(ctx + '/organization/getOrgTree', {}, function (result) {
-            organizationIdsSelect.update({
-                initValue: detail.organizationIds,
-                data: result.data
+        let organizationIdsSelect;
+        if (!parentId) {
+            // 部门数据加载
+            organizationIdsSelect = xmSelect.render({
+                el: '#organizationIds',
+                name: 'organizationIds',
+                tree: {
+                    strict: false,
+                    show: true,
+                    showLine: false,
+                    clickExpand: false,
+                    expandedKeys: detail.organizationIds,
+                },
+                prop: {
+                    value: 'id',
+                    children: 'childes'
+                },
+                data: []
             })
-        })
+            CommonUtil.getAjax(ctx + '/organization/getOrgTree', {}, function (result) {
+                organizationIdsSelect.update({
+                    initValue: detail.organizationIds,
+                    data: result.data
+                })
+            })
+        }
 
         // 角色数据加载
         let roleIdsSelect = xmSelect.render({
@@ -199,12 +207,16 @@
         form.on('submit(user-submit)', function (data) {
             layer.load(2);
             data.field.roleIds = roleIdsSelect.getValue('value');
-            data.field.organizationIds = organizationIdsSelect.getValue('value');
+            data.field.organizationIds = [parentId] || organizationIdsSelect.getValue('value');
             data.field.password = rsaEncrypt(data.field.password);
             CommonUtil.postOrPut(id, ctx + (id ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
-                    reloadParentTable();
+                    if (parentId) {
+                        reloadFrame();
+                    } else {
+                        reloadParentTable();
+                    }
                 })
             });
             return false;

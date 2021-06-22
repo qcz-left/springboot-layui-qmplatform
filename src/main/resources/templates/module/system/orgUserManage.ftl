@@ -63,6 +63,7 @@
         let tableId = 'user-list-tab';
         let layFilter = 'user';
         let nodeId = '${RequestParameters["nodeId"]}';
+        let context = '${RequestParameters["context"]}';
 
         let tableIns = table.render({
             elem: '#' + tableId,
@@ -148,7 +149,7 @@
             top.layer.open({
                 type: 2,
                 title: "添加用户",
-                content: ctx + "/user/userDetail",
+                content: ctx + "/user/userDetail?parentId=" + nodeId + "&parentName=" + context,
                 area: ['30%', '80%']
             });
         }

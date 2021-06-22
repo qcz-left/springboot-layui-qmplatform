@@ -163,9 +163,8 @@
 
 .layui-layout-admin .layui-body {
     position: fixed;
-    /*top: 102px;*/
     bottom: 0;
-    /*padding-top: 10px;*/
+    padding-bottom: 0;
 }
 
 .layui-layout-admin .layui-body .layadmin-tabsbody-item {
