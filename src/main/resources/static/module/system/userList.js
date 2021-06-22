@@ -39,9 +39,8 @@ layui.use(['table', 'form', 'element', 'layer', 'xmSelect'], function () {
             layEvent: OperateType.EXPORT,
             icon: 'layui-icon-export'
         }, 'print'],
-        where: {
-            orderName: 'username'
-        },
+        orderName: 'username',
+        order: 'desc',
         cols: [[
             {type: 'checkbox'},
             {field: 'username', title: '用户名', width: '10%', sort: true},

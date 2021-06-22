@@ -8,7 +8,7 @@
             <#--搜索条件-->
             <span class="search-where">
                 <div class="layui-inline">
-                    <input type="checkbox" name="organizationExact" lay-skin="primary" title="精确到本部门" value="1">
+                    <input type="checkbox" name="organizationExact" lay-skin="primary" title="精确到本部门" value="1" checked>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">用户名</label>
@@ -66,10 +66,15 @@
 
         let tableIns = table.render({
             elem: '#' + tableId,
-            url: ctx + '/user/getUserList',
+            url: ctx + '/user/getUserList?&organizationIdsStr=' + nodeId,
             where: {
                 orderName: 'username',
-                organizationIdsStr: nodeId
+                organizationExact: form.val('user-search').organizationExact
+            },
+            done: function() {
+                this.where = {
+                    orderName: 'username'
+                };
             },
             height: 'full-80',
             page: true,
@@ -156,10 +161,8 @@
                 CommonUtil.deleteAjax(ctx + "/user/delUser", {
                     userIds: CommonUtil.joinMulti(ids)
                 }, function (data) {
-                    LayerUtil.respMsg(data, null, null, function () {
-                        tableReload();
-                    });
                     top.layer.close(index);
+                    reloadFrame();
                 })
             });
         }
@@ -169,7 +172,7 @@
                 page: {
                     curr: 1
                 },
-                done: function () {
+                done: function()  {
                     this.where = {};
                 },
                 where: form.val('user-search')

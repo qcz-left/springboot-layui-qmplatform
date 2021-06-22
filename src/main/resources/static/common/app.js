@@ -83,6 +83,10 @@ function reloadTable(openId) {
     parent.$.find("#" + openId + " iframe")[0].contentWindow.tableReload();
 }
 
+function reloadFrame() {
+    top.$(".layui-tab[lay-filter='main-tab'] .layui-show iframe:first")[0].contentWindow.location.reload(true);
+}
+
 /*
  * layui数据表格排序监听事件 layuiTable layui表格对象 tableId table元素id
  */

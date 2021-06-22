@@ -39,9 +39,10 @@
 
         let isDept = ${isDept?c};
         let nodeId = '${RequestParameters["nodeId"]}';
+        let context = '${RequestParameters["context"]}';
 
         element.on("tab({0})".format(tabLayFilter), function () {
-            $("#org-content").attr("src", this.getAttribute("lay-href") + "?isDept=" + isDept + "&nodeId=" + nodeId);
+            $("#org-content").attr("src", "{0}?isDept={1}&nodeId={2}&context={3}".format(this.getAttribute("lay-href"), isDept, nodeId, context));
         });
         // 默认显示基本信息
         element.tabChange(tabLayFilter, "base-info");

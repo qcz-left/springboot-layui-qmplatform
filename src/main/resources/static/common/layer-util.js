@@ -14,15 +14,15 @@ const LayerUtil = {
      */
     respMsg: function (res, successMsg, failMsg, successCallback, failCallback) {
         if (CommonUtil.respSuccess(res)) {
-            top.layer.success(res.msg || successMsg || Msg.OPERATE_SUCCESS)
             if (typeof (successCallback) == "function") {
                 successCallback(res.data)
             }
+            top.layer.success(res.msg || successMsg || Msg.OPERATE_SUCCESS)
         } else {
-            top.layer.error(res.msg || failMsg || Msg.OPERATE_FAILURE)
             if (typeof (failCallback) == "function") {
                 failCallback()
             }
+            top.layer.error(res.msg || failMsg || Msg.OPERATE_FAILURE)
         }
     }
 }

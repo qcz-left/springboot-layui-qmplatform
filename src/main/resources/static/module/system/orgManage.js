@@ -5,6 +5,7 @@ layui.use(['dtree', 'table', 'form', 'element'], function () {
     CommonUtil.getSync(ctx + '/organization/getOrgUserTree', {}, function (result) {
         orgData = result.data;
     });
+
     function buildData(data) {
         // 重新构造数据结构
         for (let i = 0; i < data.length; i++) {
@@ -19,6 +20,7 @@ layui.use(['dtree', 'table', 'form', 'element'], function () {
             }
         }
     }
+
     buildData(orgData);
     // 树代码示例
     let orgTree = dtree.render({
@@ -40,6 +42,6 @@ layui.use(['dtree', 'table', 'form', 'element'], function () {
     // 绑定节点的单击事件
     dtree.on("node('orgTree')", function (obj) {
         let param = obj.param;
-        $("#orgContent").attr("src", "{0}?nodeId={1}&isDept={2}".format(ctx + "/organization/orgDetailPage", param.nodeId, param.recordData.itype === 1));
+        $("#orgContent").attr("src", "{0}?nodeId={1}&isDept={2}&context={3}".format(ctx + "/organization/orgDetailPage", param.nodeId, param.recordData.itype === 1, param.context));
     });
 });

@@ -28,9 +28,14 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">所属上级</label>
-            <div class="layui-input-block">
-                <div id="parentId" name="parentId"></div>
-            </div>
+            <#if RequestParameters["parentId"]??>
+                <input type="hidden" name="parentId" value="${RequestParameters["parentId"]!}">
+                <div class="layui-form-mid layui-word-aux">${RequestParameters["parentName"]!}</div>
+            <#else>
+                <div class="layui-input-block">
+                    <div id="parentId" name="parentId"></div>
+                </div>
+            </#if>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">排序</label>
@@ -52,6 +57,7 @@
 </div>
 <script type="text/javascript">
     let id = "${RequestParameters["id"]!}";
+    let parentId = "${RequestParameters["parentId"]!}";
     layui.use(['form', 'layer', 'xmSelect'], function () {
         let form = layui.form;
         let layer = layui.layer;
@@ -67,39 +73,45 @@
             })
         }
 
-        // 上级权限数据加载
-        let parentIdSelect = xmSelect.render({
-            el: '#parentId',
-            name: 'parentId',
-            radio: true,
-            clickClose: true,//选中关闭
-            tree: {
-                strict: false,
-                show: true,
-                showLine: false,
-                clickExpand: false
-            },
-            prop: {
-                value: 'id',
-                children: 'childes'
-            },
-            data: []
-        })
-        CommonUtil.getAjax(ctx + '/organization/getOrgTree', {
-            organizationId: id
-        }, function (result) {
-            parentIdSelect.update({
-                initValue: [detail.parentId],
-                data: result.data
-            })
-        })
+        if (!parentId) {
+            // 上级权限数据加载
+            let parentIdSelect = xmSelect.render({
+                el: '#parentId',
+                name: 'parentId',
+                radio: true,
+                clickClose: true,//选中关闭
+                tree: {
+                    strict: false,
+                    show: true,
+                    showLine: false,
+                    clickExpand: false
+                },
+                prop: {
+                    value: 'id',
+                    children: 'childes'
+                },
+                data: []
+            });
+            CommonUtil.getAjax(ctx + '/organization/getOrgTree', {
+                organizationId: id
+            }, function (result) {
+                parentIdSelect.update({
+                    initValue: [detail.parentId],
+                    data: result.data
+                })
+            });
+        }
 
         form.on('submit(org-submit)', function (data) {
             layer.load(2);
             CommonUtil.postOrPut(id, ctx + '/organization/' + (id ? 'updateOrg' : 'addOrg'), data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
-                    reloadParentTable();
+                    if (parentId) {
+                        reloadFrame();
+                    } else {
+                        reloadParentTable();
+                    }
                 })
             });
             return false;

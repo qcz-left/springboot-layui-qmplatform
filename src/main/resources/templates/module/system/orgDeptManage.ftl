@@ -27,6 +27,7 @@
         let tableId = 'org-list-tab';
         let layFilter = 'org';
         let nodeId = '${RequestParameters["nodeId"]}';
+        let context = '${RequestParameters["context"]}';
 
         treetable.render({
             elem: '#' + tableId,
@@ -73,7 +74,7 @@
             top.layer.open({
                 type: 2,
                 title: "添加部门",
-                content: ctx + "/organization/organizationDetailPage",
+                content: ctx + "/organization/organizationDetailPage?parentId=" + nodeId + "&parentName=" + context,
                 area: ['30%', '80%']
             });
         }
@@ -82,14 +83,13 @@
             top.layer.confirm("是否要删除部门：<span class='text-success'>" + CommonUtil.joinMultiByLen(names, 3) + "</span>，删除后该部门及其子部门将不可恢复！", {
                 title: "警告",
                 skin: "my-layer-danger"
-            }, function (index) {
+            }, function () {
                 CommonUtil.deleteAjax(ctx + "/organization/deleteOrg", {
                     orgIds: CommonUtil.joinMulti(ids)
                 }, function (data) {
                     LayerUtil.respMsg(data, null, null, function () {
-                        tableReload();
+                        reloadFrame();
                     });
-                    top.layer.close(index);
                 })
             });
         }

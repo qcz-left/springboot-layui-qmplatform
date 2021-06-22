@@ -172,7 +172,7 @@
                 let index = top.layer.load(2);
                 CommonUtil.postOrPut(nodeId, ctx + '/organization/' + (nodeId ? 'updateOrg' : 'addOrg'), data.field, function (result) {
                     top.layer.close(index);
-                    parent.parent.location.reload(true);
+                    reloadFrame();
                     LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE)
                 });
                 return false;
@@ -298,7 +298,7 @@
                 data.field.password = rsaEncrypt(data.field.password);
                 CommonUtil.postOrPut(nodeId, ctx + (nodeId ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
                     top.layer.close(index);
-                    parent.parent.location.reload(true);
+                    reloadFrame();
                     LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE)
                 });
                 return false;
