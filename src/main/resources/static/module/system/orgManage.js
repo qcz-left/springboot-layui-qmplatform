@@ -31,6 +31,7 @@ layui.use(['dtree', 'table', 'form', 'element'], function () {
         skin: "laySimple",
         record: true,
         ficon: "8",
+        spreadSelected: false,// 伸缩时是否选中状态
         response: {
             title: "name", //节点名称
             childName: "childes" //子节点名称

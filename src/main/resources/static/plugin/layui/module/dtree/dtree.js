@@ -563,6 +563,9 @@ layui.define(['jquery','layer','form'], function(exports) {
         	// 重置下拉树
         	this.selectSetting();
         }
+
+        /** 自定义参数 **/
+        this.spreadSelected = (typeof (this.options.spreadSelected) === "boolean") ? this.options.spreadSelected : (typeof (OPTIONS.spreadSelected) === "boolean") ? OPTIONS.spreadSelected : true;// 伸缩时是否选中状态 默认true
         
         /** 调用确认最终主题方法*/
         this.ensureTheme();
@@ -5009,7 +5012,9 @@ layui.define(['jquery','layer','form'], function(exports) {
                 node = _this.getNodeParam($div);
 
             _this.toolbarHide();
-            _this.navThis($div);
+            if (_this.spreadSelected) {
+                _this.navThis($div);
+            }
             _this.clickSpread($div);	// 展开或隐藏节点
 
             // 树状态改变后，用户自定义想做的事情
