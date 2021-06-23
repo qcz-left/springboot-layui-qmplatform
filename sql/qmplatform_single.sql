@@ -213,20 +213,21 @@ INSERT INTO "public"."sys_menu" VALUES ('1', '系统管理', 0, 'system', 'layui
 INSERT INTO "public"."sys_menu" VALUES ('b555a066-c76d-4b8f-a834-4998cc000711', '测试404', 70, 'ceshi404', 'layui-icon-404', '/error/404', '', 1);
 INSERT INTO "public"."sys_menu" VALUES ('e36040a7-f7cb-42f8-a55f-0a6f6e138958', '测试500', 80, 'ceshi500', 'layui-icon-face-cry', '/error/500', '', 1);
 INSERT INTO "public"."sys_menu" VALUES ('ec2d5dbf-ace1-4fe8-b85e-70fc84bf517e', '操作日志', 60, 'operate', 'layui-icon-log', '/operate-log/logListPage', '1', 1);
-INSERT INTO "public"."sys_menu" VALUES ('bfba142d-6a80-417b-9e58-a3671283f2fb', '图标管理', 40, 'icon', '', '/icon/iconListPage', '1', 0);
-INSERT INTO "public"."sys_menu" VALUES ('ef07f63f-4ec1-4053-bb53-db7891359339', '用户管理', 0, 'user', 'layui-icon-user', '/user/userListPage', '1', 1);
 INSERT INTO "public"."sys_menu" VALUES ('82241eeb-ed7c-44f3-b9f0-56e986363907', '菜单管理', 50, 'menu', 'layui-icon-more', '/menu/menuListPage', '1', 1);
 INSERT INTO "public"."sys_menu" VALUES ('042a5960-785f-442e-a76a-576f7eb389c4', '角色管理', 1, 'role', 'layui-icon-auz', '/role/roleListPage', '1', 1);
-INSERT INTO "public"."sys_menu" VALUES ('4af487ea-9903-4116-970e-d82dce9d49ce', '组织机构管理', 30, 'org', 'layui-icon-component', '/organization/organizationListPage', '1', 1);
 INSERT INTO "public"."sys_menu" VALUES ('f2a871d8-c1dd-4775-ad0d-8b8b3f53eede', '文件管理', 10, 'file', 'layui-icon-file', '/archive/attachment/attachmentListPage', '9ac8ef82-57c9-461e-9ee0-e2c892e8bcac', 1);
-INSERT INTO "public"."sys_menu" VALUES ('9ac8ef82-57c9-461e-9ee0-e2c892e8bcac', '档案中心', 1, 'archive', 'layui-icon-app', '', '', 1);
 INSERT INTO "public"."sys_menu" VALUES ('326ad00b-2e0f-4941-9191-a573ada65410', '运维管理', 30, 'operation', 'layui-icon-survey', '', '', 1);
 INSERT INTO "public"."sys_menu" VALUES ('e843dfa8-e868-4a83-aa35-215cbfbfd643', '数据库监控', 3, 'data-monitor', 'layui-icon-about', '/druid', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 INSERT INTO "public"."sys_menu" VALUES ('80345dc4-cc15-405b-a371-82e50b64fcd9', '系统运行状态', 1, 'system-status', 'layui-icon-website', '/server/infoPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 INSERT INTO "public"."sys_menu" VALUES ('428493a8-5e23-4e64-a24c-78e61b3ed854', '字典管理', 4, 'dict', 'layui-icon-tips', '/operation/dict/dictListPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 INSERT INTO "public"."sys_menu" VALUES ('bd8cae46-b3bc-48e1-bc6d-c623493fe64c', '短信配置', 50, 'sms', '', '/notify/smsConfigPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
-INSERT INTO "public"."sys_menu" VALUES ('e3a24ef6-134f-498a-aa11-54a184de3b70', '未知菜单', 0, 'unknown', '', '', '', 1);
+INSERT INTO "public"."sys_menu" VALUES ('bfba142d-6a80-417b-9e58-a3671283f2fb', '图标管理', 40, 'icon', '', '/icon/iconListPage', '1', 0);
+INSERT INTO "public"."sys_menu" VALUES ('9ac8ef82-57c9-461e-9ee0-e2c892e8bcac', '档案中心', 1, 'archive', 'layui-icon-app', '', '', 1);
+INSERT INTO "public"."sys_menu" VALUES ('e3a24ef6-134f-498a-aa11-54a184de3b70', '未知菜单', 0, 'unknown', '', '', '', 0);
 INSERT INTO "public"."sys_menu" VALUES ('b5ee5991-a01f-4978-bd58-3e71dcd163c6', '登录错误记录', 0, 'login-record', '', '/operation/loginRecord/loginRecordListPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
+INSERT INTO "public"."sys_menu" VALUES ('ef07f63f-4ec1-4053-bb53-db7891359339', '用户管理（旧）', 0, 'user', 'layui-icon-user', '/user/userListPage', '1', 0);
+INSERT INTO "public"."sys_menu" VALUES ('4af487ea-9903-4116-970e-d82dce9d49ce', '组织机构管理（旧）', 30, 'org', 'layui-icon-component', '/organization/organizationListPage', '1', 0);
+INSERT INTO "public"."sys_menu" VALUES ('7cbaf4c5-f31d-48f0-ac5c-d7b2bd1d3134', '组织机构管理', 0, 'org-new', 'layui-icon-component', '/organization/orgManagePage', '1', 1);
 
 
 
