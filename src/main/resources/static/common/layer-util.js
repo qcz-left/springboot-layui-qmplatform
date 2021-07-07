@@ -1,6 +1,9 @@
 let layer;
 layui.use('layer', function () {
     layer = layui.layer;
+    layer.config({
+        maxWidth: 500
+    });
 })
 
 const LayerUtil = {
