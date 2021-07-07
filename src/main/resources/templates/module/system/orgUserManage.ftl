@@ -69,14 +69,10 @@
             elem: '#' + tableId,
             url: ctx + '/user/getUserList?&organizationIdsStr=' + nodeId,
             where: {
-                orderName: 'username',
                 organizationExact: form.val('user-search').organizationExact
             },
-            done: function() {
-                this.where = {
-                    orderName: 'username'
-                };
-            },
+            orderName: 'username',
+            order: 'desc',
             height: 'full-80',
             page: true,
             toolbar: '#toolbar',
@@ -172,9 +168,6 @@
             table.reload(tableId, {
                 page: {
                     curr: 1
-                },
-                done: function()  {
-                    this.where = {};
                 },
                 where: form.val('user-search')
             });
