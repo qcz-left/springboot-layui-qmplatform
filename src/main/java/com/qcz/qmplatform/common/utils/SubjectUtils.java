@@ -30,7 +30,11 @@ public class SubjectUtils {
 
     public static void setUser(User user) {
         userCache.put(user.getId(), user);
-        CacheUtils.SESSION_CACHE.put(SecurityUtils.getSubject().getSession().getId().toString(), user);
+        CacheUtils.SESSION_CACHE.put(getSessionId(), user);
+    }
+
+    public static String getSessionId() {
+        return SecurityUtils.getSubject().getSession().getId().toString();
     }
 
     /**
@@ -41,7 +45,7 @@ public class SubjectUtils {
         if (subject.isAuthenticated()) {
             Object user = subject.getPrincipal();
             userCache.remove(user.toString());
-            CacheUtils.SESSION_CACHE.remove(SecurityUtils.getSubject().getSession().getId().toString());
+            CacheUtils.SESSION_CACHE.remove(getSessionId());
             subject.logout();
             LOGGER.debug("logout : {}", user);
         }

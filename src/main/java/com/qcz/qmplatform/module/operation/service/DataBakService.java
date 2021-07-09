@@ -194,7 +194,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         LOGGER.debug(RuntimeUtil.execForStr(StringUtils.format("{} {} {}", recoverSh, bakPath, database)));
         // 退出重新登录
         ResponseResult<?> responseResult = new ResponseResult<>(ResponseCode.DATA_BAK_RECOVER, null, null);
-        SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), SecurityUtils.getSubject().getSession().getId().toString());
+        SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), SubjectUtils.getSessionId());
         SubjectUtils.removeUser();
         return responseResult;
     }
