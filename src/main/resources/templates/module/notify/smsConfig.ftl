@@ -74,7 +74,7 @@
         // 表单数据校验
         form.verify({});
 
-        let detail;
+        let detail = {};
         CommonUtil.getSync(ctx + '/notify/getSmsConfig', {}, function (result) {
             form.val('sms-form', result.data);
             detail = result.data;

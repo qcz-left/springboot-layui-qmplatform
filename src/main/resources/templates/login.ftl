@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <#include "/include/include.ftl">
 <link rel="stylesheet" href="${ctx}/static/css/login.css"/>
 <script type="text/javascript">

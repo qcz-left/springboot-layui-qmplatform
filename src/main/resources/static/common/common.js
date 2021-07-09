@@ -238,6 +238,7 @@ const CommonUtil = {
     /**
      * 通过逗号拼接字符串数组
      * @param array
+     * @param split
      * @returns {*}
      */
     joinMulti: function (array, split) {

@@ -140,7 +140,7 @@
                     children: 'childes'
                 },
                 data: []
-            })
+            });
             CommonUtil.getAjax(ctx + '/organization/getOrgTree', {}, function (result) {
                 organizationIdsSelect.update({
                     initValue: detail.organizationIds,
@@ -158,7 +158,7 @@
                 name: 'roleName'
             },
             data: []
-        })
+        });
         CommonUtil.getAjax(ctx + '/role/getRoleList', {
             limit: 9999
         }, function (result) {
@@ -166,7 +166,7 @@
                 initValue: detail.roleIds,
                 data: result.data.list
             })
-        })
+        });
 
         // 性别数据加载
         let userSexSelect = xmSelect.render({
@@ -176,7 +176,7 @@
             clickClose: true,
             model: {label: {type: 'text'}},
             data: []
-        })
+        });
         CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
             code: 'user-sex'
         }, function (result) {
@@ -184,7 +184,7 @@
                 initValue: [detail.userSex],
                 data: result.data
             })
-        })
+        });
 
         // 账号状态数据加载
         let lockedSelect = xmSelect.render({
@@ -194,7 +194,7 @@
             clickClose: true,
             model: {label: {type: 'text'}},
             data: []
-        })
+        });
         CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
             code: 'user-status'
         }, function (result) {
@@ -202,7 +202,7 @@
                 initValue: [detail.locked],
                 data: result.data
             })
-        })
+        });
 
         form.on('submit(user-submit)', function (data) {
             layer.load(2);

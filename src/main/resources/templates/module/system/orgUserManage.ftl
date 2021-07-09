@@ -57,7 +57,7 @@
 </div>
 </body>
 <script>
-    layui.use(['table', 'form', 'element'], function () {
+    layui.use(['table', 'form'], function () {
         let table = layui.table;
         let form = layui.form;
         let tableId = 'user-list-tab';
@@ -157,7 +157,7 @@
             }, function (index) {
                 CommonUtil.deleteAjax(ctx + "/user/delUser", {
                     userIds: CommonUtil.joinMulti(ids)
-                }, function (data) {
+                }, function () {
                     top.layer.close(index);
                     reloadFrame();
                 })

@@ -40,7 +40,7 @@
                     dictId: dictId
                 }, function (result) {
                     valid = result.ok;
-                })
+                });
                 if (!valid) {
                     return '属性值已存在，请重新填写！';
                 }

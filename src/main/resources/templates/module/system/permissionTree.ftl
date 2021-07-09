@@ -21,12 +21,12 @@
         let permissionIds = [];
         CommonUtil.getSync(ctx + '/role/getRolePermission/' + roleId, {}, function (result) {
             permissionIds = result.data;
-        })
+        });
 
         let permissionData = [];
         CommonUtil.getSync(ctx + '/menu/getMenuTree', {}, function (result) {
             permissionData = result.data;
-        })
+        });
 
         buildData(permissionData);
 

@@ -22,7 +22,7 @@ layui.use(['treetable', 'table'], function () {
                 {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
             ]]
         });
-    }
+    };
     tableReload();
 
     // 头工具栏监听事件
@@ -39,7 +39,7 @@ layui.use(['treetable', 'table'], function () {
         let data = obj.data;
         switch (obj.event) {
             case 'edit':
-                open(data.id)
+                open(data.id);
                 break;
             case 'delete':
                 remove([data.id], [data.name]);

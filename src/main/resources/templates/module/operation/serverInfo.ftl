@@ -32,21 +32,6 @@
                 </div>
             </div>
         </div>
-        <#--<div class="layui-col-md12">
-            <div class="layui-card">
-                <div class="layui-card-header">CPU</div>
-                <div class="layui-card-body">
-                    <table class="layui-table">
-                        <tbody>
-                        <tr>
-                            <td>核心数：${cpu.cpuNum!0}</td>
-                            <td>系统使用率：${cpu.sys!0} %</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>-->
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-header">内存</div>
@@ -118,10 +103,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    layui.use(['element'], function () {
-        let element = layui.element;
-    });
-</script>
 </body>
 </html>

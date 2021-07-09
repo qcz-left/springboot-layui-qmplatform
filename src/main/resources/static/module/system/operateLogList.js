@@ -27,14 +27,14 @@ layui.use(['table', 'form', 'laydate', 'xmSelect'], function () {
         height: 'auto',
         model: {icon: 'hidden'},
         data: []
-    })
+    });
     CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
         code: 'operate-type'
     }, function (result) {
         operateTypeSelect.update({
             data: result.data
         })
-    })
+    });
 
     // 操作状态数据加载
     let operateStatusSelect = xmSelect.render({
@@ -45,14 +45,14 @@ layui.use(['table', 'form', 'laydate', 'xmSelect'], function () {
         height: 'auto',
         model: {icon: 'hidden'},
         data: []
-    })
+    });
     CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
         code: 'operate-status'
     }, function (result) {
         operateStatusSelect.update({
             data: result.data
         })
-    })
+    });
 
     table.render({
         height: 'full-80',
@@ -114,4 +114,4 @@ layui.use(['table', 'form', 'laydate', 'xmSelect'], function () {
             where: form.val('log-search')
         });
     }
-})
+});

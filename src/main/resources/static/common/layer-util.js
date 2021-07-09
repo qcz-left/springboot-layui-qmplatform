@@ -4,7 +4,7 @@ layui.use('layer', function () {
     layer.config({
         maxWidth: 500
     });
-})
+});
 
 const LayerUtil = {
     /**
@@ -28,4 +28,4 @@ const LayerUtil = {
             top.layer.error(res.msg || failMsg || Msg.OPERATE_FAILURE)
         }
     }
-}
+};

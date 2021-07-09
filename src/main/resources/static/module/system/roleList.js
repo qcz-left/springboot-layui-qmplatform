@@ -21,7 +21,6 @@ layui.use(['table'], function () {
 
     // 头工具栏监听事件
     table.on('toolbar(' + layFilter + ')', function (obj) {
-        let data = obj.data;
         switch (obj.event) {
             case 'add':
                 open();
@@ -33,7 +32,7 @@ layui.use(['table'], function () {
                     return;
                 }
                 let groupAttrs = CommonUtil.groupAttrFromArray(checked, ['roleId', 'roleName']);
-                remove(groupAttrs[0], groupAttrs[1])
+                remove(groupAttrs[0], groupAttrs[1]);
                 break;
         }
     });
@@ -48,7 +47,7 @@ layui.use(['table'], function () {
                 allotPermission(roleId, roleName);
                 break;
             case 'edit':
-                open(roleId)
+                open(roleId);
                 break;
             case 'delete':
                 remove([roleId], [roleName]);

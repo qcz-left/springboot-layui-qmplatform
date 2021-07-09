@@ -115,7 +115,7 @@
 
         let permissionTypeListen = function (type) {
             let $trigger = $("#display,#icon,#linkUrl");
-            if (type == '1') {
+            if (type === 1) {
                 $trigger.removeClass("layui-hide");
             } else {
                 $trigger.addClass("layui-hide");
@@ -145,7 +145,7 @@
                 children: 'childes'
             },
             data: []
-        })
+        });
         CommonUtil.getAjax(ctx + '/menu/getMenuTree', {
             permissionType: 1,
             permissionId: id
@@ -154,7 +154,7 @@
                 initValue: [detail.parentId],
                 data: result.data
             })
-        })
+        });
 
         form.on('submit(menu-submit)', function (data) {
             layer.load(2);

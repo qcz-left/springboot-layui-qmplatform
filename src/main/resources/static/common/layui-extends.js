@@ -5,7 +5,7 @@ layui.config({
     xmSelect: 'xm-select/xm-select',
     dtree: 'dtree/dtree',
     step: 'step-lay/step'
-})
+});
 layui.use(["layer"], function () {
     let layer = layui.layer;
     $.extend(layer, {
@@ -51,9 +51,6 @@ layui.use(["layer"], function () {
                 shade: 0.01
             };
             return this.msg(msg, option);
-        },
-        getElementLayerIndex: function (element) {
-            return element.closest("div.layui-layer").prop("id").replace("layui-layer", "");
         }
     });
 });

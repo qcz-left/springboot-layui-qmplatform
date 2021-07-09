@@ -1,8 +1,5 @@
-layui.use(['table', 'form', 'element', 'layer'], function () {
+layui.use(['table'], function () {
     let table = layui.table;
-    let form = layui.form;
-    let element = layui.element;
-    let layer = layui.layer;
     let tableId = 'dataBak-list-tab';
     let layFilter = 'dataBak';
     table.render({
@@ -56,11 +53,11 @@ layui.use(['table', 'form', 'element', 'layer'], function () {
             case 'delete':
                 let checked = table.checkStatus(tableId).data;
                 if (checked.length === 0) {
-                    layer.warning(Msg.AT_LEAST_CHOOSE_ONE);
+                    top.layer.warning(Msg.AT_LEAST_CHOOSE_ONE);
                     return;
                 }
                 let groupAttrs = CommonUtil.groupAttrFromArray(checked, ['bakId', 'bakName']);
-                remove(groupAttrs[0], groupAttrs[1])
+                remove(groupAttrs[0], groupAttrs[1]);
                 break;
         }
     });

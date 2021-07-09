@@ -49,7 +49,7 @@
                     dictId: id
                 }, function (result) {
                     valid = result.ok;
-                })
+                });
                 if (!valid) {
                     return '字典编码已存在，请重新填写！';
                 }
