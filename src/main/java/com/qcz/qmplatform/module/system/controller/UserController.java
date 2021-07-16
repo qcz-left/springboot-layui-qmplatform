@@ -7,9 +7,18 @@ import cn.hutool.core.util.RandomUtil;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
-import com.qcz.qmplatform.common.bean.*;
+import com.qcz.qmplatform.common.bean.PageRequest;
+import com.qcz.qmplatform.common.bean.PageResult;
+import com.qcz.qmplatform.common.bean.PageResultHelper;
+import com.qcz.qmplatform.common.bean.PrivCode;
+import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
-import com.qcz.qmplatform.common.utils.*;
+import com.qcz.qmplatform.common.utils.CacheUtils;
+import com.qcz.qmplatform.common.utils.FileUtils;
+import com.qcz.qmplatform.common.utils.SecureUtils;
+import com.qcz.qmplatform.common.utils.SmsUtils;
+import com.qcz.qmplatform.common.utils.StringUtils;
+import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.notify.NotifyServiceFactory;
 import com.qcz.qmplatform.module.notify.bean.SmsConfig;
@@ -24,7 +33,14 @@ import com.qcz.qmplatform.module.system.vo.UserVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -301,6 +317,19 @@ public class UserController extends BaseController {
             return ResponseResult.ok(retData);
         }
         return ResponseResult.error(retData);
+    }
+
+    @Override
+    public Map<String, String> getExcelField() {
+        Map<String, String> excelFieldMap = new HashMap<>();
+        excelFieldMap.put("用户名", "username");
+        excelFieldMap.put("登录名", "loginname");
+        excelFieldMap.put("性别", "userSexName");
+        excelFieldMap.put("电话", "phone");
+        excelFieldMap.put("邮箱", "emailAddr");
+        excelFieldMap.put("状态", "lockedName");
+        excelFieldMap.put("所属部门", "organizationName");
+        return excelFieldMap;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.base;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
@@ -23,15 +24,26 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Controller
 public class BaseController {
@@ -165,6 +177,41 @@ public class BaseController {
                 FileUtils.del(filePath);
             }
         }
+    }
+
+    protected <T> List<T> getExcelData(InputStream inputStream, Class<T> beanClass) {
+        List<T> rows = new ArrayList<>();
+        Map<String, String> excelField = getExcelField();
+        Map<Integer, String> fieldIndex = new HashMap<>();
+
+        ExcelUtil.readBySax(inputStream, 0, (sheetIndex, rowIndex, row) -> {
+            if (rowIndex == 0) {
+                // 列表标题
+                for (int i = 0; i < row.size(); i++) {
+                    fieldIndex.put(i, excelField.get(row.get(i).toString()));
+                }
+            } else {
+                Map<String, Object> data = new HashMap<>();
+                for (int i = 0; i < row.size(); i++) {
+                    data.put(fieldIndex.get(i), row.get(i));
+                }
+                rows.add(BeanUtil.mapToBean(data, beanClass, true));
+            }
+        });
+        return rows;
+    }
+
+    protected <T> List<T> getExcelData(MultipartFile file, Class<T> beanClass) {
+        try {
+            return getExcelData(file.getInputStream(), beanClass);
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return new ArrayList<>();
+    }
+
+    protected Map<String, String> getExcelField() {
+        return null;
     }
 
 }
