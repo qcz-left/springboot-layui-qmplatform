@@ -26,8 +26,8 @@
             <li lay-id="user-manage" lay-href="${ctx}/organization/userManagePage">用户管理</li>
             </#if>
         </ul>
-        <div class="layui-tab-content">
-            <iframe id="org-content" frameborder="0" style="width: 100%;height: 100%;"></iframe>
+        <div id="org-content" class="layui-tab-content">
+            <iframe frameborder="0" style="width: 100%;height: 100%;"></iframe>
         </div>
     </div>
 </div>
@@ -42,7 +42,7 @@
         let context = '${RequestParameters["context"]}';
 
         element.on("tab({0})".format(tabLayFilter), function () {
-            $("#org-content").attr("src", "{0}?isDept={1}&nodeId={2}&context={3}".format(this.getAttribute("lay-href"), isDept, nodeId, context));
+            $("#org-content iframe").attr("src", "{0}?isDept={1}&nodeId={2}&context={3}".format(this.getAttribute("lay-href"), isDept, nodeId, context));
         });
         // 默认显示基本信息
         element.tabChange(tabLayFilter, "base-info");

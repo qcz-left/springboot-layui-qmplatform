@@ -18,6 +18,7 @@ import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import org.apache.poi.ss.usermodel.Font;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,11 +82,12 @@ public class BaseController {
      * @param filePath 文件路径
      */
     @GetMapping("/downloadFile")
-    public ResponseEntity<InputStreamResource> downloadFile(String filePath) {
+    public ResponseEntity<InputStreamResource> downloadFile(String filePath, String fileName) {
         FileSystemResource file = new FileSystemResource(FileUtils.getRealFilePath(filePath));
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", new String(Objects.requireNonNull(file.getFilename()).getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1)));
+        fileName = StringUtils.isNotBlank(fileName) ? fileName : file.getFilename();
+        headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", new String(Objects.requireNonNull(fileName).getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1)));
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
 
@@ -118,27 +120,12 @@ public class BaseController {
      */
     @RequestMapping("/generateExportFile")
     @ResponseBody
-    public ResponseResult<?> generateExportFile(@RequestBody ExportParamVo exportParam, HttpServletRequest request) {
+    public ResponseResult<?> generateExportFile(@RequestBody ExportParamVO exportParam, HttpServletRequest request) {
         String tmpFilePath;
         try {
             ExcelWriter writer = ExcelUtil.getWriter();
 
-            // 设置字体
-            Font headFont = writer.createFont();
-            headFont.setFontHeight((short) 300);
-            writer.getHeadCellStyle().setFont(headFont);
-            Font rowFont = writer.createFont();
-            rowFont.setFontHeight((short) 250);
-            writer.getCellStyle().setFont(rowFont);
-
-            // 只写入有列头的数据
-            writer.setOnlyAlias(true);
-            Map<String, ExportColumn> colNames = exportParam.getColNames();
-            int columnIndex = 0;
-            for (String key : colNames.keySet()) {
-                writer.setColumnWidth(columnIndex++, colNames.get(key).getWidth());
-                writer.addHeaderAlias(key, colNames.get(key).getTitle());
-            }
+            setExcel(writer, exportParam.getColNames());
             String httpUrl = HttpServletUtils.getServerPath(request) + exportParam.getQueryUrl();
             HttpRequest httpRequest = HttpUtil.createGet(httpUrl);
 
@@ -168,21 +155,62 @@ public class BaseController {
         return ResponseResult.ok(null, tmpFilePath);
     }
 
+    private void setExcel(ExcelWriter writer, Map<String, ExportColumn> colNames) {
+        // 设置字体
+        Font headFont = writer.createFont();
+        headFont.setFontHeight((short) 300);
+        writer.getHeadCellStyle().setFont(headFont);
+        Font rowFont = writer.createFont();
+        rowFont.setFontHeight((short) 250);
+        writer.getCellStyle().setFont(rowFont);
+
+        // 只写入有列头的数据
+        writer.setOnlyAlias(true);
+        int columnIndex = 0;
+        List<String> titles = new ArrayList<>();
+        for (String key : colNames.keySet()) {
+            writer.setColumnWidth(columnIndex++, colNames.get(key).getWidth());
+            String title = colNames.get(key).getTitle();
+            writer.addHeaderAlias(key, title);
+            titles.add(title);
+        }
+        writer.writeHeadRow(titles);
+    }
+
     /**
      * 导出文件下载专用请求
      *
      * @param filePath 文件路径
-     * @see com.qcz.qmplatform.module.base.BaseController#downloadFile(java.lang.String)
+     * @see com.qcz.qmplatform.module.base.BaseController#downloadFile(java.lang.String, java.lang.String)
      */
-    @GetMapping("/downloadExportFile")
-    public ResponseEntity<InputStreamResource> downloadExportFile(String filePath) {
+    @GetMapping("/downloadExcelFile")
+    public ResponseEntity<InputStreamResource> downloadExcelFile(String filePath, String fileName) {
         try {
-            return downloadFile(filePath);
+            return downloadFile(filePath, fileName);
         } finally {
             if (!ConfigLoader.enableSaveTmpExportFile()) {
                 FileUtils.del(filePath);
             }
         }
+    }
+
+    /**
+     * 生成导入模板文件
+     */
+    @PostMapping("/generateTemplate")
+    @ResponseBody
+    public ResponseResult<?> generateTemplate(@RequestBody ExcelTemplateVO templateVO) throws IOException {
+        ExcelWriter writer = ExcelUtil.getWriter();
+        setExcel(writer, templateVO.getColNames());
+
+        String tmpFilePath = ConfigLoader.getDeleteTmpPath() + DateUtils.format(new Date(), DatePattern.PURE_DATETIME_MS_FORMAT) + "_" + templateVO.getGenerateName();
+        File tmpFile = new File(tmpFilePath);
+        FileUtils.createIfNotExists(tmpFile);
+
+        FileOutputStream out = new FileOutputStream(tmpFile);
+        writer.flush(out, true);
+        writer.close();
+        return ResponseResult.ok(null, tmpFilePath);
     }
 
     /**

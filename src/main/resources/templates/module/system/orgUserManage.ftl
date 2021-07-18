@@ -57,9 +57,10 @@
 </div>
 </body>
 <script>
-    layui.use(['table', 'form'], function () {
+    layui.use(['table', 'form', 'layer'], function () {
         let table = layui.table;
         let form = layui.form;
+        let layer = layui.layer;
         let tableId = 'user-list-tab';
         let layFilter = 'user';
         let nodeId = '${RequestParameters["nodeId"]}';
@@ -86,7 +87,7 @@
                 icon: 'layui-icon-export'
             }, 'print'],
             cols: [[
-                {type: 'checkbox'},
+                {type: 'checkbox', excel: false},
                 {field: 'username', title: '用户名', width: '10%', sort: true},
                 {field: 'loginname', title: '登录名', width: '10%', sort: true},
                 {field: 'userSexName', title: '性别', width: '5%'},
@@ -130,11 +131,11 @@
                     CommonUtil.exportExcel(exportParam);
                     break;
                 case OperateType.IMPORT:
-                    top.layer.open({
+                    layer.open({
                         type: 2,
                         title: "导入",
                         content: ctx + "/importExcelPage?act=" + encodeURIComponent("/user/importExcel"),
-                        area: ['30%', '35%']
+                        area: ['35%', '45%']
                     });
                     break;
             }
@@ -183,6 +184,14 @@
                 },
                 where: form.val('user-search')
             });
+        }
+
+        window.downloadTemplate = function () {
+            let templateParam = {
+                colNames: getColNames(tableIns),
+                generateName: "用户列表模板.xls"
+            };
+            CommonUtil.downloadTemplate(templateParam);
         }
 
     });

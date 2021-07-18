@@ -73,18 +73,26 @@ function reloadParentTable() {
 }
 
 /**
- * 重载上层数据表格
+ * 重载上层指定的数据表格
+ * @param openId 打开layer时指定的id
  */
 function reloadTable(openId) {
-    parent.$.find("#" + openId + " iframe")[0].contentWindow.tableReload();
+    getWindow(openId).tableReload();
 }
 
+/**
+ * 获取上层iframe的contentWindow对象
+ * @param openId 打开layer时指定的id
+ */
 function getWindow(openId) {
     return parent.$.find("#" + openId + " iframe")[0].contentWindow;
 }
 
+/**
+ * 刷新当前菜单所在iframe
+ */
 function reloadFrame() {
-    top.$(".layui-tab[lay-filter='main-tab'] .layui-show iframe:first")[0].contentWindow.location.reload(true);
+    getFrameWindow().location.reload(true);
 }
 
 function getFrameWindow() {

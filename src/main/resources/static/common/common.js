@@ -166,7 +166,17 @@ const CommonUtil = {
         CommonUtil.postAjax(ctx + '/generateExportFile', exportParam, function (result) {
             top.layer.close(index);
             if (result.ok) {
-                window.location = ctx + '/downloadExportFile?filePath=' + encodeURIComponent(result.data);
+                window.location = ctx + '/downloadExcelFile?filePath=' + encodeURIComponent(result.data);
+            }
+        });
+    },
+
+    downloadTemplate: function(templateParam) {
+        let index = top.layer.loadingWithText("正在下载模板，请稍后...");
+        CommonUtil.postAjax(ctx + '/generateTemplate', templateParam, function (result) {
+            top.layer.close(index);
+            if (result.ok) {
+                window.location = ctx + '/downloadExcelFile?filePath=' + encodeURIComponent(result.data) + "&fileName=" + encodeURIComponent(templateParam.generateName);
             }
         });
     },

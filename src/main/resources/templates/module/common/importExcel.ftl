@@ -4,12 +4,12 @@
 <body class="detail-body">
 <div>
     <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="import-form">
-        <#--<div class="layui-form-item">
+        <div class="layui-form-item">
             <label class="layui-form-label"></label>
             <div class="layui-input-block">
-                <a class="layui-btn" href="javascript:void(0);">下载导入模板</a>
+                <a id="downloadTemplate" class="layui-btn" href="javascript:void(0);">下载导入模板</a>
             </div>
-        </div>-->
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label"></label>
             <div class="layui-input-block">
@@ -76,6 +76,10 @@
             error: function () {
                 top.layer.error("导入失败")
             }
+        });
+
+        $('#downloadTemplate').click(function () {
+            parent.downloadTemplate();
         });
     });
 </script>
