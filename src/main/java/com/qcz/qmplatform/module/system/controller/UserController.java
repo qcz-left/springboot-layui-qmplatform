@@ -7,6 +7,7 @@ import cn.hutool.core.util.RandomUtil;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
+import com.qcz.qmplatform.common.bean.ImportResult;
 import com.qcz.qmplatform.common.bean.PageRequest;
 import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
@@ -319,17 +320,10 @@ public class UserController extends BaseController {
         return ResponseResult.error(retData);
     }
 
-    @Override
-    public Map<String, String> getExcelField() {
-        Map<String, String> excelFieldMap = new HashMap<>();
-        excelFieldMap.put("用户名", "username");
-        excelFieldMap.put("登录名", "loginname");
-        excelFieldMap.put("性别", "userSexName");
-        excelFieldMap.put("电话", "phone");
-        excelFieldMap.put("邮箱", "emailAddr");
-        excelFieldMap.put("状态", "lockedName");
-        excelFieldMap.put("所属部门", "organizationName");
-        return excelFieldMap;
+    @PostMapping("/importExcel")
+    @ResponseBody
+    public ResponseResult<ImportResult> importExcel(MultipartFile file) {
+        return userService.insertImportExcel(getExcelData(file, 0, UserVO.class));
     }
 
 }

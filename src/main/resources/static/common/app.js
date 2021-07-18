@@ -79,8 +79,16 @@ function reloadTable(openId) {
     parent.$.find("#" + openId + " iframe")[0].contentWindow.tableReload();
 }
 
+function getWindow(openId) {
+    return parent.$.find("#" + openId + " iframe")[0].contentWindow;
+}
+
 function reloadFrame() {
     top.$(".layui-tab[lay-filter='main-tab'] .layui-show iframe:first")[0].contentWindow.location.reload(true);
+}
+
+function getFrameWindow() {
+    return top.$(".layui-tab[lay-filter='main-tab'] .layui-show iframe:first")[0].contentWindow;
 }
 
 /*

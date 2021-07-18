@@ -7,10 +7,15 @@ import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qcz.qmplatform.common.bean.ExcelRow;
+import com.qcz.qmplatform.common.bean.ImportFailReason;
+import com.qcz.qmplatform.common.bean.ImportResult;
+import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
+import com.qcz.qmplatform.module.system.domain.Organization;
 import com.qcz.qmplatform.module.system.domain.Role;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.domain.UserOrganization;
@@ -25,6 +30,7 @@ import com.qcz.qmplatform.module.system.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +51,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private OrganizationService organizationService;
 
     public List<UserVO> getUserList(UserQO user) {
         return baseMapper.queryUserList(user);
@@ -208,5 +217,90 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         updateWrapper.set("locked", 1);
         updateWrapper.eq("loginname", loginName);
         this.update(updateWrapper);
+    }
+
+    /**
+     * 导入Excel数据
+     */
+    public ResponseResult<ImportResult> insertImportExcel(List<ExcelRow<UserVO>> excelRowList) {
+        ImportResult importResult = new ImportResult();
+        List<ImportFailReason> importFailReasonList = new ArrayList<>();
+
+        int successCount = 0;
+        for (ExcelRow<UserVO> excelRow : excelRowList) {
+            UserVO userVO = excelRow.getRow();
+            int rowIndex = excelRow.getRowIndex();
+
+            ImportFailReason importFailReason = new ImportFailReason();
+            importFailReason.setRowIndex(rowIndex);
+            importFailReason.setName(userVO.getLoginname());
+            boolean canSuccess = true;
+
+            String username = userVO.getUsername();
+            if (StringUtils.isBlank(username)) {
+                importFailReason.setReason("用户名不能为空");
+                importFailReasonList.add(importFailReason);
+                continue;
+            }
+            String loginname = userVO.getLoginname();
+            if (StringUtils.isBlank(loginname)) {
+                importFailReason.setReason("登录名不能为空");
+                importFailReasonList.add(importFailReason);
+                continue;
+            }
+            String phone = userVO.getPhone();
+            if (StringUtils.isBlank(phone)) {
+                importFailReason.setReason("手机号码不能为空");
+                importFailReasonList.add(importFailReason);
+                continue;
+            }
+            String emailAddr = userVO.getEmailAddr();
+            if (StringUtils.isBlank(emailAddr)) {
+                importFailReason.setReason("邮箱不能为空");
+                importFailReasonList.add(importFailReason);
+                continue;
+            }
+            if (queryUserByName(loginname) != null) {
+                importFailReason.setReason("登录名已存在");
+                importFailReasonList.add(importFailReason);
+                continue;
+            }
+            String userSexName = userVO.getUserSexName();
+            String lockedName = userVO.getLockedName();
+            String organizationNames = userVO.getOrganizationName();
+            String userId = IdUtil.randomUUID();
+            userVO.setId(userId);
+            userVO.setPassword(SecureUtils.simpleMD5(username, SecureUtils.DEFAULT_PASSWORD));
+            userVO.setUserSex("男".equals(userSexName) ? "1" : ("女".equals(userSexName) ? "2" : ""));
+            userVO.setLocked("正常".equals(lockedName) ? 1 : 0);
+            if (StringUtils.isNotBlank(organizationNames)) {
+                String[] orgNameArr = organizationNames.split(",");
+                List<String> orgIds = new ArrayList<>();
+                for (String orgName : orgNameArr) {
+                    Organization org = organizationService.getByName(orgName);
+                    if (org == null) {
+                        canSuccess = false;
+                        importFailReason.setReason("部门[" + orgName + "]不存在");
+                        importFailReasonList.add(importFailReason);
+                        continue;
+                    }
+                    orgIds.add(org.getOrganizationId());
+                }
+                userVO.setOrganizationIds(orgIds);
+            }
+
+            if (canSuccess) {
+                insertUser(userVO);
+                successCount++;
+            }
+        }
+
+        int total = excelRowList.size();
+        importResult.setImportFailReasonList(importFailReasonList);
+        importResult.setTitle("登录名");
+        importResult.setTotal(total);
+        importResult.setSuccessCount(successCount);
+        importResult.setFailCount(total - successCount);
+        return ResponseResult.ok(importResult);
     }
 }

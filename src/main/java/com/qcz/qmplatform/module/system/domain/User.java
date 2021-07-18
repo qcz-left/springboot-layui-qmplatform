@@ -3,6 +3,7 @@ package com.qcz.qmplatform.module.system.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.qcz.qmplatform.common.anno.ExcelField;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -40,6 +41,7 @@ public class User implements Serializable {
      * 用户名
      */
     @TableField("username")
+    @ExcelField("用户名")
     @NotBlank(message = "用户名不能为空")
     private String username;
 
@@ -47,6 +49,7 @@ public class User implements Serializable {
      * 登录名
      */
     @TableField("loginname")
+    @ExcelField("登录名")
     @NotBlank(message = "登录户名不能为空")
     private String loginname;
 
@@ -78,6 +81,7 @@ public class User implements Serializable {
      * 手机号码
      */
     @TableField("phone")
+    @ExcelField("电话")
     @NotBlank(message = "手机号码不能为空")
     private String phone;
 
@@ -85,6 +89,7 @@ public class User implements Serializable {
      * 邮箱地址
      */
     @TableField("email_addr")
+    @ExcelField("邮箱")
     private String emailAddr;
 
     /**

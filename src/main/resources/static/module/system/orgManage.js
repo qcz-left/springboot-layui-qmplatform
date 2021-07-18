@@ -45,4 +45,9 @@ layui.use(['dtree', 'table', 'form', 'element'], function () {
         let param = obj.param;
         $("#orgContent").attr("src", "{0}?nodeId={1}&isDept={2}&context={3}".format(ctx + "/organization/orgDetailPage", param.nodeId, param.recordData.itype === 1, param.context));
     });
+
+    window.reloadEvent = function () {
+        orgTree.reload();
+    }
+
 });

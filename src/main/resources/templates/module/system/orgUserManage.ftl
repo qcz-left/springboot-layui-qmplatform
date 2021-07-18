@@ -77,6 +77,10 @@
             page: true,
             toolbar: '#toolbar',
             defaultToolbar: ['filter', {
+                title: '导入',
+                layEvent: OperateType.IMPORT,
+                icon: 'layui-icon-upload'
+            }, {
                 title: '导出',
                 layEvent: OperateType.EXPORT,
                 icon: 'layui-icon-export'
@@ -124,6 +128,14 @@
                         generateName: "用户管理.xls"
                     };
                     CommonUtil.exportExcel(exportParam);
+                    break;
+                case OperateType.IMPORT:
+                    top.layer.open({
+                        type: 2,
+                        title: "导入",
+                        content: ctx + "/importExcelPage?act=" + encodeURIComponent("/user/importExcel"),
+                        area: ['30%', '35%']
+                    });
                     break;
             }
         });

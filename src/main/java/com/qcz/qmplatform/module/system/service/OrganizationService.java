@@ -67,4 +67,10 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
         }
         return updateOrgOne(org);
     }
+
+    public Organization getByName(String orgName) {
+        QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("organization_name", orgName);
+        return getOne(queryWrapper);
+    }
 }

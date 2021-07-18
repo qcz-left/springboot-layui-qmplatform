@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.system.vo;
 
+import com.qcz.qmplatform.common.anno.ExcelField;
 import com.qcz.qmplatform.module.system.domain.User;
 
 import java.util.List;
@@ -10,10 +11,13 @@ public class UserVO extends User {
 
     private List<String> roleIds;
 
+    @ExcelField("性别")
     private String userSexName;
 
+    @ExcelField("状态")
     private String lockedName;
 
+    @ExcelField("所属部门")
     private String organizationName;
 
     public String getOrganizationName() {
@@ -55,4 +59,5 @@ public class UserVO extends User {
     public void setOrganizationIds(List<String> organizationIds) {
         this.organizationIds = organizationIds;
     }
+
 }

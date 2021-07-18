@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.base;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -9,6 +10,8 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
+import com.qcz.qmplatform.common.anno.ExcelField;
+import com.qcz.qmplatform.common.bean.ExcelRow;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
@@ -37,6 +40,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,6 +53,8 @@ import java.util.Objects;
 public class BaseController {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private static final String PREFIX = "/module/common/";
 
     @PostMapping("/upload")
     @ResponseBody
@@ -179,39 +185,72 @@ public class BaseController {
         }
     }
 
-    protected <T> List<T> getExcelData(InputStream inputStream, Class<T> beanClass) {
-        List<T> rows = new ArrayList<>();
-        Map<String, String> excelField = getExcelField();
+    /**
+     * 导入选选择文件页面
+     */
+    @GetMapping("/importExcelPage")
+    public String importExcelPage() {
+        return PREFIX + "importExcel";
+    }
+
+    /**
+     * 有导入失败记录时结果页面
+     */
+    @GetMapping("/importResultPage")
+    public String importResultPage() {
+        return PREFIX + "importResult";
+    }
+
+    /**
+     * 解析导入的Excel文件数据
+     *
+     * @param inputStream 文件输入流
+     * @param titleIndex  标题行所在行数
+     * @param beanClass   数据实体类类型
+     * @return 解析后的数据列表
+     */
+    protected static <T> List<ExcelRow<T>> getExcelData(InputStream inputStream, int titleIndex, Class<T> beanClass) {
+        List<ExcelRow<T>> rows = new ArrayList<>();
+        Map<String, String> excelFieldNameMap = new HashMap<>();
+        Field[] fields = ReflectUtil.getFields(beanClass);
+        for (Field field : fields) {
+            ExcelField excelField = field.getAnnotation(ExcelField.class);
+            if (excelField != null) {
+                excelFieldNameMap.put(excelField.value(), field.getName());
+            }
+        }
         Map<Integer, String> fieldIndex = new HashMap<>();
 
         ExcelUtil.readBySax(inputStream, 0, (sheetIndex, rowIndex, row) -> {
-            if (rowIndex == 0) {
+            if (rowIndex < titleIndex) {
+                return;
+            }
+            if (rowIndex == titleIndex) {
                 // 列表标题
                 for (int i = 0; i < row.size(); i++) {
-                    fieldIndex.put(i, excelField.get(row.get(i).toString()));
+                    fieldIndex.put(i, excelFieldNameMap.get(row.get(i).toString()));
                 }
             } else {
+                ExcelRow<T> tExcelRow = new ExcelRow<>();
+                tExcelRow.setRowIndex(rowIndex + 1);
                 Map<String, Object> data = new HashMap<>();
                 for (int i = 0; i < row.size(); i++) {
                     data.put(fieldIndex.get(i), row.get(i));
                 }
-                rows.add(BeanUtil.mapToBean(data, beanClass, true));
+                tExcelRow.setRow(BeanUtil.mapToBean(data, beanClass, true));
+                rows.add(tExcelRow);
             }
         });
         return rows;
     }
 
-    protected <T> List<T> getExcelData(MultipartFile file, Class<T> beanClass) {
+    protected <T> List<ExcelRow<T>> getExcelData(MultipartFile file, int titleIndex, Class<T> beanClass) {
         try {
-            return getExcelData(file.getInputStream(), beanClass);
+            return getExcelData(file.getInputStream(), titleIndex, beanClass);
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }
         return new ArrayList<>();
-    }
-
-    protected Map<String, String> getExcelField() {
-        return null;
     }
 
 }

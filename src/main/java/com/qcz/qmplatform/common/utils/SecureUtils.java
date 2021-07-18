@@ -16,6 +16,8 @@ public class SecureUtils {
 
     public static final String PASSWORD_UNCHANGED = "******";
 
+    public static final String DEFAULT_PASSWORD = "123456";
+
     private static final AES AES_INSTANCE = SecureUtil.aes(ConfigLoader.getAesKey().getBytes());
 
     private static final DES DES_INSTANCE = SecureUtil.des(ConfigLoader.getDesKey().getBytes());
