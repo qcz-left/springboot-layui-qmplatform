@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.base;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
@@ -38,6 +39,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -142,12 +144,7 @@ public class BaseController {
             // 一次性写出内容，使用默认样式
             writer.write(rows);
             tmpFilePath = ConfigLoader.getDeleteTmpPath() + DateUtils.format(new Date(), DatePattern.PURE_DATETIME_MS_FORMAT) + "_" + exportParam.getGenerateName();
-            File tmpFile = new File(tmpFilePath);
-            FileUtils.createIfNotExists(tmpFile);
-
-            FileOutputStream out = new FileOutputStream(tmpFile);
-            writer.flush(out, true);
-            writer.close();
+            writeExcel(writer, tmpFilePath);
         } catch (Exception e) {
             throw new CommonException("Failed to export file！", e);
         }
@@ -177,6 +174,22 @@ public class BaseController {
         writer.writeHeadRow(titles);
     }
 
+
+    private void writeExcel(ExcelWriter writer, String tmpFilePath) {
+        File tmpFile = new File(tmpFilePath);
+        FileUtils.createIfNotExists(tmpFile);
+
+        FileOutputStream out;
+        try {
+            out = new FileOutputStream(tmpFile);
+            writer.flush(out, true);
+        } catch (FileNotFoundException e) {
+            logger.error(e.getMessage(), e);
+        } finally {
+            IoUtil.close(writer);
+        }
+    }
+
     /**
      * 导出文件下载专用请求
      *
@@ -199,17 +212,12 @@ public class BaseController {
      */
     @PostMapping("/generateTemplate")
     @ResponseBody
-    public ResponseResult<?> generateTemplate(@RequestBody ExcelTemplateVO templateVO) throws IOException {
+    public ResponseResult<?> generateTemplate(@RequestBody ExcelTemplateVO templateVO) {
         ExcelWriter writer = ExcelUtil.getWriter();
         setExcel(writer, templateVO.getColNames());
 
         String tmpFilePath = ConfigLoader.getDeleteTmpPath() + DateUtils.format(new Date(), DatePattern.PURE_DATETIME_MS_FORMAT) + "_" + templateVO.getGenerateName();
-        File tmpFile = new File(tmpFilePath);
-        FileUtils.createIfNotExists(tmpFile);
-
-        FileOutputStream out = new FileOutputStream(tmpFile);
-        writer.flush(out, true);
-        writer.close();
+        writeExcel(writer, tmpFilePath);
         return ResponseResult.ok(null, tmpFilePath);
     }
 
