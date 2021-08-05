@@ -21,6 +21,7 @@ import com.qcz.qmplatform.module.operation.domain.DataBak;
 import com.qcz.qmplatform.module.operation.mapper.DataBakMapper;
 import com.qcz.qmplatform.module.operation.vo.DataBakStrategyVO;
 import com.qcz.qmplatform.module.socket.SessionWebSocketServer;
+import com.qcz.qmplatform.module.sync.DBChangeCenter;
 import com.qcz.qmplatform.module.system.assist.IniDefine;
 import com.qcz.qmplatform.module.system.assist.MessageInstance;
 import com.qcz.qmplatform.module.system.assist.MessageReceiver;
@@ -147,6 +148,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
             message.setSender(operator);
             message.setContent(msg);
             messageService.createMessage(message, MessageReceiver.ADMIN);
+            DBChangeCenter.getInstance().doNotify("sys_message");
             return ResponseResult.error(msg);
         }
         // 删除 day 天前的备份
