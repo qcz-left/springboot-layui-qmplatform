@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.sync;
 
+import cn.hutool.core.thread.ThreadUtil;
 import com.qcz.qmplatform.common.bean.Observed;
 
 /**
@@ -20,6 +21,7 @@ public class DBChangeCenter implements Observed {
 
         static {
             INSTANCE.addObserver(new DBChangeWatcher());
+            ThreadUtil.execute(INSTANCE);
         }
 
     }

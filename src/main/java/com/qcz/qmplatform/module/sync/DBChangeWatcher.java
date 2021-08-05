@@ -3,9 +3,11 @@ package com.qcz.qmplatform.module.sync;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
 import com.qcz.qmplatform.common.bean.Observable;
+import com.qcz.qmplatform.common.utils.SpringContextUtils;
 import com.qcz.qmplatform.module.socket.NotifyWebSocketServer;
 import com.qcz.qmplatform.module.system.service.MessageService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.websocket.Session;
 import java.util.ArrayList;
@@ -18,11 +20,12 @@ import java.util.Map;
  */
 public class DBChangeWatcher implements Observable {
 
-    @Autowired
-    MessageService messageService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DBChangeWatcher.class);
 
     @Override
     public void receiveMessage(String tableName) {
+        LOGGER.debug("A database notification was received: " + tableName);
+
         switch (tableName) {
             case "sys_message":
                 syncMessage();
@@ -42,6 +45,7 @@ public class DBChangeWatcher implements Observable {
             for (Session session : sessions) {
                 userIds.add(session.getUserPrincipal().toString());
             }
+            MessageService messageService = SpringContextUtils.getBean(MessageService.class);
             Map<String, Map<String, Long>> noReadCount = messageService.selectNoReadCount(userIds);
             for (Session session : sessions) {
                 String userId = session.getUserPrincipal().toString();

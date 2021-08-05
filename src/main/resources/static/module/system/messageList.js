@@ -23,12 +23,16 @@ layui.use(['table', 'form'], function () {
                 }
             },
             {
+                field: 'lastUpdateTime', title: '上次更新时间', width: '15%', templet: function (row) {
+                    return new Date(row.lastUpdateTime).format('yyyy-MM-dd hh:mm:ss');
+                }
+            },
+            {field: 'senderName', title: '发送人', width: '10%', sort: false},
+            {
                 field: 'read', title: '状态', width: '10%', templet: function (row) {
                     return row.read === 1 ? '<span class="layui-badge layui-bg-green">已读</span>' : '<span style="cursor:pointer;" class="layui-badge layui-bg-orange" lay-event="fail">未读</span>';
                 }
             },
-            {field: 'senderName', title: '发送人', width: '10%', sort: false},
-            {field: 'receiverName', title: '接收人', width: '10%', sort: false},
             {fixed: 'right', title: '操作', excel: false, align: 'center', templet: '#operator'}
         ]]
     });

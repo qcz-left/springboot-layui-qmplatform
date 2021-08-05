@@ -22,9 +22,13 @@ import com.qcz.qmplatform.module.operation.mapper.DataBakMapper;
 import com.qcz.qmplatform.module.operation.vo.DataBakStrategyVO;
 import com.qcz.qmplatform.module.socket.SessionWebSocketServer;
 import com.qcz.qmplatform.module.system.assist.IniDefine;
+import com.qcz.qmplatform.module.system.assist.MessageInstance;
+import com.qcz.qmplatform.module.system.assist.MessageReceiver;
+import com.qcz.qmplatform.module.system.assist.MessageType;
 import com.qcz.qmplatform.module.system.domain.Ini;
+import com.qcz.qmplatform.module.system.domain.Message;
 import com.qcz.qmplatform.module.system.service.IniService;
-import org.apache.shiro.SecurityUtils;
+import com.qcz.qmplatform.module.system.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +66,9 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
 
     @Autowired
     private IniService iniService;
+
+    @Autowired
+    private MessageService messageService;
 
     public boolean saveDataBakStrategy(DataBakStrategyVO dataBakStrategy) {
         int week1 = dataBakStrategy.getWeek1();
@@ -110,7 +117,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
             periodList.add("7");
         }
         pattern += CollectionUtil.join(periodList, ",");
-        CronUtils.schedule(SCHEDULE_ID, pattern, () -> LOGGER.debug("schedule data bak exe result[{}]: {}", DateUtils.now(), exeBackup("系统自动备份")));
+        CronUtils.schedule(SCHEDULE_ID, pattern, () -> LOGGER.debug("schedule data bak exe result[{}]: {}", DateUtils.now(), exeBackup("系统自动备份", "system")));
     }
 
     /**
@@ -119,7 +126,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
      * @param bakRemark 备份描述
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public ResponseResult<?> exeBackup(String bakRemark) {
+    public ResponseResult<?> exeBackup(String bakRemark, String operator) {
         if (!SystemUtils.OS.isLinux()) {
             throw new CommonException("非Linux环境不允许备份数据！");
         }
@@ -131,8 +138,16 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         Map<String, String> bakStrategy = iniService.getBySec(SECTION);
         int limitDiskSpace = Integer.parseInt(bakStrategy.get(IniDefine.DataBak.LIMIT_DISK_SPACE));
         if (file.getTotalSpace() < limitDiskSpace * 1024 * 2024 * 1024L) {
-            // 备份文件目录所在磁盘空间不足
-            return ResponseResult.error("磁盘空间不足 " + limitDiskSpace + " G，不允许备份！");
+            // 备份文件目录所在磁盘空间不足，产生告警信息
+            String msg = "磁盘空间不足 " + limitDiskSpace + " G，不允许备份！";
+            Message message = new Message();
+            message.setRead(0);
+            message.setType(MessageType.ALARM);
+            message.setInstance(MessageInstance.ALARM_DISK_SPACE);
+            message.setSender(operator);
+            message.setContent(msg);
+            messageService.createMessage(message, MessageReceiver.ADMIN);
+            return ResponseResult.error(msg);
         }
         // 删除 day 天前的备份
         String saveDays = bakStrategy.get(IniDefine.DataBak.SAVE_DAYS);

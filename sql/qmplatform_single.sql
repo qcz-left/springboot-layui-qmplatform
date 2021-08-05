@@ -2001,3 +2001,54 @@ END$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
   ROWS 1000;
+
+CREATE OR REPLACE FUNCTION "public"."checkcolumnexist"("pi_table_name" varchar, "pi_colume_name" varchar)
+  RETURNS "pg_catalog"."bool" AS $BODY$
+declare l_result int2 default 0;
+begin
+	select count(0) into l_result
+	from INFORMATION_SCHEMA.COLUMNS
+	where COLUMN_NAME=$2
+		and TABLE_NAME=$1
+		and TABLE_CATALOG = current_database();
+
+	if(l_result > 0)then
+		l_result := 1;
+	end if;
+
+	return l_result;
+end
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+CREATE OR REPLACE FUNCTION "public"."_exec_add"("pi_table" varchar, "pi_column" varchar, "pi_column_type" varchar)
+  RETURNS "pg_catalog"."void" AS $BODY$
+
+declare l_sql varchar(4096);
+begin
+	l_sql := ' ' || 'alter table ' || $1 || ' add column ' || $2 || ' ' || $3;
+   	execute l_sql;
+end
+
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+CREATE OR REPLACE FUNCTION "public"."_add_column"("pi_table" varchar, "pi_column" varchar, "pi_column_type" varchar)
+  RETURNS "pg_catalog"."int2" AS $BODY$
+declare lresut smallint default 0;
+begin
+	if not CheckColumnExist($1,$2) then
+     	perform _exec_add($1,$2,$3);
+		lresut := 1;
+   	end if;
+	return lresut;
+end
+
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+select _add_column('sys_message', 'instance', 'varchar(50)');
+select _add_column('sys_message', 'last_update_time', 'timestamp');

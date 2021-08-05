@@ -11,6 +11,7 @@ import com.qcz.qmplatform.common.bean.ExcelRow;
 import com.qcz.qmplatform.common.bean.ImportFailReason;
 import com.qcz.qmplatform.common.bean.ImportResult;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -57,6 +58,10 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     public List<UserVO> getUserList(UserQO user) {
         return baseMapper.queryUserList(user);
+    }
+
+    public List<UserVO> queryAllAdmin() {
+        return baseMapper.queryByRoleSign(Constant.SYSTEM_ADMIN);
     }
 
     public User findByLoginNameAndPassword(String loginName, String password) {

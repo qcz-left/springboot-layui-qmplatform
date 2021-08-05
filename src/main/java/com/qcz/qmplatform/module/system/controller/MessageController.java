@@ -8,6 +8,7 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.sync.DBChangeCenter;
 import com.qcz.qmplatform.module.system.domain.Message;
@@ -55,6 +56,7 @@ public class MessageController extends BaseController {
             PageResultHelper.startPage(pageRequest);
         }
 
+        message.setReceiver(SubjectUtils.getUserId());
         return ResponseResult.ok(PageResultHelper.parseResult(messageService.getList(message)));
     }
 

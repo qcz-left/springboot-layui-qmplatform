@@ -38,11 +38,20 @@ public class Message implements Serializable {
     @TableField("type")
     private Integer type;
 
+    @TableField("instance")
+    private String instance;
+
     /**
      * 创建时间
      */
     @TableField("create_time")
     private Timestamp createTime;
+
+    /**
+     * 上次更新时间
+     */
+    @TableField("last_update_time")
+    private Timestamp lastUpdateTime;
 
     /**
      * 是否已读
@@ -118,16 +127,34 @@ public class Message implements Serializable {
         this.receiver = receiver;
     }
 
+    public String getInstance() {
+        return instance;
+    }
+
+    public void setInstance(String instance) {
+        this.instance = instance;
+    }
+
+    public Timestamp getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Timestamp lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
-                "messageId=" + messageId +
-                ", content=" + content +
+                "messageId='" + messageId + '\'' +
+                ", content='" + content + '\'' +
                 ", type=" + type +
+                ", instance='" + instance + '\'' +
                 ", createTime=" + createTime +
+                ", lastUpdateTime=" + lastUpdateTime +
                 ", read=" + read +
-                ", sender=" + sender +
-                ", receiver=" + receiver +
-                "}";
+                ", sender='" + sender + '\'' +
+                ", receiver='" + receiver + '\'' +
+                '}';
     }
 }

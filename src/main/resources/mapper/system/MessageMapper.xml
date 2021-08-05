@@ -38,7 +38,7 @@
         select
             sm.*,
             va.attr_name typeName,
-            su.username senderName,
+            case sm.sender when 'system' then '系统' else su.username end senderName,
             su2.username receiverName
         from
             sys_message sm
@@ -48,6 +48,9 @@
         where 1=1
         <if test="content != null and content != ''">
             and content like concat('%', #{content}, '%')
+        </if>
+        <if test="receiver != null and receiver != ''">
+            and sm.receiver = #{receiver}
         </if>
     </select>
 

@@ -2,10 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qcz.qmplatform.module.system.mapper.UserMapper">
 
+    <sql id="userColumns">
+        ${alias}.id,
+        ${alias}.password,
+        ${alias}.username,
+        ${alias}.loginname,
+        ${alias}.user_sex,
+        ${alias}.remark,
+        ${alias}.create_time,
+        ${alias}.create_user_id,
+        ${alias}.phone,
+        ${alias}.email_addr,
+        ${alias}.locked,
+        ${alias}.photo_path
+    </sql>
+
     <select id="queryUserByName" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
-        select *
-        from sys_user
-        where loginname like #{loginName}
+        select
+        <include refid="userColumns"><property name="alias" value="su"/></include>
+        from sys_user su
+        where su.loginname like #{loginName}
     </select>
 
     <select id="queryAuthoritiesByUserId" resultType="string">
@@ -70,5 +86,16 @@
             su.id,
             usersexname,
             lockedname
+    </select>
+
+    <select id="queryByRoleSign" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
+        select
+        <include refid="userColumns"><property name="alias" value="su"/></include>
+        from
+            sys_user su
+            left join sys_user_role sur on su.id = sur.user_id
+            left join sys_role sr on sur.role_id = sr.role_id
+        where
+            sr.role_sign = #{roleSign}#
     </select>
 </mapper>

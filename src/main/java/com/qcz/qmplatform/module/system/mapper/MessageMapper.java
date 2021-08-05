@@ -1,8 +1,7 @@
 package com.qcz.qmplatform.module.system.mapper;
 
-import com.qcz.qmplatform.intercept.AuthQuery;
-import com.qcz.qmplatform.module.system.domain.Message;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qcz.qmplatform.module.system.domain.Message;
 import com.qcz.qmplatform.module.system.vo.MessageVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,7 +22,6 @@ public interface MessageMapper extends BaseMapper<Message> {
 
     List<Map<String, Object>> selectTypeCountByUserIds(@Param("read") int read, @Param("receivers") List<String> receivers);
 
-    @AuthQuery(userColumn = "receiver")
     List<MessageVO> selectList(Message message);
 
 }

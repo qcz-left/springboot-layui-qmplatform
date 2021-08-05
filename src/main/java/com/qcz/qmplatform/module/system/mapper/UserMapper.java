@@ -21,4 +21,7 @@ public interface UserMapper extends BaseMapper<User> {
     List<String> queryAuthoritiesByUserId(String userId);
 
     List<UserVO> queryUserList(UserQO user);
+
+    List<UserVO> queryByRoleSign(String roleSign);
+
 }
