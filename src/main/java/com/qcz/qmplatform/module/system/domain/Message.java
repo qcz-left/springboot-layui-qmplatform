@@ -3,6 +3,7 @@ package com.qcz.qmplatform.module.system.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.qcz.qmplatform.common.bean.DBProperties;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -15,7 +16,7 @@ import java.sql.Timestamp;
  * @author quchangzhong
  * @since 2021-03-26
  */
-@TableName("sys_message")
+@TableName(DBProperties.Table.SYS_MESSAGE)
 public class Message implements Serializable {
 
     private static final long serialVersionUID = 1L;

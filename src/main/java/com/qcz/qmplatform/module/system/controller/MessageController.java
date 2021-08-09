@@ -68,7 +68,7 @@ public class MessageController extends BaseController {
         if (!messageService.setHasRead(params.get("messageIds"))) {
             return ResponseResult.error();
         }
-        dbChanged();
+        DBChangeCenter.getInstance().notifyMessage();
         return ResponseResult.ok();
     }
 
@@ -80,11 +80,8 @@ public class MessageController extends BaseController {
         if (!messageService.removeByIds(Arrays.asList(messageIds.split(",")))) {
             return ResponseResult.error();
         }
-        dbChanged();
+        DBChangeCenter.getInstance().notifyMessage();
         return ResponseResult.ok();
     }
 
-    private void dbChanged() {
-        DBChangeCenter.getInstance().doNotify("sys_message");
-    }
 }

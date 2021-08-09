@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.sync;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
+import com.qcz.qmplatform.common.bean.DBProperties;
 import com.qcz.qmplatform.common.bean.Observable;
 import com.qcz.qmplatform.common.utils.SpringContextUtils;
 import com.qcz.qmplatform.module.socket.NotifyWebSocketServer;
@@ -27,7 +28,7 @@ public class DBChangeWatcher implements Observable {
         LOGGER.debug("A database notification was received: " + tableName);
 
         switch (tableName) {
-            case "sys_message":
+            case DBProperties.Table.SYS_MESSAGE:
                 syncMessage();
                 break;
             default:

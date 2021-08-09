@@ -148,7 +148,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
             message.setSender(operator);
             message.setContent(msg);
             messageService.createMessage(message, MessageReceiver.ADMIN);
-            DBChangeCenter.getInstance().doNotify("sys_message");
+            DBChangeCenter.getInstance().notifyMessage();
             return ResponseResult.error(msg);
         }
         // 删除 day 天前的备份
