@@ -13,7 +13,7 @@ public class DBChangeCenter implements Observed {
      * 系统消息通知
      */
     public void notifyMessage() {
-        getInstance().doNotify(DBProperties.Table.SYS_MESSAGE);
+        doNotify(DBProperties.Table.SYS_MESSAGE);
     }
 
     public static DBChangeCenter getInstance() {
