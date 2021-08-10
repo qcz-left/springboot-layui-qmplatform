@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.common.bean;
 
+import cn.hutool.core.thread.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +50,9 @@ public interface Observed extends Runnable {
             try {
                 String msg = MSG_QUEUE.take();
                 for (Observable observable : OBSERVABLE_LIST) {
-                    observable.receiveMessage(msg);
+                    ThreadUtil.execute(() -> {
+                        observable.receiveMessage(msg);
+                    });
                 }
             } catch (InterruptedException e) {
                 LOGGER.error("", e);
