@@ -8,6 +8,7 @@ import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.system.domain.OperateLog;
 import com.qcz.qmplatform.module.system.domain.User;
@@ -183,7 +184,7 @@ public class OperateLogAspect {
             strBuff.append(stet).append("\n");
         }
         String stackTrace = exceptionName + ":" + exceptionMessage + "\n\t" + strBuff.toString();
-        return stackTrace.length() > 999 ? stackTrace.substring(0, 999) : stackTrace;
+        return StringUtils.omit(stackTrace, 999);
     }
 
 }

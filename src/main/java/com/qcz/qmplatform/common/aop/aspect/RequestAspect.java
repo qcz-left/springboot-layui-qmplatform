@@ -1,7 +1,8 @@
 package com.qcz.qmplatform.common.aop.aspect;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -21,7 +22,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -66,12 +66,15 @@ public class RequestAspect {
                 Annotation[] itemParameterAnnotation = allParameterAnnotations[i];
                 for (Annotation annotation : itemParameterAnnotation) {
                     if (annotation.annotationType() == RequestBody.class) {
-                        LOGGER.info("[body] {}: {", arg.getClass().getSimpleName());
-                        Field[] fields = ReflectUtil.getFields(arg.getClass());
-                        for (Field declaredField : fields) {
-                            String fieldName = declaredField.getName();
-                            Object fieldValue = ReflectUtil.getFieldValue(arg, declaredField);
-                            LOGGER.info("  {}: {}", fieldName, checkPwdFieldHidden(fieldName, String.valueOf(fieldValue)));
+                        Class<?> argClass = arg.getClass();
+                        LOGGER.info("[body] {}: {", argClass.getSimpleName());
+                        Map argMap = BeanUtil.beanToMap(arg);
+                        if (arg instanceof Map) {
+                            argMap = (Map) arg;
+                         }
+                        for (Object paramKey : argMap.keySet()) {
+                            Object paramValue = argMap.get(paramKey);
+                            LOGGER.info("  {}: {}", paramKey, checkPwdFieldHidden(String.valueOf(paramKey), paramValue));
                         }
                         LOGGER.info("}");
                     }
@@ -96,17 +99,20 @@ public class RequestAspect {
      * @param fieldValue 参数值
      * @return 处理后的参数值，是密码字段则只打印字符长度
      */
-    private String checkPwdFieldHidden(String fieldName, String fieldValue) {
-        fieldValue = StringUtils.isNullOrUndefined(fieldValue) ? "" : fieldValue;
-        List<String> pwdFields = ConfigLoader.getPwdFields();
-        if (pwdFields.isEmpty()) {
-            return fieldValue;
+    private String checkPwdFieldHidden(String fieldName, Object fieldValue) {
+        String strFieldValue = String.valueOf(fieldValue);
+        if (fieldValue instanceof Object[]) {
+            Object[] arrFieldValue = (Object[]) fieldValue;
+            strFieldValue = StringUtils.format("[{}]", ArrayUtil.join(arrFieldValue, ","));
         }
+        strFieldValue = StringUtils.isNullOrUndefined(strFieldValue) ? "" : strFieldValue;
+        List<String> pwdFields = ConfigLoader.getPwdFields();
         for (String pwdField : pwdFields) {
             if (StringUtils.containsIgnoreCase(fieldName, pwdField)) {
-                return StringUtils.format("({})", fieldValue.length());
+                return StringUtils.format("({})", strFieldValue.length());
             }
         }
-        return fieldValue;
+        return StringUtils.omit(strFieldValue, 99);
     }
+
 }
