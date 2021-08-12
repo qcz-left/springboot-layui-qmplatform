@@ -24,10 +24,10 @@ public class DBChangeWatcher implements Observable {
     private static final Logger LOGGER = LoggerFactory.getLogger(DBChangeWatcher.class);
 
     @Override
-    public void receiveMessage(String tableName) {
+    public void receiveMessage(Object tableName) {
         LOGGER.debug("A database notification was received: " + tableName);
 
-        switch (tableName) {
+        switch ((String) tableName) {
             case DBProperties.Table.SYS_MESSAGE:
                 syncMessage();
                 break;
@@ -53,5 +53,9 @@ public class DBChangeWatcher implements Observable {
                 NotifyWebSocketServer.sendMsg(JSONUtil.toJsonStr(noReadCount.get(userId)), session);
             }
         }
+    }
+
+    static {
+        DBChangeCenter.getInstance().addObserver(new DBChangeWatcher());
     }
 }

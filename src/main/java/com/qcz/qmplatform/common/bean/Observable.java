@@ -5,5 +5,5 @@ package com.qcz.qmplatform.common.bean;
  */
 public interface Observable {
 
-    void receiveMessage(String msg);
+    void receiveMessage(Object msg);
 }
