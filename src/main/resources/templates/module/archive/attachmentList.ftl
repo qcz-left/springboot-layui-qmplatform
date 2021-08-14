@@ -14,6 +14,12 @@
                         <input type="text" name="attachmentName" autocomplete="off" class="layui-input">
                     </div>
                 </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">上传人</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="uploadUserName" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
             </span>
             <#--搜索栏-->
             <span class="searcher">
