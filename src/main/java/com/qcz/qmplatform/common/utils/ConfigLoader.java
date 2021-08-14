@@ -158,4 +158,11 @@ public class ConfigLoader {
     public static boolean enableSaveTmpExportFile() {
         return "1".equals(getStringConfig("EnableSaveTmpExportFile", "0"));
     }
+
+    /**
+     * 获取可预览的文件后缀
+     */
+    public static List<String> getPreviewedSuffix() {
+        return CollectionUtil.newArrayList(getStringConfig("PreviewedSuffix", "txt,pdf,doc,docx,xls,xlsx,png,jpg,jpeg").split(","));
+    }
 }

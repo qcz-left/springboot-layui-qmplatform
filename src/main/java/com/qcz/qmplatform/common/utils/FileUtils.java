@@ -167,6 +167,13 @@ public class FileUtils extends FileUtil {
         return filePath;
     }
 
+    /**
+     * 获取文件名后缀
+     */
+    public static String getFileSuf(String filePathOrName) {
+        return filePathOrName.substring(filePathOrName.lastIndexOf(".") + 1);
+    }
+
     private static String getWebPath() {
         try {
             String webPath = new ClassPathResource("").getFile().getCanonicalPath();

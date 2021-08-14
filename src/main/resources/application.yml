@@ -74,6 +74,13 @@ jasypt:
   encryptor:
     password: qcz
 
+jodconverter:
+  local:
+    enabled: true
+    office-home: C:\Program Files (x86)\OpenOffice 4
+    max-tasks-per-process: 10
+    port-numbers: 8100
+
 # 自定义属性
 custom:
   database: qmplatform_single

@@ -59,6 +59,10 @@ layui.use(['table', 'form', 'element'], function () {
     table.on('tool(' + layFilter + ')', function (obj) {
         let data = obj.data;
         switch (obj.event) {
+            case 'preview':
+                console.log(data)
+                window.open(ctx + "/toPDF?filePath=" + data.attachmentUrl);
+                break;
             case 'download':
                 location.href = ctx + '/archive/attachment/downloadFile?filePath=' + data.attachmentUrl;
                 break;

@@ -362,5 +362,12 @@ const CommonUtil = {
      */
     getWsProtocol: function () {
         return window.location.protocol === "https:" ? "wss" : "ws";
+    },
+
+    /**
+     * 获取文件名后缀
+     */
+    getFileSuf: function (fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 };

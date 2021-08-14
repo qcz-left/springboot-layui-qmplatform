@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <#include "/include/include.ftl">
+<script type="text/javascript">
+    let previewedSuffix = [];
+    <#list previewedSuffix as suf>
+        previewedSuffix.push('${suf!}');
+    </#list>
+</script>
 <script type="text/javascript" src="${ctx}/static/module/archive/attachmentList.js"></script>
 <body>
 <div class="layui-fluid">
@@ -41,6 +47,9 @@
             </div>
         </script>
         <script type="text/html" id="operator">
+            {{# if (previewedSuffix.indexOf(CommonUtil.getFileSuf(d.attachmentName)) > -1) { }}
+                <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="preview"><i class="layui-icon layui-icon-read"></i>预览</button>
+            {{# } }}
             <button class="layui-btn layui-btn-sm" lay-event="download"><i class="layui-icon layui-icon-download-circle"></i>下载</button>
             <@shiro.hasPermission name="${PrivCode.BTN_CODE_FILE_DELETE}">
                 <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>

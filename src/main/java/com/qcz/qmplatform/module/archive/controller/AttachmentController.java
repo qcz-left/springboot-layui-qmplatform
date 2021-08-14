@@ -13,6 +13,7 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -59,7 +60,8 @@ public class AttachmentController extends BaseController {
     private String maxFileSize;
 
     @GetMapping("/attachmentListPage")
-    public String attachmentListPage() {
+    public String attachmentListPage(Map<String, Object> root) {
+        root.put("previewedSuffix", ConfigLoader.getPreviewedSuffix());
         return PREFIX + "attachmentList";
     }
 
