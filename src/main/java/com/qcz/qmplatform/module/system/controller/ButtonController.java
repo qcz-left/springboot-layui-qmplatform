@@ -50,7 +50,7 @@ public class ButtonController extends BaseController {
      * @param pageRequest 分页请求
      * @param button      请求参数
      */
-    @GetMapping("/getButtonList")
+    @PostMapping("/getButtonList")
     @ResponseBody
     public ResponseResult<PageResult> getButtonList(PageRequest pageRequest, Button button) {
         PageResultHelper.startPage(pageRequest.getPage(), pageRequest.getLimit());

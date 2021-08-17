@@ -109,7 +109,7 @@ public class UserController extends BaseController {
         return userService.getUserOne(userId);
     }
 
-    @RequestMapping("/getUserList")
+    @PostMapping("/getUserList")
     @ResponseBody
     public ResponseResult<PageResult> getUserList(PageRequest pageRequest, UserQO user, boolean export) {
         if (!export) {

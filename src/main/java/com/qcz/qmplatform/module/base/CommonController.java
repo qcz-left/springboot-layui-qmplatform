@@ -58,7 +58,7 @@ public class CommonController extends BaseController {
 
     private static final String PREFIX = "/module/common/";
 
-    @Autowired
+    @Autowired(required = false)
     private DocumentConverter converter;
 
     /**
@@ -112,7 +112,7 @@ public class CommonController extends BaseController {
 
             setExcel(writer, exportParam.getColNames());
             String httpUrl = HttpServletUtils.getServerPath(request) + exportParam.getQueryUrl();
-            HttpRequest httpRequest = HttpUtil.createGet(httpUrl);
+            HttpRequest httpRequest = HttpUtil.createPost(httpUrl);
 
             Map<String, Object> param = exportParam.getQueryParam();
             param.put("export", true);

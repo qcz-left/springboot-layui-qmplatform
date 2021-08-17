@@ -91,7 +91,7 @@ public class OrganizationController extends BaseController {
      *
      * @param organization 请求参数
      */
-    @GetMapping("/getOrgList")
+    @PostMapping("/getOrgList")
     @ResponseBody
     public ResponseResult<List<OrgTree>> getOrgList(Organization organization) {
         return ResponseResult.ok(organizationService.getOrgList(organization));

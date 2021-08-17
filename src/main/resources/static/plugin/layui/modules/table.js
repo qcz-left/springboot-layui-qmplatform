@@ -726,7 +726,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
       that.loading();
 
       $.ajax({
-        type: options.method || 'get'
+        type: options.method || 'post'
         ,url: options.url
         ,contentType: options.contentType
         ,data: data

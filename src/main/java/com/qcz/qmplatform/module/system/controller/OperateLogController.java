@@ -11,6 +11,7 @@ import com.qcz.qmplatform.module.system.vo.OperateLogTimeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -36,7 +37,7 @@ public class OperateLogController extends BaseController {
         return PREFIX + "operateLogList";
     }
 
-    @GetMapping("/getLogList")
+    @PostMapping("/getLogList")
     @ResponseBody
     public ResponseResult<PageResult> getLogList(PageRequest pageRequest, OperateLogTimeVO operateLogTimeVO) {
         PageResultHelper.startPage(pageRequest);

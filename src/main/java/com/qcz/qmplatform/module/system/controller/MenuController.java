@@ -72,7 +72,7 @@ public class MenuController extends BaseController {
      *
      * @param permission 请求参数
      */
-    @RequestMapping("/getMenuList")
+    @PostMapping("/getMenuList")
     @ResponseBody
     public ResponseResult<List<MenuTree>> getMenuList(PermissionVO permission) {
         List<MenuTree> menuList = menuService.getMenuList(permission);

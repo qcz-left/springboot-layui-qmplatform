@@ -25,7 +25,6 @@ layui.use(['dtree', 'table', 'form', 'element'], function () {
     // 树代码示例
     let orgTree = dtree.render({
         elem: "#orgTree",
-        method: "get",
         data: orgData,
         dataStyle: "layuiStyle",
         skin: "laySimple",

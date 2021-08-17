@@ -67,7 +67,7 @@ public class RoleController extends BaseController {
      * @param pageRequest 分页请求
      * @param role        请求参数
      */
-    @GetMapping("/getRoleList")
+    @PostMapping("/getRoleList")
     @ResponseBody
     public ResponseResult<PageResult> getRoleList(PageRequest pageRequest, Role role) {
         PageResultHelper.startPage(pageRequest);
