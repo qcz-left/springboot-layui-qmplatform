@@ -1,10 +1,10 @@
 package com.qcz.qmplatform.module.operation.service;
 
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
+import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.operation.domain.LoginRecord;
 import com.qcz.qmplatform.module.operation.mapper.LoginRecordMapper;
@@ -103,7 +103,7 @@ public class LoginRecordService extends ServiceImpl<LoginRecordMapper, LoginReco
         if (loginRecord == null) {
             // 新增记录
             loginRecord = new LoginRecord();
-            loginRecord.setRecordId(IdUtil.randomUUID());
+            loginRecord.setRecordId(IdUtils.simpleUUID());
             loginRecord.setErrorTimes(1);
             loginRecord.setLastLoginIp(clientIp);
             loginRecord.setLastLoginTime(DateUtils.getCurrTimestamp());

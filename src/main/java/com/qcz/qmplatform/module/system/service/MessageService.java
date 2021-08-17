@@ -1,11 +1,11 @@
 package com.qcz.qmplatform.module.system.service;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
+import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.system.assist.MessageReceiver;
 import com.qcz.qmplatform.module.system.domain.Message;
@@ -102,7 +102,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
         Message tmpMessage = getOne(queryWarpper);
         if (tmpMessage == null) {
             if (StringUtils.isBlank(message.getMessageId())) {
-                message.setMessageId(IdUtil.randomUUID());
+                message.setMessageId(IdUtils.simpleUUID());
             }
             message.setCreateTime(currTimestamp);
             save(message);

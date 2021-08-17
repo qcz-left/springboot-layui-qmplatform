@@ -2,8 +2,8 @@ package com.qcz.qmplatform.module.system.service;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
 import com.qcz.qmplatform.module.system.assist.PermissionType;
@@ -41,7 +41,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
     }
 
     public boolean addMenuOne(Menu menu) {
-        menu.setMenuId(IdUtil.randomUUID());
+        menu.setMenuId(IdUtils.simpleUUID());
         return save(menu);
     }
 

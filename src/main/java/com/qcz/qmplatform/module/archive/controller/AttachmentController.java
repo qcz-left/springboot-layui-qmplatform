@@ -3,7 +3,6 @@ package com.qcz.qmplatform.module.archive.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
@@ -16,6 +15,7 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
+import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.archive.domain.Attachment;
@@ -89,7 +89,7 @@ public class AttachmentController extends BaseController {
         ResponseResult<Map<String, String>> upload = upload(file);
         // 将文件路径保存到数据库
         if (upload.isOk()) {
-            attachment.setAttachmentId(IdUtil.randomUUID());
+            attachment.setAttachmentId(IdUtils.simpleUUID());
             attachment.setAttachmentName(file.getOriginalFilename());
             attachment.setAttachmentUrl(upload.getData().get("filePath"));
             attachment.setUploadTime(DateUtils.getCurrTimestamp());

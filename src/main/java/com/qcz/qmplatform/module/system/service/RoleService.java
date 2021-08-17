@@ -1,9 +1,9 @@
 package com.qcz.qmplatform.module.system.service;
 
 import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.system.domain.Role;
 import com.qcz.qmplatform.module.system.domain.RolePermission;
@@ -36,7 +36,7 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
     }
 
     public boolean addRoleOne(Role role) {
-        role.setRoleId(IdUtil.randomUUID());
+        role.setRoleId(IdUtils.simpleUUID());
         return save(role);
     }
 

@@ -1,9 +1,9 @@
 package com.qcz.qmplatform.module.operation.service;
 
 import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.operation.domain.DictAttr;
 import com.qcz.qmplatform.module.operation.mapper.DictAttrMapper;
@@ -30,7 +30,7 @@ public class DictAttrService extends ServiceImpl<DictAttrMapper, DictAttr> {
     }
 
     public boolean addDictAttrOne(DictAttr dictAttr) {
-        dictAttr.setAttrId(IdUtil.randomUUID());
+        dictAttr.setAttrId(IdUtils.simpleUUID());
         return save(dictAttr);
     }
 

@@ -1,9 +1,9 @@
 package com.qcz.qmplatform.module.system.service;
 
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
+import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
 import com.qcz.qmplatform.module.system.domain.Organization;
@@ -42,7 +42,7 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
     }
 
     public boolean addOrgOne(Organization org) {
-        org.setOrganizationId(IdUtil.randomUUID());
+        org.setOrganizationId(IdUtils.simpleUUID());
         org.setCreateTime(DateUtils.getCurrTimestamp());
         return save(org);
     }

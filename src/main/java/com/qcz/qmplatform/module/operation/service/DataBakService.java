@@ -2,7 +2,6 @@ package com.qcz.qmplatform.module.operation.service;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RuntimeUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -14,6 +13,7 @@ import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.CronUtils;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
+import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.common.utils.SystemUtils;
@@ -174,7 +174,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         LOGGER.debug(RuntimeUtil.execForStr(dumpCmd));
 
         DataBak dataBak = new DataBak();
-        dataBak.setBakId(IdUtil.randomUUID());
+        dataBak.setBakId(IdUtils.simpleUUID());
         dataBak.setBakName(bakName);
         dataBak.setBakPath(bakFilePath);
         dataBak.setCreateTime(DateUtils.timestamp(date));

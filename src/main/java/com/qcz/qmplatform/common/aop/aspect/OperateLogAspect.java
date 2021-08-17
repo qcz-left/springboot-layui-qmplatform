@@ -1,12 +1,12 @@
 package com.qcz.qmplatform.common.aop.aspect;
 
-import cn.hutool.core.util.IdUtil;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
@@ -147,7 +147,7 @@ public class OperateLogAspect {
         }
         OperateLog log = new OperateLog();
         log.setOperateModule(moduleName);
-        log.setLogId(IdUtil.randomUUID());
+        log.setLogId(IdUtils.simpleUUID());
         if (currentUser != null) {
             log.setOperateUserId(currentUser.getId());
             log.setOperateUserName(currentUser.getUsername());
