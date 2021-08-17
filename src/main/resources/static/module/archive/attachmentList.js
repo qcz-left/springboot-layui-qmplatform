@@ -60,11 +60,10 @@ layui.use(['table', 'form', 'element'], function () {
         let data = obj.data;
         switch (obj.event) {
             case 'preview':
-                console.log(data)
                 window.open(ctx + "/toPDF?filePath=" + data.attachmentUrl);
                 break;
             case 'download':
-                location.href = ctx + '/archive/attachment/downloadFile?filePath=' + data.attachmentUrl;
+                location.href = ctx + '/downloadFile?filePath=' + data.attachmentUrl;
                 break;
             case 'delete':
                 remove([data.attachmentId], [data.attachmentName]);
