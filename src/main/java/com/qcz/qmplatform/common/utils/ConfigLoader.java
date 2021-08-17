@@ -39,7 +39,7 @@ public class ConfigLoader {
     }
 
     private static Integer getIntConfig(String group, String propertyName, Integer defaultValue) {
-        return configFile.getInt(propertyName, group , defaultValue);
+        return configFile.getInt(propertyName, group, defaultValue);
     }
 
     private static Integer getIntConfig(String propertyName, Integer defaultValue) {
@@ -164,5 +164,19 @@ public class ConfigLoader {
      */
     public static List<String> getPreviewedSuffix() {
         return CollectionUtil.newArrayList(getStringConfig("PreviewedSuffix", "txt,pdf,doc,docx,xls,xlsx,png,jpg,jpeg").split(","));
+    }
+
+    /**
+     * 获取雪花算法机房ID
+     */
+    public static long getSnowflakeDataCenterId() {
+        return getLongConfig("SnowflakeDataCenterId", 1L);
+    }
+
+    /**
+     * 获取雪花算法机器ID
+     */
+    public static long getSnowflakeWorkerId() {
+        return getLongConfig("SnowflakeWorkerId", 1L);
     }
 }
