@@ -54,7 +54,7 @@ public class LoginRecordController extends BaseController {
         return PREFIX + "loginRecordList";
     }
 
-    @GetMapping("/getLoginRecordList")
+    @PostMapping("/getLoginRecordList")
     @ResponseBody
     public ResponseResult<PageResult> getLoginRecordList(PageRequest pageRequest) {
         PageResultHelper.startPage(pageRequest);

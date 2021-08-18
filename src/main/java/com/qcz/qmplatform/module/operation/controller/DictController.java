@@ -59,7 +59,7 @@ public class DictController extends BaseController {
      * @param pageRequest 分页请求
      * @param dict        请求参数
      */
-    @GetMapping("/getDictList")
+    @PostMapping("/getDictList")
     @ResponseBody
     public ResponseResult<PageResult> getDictList(PageRequest pageRequest, Dict dict) {
         PageResultHelper.startPage(pageRequest);

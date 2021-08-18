@@ -71,7 +71,7 @@ public class AttachmentController extends BaseController {
         return PREFIX + "attachmentDetail";
     }
 
-    @GetMapping("/getAttachmentList")
+    @PostMapping("/getAttachmentList")
     @ResponseBody
     public ResponseResult<PageResult> getAttachmentList(PageRequest pageRequest, Attachment attachment) {
         QueryWrapper<Attachment> queryWrapper = new QueryWrapper<>();

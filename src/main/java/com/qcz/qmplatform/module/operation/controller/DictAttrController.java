@@ -61,7 +61,7 @@ public class DictAttrController extends BaseController {
      *
      * @param pageRequest 分页请求
      */
-    @GetMapping("/getDictAttrList/{dictId}")
+    @PostMapping("/getDictAttrList/{dictId}")
     @ResponseBody
     public ResponseResult<PageResult> getDictList(PageRequest pageRequest, @PathVariable String dictId) {
         PageResultHelper.startPage(pageRequest);
