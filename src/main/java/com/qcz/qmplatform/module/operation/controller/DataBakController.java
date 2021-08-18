@@ -69,7 +69,7 @@ public class DataBakController extends BaseController {
         return PREFIX + "dataBakStrategy";
     }
 
-    @GetMapping("/getDataBakList")
+    @PostMapping("/getDataBakList")
     @ResponseBody
     public ResponseResult<PageResult> getDataBakList(PageRequest pageRequest, DataBakVO dataBakVO) {
         PageResultHelper.startPage(pageRequest);
