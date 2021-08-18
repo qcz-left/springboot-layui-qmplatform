@@ -2,7 +2,6 @@ package com.qcz.qmplatform.module.operation.service;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
-import cn.hutool.core.util.RuntimeUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -14,6 +13,7 @@ import com.qcz.qmplatform.common.utils.CronUtils;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
+import com.qcz.qmplatform.common.utils.ShellTools;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.common.utils.SystemUtils;
@@ -169,9 +169,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         String bakName = database + DateUtils.format(date, DatePattern.PURE_DATETIME_PATTERN) + ".dump";
         String bakFilePath = dataBakPath + bakName;
 
-        String dumpCmd = StringUtils.format("pg_dump -U postgres -Fc {} -f {}", database, bakFilePath);
-        LOGGER.debug("dump exe shell: " + dumpCmd);
-        LOGGER.debug(RuntimeUtil.execForStr(dumpCmd));
+        ShellTools.databaseDump(database, bakFilePath);
 
         DataBak dataBak = new DataBak();
         dataBak.setBakId(IdUtils.simpleUUID());
@@ -204,11 +202,9 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         if (!new File(bakPath).exists()) {
             return ResponseResult.error("备份文件不存在！");
         }
-        String recoverSh = FileUtils.WEB_PATH + "/shell/db_bak_recover.sh";
-        if (!new File(recoverSh).exists()) {
-            return ResponseResult.error("备份恢复所需脚本文件缺失！");
-        }
-        LOGGER.debug(RuntimeUtil.execForStr(StringUtils.format("{} {} {}", recoverSh, bakPath, database)));
+
+        ShellTools.databaseRecover(database, bakPath);
+
         // 退出重新登录
         ResponseResult<?> responseResult = new ResponseResult<>(ResponseCode.DATA_BAK_RECOVER, null, null);
         SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), SubjectUtils.getSessionId());
