@@ -118,36 +118,6 @@ function sortEventListen(layuiTable, layFilter, tableId) {
     });
 }
 
-/*
- * 打开表单
- * title 标题
- * url 请求路径
- * isTop 是否在顶层的基础上打开图层，默认false
- */
-function openCommonForm(table, tableId, title, url, area, isTop) {
-    isTop = isTop != undefined ? isTop : false;
-    var options = {
-        type: 2,
-        title: title,
-        content: url,
-        area: area ? area : ["90%", "90%"],
-        skin: 'layui-layer-molv',
-        shade: 0.3,
-        maxmin: true,
-        resize: true,
-        moveOut: true,
-        zIndex: layer.zIndex, //多窗口模式，层叠打开
-        end: function () {
-            table.reload(tableId);
-        }
-    };
-    if (isTop) {
-        top.layer.open(options);
-    } else {
-        layer.open(options);
-    }
-}
-
 function toUrlParam(param, key) {
     let paramStr = "";
     if (param instanceof String || param instanceof Number || param instanceof Boolean) {

@@ -66,12 +66,49 @@ layui.use(['table'], function () {
 
     function open(id) {
         id = id || '';
-        top.layer.open({
-            type: 2,
+        LayerUtil.openLayer({
             title: id ? "编辑角色" : "添加角色",
             content: ctx + "/role/roleDetailPage?id=" + id,
-            area: ['30%', '80%']
-        });
+            area: ['30%', '80%'],
+            loaded: function(iframeWin) {
+                let form = iframeWin.layui.form;
+                // 表单数据校验
+                form.verify({
+                    roleSign: function (value) {
+                        let valid;
+                        CommonUtil.getSync(ctx + '/role/validateRoleSign', {
+                            roleSign: value,
+                            roleId: id
+                        }, function (result) {
+                            valid = result.ok;
+                        });
+                        if (!valid) {
+                            return '角色标识已存在，请更换一个！';
+                        }
+                    }
+                });
+
+                if (id) {
+                    CommonUtil.getSync(ctx + '/role/getRoleOne/' + id, {}, function (result) {
+                        form.val('role-form', result.data);
+                    })
+                }
+            },
+            submit: function (iframeWin) {
+                let form = iframeWin.layui.form;
+                if (!form.doVerify(iframeWin.$("form"))) {
+                    return false;
+                }
+                top.layer.load(2);
+                CommonUtil.postOrPut(id, ctx + '/role/' + (id ? 'updateRole' : 'addRole'), form.val('role-form'), function (result) {
+                    top.layer.closeAll();
+                    LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
+                        tableReload();
+                    })
+                });
+                return false;
+            }
+        }, true);
     }
 
     function remove(ids, names) {

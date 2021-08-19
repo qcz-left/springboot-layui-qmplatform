@@ -63,6 +63,85 @@ layui.define('layer', function(exports){
     $.extend(true, that.config.verify, settings);
     return that;
   };
+
+  Form.prototype.doVerify = function($form) {
+    var stop = null //验证不通过状态
+        ,verify = form.config.verify //验证规则
+        ,DANGER = 'layui-form-danger' //警示样式
+        ,verifyElem = $form.find('*[lay-verify]') //获取需要校验的元素
+
+    //开始校验
+    layui.each(verifyElem, function(_, item){
+      var othis = $(this)
+          ,vers = othis.attr('lay-verify').split('|')
+          ,verType = othis.attr('lay-verType') //提示方式
+          ,value = othis.val();
+
+      othis.removeClass(DANGER); //移除警示样式
+
+      //遍历元素绑定的验证规则
+      layui.each(vers, function(_, thisVer){
+        var isTrue //是否命中校验
+            ,errorText = '' //错误提示文本
+            ,isFn = typeof verify[thisVer] === 'function';
+
+        //匹配验证规则
+        if(verify[thisVer]){
+          var isTrue = isFn ? errorText = verify[thisVer](value, item) : !verify[thisVer][0].test(value)
+              //是否属于美化替换后的表单元素
+              ,isForm2Elem = item.tagName.toLowerCase() === 'select' || /^checkbox|radio$/.test(item.type);
+
+          errorText = errorText || verify[thisVer][1];
+
+          if(thisVer === 'required'){
+            errorText = othis.attr('lay-reqText') || errorText;
+          }
+
+          //如果是必填项或者非空命中校验，则阻止提交，弹出提示
+          if(isTrue){
+            //提示层风格
+            if(verType === 'tips'){
+              layer.tips(errorText, function(){
+                if(typeof othis.attr('lay-ignore') !== 'string'){
+                  if(isForm2Elem){
+                    return othis.next();
+                  }
+                }
+                return othis;
+              }(), {tips: 1});
+            } else if(verType === 'alert') {
+              layer.alert(errorText, {title: '提示', shadeClose: true});
+            }
+            //如果返回的为字符或数字，则自动弹出默认提示框；否则由 verify 方法中处理提示
+            else if(/\bstring|number\b/.test(typeof errorText)){
+              layer.msg(errorText, {icon: 5, shift: 6});
+            }
+
+            //非移动设备自动定位焦点
+            if(!device.mobile){
+              setTimeout(function(){
+                (isForm2Elem ? othis.next().find('input') : item).focus();
+              }, 7);
+            } else { //移动设备定位
+              $dom.scrollTop(function(){
+                try {
+                  return (isForm2Elem ? othis.next() : othis).offset().top - 15
+                } catch(e){
+                  return 0;
+                }
+              }());
+            }
+
+            othis.addClass(DANGER);
+            return stop = true;
+          }
+        }
+      });
+      if(stop) return stop;
+    });
+
+    return !stop;
+  };
   
   //表单事件
   Form.prototype.on = function(events, callback){

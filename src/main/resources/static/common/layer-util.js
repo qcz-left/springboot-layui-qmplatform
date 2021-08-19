@@ -27,5 +27,45 @@ const LayerUtil = {
             }
             top.layer.error(res.msg || failMsg || Msg.OPERATE_FAILURE)
         }
+    },
+
+    /**
+     * 打开一个弹窗
+     * 1、loaded和success函数如果同时存在，只生效loaded
+     * 2、submit和yes函数如果同时存在，只生效submit
+     * 3、如果设置了submit函数，按钮显示默认为['保存', '取消']
+     * 4、默认宽高50%
+     * 5、layer默认type类型为2
+     * @param options 原生layer参数
+     * @param isTop 是否顶层
+     */
+    openLayer: function (options, isTop) {
+        isTop = isTop !== undefined ? isTop : false;
+        if (options.loaded && typeof options.loaded == "function") {
+            options.success = function (layerDom, index) {
+                let iframeWin = layerDom.find('iframe')[0].contentWindow;
+                options.loaded(iframeWin);
+            }
+        }
+        if (options.submit && typeof options.submit == "function") {
+            if (!options.btn) {
+                options.btn = ['保存', '取消'];
+            }
+            options.yes = function (index, layerDom) {
+                let iframeWin = layerDom.find('iframe')[0].contentWindow;
+                options.submit(iframeWin);
+            }
+        }
+        if (!options.area) {
+            options.area = ['50%', '50%'];
+        }
+        if (!options.type) {
+            options.type = 2;
+        }
+        if (isTop) {
+            top.layer.open(options);
+        } else {
+            layer.open(options);
+        }
     }
 };
