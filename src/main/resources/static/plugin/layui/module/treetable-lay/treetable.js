@@ -14,8 +14,13 @@ layui.define(['layer', 'table'], function (exports) {
             if (param.data) {
                 treetable.init(param, param.data);
             } else {
-                $.getJSON(param.url, param.where, function (res) {
-                    treetable.init(param, res.data);
+                $.ajax({
+                    url: param.url,
+                    data: param.where,
+                    type: param.method || 'post',
+                    success: function (res) {
+                        treetable.init(param, res.data);
+                    }
                 });
             }
         },
