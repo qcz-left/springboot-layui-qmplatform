@@ -32,6 +32,7 @@
         treetable.render({
             elem: '#' + tableId,
             url: ctx + '/organization/getOrgList',
+            method: 'post',
             where: {
                 parentId: nodeId
             },

@@ -7,6 +7,7 @@ layui.use(['treetable', 'table'], function () {
         treetable.render({
             elem: '#' + tableId,
             url: ctx + '/menu/getMenuList',
+            method: 'post',
             height: 'full-30',
             treeColIndex: 1,	//树形图标显示在第几列
             treeSpid: '',		//最上级的父级id
