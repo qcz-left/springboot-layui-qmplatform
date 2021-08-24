@@ -6,6 +6,7 @@
     <#list previewedSuffix as suf>
         previewedSuffix.push('${suf!}');
     </#list>
+    let enableJodConverter = ${enableJodConverter?c};
 </script>
 <script type="text/javascript" src="${ctx}/static/module/archive/attachmentList.js"></script>
 <body>
@@ -47,7 +48,7 @@
             </div>
         </script>
         <script type="text/html" id="operator">
-            {{# if (previewedSuffix.indexOf(CommonUtil.getFileSuf(d.attachmentName)) > -1) { }}
+            {{# if (previewedSuffix.indexOf(CommonUtil.getFileSuf(d.attachmentName)) > -1 && enableJodConverter) { }}
                 <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="preview"><i class="layui-icon layui-icon-read"></i>预览</button>
             {{# } }}
             <button class="layui-btn layui-btn-sm" lay-event="download"><i class="layui-icon layui-icon-download-circle"></i>下载</button>

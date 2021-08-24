@@ -18,13 +18,13 @@ import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
+import com.qcz.qmplatform.common.utils.YmlPropertiesUtils;
 import com.qcz.qmplatform.module.archive.domain.Attachment;
 import com.qcz.qmplatform.module.archive.service.AttachmentService;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.domain.User;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,18 +56,16 @@ public class AttachmentController extends BaseController {
     @Autowired
     private AttachmentService attachmentService;
 
-    @Value("${spring.servlet.multipart.max-file-size}")
-    private String maxFileSize;
-
     @GetMapping("/attachmentListPage")
     public String attachmentListPage(Map<String, Object> root) {
         root.put("previewedSuffix", ConfigLoader.getPreviewedSuffix());
+        root.put("enableJodConverter", YmlPropertiesUtils.enableJodConverter());
         return PREFIX + "attachmentList";
     }
 
     @GetMapping("/uploadPage")
     public String uploadPage(Map<String, Object> root) {
-        root.put("maxFileSize", maxFileSize);
+        root.put("maxFileSize", YmlPropertiesUtils.getMaxFileSize());
         return PREFIX + "attachmentDetail";
     }
 

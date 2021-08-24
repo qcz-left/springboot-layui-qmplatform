@@ -1,22 +1,16 @@
 package com.qcz.qmplatform.config;
 
+import com.qcz.qmplatform.common.utils.YmlPropertiesUtils;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SSLConfig {
-
-    @Value("${server.port}")
-    private int sslPort;
-
-    @Value("${server.http-port}")
-    private int httpPort;
 
     @Bean
     public TomcatServletWebServerFactory servletContainerFactory() {
@@ -43,10 +37,10 @@ public class SSLConfig {
         connector.setSecure(false);
 
         //设置监听请求的端口号，这个端口不能其他已经在使用的端口重复，否则会报错
-        connector.setPort(httpPort);
+        connector.setPort(YmlPropertiesUtils.getServerHttpPort());
 
         //重定向端口号(非SSL到SSL)
-        connector.setRedirectPort(sslPort);
+        connector.setRedirectPort(YmlPropertiesUtils.getServerPort());
 
         tomcat.addAdditionalTomcatConnectors(connector);
         return tomcat;

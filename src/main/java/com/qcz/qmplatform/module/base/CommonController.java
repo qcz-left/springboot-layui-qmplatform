@@ -17,6 +17,7 @@ import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
+import com.qcz.qmplatform.common.utils.YmlPropertiesUtils;
 import org.apache.poi.ss.usermodel.Font;
 import org.jodconverter.core.DocumentConverter;
 import org.slf4j.Logger;
@@ -190,6 +191,9 @@ public class CommonController extends BaseController {
     @GetMapping("/toPDF")
     @ResponseBody
     public void toPDF(String filePath, HttpServletResponse response) {
+        if (!YmlPropertiesUtils.enableJodConverter()) {
+            throw new CommonException("未开启OpenOffice服务");
+        }
         File file = new File(FileUtils.getRealFilePath(filePath));
         String type = FileTypeUtil.getType(file);
         List<String> previewedSuffix = ConfigLoader.getPreviewedSuffix();

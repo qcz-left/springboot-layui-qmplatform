@@ -17,6 +17,7 @@ import com.qcz.qmplatform.common.utils.ShellTools;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.common.utils.SystemUtils;
+import com.qcz.qmplatform.common.utils.YmlPropertiesUtils;
 import com.qcz.qmplatform.module.operation.domain.DataBak;
 import com.qcz.qmplatform.module.operation.mapper.DataBakMapper;
 import com.qcz.qmplatform.module.operation.vo.DataBakStrategyVO;
@@ -33,7 +34,6 @@ import com.qcz.qmplatform.module.system.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -62,8 +62,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
 
     private static final String SCHEDULE_ID = "dataBak";
 
-    @Value("${custom.database}")
-    private String database;
+    private String database = YmlPropertiesUtils.getDatabase();
 
     @Autowired
     private IniService iniService;
