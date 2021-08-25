@@ -115,7 +115,7 @@
 
         let permissionTypeListen = function (type) {
             let $trigger = $("#display,#icon,#linkUrl");
-            if (type === 1) {
+            if (type == '1') {
                 $trigger.removeClass("layui-hide");
             } else {
                 $trigger.addClass("layui-hide");
