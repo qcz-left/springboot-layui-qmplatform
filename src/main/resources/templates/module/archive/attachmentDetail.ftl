@@ -32,10 +32,11 @@
     </form>
 </div>
 <script type="text/javascript">
-    layui.use(['form', 'layer', 'upload'], function () {
+    layui.use(['form', 'upload', 'element'], function () {
         let form = layui.form;
         let layer = layui.layer;
         let upload = layui.upload;
+        let element = layui.element;
         let maxFileSize = "${maxFileSize!'1MB'}";
         maxFileSize = maxFileSize.substring(0, maxFileSize.length - 2);
         upload.render({
@@ -45,11 +46,29 @@
             auto: false,
             bindAction: '#upload',
             size: maxFileSize * 1024,// KB
-            before: function (obj) {
+            before: function () {
                 this.data = form.val('attachment-form');
+                layer.open({
+                    type: 1,
+                    title: '上传进度',
+                    area: ['80%', '30%'],
+                    content:    '<div style="width: 90%; text-align: center" class="vertical-horizontal-center">' +
+                                '   <div class="layui-progress layui-progress-big" lay-showpercent="yes" lay-filter="upload">' +
+                                '       <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>' +
+                                '   </div>' +
+                                '   <div><span class="upload-loaded"></span> / <span class="upload-total"></span></div>' +
+                                '</div>'
+                });
+            },
+            progress: function (n, elem, res) {
+                let percent = n + '%'; //获取进度百分比
+                element.progress('upload', percent); //可配合 layui 进度条元素使用
+                $(".upload-loaded").text(CommonUtil.convertByte(res.loaded));
+                $(".upload-total").text(CommonUtil.convertByte(res.total));
+                // 重新渲染
+                element.render(null, 'upload');
             },
             done: function (result) {
-                layer.load(2);
                 LayerUtil.respMsg(result, '上传成功', '上传失败', function () {
                     top.layer.closeAll();
                     reloadParentTable();
