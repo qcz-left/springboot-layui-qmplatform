@@ -23,8 +23,10 @@ public class YmlPropertiesUtils {
         Properties appProp = yamlPropertiesFactoryBean.getObject();
         if (appProp != null) {
             String activeProfiles = appProp.getProperty("spring.profiles.active");
-            ClassPathResource activeResources = new ClassPathResource("application-" + activeProfiles + ".yml");
-            yamlPropertiesFactoryBean.setResources(appResources, activeResources);
+            if (StringUtils.isNotBlank(activeProfiles)) {
+                ClassPathResource activeResources = new ClassPathResource("application-" + activeProfiles + ".yml");
+                yamlPropertiesFactoryBean.setResources(appResources, activeResources);
+            }
         }
         ymlProp = yamlPropertiesFactoryBean.getObject();
     }
