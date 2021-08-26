@@ -81,7 +81,7 @@
         });
 
         // 默认选中侧边栏第一个菜单
-        $(".layui-side .layui-nav-child a[lay-id]:first").click();
+        $(".layui-side a[lay-id]:first").click();
 
         // 上传头像
         $("#userImg").click(function () {
