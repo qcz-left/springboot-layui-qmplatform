@@ -18,7 +18,7 @@ layui.use(['table', 'form', 'element'], function () {
         cols: [[
             {type: 'checkbox'},
             {type: 'numbers'},
-            {field: 'attachmentName', title: '文件名称', width: '10%', sort: true},
+            {field: 'attachmentName', title: '文件名称', width: '20%', sort: true},
             {field: 'uploadUserName', title: '上传人', width: '10%', sort: true},
             {
                 field: 'uploadTime', title: '上传时间', width: '15%', sort: true, templet: function (row) {
@@ -26,7 +26,7 @@ layui.use(['table', 'form', 'element'], function () {
                 }
             },
             {
-                field: 'size', title: '文件大小', templet: function (row) {
+                field: 'size', title: '文件大小', width: '5%', templet: function (row) {
                     return CommonUtil.convertByte(row.size);
                 }
             },
