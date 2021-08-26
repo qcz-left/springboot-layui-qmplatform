@@ -18,15 +18,15 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">备注</label>
-            <div class="layui-input-block">
-                <textarea class="layui-textarea" id="remark" name="remark"></textarea>
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label class="layui-form-label">排序</label>
             <div class="layui-input-block">
                 <input type="number" name="sort" maxlength="5" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" id="remark" name="remark"></textarea>
             </div>
         </div>
         <div class="detail-operator">

@@ -79,7 +79,7 @@ layui.use(['table', 'form'], function () {
             type: 2,
             title: id ? "编辑字典" : "添加字典",
             content: ctx + "/operation/dict/dictDetailPage?id=" + id,
-            area: ['30%', '40%']
+            area: ['30%', '50%']
         });
     }
 
