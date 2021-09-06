@@ -159,7 +159,7 @@
             },
             data: []
         });
-        CommonUtil.getAjax(ctx + '/role/getRoleList', {
+        CommonUtil.postAjax(ctx + '/role/getRoleList', {
             limit: 9999
         }, function (result) {
             roleIdsSelect.update({
