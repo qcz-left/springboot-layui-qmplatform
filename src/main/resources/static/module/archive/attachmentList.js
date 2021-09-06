@@ -26,7 +26,7 @@ layui.use(['table', 'form', 'element'], function () {
                 }
             },
             {
-                field: 'size', title: '文件大小', width: '5%', templet: function (row) {
+                field: 'size', title: '文件大小', width: '10%', templet: function (row) {
                     return CommonUtil.convertByte(row.size);
                 }
             },
