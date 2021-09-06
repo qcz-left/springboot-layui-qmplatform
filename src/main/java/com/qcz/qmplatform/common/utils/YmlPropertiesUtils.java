@@ -10,7 +10,7 @@ import java.util.Properties;
  */
 public class YmlPropertiesUtils {
 
-    private static Properties ymlProp;
+    private static final Properties YML_PROP;
 
     private YmlPropertiesUtils() {
 
@@ -28,42 +28,42 @@ public class YmlPropertiesUtils {
                 yamlPropertiesFactoryBean.setResources(appResources, activeResources);
             }
         }
-        ymlProp = yamlPropertiesFactoryBean.getObject();
+        YML_PROP = yamlPropertiesFactoryBean.getObject();
     }
 
     /**
      * 是否开启文件预览
      */
     public static boolean enableJodConverter() {
-        return Boolean.valueOf(ymlProp.getProperty("jodconverter.local.enabled"));
+        return Boolean.parseBoolean(YML_PROP.getProperty("jodconverter.local.enabled"));
     }
 
     /**
      * 服务端口（https）
      */
     public static int getServerPort() {
-        return Integer.valueOf(ymlProp.getProperty("server.port"));
+        return Integer.parseInt(YML_PROP.getProperty("server.port"));
     }
 
     /**
      * http服务端口
      */
     public static int getServerHttpPort() {
-        return Integer.valueOf(ymlProp.getProperty("server.http-port"));
+        return Integer.parseInt(YML_PROP.getProperty("server.http-port"));
     }
 
     /**
      * 数据库名称
      */
     public static String getDatabase() {
-        return ymlProp.getProperty("custom.database");
+        return YML_PROP.getProperty("custom.database");
     }
 
     /**
      * 文件上传最大长度
      */
     public static String getMaxFileSize() {
-        return ymlProp.getProperty("spring.servlet.multipart.max-file-size");
+        return YML_PROP.getProperty("spring.servlet.multipart.max-file-size");
     }
 
 }
