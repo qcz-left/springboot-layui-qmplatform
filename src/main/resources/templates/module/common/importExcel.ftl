@@ -42,11 +42,17 @@
             },
             done: function (result) {
                 top.layer.closeAll();
-                getFrameWindow().reloadEvent();
-
+                let reloadEvent = getFrameWindow().reloadEvent;
+                let hasReloadEvent = false;
+                if (reloadEvent && typeof reloadEvent === "function") {
+                    hasReloadEvent = true;
+                }
                 let importResult = result.data;
                 let failCount = importResult.failCount;
                 if (failCount === 0) {
+                    if (hasReloadEvent) {
+                        getFrameWindow().reloadEvent();
+                    }
                     top.layer.success("导入成功");
                 } else {
                     // 有导入失败的记录
@@ -69,6 +75,9 @@
                                     {field: 'reason', title: '失败原因'}
                                 ]]
                             });
+                            if (hasReloadEvent) {
+                                getFrameWindow().reloadEvent();
+                            }
                         }
                     });
                 }
@@ -81,6 +90,8 @@
         $('#downloadTemplate').click(function () {
             parent.downloadTemplate();
         });
+
+
     });
 </script>
 </body>
