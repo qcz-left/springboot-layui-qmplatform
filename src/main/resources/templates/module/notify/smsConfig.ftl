@@ -81,21 +81,20 @@
         });
 
         // 短信数据加载
-        let smsProviderSelect = xmSelect.render({
+        xmSelect.render({
             el: '#smsProvider',
             name: 'smsProvider',
             radio: true,
             clickClose: true,
             model: {icon: 'hidden'},
-            data: []
-        });
-        CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
-            code: 'sms-provider'
-        }, function (result) {
-            smsProviderSelect.update({
-                initValue: [detail.smsProvider],
-                data: result.data
-            })
+            data: [{
+                name: '腾讯云',
+                value: '1'
+            }, {
+                name: '阿里云',
+                value: '2'
+            }],
+            initValue: [detail.smsProvider]
         });
 
         // 短信模板参数

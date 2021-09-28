@@ -113,7 +113,6 @@ INSERT INTO "public"."sys_dict" VALUES ('04202f98-521d-4e1e-895a-a7c8156a7f3e', 
 INSERT INTO "public"."sys_dict" VALUES ('a500f79b-5e4c-4dfb-8dae-d837587847d9', '菜单是否显示', '菜单管理-是否显示', 4, 'display');
 INSERT INTO "public"."sys_dict" VALUES ('778223bf-498d-4625-a1f2-6cf9769291c8', '操作类型', '操作日志-操作类型', 5, 'operate-type');
 INSERT INTO "public"."sys_dict" VALUES ('8ab45963-e454-4aed-a76e-1104fa97e1fa', '操作状态', '操作日志-操作状态', 10, 'operate-status');
-INSERT INTO "public"."sys_dict" VALUES ('bdcef397-ddad-4656-8044-8d96774fd639', '短信提供商', '短信配置', 20, 'sms-provider');
 INSERT INTO "public"."sys_dict" VALUES ('3f9b60cf-dfcf-4e45-8cca-0925361bbed7', '系统消息类型', '', NULL, 'message-type');
 
 
@@ -152,8 +151,6 @@ INSERT INTO "public"."sys_dict_attr" VALUES ('修改', '4', '778223bf-498d-4625-
 INSERT INTO "public"."sys_dict_attr" VALUES ('删除', '5', '778223bf-498d-4625-a1f2-6cf9769291c8', '74a6164c-3c74-42ef-a016-06028fd2d615');
 INSERT INTO "public"."sys_dict_attr" VALUES ('成功', '1', '8ab45963-e454-4aed-a76e-1104fa97e1fa', '0e26086e-e284-4c60-9caf-d112ad9aa7da');
 INSERT INTO "public"."sys_dict_attr" VALUES ('失败', '0', '8ab45963-e454-4aed-a76e-1104fa97e1fa', 'fa408d46-918c-4663-84ad-aacf48cae2ff');
-INSERT INTO "public"."sys_dict_attr" VALUES ('腾讯云', '1', 'bdcef397-ddad-4656-8044-8d96774fd639', '14413e2e-fd8d-4e42-8c31-4a30d74dc539');
-INSERT INTO "public"."sys_dict_attr" VALUES ('阿里云', '2', 'bdcef397-ddad-4656-8044-8d96774fd639', '4f203b9b-1bb8-4cdd-849c-54208048856c');
 INSERT INTO "public"."sys_dict_attr" VALUES ('告警', '1', '3f9b60cf-dfcf-4e45-8cca-0925361bbed7', 'aa31a862-9fdf-4513-af09-b7ce4f9b58f6');
 INSERT INTO "public"."sys_dict_attr" VALUES ('通知提醒', '2', '3f9b60cf-dfcf-4e45-8cca-0925361bbed7', 'fbe26946-463c-4d45-960e-f28f105788a2');
 
