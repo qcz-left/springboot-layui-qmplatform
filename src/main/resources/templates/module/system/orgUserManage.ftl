@@ -135,7 +135,7 @@
                         type: 2,
                         title: "导入",
                         content: ctx + "/importExcelPage?act=" + encodeURIComponent("/user/importExcel"),
-                        area: ['35%', '45%']
+                        area: ['45%', '55%']
                     });
                     break;
             }
