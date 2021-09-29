@@ -98,6 +98,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
         queryWarpper.eq("type", message.getType());
         queryWarpper.eq("read", message.getRead());
         queryWarpper.eq("instance", message.getInstance());
+        queryWarpper.eq("receiver", message.getReceiver());
 
         Message tmpMessage = getOne(queryWarpper);
         if (tmpMessage == null) {
