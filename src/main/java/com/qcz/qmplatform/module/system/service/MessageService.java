@@ -127,6 +127,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
             receiverIds = CollectionUtil.getFieldValues(userService.queryAllAdmin(), "id", String.class);
         }
         for (String receiverId : receiverIds) {
+            message.setMessageId(IdUtils.simpleUUID());
             message.setReceiver(receiverId);
             saveOne(message);
         }
