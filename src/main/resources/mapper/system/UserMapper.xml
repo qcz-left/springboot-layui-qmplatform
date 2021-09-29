@@ -96,6 +96,6 @@
             left join sys_user_role sur on su.id = sur.user_id
             left join sys_role sr on sur.role_id = sr.role_id
         where
-            sr.role_sign = #{roleSign}#
+            sr.role_sign = #{roleSign}
     </select>
 </mapper>
