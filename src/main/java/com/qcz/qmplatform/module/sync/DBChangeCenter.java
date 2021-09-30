@@ -84,4 +84,8 @@ public class DBChangeCenter implements Observed, Runnable {
 
     }
 
+    static {
+        DBChangeCenter.getInstance().addObserver(new DBChangeWatcher());
+    }
+
 }

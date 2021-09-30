@@ -55,7 +55,4 @@ public class DBChangeWatcher implements Observable {
         }
     }
 
-    static {
-        DBChangeCenter.getInstance().addObserver(new DBChangeWatcher());
-    }
 }
