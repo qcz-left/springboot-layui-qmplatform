@@ -26,7 +26,7 @@
 哪有啥安装教程，clone下来导入maven工程就开干，记得先调好自己的数据库哈，sql文件也有了
 
 ## 文件目录说明
-shell：存放需要执行Linux shell脚本的文件夹<br/>	
+shell：需要执行Linux shell脚本的文件夹，默认存放于与执行jar的同级目录下<br/>	
 &emsp;db_bak_recover.sh   数据库恢复备份脚本<br/>	
 sql：数据库初始化脚本文件
 
