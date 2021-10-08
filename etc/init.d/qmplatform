@@ -1,0 +1,47 @@
+#!/bin/bash
+export LANG=en_US.UTF-8
+start() {
+    /opt/jdk/bin/java -Xmx256m -Xms256m -DAPPID=QmplatformApplication -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -jar /opt/web/qmplatform.jar --xjar.keyfile=/opt/web/security/qmplatform.key > /dev/null 2>&1 &
+    isrunning=`ps aux | grep QmplatformApplication | grep -v grep | grep -v vim | grep -v vi | grep -v service | grep -v etc | awk '{print $2}'`
+    echo "qmplatform is starting: $isrunning"
+}
+
+stop() {
+    isrunning=`ps aux | grep QmplatformApplication | grep -v grep | grep -v vim | grep -v vi | grep -v service | grep -v etc | awk '{print $2}'`
+    kill -9 $isrunning
+    echo "qmplatform has stopped!"
+}
+
+status() {
+    isrunning=`ps aux | grep QmplatformApplication | grep -v grep | grep -v vim | grep -v vi | grep -v service | grep -v etc | awk '{print $2}'`
+    if [ ! -z "$isrunning" ];then
+      echo "qmplatform is starting: $isrunning"
+    else
+      echo "qmplatform has stopped!"
+    fi
+}
+
+restart() {
+    stop
+    sleep 3
+    start
+}
+
+case "$1" in
+    start)
+        $1
+        ;;
+    stop)
+        $1
+        ;;
+    status)
+        $1
+        ;;
+    restart)
+        $1
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart}"
+        exit 2
+esac
+exit $?

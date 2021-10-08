@@ -26,9 +26,17 @@
 哪有啥安装教程，clone下来导入maven工程就开干，记得先调好自己的数据库哈，sql文件也有了
 
 ## 文件目录说明
+/etc/init.d/qmplatform: 服务启动脚本（service qmplatform stop/start/status），直接放到/etc/init.d下使用<br/>
+security/qmplatform.key: 启动文件秘钥（打出来的jar是加了密的，具体加密方式在pom.xml里面，这个文件用来解密的）<br/>	
 shell：需要执行Linux shell脚本的文件夹，默认存放于与执行jar的同级目录下<br/>	
 &emsp;db_bak_recover.sh   数据库恢复备份脚本<br/>	
 sql：数据库初始化脚本文件
+
+## 注意事项
+1、目前只支持打jar包方式，使用java -jar启动，打成war放入Tomcat还有点问题，有兴趣的可自行研究<br/>
+2、除了/etc/init.d/qmplatform启动脚本文件，其它配置文件（shell、security、config、lib等）均和qmplatform.jar平级<br/>
+3、application-pro.yml没有打入jar内，需要将该文件放入一份与qmplatform.jar平级的地方
+
 
 ## 功能说明
 
