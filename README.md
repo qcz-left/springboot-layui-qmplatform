@@ -34,8 +34,9 @@ sql：数据库初始化脚本文件
 
 ## 注意事项
 1、目前只支持打jar包方式，使用java -jar启动，打成war放入Tomcat还有点问题，有兴趣的可自行研究<br/>
-2、除了/etc/init.d/qmplatform启动脚本文件，其它配置文件（shell、security、config、lib等）均和qmplatform.jar平级<br/>
-3、application-pro.yml没有打入jar内，需要将该文件放入一份与qmplatform.jar平级的地方
+2、部署方式采取单jar部署，不会包含所有依赖jar，这样是为了缩小每次部署的包体积大小，第一次部署，打成war包，提取war内WEB-INF/lib里面的jar包放入lib目录中<br/>
+3、除了/etc/init.d/qmplatform启动脚本文件，其它配置文件（shell、security、config、lib等）均和qmplatform.jar平级<br/>
+4、application-pro.yml没有打入jar内，需要将该文件放入一份与qmplatform.jar平级的地方
 ![部署目录截图](https://images.gitee.com/uploads/images/2021/1008/204507_e8f763fd_1324727.png "屏幕截图.png")
 
 ## 功能说明
