@@ -16,6 +16,7 @@ import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.YmlPropertiesUtils;
 import org.apache.poi.ss.usermodel.Font;
@@ -197,16 +198,20 @@ public class CommonController extends BaseController {
         File file = new File(FileUtils.getRealFilePath(filePath));
         String type = FileTypeUtil.getType(file);
         List<String> previewedSuffix = ConfigLoader.getPreviewedSuffix();
-        if (!previewedSuffix.contains(type) && !previewedSuffix.contains(FileUtils.getFileSuf(filePath))) {
+        String fileSuf = FileUtils.getFileSuf(filePath);
+        if (!previewedSuffix.contains(type) && !previewedSuffix.contains(fileSuf)) {
             throw new CommonException(StringUtils.format("该文件类型 .{} 暂不提供预览", type));
         }
-        File previewPDF = new File(ConfigLoader.getDeleteTmpPath() + "preview_" + file.getName() + ".pdf");
+        // 放到Linux环境上会出现中文文件名的文件无法找到的异常 URL seems to be an unsupported one.，这里先存放一份无中文的临时文件
+        File tmpSourceFile = new File(ConfigLoader.getDeleteTmpPath() + IdUtils.simpleUUID() + "." + fileSuf);
+        FileUtils.copy(file, tmpSourceFile, true);
+        File previewPDF = new File(ConfigLoader.getDeleteTmpPath() + "preview_" + tmpSourceFile.getName() + ".pdf");
         ServletOutputStream outputStream = null;
         InputStream inputStream = null;
         try {
             outputStream = response.getOutputStream();
             // 文件转化
-            converter.convert(file).to(previewPDF).execute();
+            converter.convert(tmpSourceFile);
             inputStream = new FileInputStream(previewPDF);
             IoUtil.copy(inputStream, outputStream);
         } catch (Exception e) {
@@ -215,6 +220,7 @@ public class CommonController extends BaseController {
             IoUtil.close(outputStream);
             IoUtil.close(inputStream);
             FileUtils.del(previewPDF);
+            FileUtils.del(tmpSourceFile);
         }
     }
 
