@@ -66,4 +66,11 @@ public class YmlPropertiesUtils {
         return YML_PROP.getProperty("spring.servlet.multipart.max-file-size");
     }
 
+    /**
+     * 是否开启http重定向到https
+     */
+    public static boolean redirectHttps() {
+        return Boolean.parseBoolean(YML_PROP.getProperty("custom.redirect-https", "false"));
+    }
+
 }

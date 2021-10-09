@@ -34,7 +34,7 @@ public class SSLConfig {
 
         //true： http使用http, https使用https;
         //false： http重定向到https;
-        connector.setSecure(false);
+        connector.setSecure(!YmlPropertiesUtils.redirectHttps());
 
         //设置监听请求的端口号，这个端口不能其他已经在使用的端口重复，否则会报错
         connector.setPort(YmlPropertiesUtils.getServerHttpPort());
