@@ -137,7 +137,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         }
         Map<String, String> bakStrategy = iniService.getBySec(SECTION);
         int limitDiskSpace = Integer.parseInt(bakStrategy.get(IniDefine.DataBak.LIMIT_DISK_SPACE));
-        if (file.getTotalSpace() < limitDiskSpace * 1024 * 2024 * 1024L) {
+        if (file.getTotalSpace() < limitDiskSpace * 1024 * 1024 * 1024L) {
             // 备份文件目录所在磁盘空间不足，产生告警信息
             String msg = "磁盘空间不足 " + limitDiskSpace + " G，不允许备份！";
             Message message = new Message();
