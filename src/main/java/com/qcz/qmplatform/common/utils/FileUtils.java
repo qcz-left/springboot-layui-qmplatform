@@ -177,9 +177,11 @@ public class FileUtils extends FileUtil {
     private static String getWebPath() {
         try {
             String webPath = new ClassPathResource("").getFile().getCanonicalPath();
+            // 本地运行
             if (webPath.contains("target\\classes")) {
                 return new File("../").getCanonicalPath();
             }
+            // 以jar包部署方式路径则为jar所在目录
             return webPath;
         } catch (IOException e) {
             LOGGER.error(null, e);

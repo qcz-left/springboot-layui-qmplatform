@@ -53,7 +53,8 @@ public class ConfigLoader {
     /**
      * 获取文件上传存放路径
      *
-     * @return 文件上传路径，默认 /opt/web/file/
+     * @return 文件上传路径，默认 FileUtils.WEB_PATH + /file/
+     * @see com.qcz.qmplatform.common.utils.FileUtils#WEB_PATH
      */
     public static String getUploadFilePath() {
         return getStringConfig("UploadFilePath", FileUtils.WEB_PATH + "/file/");
@@ -62,7 +63,8 @@ public class ConfigLoader {
     /**
      * 获取临时目录
      *
-     * @return 默认 /opt/web/tmp/
+     * @return 默认 FileUtils.WEB_PATH + /tmp/
+     * @see com.qcz.qmplatform.common.utils.FileUtils#WEB_PATH
      */
     public static String getTmpPath() {
         return getStringConfig("TmpPath", FileUtils.WEB_PATH + "/tmp/");
@@ -71,7 +73,8 @@ public class ConfigLoader {
     /**
      * 获取可删除的临时目录
      *
-     * @return 默认 /opt/web/tmp/delete/
+     * @return 默认 FileUtils.WEB_PATH + tmp/delete/
+     * @see com.qcz.qmplatform.common.utils.FileUtils#WEB_PATH
      */
     public static String getDeleteTmpPath() {
         return getStringConfig("DeleteTmpPath", getTmpPath() + "delete/");
@@ -80,7 +83,8 @@ public class ConfigLoader {
     /**
      * 获取备份目录
      *
-     * @return 备份目录，默认 /opt/web/bak/
+     * @return 备份目录，默认 FileUtils.WEB_PATH + /bak/
+     * @see com.qcz.qmplatform.common.utils.FileUtils#WEB_PATH
      */
     public static String getBakPath() {
         return getStringConfig("BakPath", FileUtils.WEB_PATH + "/bak/");
@@ -89,7 +93,8 @@ public class ConfigLoader {
     /**
      * 获取数据库备份存放路径
      *
-     * @return 数据库备份路径，默认 /opt/web/bak/database/
+     * @return 数据库备份路径，默认 FileUtils.WEB_PATH + /bak/database/
+     * @see com.qcz.qmplatform.common.utils.FileUtils#WEB_PATH
      */
     public static String getDataBakPath() {
         return getStringConfig("DataBakPath", getBakPath() + "database/");
