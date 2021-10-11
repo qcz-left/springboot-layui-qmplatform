@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
+    <define name="webPath" class="com.qcz.qmplatform.common.log.WebHomeDefiner"/>
     <!--设置系统日志目录 -->
-    <property name="APPDIR" value="/opt/web/logs"/>
+    <property name="APPDIR" value="${webPath}/logs"/>
     <!--文日志件名 -->
     <property name="LOG_NAME" value="qmplatform"/>
     <!-- 日志记录器，日期滚动记录 -->
