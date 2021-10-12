@@ -108,8 +108,8 @@ public class TencentCloudSmsNotifyService implements INotifyService {
             return res.getSendStatusSet()[0].getCode();
         } catch (TencentCloudSDKException e) {
             LOGGER.error("", e);
+            return e.getMessage();
         }
-        return null;
     }
 
     @Override

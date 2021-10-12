@@ -44,9 +44,8 @@ public class AliyunSmsNotifyService implements INotifyService {
             return body.getCode();
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
+            return e.getMessage();
         }
-
-        return null;
     }
 
     @Override
