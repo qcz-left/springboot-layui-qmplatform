@@ -157,9 +157,11 @@
 
         $("#btnCode").click(function () {
             let $this = $(this);
+            let loading = layer.load(2);
             CommonUtil.getAjax(ctx + '/user/noNeedLogin/getValidateCode', {
                 phone: $("#phone").val()
             }, function (result) {
+                layer.close(loading);
                 let data = result.data;
                 if (result.ok) {
                     layer.success('验证码已发送到手机：' + data.phone + '，请注意查收！');
