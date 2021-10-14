@@ -60,7 +60,7 @@ layui.use(['table', 'form', 'element'], function () {
         let data = obj.data;
         switch (obj.event) {
             case 'preview':
-                window.open(ctx + "/toPDF?filePath=" + data.attachmentUrl);
+                window.open(ctx + "/previewFile?filePath=" + data.attachmentUrl);
                 break;
             case 'download':
                 location.href = ctx + '/downloadFile?filePath=' + data.attachmentUrl;

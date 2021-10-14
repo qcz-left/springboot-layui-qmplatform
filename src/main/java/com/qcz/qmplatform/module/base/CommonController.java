@@ -188,9 +188,9 @@ public class CommonController extends BaseController {
      *
      * @param filePath 虚拟文件路径
      */
-    @GetMapping("/toPDF")
+    @GetMapping("/previewFile")
     @ResponseBody
-    public void toPDF(String filePath, HttpServletResponse response) {
+    public void previewFile(String filePath, HttpServletResponse response) {
         if (!YmlPropertiesUtils.enableJodConverter()) {
             throw new CommonException("未开启OpenOffice服务");
         }
@@ -210,6 +210,7 @@ public class CommonController extends BaseController {
             inputStream = new FileInputStream(previewPDF);
             IoUtil.copy(inputStream, outputStream);
         } catch (Exception e) {
+            logger.error("", e);
             throw new CommonException("预览文件失败");
         } finally {
             IoUtil.close(outputStream);
