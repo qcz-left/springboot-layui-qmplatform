@@ -184,6 +184,15 @@ public class CommonController extends BaseController {
     }
 
     /**
+     * 文件预览页面
+     */
+    @GetMapping("/previewFilePage")
+    public String previewFilePage(String filePath, Map<String, Object> root) {
+        root.put("fileName", FileUtils.mainName(FileUtils.getRealFilePath(filePath)));
+        return PREFIX + "previewFile";
+    }
+
+    /**
      * 将文件转成PDF 提供预览
      *
      * @param filePath 虚拟文件路径
