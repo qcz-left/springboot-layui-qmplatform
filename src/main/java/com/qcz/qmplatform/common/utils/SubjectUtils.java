@@ -1,6 +1,6 @@
 package com.qcz.qmplatform.common.utils;
 
-import cn.hutool.cache.impl.TimedCache;
+import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -12,24 +12,22 @@ public class SubjectUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SubjectUtils.class);
 
-    private static final TimedCache<String, User> userCache = CacheUtils.USER_CACHE;
-
     public static User getUser() {
         Object principal = SecurityUtils.getSubject().getPrincipal();
         if (principal != null) {
             String principalStr = principal.toString();
-            User user = userCache.get(principalStr);
+            User user = CacheUtils.USER_CACHE.get(principalStr);
             if (user == null) {
-                user = SpringContextUtils.getBean(UserService.class).getById(String.valueOf(principal));
+                user = SpringContextUtils.getBean(UserService.class).getById(principalStr);
                 setUser(user);
             }
             return user;
         }
-        return null;
+        throw new CommonException("没有登录用户");
     }
 
     public static void setUser(User user) {
-        userCache.put(user.getId(), user);
+        CacheUtils.USER_CACHE.put(user.getId(), user);
         CacheUtils.SESSION_CACHE.put(getSessionId(), user);
     }
 
@@ -44,7 +42,7 @@ public class SubjectUtils {
         Subject subject = SecurityUtils.getSubject();
         if (subject.isAuthenticated()) {
             Object user = subject.getPrincipal();
-            userCache.remove(user.toString());
+            CacheUtils.USER_CACHE.remove(user.toString());
             CacheUtils.SESSION_CACHE.remove(getSessionId());
             subject.logout();
             LOGGER.debug("logout : {}", user);
