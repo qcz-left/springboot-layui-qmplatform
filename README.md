@@ -67,18 +67,24 @@ sql：数据库初始化脚本文件
 
 ## Jenkins持续集成
 ### 下载Jenkins
-到官方网站下载war包（我使用的版本是2.254）：https://get.jenkins.io/war/，下载后执行java -jar jenkins.war启动Jenkins，默认端口是80，web访问地址就是你的服务器ip<br/>
+到官方网站下载war包（我使用的版本是2.316）：https://get.jenkins.io/war/，下载后执行java -jar jenkins.war启动Jenkins，默认端口是8080，web访问地址就是你的服务器ip+端口<br/>
 启动完成后会在生成一个admin秘钥文件，执行：cat /root/.jenkins/secrets/initialAdminPassword查看，初始登录web时需要这个秘钥，进去后自己创建一个账号<br/>
 ### Jenkins配置
 安装插件列表：<br/>	
-    Publish Over SSH（连接部署远程服务器用的）<br/>	
-    Oracle Java SE Development Kit Installer Plugin<br/>	
+    Publish Over SSH（连接部署远程服务器用的）<br/>		
     Localization: Chinese （国际化）(Simplified)<br/>	
     Gitee Plugin（我使用的是从gitee上拉取文件，你如果使用的GitHub就不用这个了）<br/>	
     Git plugin<br/>	
     
 到码云官方网站个人设置中申请一个私人令牌<br/>
-
+配置Maven<br/>
+![Maven配置](https://images.gitee.com/uploads/images/2021/1018/111553_23182d5b_1324727.png "屏幕截图.png")
+![Maven配置2](https://images.gitee.com/uploads/images/2021/1018/111824_6b8bc083_1324727.png "屏幕截图.png")
+配置JDK<br/>
+取消勾选了自动安装，因为本地已经手动安装了jdk，这里只需要指定安装目录即可
+![JDK配置](https://images.gitee.com/uploads/images/2021/1018/110839_2f23ccc4_1324727.png "屏幕截图.png")
+配置Git<br/>
+![配置Git](https://images.gitee.com/uploads/images/2021/1018/111640_d6ae221a_1324727.png "屏幕截图.png")
 系统管理-系统配置：<br/>
 ![gitee配置](https://images.gitee.com/uploads/images/2020/1218/150113_2bb02172_1324727.png "屏幕截图.png")
 ![远程服务器ssh配置](https://images.gitee.com/uploads/images/2020/1218/150306_12cf0216_1324727.png "屏幕截图.png")
