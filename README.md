@@ -77,14 +77,6 @@ sql：数据库初始化脚本文件
     Git plugin<br/>	
     
 到码云官方网站个人设置中申请一个私人令牌<br/>
-配置Maven<br/>
-![Maven配置](https://images.gitee.com/uploads/images/2021/1018/111553_23182d5b_1324727.png "屏幕截图.png")
-![Maven配置2](https://images.gitee.com/uploads/images/2021/1018/111824_6b8bc083_1324727.png "屏幕截图.png")
-配置JDK<br/>
-取消勾选了自动安装，因为本地已经手动安装了jdk，这里只需要指定安装目录即可
-![JDK配置](https://images.gitee.com/uploads/images/2021/1018/110839_2f23ccc4_1324727.png "屏幕截图.png")
-配置Git<br/>
-![配置Git](https://images.gitee.com/uploads/images/2021/1018/111640_d6ae221a_1324727.png "屏幕截图.png")
 系统管理-系统配置：<br/>
 ![gitee配置](https://images.gitee.com/uploads/images/2020/1218/150113_2bb02172_1324727.png "屏幕截图.png")
 ![远程服务器ssh配置](https://images.gitee.com/uploads/images/2020/1218/150306_12cf0216_1324727.png "屏幕截图.png")
