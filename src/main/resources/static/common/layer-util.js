@@ -67,5 +67,16 @@ const LayerUtil = {
         } else {
             layer.open(options);
         }
+    },
+
+    tips: function (content, follow, options) {
+        let tipIndex;
+        $(follow).mouseover(function () {
+            tipIndex = layer.tips(content, this, $.extend({
+                time: 0
+            }, options));
+        }).mouseout(function () {
+            layer.close(tipIndex);
+        });
     }
 };

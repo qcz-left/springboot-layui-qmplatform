@@ -35,6 +35,11 @@ layui.use(['table', 'form', 'element'], function () {
         ]]
     });
 
+    LayerUtil.tips(enableJodConverter ? '当前 OpenOffice 服务已开启，您可以使用文件预览功能' : '当前 OpenOffice 服务未开启，暂不提供文件预览功能',
+        '#attachmentHelp', {
+            tips: [4, enableJodConverter ? '#5FB878' : '#FFB800']
+        });
+
     sortEventListen(table, layFilter, tableId);
 
 

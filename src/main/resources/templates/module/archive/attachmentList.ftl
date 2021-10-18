@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <#include "/include/include.ftl">
+<style>
+    .layui-table-tool-temp {
+        padding-right: unset;
+    }
+
+    #attachmentHelp {
+        float: right;
+    }
+</style>
 <script type="text/javascript">
     let previewedSuffix = [];
     <#list previewedSuffix as suf>
@@ -45,6 +54,7 @@
                 <@shiro.hasPermission name="${PrivCode.BTN_CODE_FILE_DELETE}">
                     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
                 </@shiro.hasPermission>
+                <i id="attachmentHelp" class="layui-icon layui-icon-help"></i>
             </div>
         </script>
         <script type="text/html" id="operator">
