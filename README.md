@@ -91,7 +91,7 @@ Jenkins服务器上创建一个jenkins账号：useradd jenkins，切换账号su 
 ![私钥账号配置](https://images.gitee.com/uploads/images/2020/1218/152919_f022dfd5_1324727.png "屏幕截图.png")
 构建触发器选择 Gitee webhook 触发构建：<br/>
 ![webhook](https://images.gitee.com/uploads/images/2020/1218/153339_9a584d47_1324727.png "屏幕截图.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/1218/153435_4f7fd2c3_1324727.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/1018/115150_4add1ea0_1324727.png "屏幕截图.png")
 远程ssh服务器配置：<br/>
 ![远程ssh服务器配置](https://images.gitee.com/uploads/images/2020/1218/154040_dd220a4f_1324727.png "屏幕截图.png")
 ## 其它
