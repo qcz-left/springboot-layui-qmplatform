@@ -85,7 +85,7 @@ sql：数据库初始化脚本文件
 ![jdk、git、maven安装目录配置](https://images.gitee.com/uploads/images/2020/1218/150643_2ab8fab6_1324727.png "屏幕截图.png")
 新建一个自由风格的项目：<br/>
 ![新建项目](https://images.gitee.com/uploads/images/2020/1218/150906_e40606e1_1324727.png "屏幕截图.png")
-Jenkins服务器上创建一个jenkins账号：useradd jenkins，并生成公钥和私钥：ssh-keygen -t rsa -C "git@gitee.com"，执行后默认会到/home/qcz/.ssh目录下生成一个私钥：id_rsa，和一个公钥：id_rsa.pub，私钥用于在jenkins web中创建连接gitee链接用的，公钥需要配置到gitee官方网站中
+Jenkins服务器上创建一个jenkins账号：useradd jenkins，切换账号su jenkins，并生成公钥和私钥：ssh-keygen -t rsa -C "git@gitee.com"，执行后默认会到/home/jenkins/.ssh目录下生成一个私钥：id_rsa，和一个公钥：id_rsa.pub，私钥用于在jenkins web中创建连接gitee链接用的，公钥需要配置到gitee官方网站中
 ![公钥](https://images.gitee.com/uploads/images/2020/1218/152220_e453b4bc_1324727.png "屏幕截图.png")
 ![项目的gitee配置](https://images.gitee.com/uploads/images/2020/1218/152701_e67105b5_1324727.png "屏幕截图.png")
 ![私钥账号配置](https://images.gitee.com/uploads/images/2020/1218/152919_f022dfd5_1324727.png "屏幕截图.png")
