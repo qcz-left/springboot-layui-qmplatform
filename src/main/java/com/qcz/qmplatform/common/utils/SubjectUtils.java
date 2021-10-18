@@ -1,12 +1,13 @@
 package com.qcz.qmplatform.common.utils;
 
-import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Objects;
 
 public class SubjectUtils {
 
@@ -23,7 +24,7 @@ public class SubjectUtils {
             }
             return user;
         }
-        throw new CommonException("没有登录用户");
+        return null;
     }
 
     public static void setUser(User user) {
@@ -50,11 +51,11 @@ public class SubjectUtils {
     }
 
     public static String getUserId() {
-        return getUser().getId();
+        return Objects.requireNonNull(getUser()).getId();
     }
 
     public static String getUserName() {
-        return getUser().getUsername();
+        return Objects.requireNonNull(getUser()).getUsername();
     }
 
 }
