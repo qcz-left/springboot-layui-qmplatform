@@ -225,7 +225,7 @@ INSERT INTO "public"."sys_menu" VALUES ('b5ee5991-a01f-4978-bd58-3e71dcd163c6', 
 INSERT INTO "public"."sys_menu" VALUES ('ef07f63f-4ec1-4053-bb53-db7891359339', '用户管理（旧）', 0, 'user', 'layui-icon-user', '/user/userListPage', '1', 0);
 INSERT INTO "public"."sys_menu" VALUES ('4af487ea-9903-4116-970e-d82dce9d49ce', '组织机构管理（旧）', 30, 'org', 'layui-icon-component', '/organization/organizationListPage', '1', 0);
 INSERT INTO "public"."sys_menu" VALUES ('7cbaf4c5-f31d-48f0-ac5c-d7b2bd1d3134', '组织机构管理', 0, 'org-new', 'layui-icon-component', '/organization/orgManagePage', '1', 1);
-
+INSERT INTO "public"."sys_menu" VALUES ('b7231a740a1e423a8fe8ef4e747d7584', '邮箱配置', 51, 'mail', '', '/notify/mailConfigPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 
 
 -- ----------------------------
@@ -1656,6 +1656,7 @@ INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b5ee5991-a01f-4978-bd58-3e71dcd163c6');
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '15d0b9e4-7630-4826-975d-18d409bae421');
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '5ef5be70-684a-4a65-b2ae-ba95bb4bc4df');
+INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b7231a740a1e423a8fe8ef4e747d7584');
 
 -- ----------------------------
 -- Table structure for sys_user

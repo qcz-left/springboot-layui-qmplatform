@@ -3,9 +3,6 @@ spring:
     url: jdbc:postgresql://127.0.0.1:5432/${custom.database}
     username: postgres
     password: postgres
-  mail:
-    username: qmplatform@163.com
-    password: qmplatform
 
 custom:
   # 是否开启http重定向到https

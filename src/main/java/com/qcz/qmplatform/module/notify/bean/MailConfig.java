@@ -2,67 +2,73 @@ package com.qcz.qmplatform.module.notify.bean;
 
 import java.io.Serializable;
 
+/**
+ * 邮件配置信息
+ */
 public class MailConfig implements Serializable {
 
     /**
-     * 发送方
+     * 邮件服务地址
      */
-    private String from;
+    private String host;
 
     /**
-     * 接收方
+     * 服务端口
      */
-    private String to;
+    private int port;
 
     /**
-     * 邮件主题
+     * 是否需要加密连接
      */
-    private String subject;
+    private boolean enableSSL;
 
     /**
-     * 邮件内容
+     * 发送人地址
      */
-    private String content;
+    private String senderHost;
 
-    public String getFrom() {
-        return from;
+    /**
+     * 发送人密码（部分邮箱是授权码）
+     */
+    private String senderPwd;
+
+    public String getHost() {
+        return host;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setHost(String host) {
+        this.host = host;
     }
 
-    public String getTo() {
-        return to;
+    public int getPort() {
+        return port;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setPort(int port) {
+        this.port = port;
     }
 
-    public String getSubject() {
-        return subject;
+    public boolean isEnableSSL() {
+        return enableSSL;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setEnableSSL(boolean enableSSL) {
+        this.enableSSL = enableSSL;
     }
 
-    public String getContent() {
-        return content;
+    public String getSenderHost() {
+        return senderHost;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setSenderHost(String senderHost) {
+        this.senderHost = senderHost;
     }
 
-    @Override
-    public String toString() {
-        return "MailDTO{" +
-                "from='" + from + '\'' +
-                ", to='" + to + '\'' +
-                ", subject='" + subject + '\'' +
-                ", content='" + content + '\'' +
-                '}';
+    public String getSenderPwd() {
+        return senderPwd;
+    }
+
+    public void setSenderPwd(String senderPwd) {
+        this.senderPwd = senderPwd;
     }
 }

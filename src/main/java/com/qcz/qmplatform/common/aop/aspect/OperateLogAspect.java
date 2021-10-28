@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.common.aop.aspect;
 
+import cn.hutool.extra.mail.MailException;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -78,7 +79,13 @@ public class OperateLogAspect {
                 insertOperateLog(1, currentUser, null, requestUrl, ipAddress, joinPoint);
             });
         } catch (Exception e) {// 原逻辑程序有异常，这里抛回
-            throw new CommonException(e.getMessage(), e);
+            String msg;
+            if (e instanceof MailException && StringUtils.containsAny(e.getMessage(), "AuthenticationFailedException", "535")) {
+                msg = "邮箱账号验证失败";
+            } else {
+                msg = e.getMessage();
+            }
+            throw new CommonException(msg, e);
         }
         return proceed;
     }

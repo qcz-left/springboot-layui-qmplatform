@@ -1,10 +1,18 @@
 package com.qcz.qmplatform.module.notify.service.mail;
 
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.extra.mail.MailAccount;
+import com.qcz.qmplatform.common.exception.CommonException;
+import com.qcz.qmplatform.common.utils.FileUtils;
+import com.qcz.qmplatform.common.utils.MailUtils;
+import com.qcz.qmplatform.common.utils.SecureUtils;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.notify.bean.MailConfig;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import com.qcz.qmplatform.module.notify.bean.MailParam;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * 邮件通知服务
@@ -12,16 +20,42 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailNotifyService {
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+    /**
+     * 发送邮件，使用已保存的配置
+     *
+     * @param mailParam 邮件内容
+     */
+    public void send(MailParam mailParam) {
+        MailConfig mailConfig = FileUtils.readObjectFromFile(MailUtils.DAT_MAIL_CONFIG, MailConfig.class);
+        send(mailConfig, mailParam);
+    }
 
-    public void send(MailConfig mailConfig) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(mailConfig.getFrom());
-        mailMessage.setTo(mailConfig.getTo());
-        mailMessage.setText(mailConfig.getContent());
-        mailMessage.setSubject(mailConfig.getSubject());
-        javaMailSender.send(mailMessage);
+    /**
+     * 发送
+     *
+     * @param mailConfig 邮箱配置信息
+     * @param mailParam  邮件内容
+     */
+    public void send(MailConfig mailConfig, MailParam mailParam) {
+        if (StringUtils.isBlank(mailConfig.getHost())) {
+            throw new CommonException("未读取到邮件配置信息");
+        }
+
+        MailAccount mailAccount = new MailAccount();
+        mailAccount.setHost(mailConfig.getHost());
+        mailAccount.setPort(mailConfig.getPort());
+        mailAccount.setSslEnable(mailConfig.isEnableSSL());
+        mailAccount.setFrom(mailConfig.getSenderHost());
+        mailAccount.setPass(SecureUtils.aesDecrypt(mailConfig.getSenderPwd()));
+        mailAccount.setAuth(true);
+
+        List<File> files = mailParam.getFiles();
+
+        if (files == null) {
+            MailUtils.send(mailAccount, mailParam.getTo(), mailParam.getSubject(), mailParam.getContent(), mailParam.isHtml());
+        } else {
+            MailUtils.send(mailAccount, mailParam.getTo(), mailParam.getSubject(), mailParam.getContent(), mailParam.isHtml(), ArrayUtil.toArray(files, File.class));
+        }
     }
 
 }
