@@ -48,7 +48,8 @@ layui.use(["layer"], function () {
         loadingWithText: function (msg, option) {
             option = option || {
                 icon: 16,
-                shade: 0.01
+                shade: 0.01,
+                time: 0
             };
             return this.msg(msg, option);
         }
