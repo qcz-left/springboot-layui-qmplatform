@@ -83,7 +83,14 @@ public class NotifyController {
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改邮箱配置信息")
     public ResponseResult<?> saveMailConfig(@RequestBody MailConfig mailConfig) {
-        dealSenderPwd(mailConfig);
+        String senderPwd = mailConfig.getSenderPwd();
+        String encSenderPwd;
+        if (SecureUtils.passwordChanged(senderPwd)) {
+            encSenderPwd = SecureUtils.aesEncrypt(senderPwd);
+        } else {
+            encSenderPwd = FileUtils.readObjectFromFile(MailUtils.DAT_MAIL_CONFIG, MailConfig.class).getSenderPwd();
+        }
+        mailConfig.setSenderPwd(encSenderPwd);
         FileUtils.writeObjectToFile(mailConfig, MailUtils.DAT_MAIL_CONFIG);
         return ResponseResult.ok();
     }
@@ -101,25 +108,12 @@ public class NotifyController {
     @RecordLog(type = OperateType.UPDATE, description = "测试发送邮件")
     public ResponseResult<?> testSendMail(@RequestBody TestMailVO testMailVO) {
         MailConfig mailConfig = testMailVO.getMailConfig();
-        dealSenderPwd(mailConfig);
+        if (!SecureUtils.passwordChanged(mailConfig.getSenderPwd())) {
+            String encSenderPwd = FileUtils.readObjectFromFile(MailUtils.DAT_MAIL_CONFIG, MailConfig.class).getSenderPwd();
+            mailConfig.setSenderPwd(SecureUtils.rsaDecrypt(encSenderPwd));
+        }
         mailNotifyService.send(mailConfig, testMailVO.getMailParam());
         return ResponseResult.ok();
-    }
-
-    /**
-     * 处理密码
-     *
-     * @param mailConfig 邮箱配置
-     */
-    private void dealSenderPwd(MailConfig mailConfig) {
-        String senderPwd = mailConfig.getSenderPwd();
-        String encSenderPwd;
-        if (SecureUtils.passwordChanged(mailConfig.getSenderPwd())) {
-            encSenderPwd = SecureUtils.aesEncrypt(senderPwd);
-        } else {
-            encSenderPwd = FileUtils.readObjectFromFile(MailUtils.DAT_MAIL_CONFIG, MailConfig.class).getSenderPwd();
-        }
-        mailConfig.setSenderPwd(encSenderPwd);
     }
 
 }

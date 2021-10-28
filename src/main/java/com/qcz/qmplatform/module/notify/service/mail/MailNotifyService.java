@@ -27,6 +27,7 @@ public class MailNotifyService {
      */
     public void send(MailParam mailParam) {
         MailConfig mailConfig = FileUtils.readObjectFromFile(MailUtils.DAT_MAIL_CONFIG, MailConfig.class);
+        mailConfig.setSenderPwd(SecureUtils.rsaDecrypt(mailConfig.getSenderPwd()));
         send(mailConfig, mailParam);
     }
 
@@ -46,7 +47,7 @@ public class MailNotifyService {
         mailAccount.setPort(mailConfig.getPort());
         mailAccount.setSslEnable(mailConfig.isEnableSSL());
         mailAccount.setFrom(mailConfig.getSenderHost());
-        mailAccount.setPass(SecureUtils.aesDecrypt(mailConfig.getSenderPwd()));
+        mailAccount.setPass(mailConfig.getSenderPwd());
         mailAccount.setAuth(true);
 
         List<File> files = mailParam.getFiles();
