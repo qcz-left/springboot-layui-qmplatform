@@ -86,7 +86,7 @@ public class NotifyController {
         String senderPwd = mailConfig.getSenderPwd();
         String encSenderPwd;
         if (SecureUtils.passwordChanged(senderPwd)) {
-            encSenderPwd = SecureUtils.aesEncrypt(senderPwd);
+            encSenderPwd = SecureUtils.rsaDecrypt(senderPwd);
         } else {
             encSenderPwd = FileUtils.readObjectFromFile(MailUtils.DAT_MAIL_CONFIG, MailConfig.class).getSenderPwd();
         }
