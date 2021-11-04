@@ -32,7 +32,6 @@
             </div>
         </script>
         <script type="text/html" id="operator">
-            <button class="layui-btn layui-btn-sm" lay-event="read"><i class="layui-icon layui-icon-read"></i>查看</button>
             <button class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</button>
             <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
         </script>

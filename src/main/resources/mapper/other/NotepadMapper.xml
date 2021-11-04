@@ -6,6 +6,7 @@
         select
           id,
           title,
+          content,
           create_user_id,
           create_user_name,
           create_time,

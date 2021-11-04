@@ -5,6 +5,7 @@ import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.PageRequest;
+import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.module.base.BaseController;
@@ -14,9 +15,11 @@ import com.qcz.qmplatform.module.other.vo.NotepadVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -38,9 +41,9 @@ public class NotepadController extends BaseController {
     @Autowired
     NotepadService notepadService;
 
-    @GetMapping("/addPage")
-    public String addPage() {
-        return PREFIX + "addNotepad";
+    @GetMapping("/detailPage")
+    public String detailPage() {
+        return PREFIX + "detail";
     }
 
     @GetMapping("/listPage")
@@ -49,22 +52,41 @@ public class NotepadController extends BaseController {
     }
 
     @PostMapping("/list")
-    public ResponseResult<?> list(PageRequest pageRequest, NotepadVO notepadVO) {
+    @ResponseBody
+    public ResponseResult<PageResult> list(PageRequest pageRequest, NotepadVO notepadVO) {
         PageResultHelper.startPage(pageRequest.getPage(), pageRequest.getLimit());
         List<Notepad> notepadList = notepadService.getList(notepadVO);
         return ResponseResult.ok(PageResultHelper.parseResult(notepadList));
     }
 
-    @PostMapping("/save")
+    @GetMapping("/getOne/{id}")
+    @ResponseBody
+    public ResponseResult<Notepad> getOne(@PathVariable String id) {
+        return ResponseResult.ok(notepadService.getById(id));
+    }
+
+    @PostMapping("/insert")
+    @ResponseBody
     @RecordLog(type = OperateType.INSERT, description = "添加记事本")
-    public ResponseResult<?> save(@RequestBody Notepad notepad) {
+    public ResponseResult<?> insert(@RequestBody Notepad notepad) {
         if (notepadService.saveOne(notepad)) {
             return ResponseResult.ok();
         }
         return ResponseResult.error();
     }
 
+    @PostMapping("/update")
+    @ResponseBody
+    @RecordLog(type = OperateType.UPDATE, description = "编辑记事本")
+    public ResponseResult<?> update(@RequestBody Notepad notepad) {
+        if (notepadService.updateOne(notepad)) {
+            return ResponseResult.ok();
+        }
+        return ResponseResult.error();
+    }
+
     @PostMapping("/delete")
+    @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除记事本")
     public ResponseResult<?> delete() {
 
