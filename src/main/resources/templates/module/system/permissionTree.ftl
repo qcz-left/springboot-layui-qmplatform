@@ -55,7 +55,7 @@
             menubarTips: {
                 group: ["moveDown", "moveUp", "checkAll", "unCheckAll"]
             },
-            checkbarType: "all",
+            checkbarType: "p-casc",
             response: {
                 title: "name",		//节点名称
                 childName: "childes"	//子节点名称
