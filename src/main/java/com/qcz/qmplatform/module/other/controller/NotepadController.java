@@ -43,12 +43,12 @@ public class NotepadController extends BaseController {
 
     @GetMapping("/detailPage")
     public String detailPage() {
-        return PREFIX + "detail";
+        return PREFIX + "notepadDetail";
     }
 
     @GetMapping("/listPage")
     public String listPage() {
-        return PREFIX + "notepad";
+        return PREFIX + "notepadList";
     }
 
     @PostMapping("/list")
