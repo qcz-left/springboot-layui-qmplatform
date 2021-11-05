@@ -3,6 +3,7 @@ package com.qcz.qmplatform.module.notify.controller;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
+import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.MailUtils;
@@ -13,6 +14,7 @@ import com.qcz.qmplatform.module.notify.bean.MailParam;
 import com.qcz.qmplatform.module.notify.service.mail.MailNotifyService;
 import com.qcz.qmplatform.module.notify.vo.SmsConfigVO;
 import com.qcz.qmplatform.module.notify.vo.TestMailVO;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,6 +84,7 @@ public class NotifyController {
     @PostMapping("/saveMailConfig")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改邮箱配置信息")
+    @RequiresPermissions(PrivCode.BTN_CODE_MAIL_CONFIG_SAVE)
     public ResponseResult<?> saveMailConfig(@RequestBody MailConfig mailConfig) {
         String senderPwd = mailConfig.getSenderPwd();
         String encSenderPwd;
