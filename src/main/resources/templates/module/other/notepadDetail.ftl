@@ -17,6 +17,13 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label required">是否公开</label>
+            <div class="layui-input-block">
+                <input type="radio" name="isPublic" value="1" title="公开" checked>
+                <input type="radio" name="isPublic" value="0" title="私密">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">内容</label>
             <div class="layui-input-block">
                 <textarea id="content" lay-verify="content"></textarea>

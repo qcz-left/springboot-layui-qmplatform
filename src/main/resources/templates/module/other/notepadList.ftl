@@ -10,6 +10,7 @@
             <span class="search-where">
                 <div class="layui-inline">
                     <label class="layui-form-label">标题</label>
+                    <input type="checkbox" name="onlySelf" lay-skin="primary" title="只看自己" value="true">
                     <div class="layui-input-inline">
                         <input type="text" name="title" autocomplete="off" class="layui-input">
                     </div>
