@@ -9,14 +9,10 @@
 'MENU_CODE_CESHI500': 'ceshi500',
 <#--操作日志-->
 'MENU_CODE_OPERATE': 'operate',
-<#--用户管理-->
-'MENU_CODE_USER': 'user',
 <#--菜单管理-->
 'MENU_CODE_MENU': 'menu',
 <#--角色管理-->
 'MENU_CODE_ROLE': 'role',
-<#--组织机构管理-->
-'MENU_CODE_ORG': 'org',
 <#--文件管理-->
 'MENU_CODE_FILE': 'file',
 <#--档案中心-->
@@ -31,6 +27,8 @@
 'MENU_CODE_DICT': 'dict',
 <#--短信配置-->
 'MENU_CODE_SMS': 'sms',
+<#--记事本-->
+'MENU_CODE_NOTEPAD': 'notepad',
 <#--图标管理-->
 'MENU_CODE_ICON': 'icon',
 <#--Demo-->
@@ -39,6 +37,16 @@
 'MENU_CODE_UNKNOWN': 'unknown',
 <#--登录错误记录-->
 'MENU_CODE_LOGIN_RECORD': 'login-record',
+<#--用户管理-->
+'MENU_CODE_USER': 'user',
+<#--组织机构管理（旧）-->
+'MENU_CODE_ORG': 'org',
+<#--组织机构-->
+'MENU_CODE_ORG_NEW': 'org-new',
+<#--首页-->
+'MENU_CODE_HOME': 'home',
+<#--邮箱配置-->
+'MENU_CODE_MAIL': 'mail',
 <#--删除用户-->
 'BTN_CODE_USER_DELETE': 'user-delete',
 <#--保存用户-->
@@ -87,6 +95,8 @@
 'BTN_CODE_LOGIN_STRATEGY_SAVE': 'login-strategy-save',
 <#--删除登录错误记录-->
 'BTN_CODE_LOGIN_RECORD_DELETE': 'login-record-delete',
+<#--保存邮箱配置-->
+'BTN_CODE_MAIL_CONFIG_SAVE': 'mail-config-save',
 <#--无实际意义-->
 'INSTANCE': 'instance'
 }>

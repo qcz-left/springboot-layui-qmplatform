@@ -84,6 +84,7 @@ INSERT INTO "public"."sys_button" VALUES ('94c6fe0d-5c7f-42cd-85fe-60f6c096e230'
 INSERT INTO "public"."sys_button" VALUES ('dd5db615-6b1a-4bfe-9e45-45b008d73e90', '系统通知-设置已读', 'e3a24ef6-134f-498a-aa11-54a184de3b70', 'message-set-read', 0, '');
 INSERT INTO "public"."sys_button" VALUES ('15d0b9e4-7630-4826-975d-18d409bae421', '保存登录策略', 'b5ee5991-a01f-4978-bd58-3e71dcd163c6', 'login-strategy-save', 0, '');
 INSERT INTO "public"."sys_button" VALUES ('5ef5be70-684a-4a65-b2ae-ba95bb4bc4df', '删除登录错误记录', 'b5ee5991-a01f-4978-bd58-3e71dcd163c6', 'login-record-delete', 0, '');
+INSERT INTO "public"."sys_button" VALUES ('aa0362e2f74a4f39833cf5ddd77ad40b', '保存邮箱配置', 'b7231a740a1e423a8fe8ef4e747d7584', 'mail-config-save', 0, '');
 
 
 -- ----------------------------
@@ -226,6 +227,8 @@ INSERT INTO "public"."sys_menu" VALUES ('ef07f63f-4ec1-4053-bb53-db7891359339', 
 INSERT INTO "public"."sys_menu" VALUES ('4af487ea-9903-4116-970e-d82dce9d49ce', '组织机构管理（旧）', 30, 'org', 'layui-icon-component', '/organization/organizationListPage', '1', 0);
 INSERT INTO "public"."sys_menu" VALUES ('7cbaf4c5-f31d-48f0-ac5c-d7b2bd1d3134', '组织机构管理', 0, 'org-new', 'layui-icon-component', '/organization/orgManagePage', '1', 1);
 INSERT INTO "public"."sys_menu" VALUES ('b7231a740a1e423a8fe8ef4e747d7584', '邮箱配置', 51, 'mail', '', '/notify/mailConfigPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
+INSERT INTO "public"."sys_menu" VALUES ('5f5325d64aca4206a73ed6ac0768dcff', '记事本', 10, 'notepad', '', '/other/notepad/listPage', '', 1);
+
 
 
 -- ----------------------------
@@ -1657,6 +1660,9 @@ INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '15d0b9e4-7630-4826-975d-18d409bae421');
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '5ef5be70-684a-4a65-b2ae-ba95bb4bc4df');
 INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b7231a740a1e423a8fe8ef4e747d7584');
+INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '5f5325d64aca4206a73ed6ac0768dcff');
+INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'aa0362e2f74a4f39833cf5ddd77ad40b');
+
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -2050,3 +2056,48 @@ $BODY$
 
 select _add_column('sys_message', 'instance', 'varchar(50)');
 select _add_column('sys_message', 'last_update_time', 'timestamp');
+
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : 127.0.0.1-pgsql
+ Source Server Type    : PostgreSQL
+ Source Server Version : 110010
+ Source Host           : 127.0.0.1:5432
+ Source Catalog        : qmplatform_single
+ Source Schema         : public
+
+ Target Server Type    : PostgreSQL
+ Target Server Version : 110010
+ File Encoding         : 65001
+
+ Date: 04/11/2021 21:32:36
+*/
+
+
+-- ----------------------------
+-- Table structure for tbl_notepad
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."tbl_notepad";
+CREATE TABLE "public"."tbl_notepad" (
+  "id" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "title" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "content" text COLLATE "pg_catalog"."default",
+  "create_user_id" varchar(50) COLLATE "pg_catalog"."default",
+  "create_user_name" varchar(20) COLLATE "pg_catalog"."default",
+  "create_time" timestamp(6),
+  "is_public" int2 DEFAULT 1
+)
+;
+COMMENT ON COLUMN "public"."tbl_notepad"."id" IS '数据id';
+COMMENT ON COLUMN "public"."tbl_notepad"."title" IS '标题';
+COMMENT ON COLUMN "public"."tbl_notepad"."content" IS '内容';
+COMMENT ON COLUMN "public"."tbl_notepad"."create_user_id" IS '创建人id';
+COMMENT ON COLUMN "public"."tbl_notepad"."create_user_name" IS '创建人名称';
+COMMENT ON COLUMN "public"."tbl_notepad"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."tbl_notepad"."is_public" IS '是否公开（0：私密，1：公开）默认公开';
+
+-- ----------------------------
+-- Primary Key structure for table tbl_notepad
+-- ----------------------------
+ALTER TABLE "public"."tbl_notepad" ADD CONSTRAINT "tbl_notepad_pkey" PRIMARY KEY ("id");

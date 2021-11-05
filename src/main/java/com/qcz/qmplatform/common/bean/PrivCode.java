@@ -31,11 +31,6 @@ public class PrivCode {
     public static final String MENU_CODE_OPERATE = "operate";
 
     /**
-     * 用户管理
-     */
-    public static final String MENU_CODE_USER = "user";
-
-    /**
      * 菜单管理
      */
     public static final String MENU_CODE_MENU = "menu";
@@ -44,11 +39,6 @@ public class PrivCode {
      * 角色管理
      */
     public static final String MENU_CODE_ROLE = "role";
-
-    /**
-     * 组织机构管理
-     */
-    public static final String MENU_CODE_ORG = "org";
 
     /**
      * 文件管理
@@ -86,6 +76,11 @@ public class PrivCode {
     public static final String MENU_CODE_SMS = "sms";
 
     /**
+     * 记事本
+     */
+    public static final String MENU_CODE_NOTEPAD = "notepad";
+
+    /**
      * 图标管理
      */
     public static final String MENU_CODE_ICON = "icon";
@@ -104,6 +99,31 @@ public class PrivCode {
      * 登录错误记录
      */
     public static final String MENU_CODE_LOGIN_RECORD = "login-record";
+
+    /**
+     * 用户管理
+     */
+    public static final String MENU_CODE_USER = "user";
+
+    /**
+     * 组织机构管理（旧）
+     */
+    public static final String MENU_CODE_ORG = "org";
+
+    /**
+     * 组织机构
+     */
+    public static final String MENU_CODE_ORG_NEW = "org-new";
+
+    /**
+     * 首页
+     */
+    public static final String MENU_CODE_HOME = "home";
+
+    /**
+     * 邮箱配置
+     */
+    public static final String MENU_CODE_MAIL = "mail";
 
     /**
      * 删除用户
@@ -224,5 +244,10 @@ public class PrivCode {
      * 删除登录错误记录
      */
     public static final String BTN_CODE_LOGIN_RECORD_DELETE = "login-record-delete";
+
+    /**
+     * 保存邮箱配置
+     */
+    public static final String BTN_CODE_MAIL_CONFIG_SAVE = "mail-config-save";
 
 }
