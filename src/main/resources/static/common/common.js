@@ -13,19 +13,21 @@ const CommonUtil = {
 
     /**
      * post方式的异步提交操作
-     * _url : 接口路径 （必填）
-     * _data : 请求数据 （必填）
-     * _success : 成功回调函数 （非必填）
-     * _fail : 失败回调函数 （非必填）
-     * _async : 是否异步（默认异步）
+     * @param _url 接口路径 （必填）
+     * @param _data 请求数据 （必填）
+     * @param _success 成功回调函数 （非必填）
+     * @param _fail 失败回调函数 （非必填）
+     * @param _async 是否异步（默认异步）
+     * @param _transferJson 是否将参数转换成json（默认转换）
      */
-    postAjax: function (_url, _data, _success, _fail, _async) {
+    postAjax: function (_url, _data, _success, _fail, _async, _transferJson) {
+        _transferJson = typeof (_transferJson) == "undefined" ? true : _transferJson;
         $.ajax({
             type: AjaxType.POST,
             url: _url,
             async: typeof (_async) == "undefined" ? true : _async,
-            data: encodeURIComponent(JSON.stringify(_data)),
-            contentType: 'application/json;charset=UTF-8',
+            data: _transferJson ? encodeURIComponent(JSON.stringify(_data)) : _data,
+            contentType: _transferJson ? 'application/json;charset=UTF-8' : 'application/x-www-form-urlencoded;charset=UTF-8',
             success: function (msg) {
                 if (_success && typeof _success == "function") {
                     _success(msg);
@@ -41,10 +43,11 @@ const CommonUtil = {
 
     /**
      * get方式的异步提交操作
-     * _url : 接口路径 （必填）
-     * _success : 成功回调函数 （非必填）
-     * _fail : 失败回调函数 （非必填）
-     * _async : 是否异步（默认异步）
+     * @param _url 接口路径 （必填）
+     * @param _data 参数
+     * @param _success 成功回调函数 （非必填）
+     * @param _fail 失败回调函数 （非必填）
+     * @param _async 是否异步（默认异步）
      */
     getAjax: function (_url, _data, _success, _fail, _async) {
         $.ajax({
@@ -67,10 +70,10 @@ const CommonUtil = {
 
     /**
      * put方式的异步提交操作
-     * _url : 接口路径 （必填）
-     * _data : 请求数据 （必填）
-     * _success : 成功回调函数 （非必填）
-     * _fail : 失败回调函数 （非必填）
+     * @param _url 接口路径 （必填）
+     * @param _data 请求数据 （必填）
+     * @param _success 成功回调函数 （非必填）
+     * @param _fail 失败回调函数 （非必填）
      */
     putAjax: function (_url, _data, _success, _fail) {
         $.ajax({
@@ -93,10 +96,10 @@ const CommonUtil = {
 
     /**
      * patch方式的异步提交操作
-     * _url : 接口路径 （必填）
-     * _data : 请求数据 （必填）
-     * _success : 成功回调函数 （非必填）
-     * _fail : 失败回调函数 （非必填）
+     * @param _url 接口路径 （必填）
+     * @param _data 请求数据 （必填）
+     * @param _success 成功回调函数 （非必填）
+     * @param _fail 失败回调函数 （非必填）
      */
     patchAjax: function (_url, _data, _success, _fail) {
         $.ajax({
@@ -138,10 +141,10 @@ const CommonUtil = {
 
     /**
      * delete方式的异步提交操作
-     * _url : 接口路径 （必填）
-     * _data : 请求数据 （必填）
-     * _success : 成功回调函数 （非必填）
-     * _fail : 失败回调函数 （非必填）
+     * @param _url 接口路径 （必填）
+     * @param _data 请求数据 （必填）
+     * @param _success 成功回调函数 （非必填）
+     * @param _fail 失败回调函数 （非必填）
      */
     deleteAjax: function (_url, _data, _success, _fail) {
         $.ajax({
@@ -161,7 +164,7 @@ const CommonUtil = {
         });
     },
 
-    exportExcel: function(exportParam) {
+    exportExcel: function (exportParam) {
         let index = top.layer.loadingWithText("正在导出数据到Excel，请稍后...");
         CommonUtil.postAjax(ctx + '/generateExportFile', exportParam, function (result) {
             top.layer.close(index);
@@ -171,7 +174,7 @@ const CommonUtil = {
         });
     },
 
-    downloadTemplate: function(templateParam) {
+    downloadTemplate: function (templateParam) {
         let index = top.layer.loadingWithText("正在下载模板，请稍后...");
         CommonUtil.postAjax(ctx + '/generateTemplate', templateParam, function (result) {
             top.layer.close(index);
