@@ -114,14 +114,14 @@ layui.use(['table', 'form'], function () {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
-            CommonUtil.deleteAjax(baseUrl + "/delete", {
+            CommonUtil.postAjax(baseUrl + "/delete", {
                 ids: CommonUtil.joinMulti(ids)
             }, function (data) {
                 LayerUtil.respMsg(data, null, null, function () {
                     tableReload();
                 });
                 layer.close(index);
-            })
+            }, null, true, false);
         });
     }
 

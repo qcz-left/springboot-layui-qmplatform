@@ -8,6 +8,7 @@ import com.qcz.qmplatform.common.bean.PageRequest;
 import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.other.domain.Notepad;
 import com.qcz.qmplatform.module.other.service.NotepadService;
@@ -88,8 +89,11 @@ public class NotepadController extends BaseController {
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除记事本")
-    public ResponseResult<?> delete() {
-
+    public ResponseResult<?> delete(String ids) {
+        if (notepadService.removeByIds(StringUtils.split(ids, ','))) {
+            return ResponseResult.ok();
+        }
         return ResponseResult.error();
     }
+
 }
