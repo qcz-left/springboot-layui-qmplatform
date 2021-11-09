@@ -27,12 +27,10 @@ public class GenerateCode {
      * 读取控制台内容
      * </p>
      */
-    public static String scanner(String tip) {
+    private static String scanner(String tip) {
         @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
-        StringBuilder help = new StringBuilder();
-        help.append("请输入" + tip + "：");
-        System.out.println(help.toString());
+        System.out.println("请输入" + tip + "：");
         if (scanner.hasNext()) {
             String ipt = scanner.next();
             if (StringUtils.isNotEmpty(ipt)) {
@@ -88,7 +86,7 @@ public class GenerateCode {
         strategy.setSuperControllerClass("com.qcz.qmplatform.module.base.BaseController");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix("sys_");
+        strategy.setTablePrefix(scanner("表名前缀") + "_");
         strategy.setEntityTableFieldAnnotationEnable(true);
         mpg.setStrategy(strategy);
 
@@ -100,17 +98,49 @@ public class GenerateCode {
             }
         };
 
-        String templatePath = "/ftl/service.java.ftl";
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
         // 自定义配置会被优先输出
-        focList.add(new FileOutConfig(templatePath) {
+        focList.add(new FileOutConfig("/ftl/controller.java.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名
+                return parent + "controller/" + tableInfo.getEntityName() + "Controller" + StringPool.DOT_JAVA;
+            }
+        });
+        focList.add(new FileOutConfig("/ftl/service.java.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名
                 return parent + "service/" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
             }
         });
+
+        String pageParent = projectPath + "/src/main/resources/templates/module/" + pc.getModuleName() + "/";
+        String jsParent = projectPath + "/src/main/resources/static/module/" + pc.getModuleName() + "/";
+        String scanPage = scanner("是否输出页面文件 Y/N");
+        if (StringUtils.equalsIgnoreCase(scanPage, "Y")) {
+            // 前端文件
+            focList.add(new FileOutConfig("/ftl/list.ftl.ftl") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return pageParent + StringUtils.lowerFirst(tableInfo.getEntityName()) + "List.ftl";
+                }
+            });
+            focList.add(new FileOutConfig("/ftl/detail.ftl.ftl") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return pageParent + StringUtils.lowerFirst(tableInfo.getEntityName()) + "Detail.ftl";
+                }
+            });
+            focList.add(new FileOutConfig("/ftl/list.js.ftl") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return jsParent + StringUtils.lowerFirst(tableInfo.getEntityName()) + "List.js";
+                }
+            });
+        }
+
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
 
