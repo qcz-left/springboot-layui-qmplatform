@@ -6,6 +6,7 @@ import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.pojo.MenuTree;
 import com.qcz.qmplatform.module.system.pojo.Permission;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -111,10 +111,7 @@ public class MenuController extends BaseController {
     @GetMapping("/validatePermissionCode")
     @ResponseBody
     public ResponseResult<?> validatePermissionCode(String permissionId, String code) {
-        if (!menuService.validatePermissionCode(permissionId, code)) {
-            return ResponseResult.error();
-        }
-        return ResponseResult.ok();
+        return ResponseResult.newInstance(menuService.validatePermissionCode(permissionId, code));
     }
 
     /**
@@ -152,10 +149,7 @@ public class MenuController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_MENU_SAVE)
     public ResponseResult<?> savePermissionOne(@RequestBody Permission permission) {
-        if (menuService.savePermissionOne(permission)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(menuService.savePermissionOne(permission));
     }
 
     /**
@@ -167,10 +161,7 @@ public class MenuController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_MENU_DELETE)
     @ResponseBody
     public ResponseResult<?> deletePermission(String permissionIds) {
-        if (menuService.deletePermission(Arrays.asList(permissionIds.split(",")))) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(menuService.deletePermission(StringUtils.split(permissionIds, ',')));
     }
 }
 

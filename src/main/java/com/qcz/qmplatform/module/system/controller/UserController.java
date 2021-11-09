@@ -45,7 +45,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -170,10 +169,7 @@ public class UserController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增用户")
     public ResponseResult<?> addUser(@Valid @RequestBody UserVO user) {
-        if (userService.insertUser(user)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(userService.insertUser(user));
     }
 
     @PutMapping("/updateUser")
@@ -181,10 +177,7 @@ public class UserController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改用户")
     public ResponseResult<?> updateUser(@Valid @RequestBody UserVO user) {
-        if (userService.updateUser(user)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(userService.updateUser(user));
     }
 
     /**
@@ -197,10 +190,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户基本资料")
     public ResponseResult<?> saveCurrentUserInfo(@Valid @RequestBody CurrentUserInfoVO user) {
-        if (userService.saveCurrentUserInfo(user)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(userService.saveCurrentUserInfo(user));
     }
 
     @PutMapping("/noNeedLogin/changeUserPwd")
@@ -277,10 +267,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除用户")
     public ResponseResult<?> delUser(String userIds) {
-        if (userService.removeByIds(Arrays.asList(userIds.split(",")))) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(userService.removeByIds(StringUtils.split(userIds, ',')));
     }
 
     /**

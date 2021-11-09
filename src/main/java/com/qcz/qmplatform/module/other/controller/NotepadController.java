@@ -70,30 +70,21 @@ public class NotepadController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.INSERT, description = "添加记事本")
     public ResponseResult<?> insert(@RequestBody Notepad notepad) {
-        if (notepadService.saveOne(notepad)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(notepadService.saveOne(notepad));
     }
 
     @PostMapping("/update")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "编辑记事本")
     public ResponseResult<?> update(@RequestBody Notepad notepad) {
-        if (notepadService.updateOne(notepad)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(notepadService.updateOne(notepad));
     }
 
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除记事本")
     public ResponseResult<?> delete(String ids) {
-        if (notepadService.removeByIds(StringUtils.split(ids, ','))) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(notepadService.removeByIds(StringUtils.split(ids, ',')));
     }
 
 }

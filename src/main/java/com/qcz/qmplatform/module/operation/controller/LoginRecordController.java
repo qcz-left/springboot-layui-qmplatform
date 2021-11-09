@@ -8,6 +8,7 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.operation.service.LoginRecordService;
 import com.qcz.qmplatform.module.operation.vo.LoginStrategyVO;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -66,10 +66,7 @@ public class LoginRecordController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_LOGIN_STRATEGY_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "编辑登录策略")
     public ResponseResult<?> saveLoginStrategy(@RequestBody LoginStrategyVO loginStrategyVO) {
-        if (loginRecordService.saveLoginStrategy(loginStrategyVO)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(loginRecordService.saveLoginStrategy(loginStrategyVO));
     }
 
     @DeleteMapping("/deleteLoginRecord")
@@ -77,9 +74,6 @@ public class LoginRecordController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_LOGIN_RECORD_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除登录错误记录")
     public ResponseResult<?> deleteLoginRecord(String recordIds) {
-        if (loginRecordService.deleteLoginRecord(Arrays.asList(recordIds.split(",")))) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(loginRecordService.deleteLoginRecord(StringUtils.split(recordIds, ',')));
     }
 }

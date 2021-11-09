@@ -5,6 +5,7 @@ import com.qcz.qmplatform.common.bean.PageRequest;
 import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.domain.Button;
 import com.qcz.qmplatform.module.system.service.ButtonService;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -79,10 +79,7 @@ public class ButtonController extends BaseController {
     @PostMapping("/addButtonOne")
     @ResponseBody
     public ResponseResult<?> addButtonOne(@RequestBody Button button) {
-        if (buttonService.addButtonOne(button)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(buttonService.addButtonOne(button));
     }
 
     /**
@@ -93,10 +90,7 @@ public class ButtonController extends BaseController {
     @PutMapping("/updateButtonOne")
     @ResponseBody
     public ResponseResult<?> updateButtonOne(@RequestBody Button button) {
-        if (buttonService.updateButtonOne(button)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(buttonService.updateButtonOne(button));
     }
 
     /**
@@ -107,10 +101,7 @@ public class ButtonController extends BaseController {
     @DeleteMapping("/deleteButton")
     @ResponseBody
     public ResponseResult<?> deleteButton(String permissionIds) {
-        if (buttonService.deleteButton(Arrays.asList(permissionIds.split(",")))) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(buttonService.deleteButton(StringUtils.split(permissionIds, ',')));
     }
 }
 

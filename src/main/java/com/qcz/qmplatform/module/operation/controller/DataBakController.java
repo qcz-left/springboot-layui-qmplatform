@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -112,10 +111,7 @@ public class DataBakController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_STRATEGY_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "调整数据备份策略")
     public ResponseResult<?> saveDataBakStrategy(@RequestBody DataBakStrategyVO dataBakStrategyVO) {
-        if (dataBakService.saveDataBakStrategy(dataBakStrategyVO)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(dataBakService.saveDataBakStrategy(dataBakStrategyVO));
     }
 
     /**
@@ -144,9 +140,6 @@ public class DataBakController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除备份")
     public ResponseResult<?> deleteDataBak(String dataBakIds) {
-        if (dataBakService.deleteDataBak(Arrays.asList(dataBakIds.split(",")))) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(dataBakService.deleteDataBak(StringUtils.split(dataBakIds, ',')));
     }
 }

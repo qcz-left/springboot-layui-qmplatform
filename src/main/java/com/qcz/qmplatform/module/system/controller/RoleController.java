@@ -9,6 +9,7 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.domain.Role;
 import com.qcz.qmplatform.module.system.service.RoleService;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -134,10 +134,7 @@ public class RoleController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_ROLE_SAVE)
     @ResponseBody
     public ResponseResult<?> saveRoleOne(@RequestBody Role role) {
-        if (roleService.saveRoleOne(role)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(roleService.saveRoleOne(role));
     }
 
     /**
@@ -163,10 +160,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除角色")
     public ResponseResult<?> deleteRole(String roleIds) {
-        if (roleService.deleteRole(Arrays.asList(roleIds.split(",")))) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(roleService.deleteRole(StringUtils.split(roleIds, ',')));
     }
 
     /**
@@ -179,10 +173,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "分配角色权限")
     public ResponseResult<?> saveRolePermission(@RequestBody RolePermissionVO rolePermissionVo) {
-        if (roleService.saveRolePermission(rolePermissionVo.getRoleId(), rolePermissionVo.getPermissionIds())) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(roleService.saveRolePermission(rolePermissionVo.getRoleId(), rolePermissionVo.getPermissionIds()));
     }
 }
 

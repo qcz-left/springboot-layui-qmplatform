@@ -6,6 +6,7 @@ import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.domain.Organization;
 import com.qcz.qmplatform.module.system.pojo.OrgTree;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -152,10 +152,7 @@ public class OrganizationController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
     public ResponseResult<?> saveOrgOne(@RequestBody Organization org) {
-        if (organizationService.saveOrgOne(org)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(organizationService.saveOrgOne(org));
     }
 
     /**
@@ -181,10 +178,7 @@ public class OrganizationController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_ORG_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除组织机构")
     public ResponseResult<?> deleteOrg(String orgIds) {
-        if (organizationService.deleteOrg(Arrays.asList(orgIds.split(",")))) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(organizationService.deleteOrg(StringUtils.split(orgIds, ',')));
     }
 
 }

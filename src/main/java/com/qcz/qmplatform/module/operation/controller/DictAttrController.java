@@ -9,6 +9,7 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.operation.domain.DictAttr;
 import com.qcz.qmplatform.module.operation.service.DictAttrService;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -87,10 +87,7 @@ public class DictAttrController extends BaseController {
     @GetMapping("/validateAttrValue")
     @ResponseBody
     public ResponseResult<?> validateAttrValue(DictAttr dictAttr) {
-        if (!dictAttrService.validateAttrValue(dictAttr)) {
-            return ResponseResult.error();
-        }
-        return ResponseResult.ok();
+        return ResponseResult.newInstance(dictAttrService.validateAttrValue(dictAttr));
     }
 
     /**
@@ -114,10 +111,7 @@ public class DictAttrController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_ATTR_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增字典属性")
     public ResponseResult<?> addDictAttr(@RequestBody DictAttr dictAttr) {
-        if (dictAttrService.addDictAttrOne(dictAttr)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(dictAttrService.addDictAttrOne(dictAttr));
     }
 
     /**
@@ -130,10 +124,7 @@ public class DictAttrController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_ATTR_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改字典属性")
     public ResponseResult<?> updateDictAttr(@RequestBody DictAttr dictAttr) {
-        if (dictAttrService.updateDictAttrOne(dictAttr)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(dictAttrService.updateDictAttrOne(dictAttr));
     }
 
     /**
@@ -146,9 +137,6 @@ public class DictAttrController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_ATTR_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除字典属性")
     public ResponseResult<?> deleteDictAttr(String attrIds) {
-        if (dictAttrService.deleteDictAttr(Arrays.asList(attrIds.split(",")))) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(dictAttrService.deleteDictAttr(StringUtils.split(attrIds, ',')));
     }
 }

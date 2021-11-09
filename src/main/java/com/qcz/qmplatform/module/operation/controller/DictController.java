@@ -8,6 +8,7 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.operation.domain.Dict;
 import com.qcz.qmplatform.module.operation.service.DictService;
@@ -22,8 +23,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.Arrays;
 
 /**
  * <p>
@@ -86,10 +85,7 @@ public class DictController extends BaseController {
     @GetMapping("/validateDictCode")
     @ResponseBody
     public ResponseResult<?> validateDictCode(String dictId, String dictCode) {
-        if (!dictService.validateDictCode(dictId, dictCode)) {
-            return ResponseResult.error();
-        }
-        return ResponseResult.ok();
+        return ResponseResult.newInstance(dictService.validateDictCode(dictId, dictCode));
     }
 
     /**
@@ -102,10 +98,7 @@ public class DictController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增字典")
     public ResponseResult<?> addDict(@RequestBody Dict dict) {
-        if (dictService.addDictOne(dict)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(dictService.addDictOne(dict));
     }
 
     /**
@@ -118,10 +111,7 @@ public class DictController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改字典")
     public ResponseResult<?> updateDict(@RequestBody Dict dict) {
-        if (dictService.updateDictOne(dict)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(dictService.updateDictOne(dict));
     }
 
     /**
@@ -134,9 +124,6 @@ public class DictController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除字典")
     public ResponseResult<?> deleteDict(String dictIds) {
-        if (dictService.deleteDict(Arrays.asList(dictIds.split(",")))) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+        return ResponseResult.newInstance(dictService.deleteDict(StringUtils.split(dictIds, ',')));
     }
 }

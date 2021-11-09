@@ -52,6 +52,10 @@ public class ResponseResult<T> {
         return new ResponseResult<>(ResponseCode.ERROR, null, null);
     }
 
+    public static ResponseResult<?> newInstance(boolean success) {
+        return new ResponseResult<>(success ? ResponseCode.SUCCESS : ResponseCode.ERROR, null, null);
+    }
+
     public int getCode() {
         return code;
     }
