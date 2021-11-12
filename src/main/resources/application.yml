@@ -14,7 +14,7 @@ server:
 
 spring:
   profiles:
-    active: pro
+    active: @spring.profiles.active@
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver
