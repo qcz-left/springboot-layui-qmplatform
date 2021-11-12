@@ -52,7 +52,7 @@ public class GenerateCode {
         gc.setAuthor("quchangzhong");
         gc.setOpen(false);
         gc.setServiceImplName("%sService");
-        gc.setDateType(DateType.TIME_PACK);
+        gc.setDateType(DateType.SQL_PACK);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
