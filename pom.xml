@@ -40,7 +40,6 @@
     </properties>
 
     <dependencies>
-
         <!--Spring相关-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -149,7 +148,6 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
         </dependency>
-
 
         <!--shiro-->
         <dependency>
