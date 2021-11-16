@@ -29,6 +29,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -51,7 +52,7 @@ public class OperateLogAspect {
     /**
      * 线程池服务
      */
-    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(50);
 
     @Pointcut("@annotation(com.qcz.qmplatform.common.aop.annotation.RecordLog)")
     public void operateLogPointcut() {
@@ -73,10 +74,11 @@ public class OperateLogAspect {
         String ipAddress = HttpServletUtils.getIpAddress(request);
         Object proceed;
         User currentUser = SubjectUtils.getUser();
+        Timestamp currTimestamp = DateUtils.getCurrTimestamp();
         try {
             proceed = joinPoint.proceed();
             executorService.submit(() -> {
-                insertOperateLog(1, currentUser, null, requestUrl, ipAddress, joinPoint);
+                insertOperateLog(1, currentUser, null, requestUrl, ipAddress, joinPoint, currTimestamp);
             });
         } catch (Exception e) {// 原逻辑程序有异常，这里抛回
             String msg;
@@ -102,9 +104,10 @@ public class OperateLogAspect {
         String requestUrl = request.getServletPath();
         String ipAddress = HttpServletUtils.getIpAddress(request);
         User currentUser = SubjectUtils.getUser();
+        Timestamp currTimestamp = DateUtils.getCurrTimestamp();
         executorService.submit(() -> {
             String stackTrace = stackTraceToString(e.getClass().getName(), e.getMessage(), e.getStackTrace());
-            insertOperateLog(0, currentUser, stackTrace, requestUrl, ipAddress, joinPoint);
+            insertOperateLog(0, currentUser, stackTrace, requestUrl, ipAddress, joinPoint, currTimestamp);
         });
 
     }
@@ -118,8 +121,9 @@ public class OperateLogAspect {
      * @param requestUrl    请求路径
      * @param ipAddress     请求ip地址
      * @param joinPoint     切点
+     * @param operateTime   操作时间
      */
-    private void insertOperateLog(int operateStatus, User currentUser, String expMsg, String requestUrl, String ipAddress, JoinPoint joinPoint) {
+    private void insertOperateLog(int operateStatus, User currentUser, String expMsg, String requestUrl, String ipAddress, JoinPoint joinPoint, Timestamp operateTime) {
         RecordLog recordLog = ((MethodSignature) joinPoint.getSignature()).getMethod().getAnnotation(RecordLog.class);
         String moduleName = null;
         String description = null;
@@ -159,7 +163,7 @@ public class OperateLogAspect {
             log.setOperateUserId(currentUser.getId());
             log.setOperateUserName(currentUser.getUsername());
         }
-        log.setOperateTime(DateUtils.getCurrTimestamp());
+        log.setOperateTime(operateTime);
         log.setOperateType(type.getType());
         log.setRequestUrl(requestUrl);
         log.setIpAddr(ipAddress);
