@@ -38,13 +38,13 @@
                 <label class="layui-icon layui-icon-password" for="user-login-password"></label>
                 <input type="password" name="password" id="user-login-password" lay-verify="required" placeholder="密码" class="layui-input" value="admin">
             </div>
-            <div class="layui-form-item">
-                <a href="${ctx}/user/noNeedLogin/retrievePasswordPage" class="layui-btn" style="color: #1760D7; background: unset; font-weight: bold; float: right;">忘记密码？</a>
-            </div>
             <div id="codeDiv" class="layui-form-item hide">
                 <label class="layui-icon layui-icon-vercode" for="user-login-code"></label>
                 <input type="text" name="validateCode" id="user-login-code" placeholder="验证码" lay-filter="validateCode" class="layui-input layui-input-inline">
                 <img id="codeImg"/>
+            </div>
+            <div class="layui-form-item">
+                <a href="${ctx}/user/noNeedLogin/retrievePasswordPage" class="layui-btn" style="color: #1760D7; background: unset; font-weight: bold; float: right;">忘记密码？</a>
             </div>
             <div class="layui-form-item">
                 <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login">登 入</button>
