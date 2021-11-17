@@ -6,10 +6,11 @@ body {
 }
 
 .user-login-main {
-	width: 375px;
-	margin: 0 auto;
-	box-sizing: border-box;
-	padding-top: 110px;
+	width: 800px;
+	height: 400px;
+	padding: 20px;
+	box-shadow: 0 2px 6px 0 rgb(0 0 0 / 10%);
+	background-color: #fff;
 }
 
 .user-login-header h2 {
@@ -24,8 +25,70 @@ body {
 	color: #999;
 }
 
+.login-left {
+	height: 100%;
+}
+
+.login-left .system-cn {
+	color: #009688;
+	font-size: 30px;
+	font-weight: 600;
+}
+
+.login-left .system-en {
+	color: gray;
+	font-size: 20px;
+}
+
 .layui-form {
 	padding: 20px;
+}
+
+.login-title {
+	padding: 40px 0 30px 0;
+	color: #333;
+	line-height: 28px;
+	text-align: center;
+}
+
+.login-title h1 {
+	margin-top: 10px;
+}
+
+.login-pattern {
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	width: 46px;
+	height: 46px;
+	z-index: 2;
+	cursor: pointer;
+}
+
+.login-pattern-logo {
+	width: 50px;
+	height: 50px;
+}
+
+#logo-code {
+	background: url("../common/image/logo-code.png");
+	background-size: 100% 100%;
+}
+
+#logo-pc {
+	background: url("../common/image/logo-pc.png");
+	background-size: 100% 100%;
+}
+
+#pc-login-tip {
+	position: absolute;
+	top: 0;
+	right: 46px;
+	width: 99px;
+	height: 18px;
+	background: url("../common/image/logo-pwd.png");
+	background-size: 100% 100%;
+	cursor: default;
 }
 
 .layui-icon-username, .layui-icon-password, .layui-icon-vercode {

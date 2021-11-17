@@ -27,6 +27,16 @@ layui.use(['form', 'layer'], function () {
         });
     }
 
+    $("#logo-code").click(function () {
+        $(".pc-login").hide();
+        $(".code-login").show();
+    });
+
+    $("#logo-pc").click(function () {
+        $(".code-login").hide();
+        $(".pc-login").show();
+    });
+
     /**
      * 加载验证码
      */
