@@ -3,8 +3,8 @@ package com.qcz.qmplatform.config;
 import cn.hutool.core.collection.CollectionUtil;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.module.listen.ShiroSessionListener;
+import com.qcz.qmplatform.module.system.realm.CustomCredentialsMatch;
 import com.qcz.qmplatform.module.system.realm.UserRealm;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -63,7 +63,7 @@ public class ShiroConfig {
     public UserRealm userRealm() {
         UserRealm userRealm = new UserRealm();
         // 加密设置
-        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+        CustomCredentialsMatch credentialsMatcher = new CustomCredentialsMatch();
         credentialsMatcher.setHashAlgorithmName(Constant.SUBJECT_ALGORITHM_NAME_MD5);
         credentialsMatcher.setHashIterations(Constant.SUBJECT_HASHTERATIONS);
         // 设置认证密码算法及迭代复杂度

@@ -17,7 +17,6 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
-import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.operation.service.LoginRecordService;
@@ -26,6 +25,7 @@ import com.qcz.qmplatform.module.system.assist.PermissionType;
 import com.qcz.qmplatform.module.system.assist.Thirdparty;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.domain.UserThirdparty;
+import com.qcz.qmplatform.module.system.realm.CustomToken;
 import com.qcz.qmplatform.module.system.service.IniService;
 import com.qcz.qmplatform.module.system.service.MenuService;
 import com.qcz.qmplatform.module.system.service.MessageService;
@@ -37,7 +37,6 @@ import com.qcz.qmplatform.module.system.vo.UserVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
@@ -137,7 +136,7 @@ public class LoginController {
     @Retryable(value = {PSQLException.class})
     public ResponseResult<?> login(@RequestBody PasswordVO passwordVO, HttpServletRequest request) {
         String loginname = passwordVO.getLoginname();
-        UsernamePasswordToken token = new UsernamePasswordToken(loginname, SecureUtils.simpleMD5(loginname, passwordVO.getPassword()));
+        CustomToken token = new CustomToken(loginname, passwordVO.getPassword());
 
         String clientIp = HttpServletUtils.getIpAddress(request);
 
@@ -230,7 +229,7 @@ public class LoginController {
 
         // 构造登录信息
         UserVO userOne = userService.getUserOne(userThirdparty.getUserId());
-        UsernamePasswordToken token = new UsernamePasswordToken(userOne.getLoginname(), userOne.getPassword());
+        CustomToken token = new CustomToken(userOne.getLoginname());
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
     }

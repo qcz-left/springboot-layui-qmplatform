@@ -35,7 +35,7 @@ public class UserThirdpartyService extends ServiceImpl<UserThirdpartyMapper, Use
     public UserThirdparty getUserIdByThirdparty(String thirdpartyId, Thirdparty thirdparty) {
         QueryWrapper<UserThirdparty> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("thirdparty_id", thirdpartyId);
-        queryWrapper.eq("access_type", thirdparty.name());
+        queryWrapper.eq("access_type", thirdparty.getType());
         return baseMapper.selectOne(queryWrapper);
     }
 }

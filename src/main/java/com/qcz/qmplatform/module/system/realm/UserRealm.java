@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.SpringContextUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
+import com.qcz.qmplatform.module.system.assist.LoginType;
 import com.qcz.qmplatform.module.system.mapper.UserMapper;
 import com.qcz.qmplatform.module.system.mapper.UserRoleMapper;
 import com.qcz.qmplatform.module.system.service.UserService;
@@ -15,7 +16,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -49,12 +49,17 @@ public class UserRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        CustomToken upToken = (CustomToken) token;
         String loginName = upToken.getUsername();
         // 到这里已经是密文
-        String password = new String((char[]) upToken.getCredentials());
         UserService userService = SpringContextUtils.getBean(UserService.class);
         UserVO user = userService.queryUserByName(loginName);
+        String password;
+        if (upToken.getType() == LoginType.NO_PASSWORD) {
+            password = user.getPassword();
+        } else {
+            password = SecureUtils.simpleMD5(loginName, new String((char[]) upToken.getCredentials()));
+        }
         // 账号不存在
         if (user == null) {
             throw new UnknownAccountException("不存在该账号");

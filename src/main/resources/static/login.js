@@ -38,7 +38,7 @@ layui.use(['form', 'layer'], function () {
     });
 
     // 加载二维码
-    $("#codeLoginContainer iframe").attr("src", "https://login.dingtalk.com/oauth2/challenge.htm?client_id=ding87uronmn84khshi8&prompt=consent&response_type=code&scope=openid&state=STATE&iframe=true&redirect_uri=" + window.location.protocol + "//" + window.location.host + ctx + "/noNeedLogin/preScanCodeLoginCheck");
+    $("#codeLoginContainer iframe").attr("src", "https://login.dingtalk.com/oauth2/auth?client_id=ding87uronmn84khshi8&prompt=consent&response_type=code&scope=openid&state=STATE&redirect_uri=" + window.location.protocol + "//" + window.location.host + ctx + "/noNeedLogin/preScanCodeLoginCheck");
 
     /**
      * 加载验证码
