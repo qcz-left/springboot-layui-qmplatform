@@ -51,7 +51,8 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String loginName = upToken.getUsername();
-        String password = SecureUtils.simpleMD5(loginName, new String((char[]) upToken.getCredentials()));
+        // 到这里已经是密文
+        String password = new String((char[]) upToken.getCredentials());
         UserService userService = SpringContextUtils.getBean(UserService.class);
         UserVO user = userService.queryUserByName(loginName);
         // 账号不存在

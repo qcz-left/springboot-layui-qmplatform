@@ -3,6 +3,13 @@ package com.qcz.qmplatform.module.system.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
+import com.aliyun.dingtalkcontact_1_0.models.GetUserHeaders;
+import com.aliyun.dingtalkcontact_1_0.models.GetUserResponseBody;
+import com.aliyun.dingtalkoauth2_1_0.models.GetUserTokenRequest;
+import com.aliyun.dingtalkoauth2_1_0.models.GetUserTokenResponse;
+import com.aliyun.tea.TeaException;
+import com.aliyun.teaopenapi.models.Config;
+import com.aliyun.teautil.models.RuntimeOptions;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -10,18 +17,23 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.operation.service.LoginRecordService;
 import com.qcz.qmplatform.module.operation.vo.LoginStrategyVO;
 import com.qcz.qmplatform.module.system.assist.PermissionType;
+import com.qcz.qmplatform.module.system.assist.Thirdparty;
 import com.qcz.qmplatform.module.system.domain.User;
+import com.qcz.qmplatform.module.system.domain.UserThirdparty;
 import com.qcz.qmplatform.module.system.service.IniService;
 import com.qcz.qmplatform.module.system.service.MenuService;
 import com.qcz.qmplatform.module.system.service.MessageService;
 import com.qcz.qmplatform.module.system.service.UserService;
+import com.qcz.qmplatform.module.system.service.UserThirdpartyService;
 import com.qcz.qmplatform.module.system.vo.PasswordVO;
 import com.qcz.qmplatform.module.system.vo.PermissionVO;
+import com.qcz.qmplatform.module.system.vo.UserVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -62,6 +74,8 @@ public class LoginController {
     IniService iniService;
     @Autowired
     UserService userService;
+    @Autowired
+    UserThirdpartyService userThirdpartyService;
 
     @GetMapping("/")
     public String index(Map<String, Object> root) {
@@ -123,7 +137,7 @@ public class LoginController {
     @Retryable(value = {PSQLException.class})
     public ResponseResult<?> login(@RequestBody PasswordVO passwordVO, HttpServletRequest request) {
         String loginname = passwordVO.getLoginname();
-        UsernamePasswordToken token = new UsernamePasswordToken(loginname, passwordVO.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken(loginname, SecureUtils.simpleMD5(loginname, passwordVO.getPassword()));
 
         String clientIp = HttpServletUtils.getIpAddress(request);
 
@@ -198,4 +212,82 @@ public class LoginController {
         request.getSession().setAttribute("validateCode", code);
         outputStream.close();
     }
+
+    /**
+     * 钉钉：扫码成功登录前的检查，获取 unionId 查询系统中绑定的账号，如果没查到，则需要先进行绑定账号
+     *
+     * @param authCode Oauth2 临时授权码
+     */
+    @RequestMapping("/noNeedLogin/preScanCodeLoginCheck")
+    public void preScanCodeLoginCheck(String authCode) throws Exception {
+        String unionId = getUserInfo(authCode).getUnionId();
+        System.out.println(unionId);
+        UserThirdparty userThirdparty = userThirdpartyService.getUserIdByThirdparty(unionId, Thirdparty.DINGTALK);
+        if (userThirdparty == null) {
+            // 不存在绑定记录，跳转至绑定记录页面
+            return;
+        }
+
+        // 构造登录信息
+        UserVO userOne = userService.getUserOne(userThirdparty.getUserId());
+        UsernamePasswordToken token = new UsernamePasswordToken(userOne.getLoginname(), userOne.getPassword());
+        Subject subject = SecurityUtils.getSubject();
+        subject.login(token);
+    }
+
+    /**
+     * 钉钉：根据临时授权码获取用户信息
+     */
+    private GetUserResponseBody getUserInfo(String code) throws Exception {
+        com.aliyun.dingtalkcontact_1_0.Client client = new com.aliyun.dingtalkcontact_1_0.Client(getDingConfig());
+        GetUserHeaders getUserHeaders = new GetUserHeaders();
+        getUserHeaders.xAcsDingtalkAccessToken = getAccessToken(code);
+        try {
+            return client.getUserWithOptions("me", getUserHeaders, new RuntimeOptions()).getBody();
+        } catch (TeaException err) {
+            LOGGER.error("", err);
+
+        } catch (Exception _err) {
+            TeaException err = new TeaException(_err.getMessage(), _err);
+            LOGGER.error("", err);
+        }
+        return new GetUserResponseBody();
+    }
+
+    /**
+     * 钉钉：获取用户token
+     */
+    private String getAccessToken(String code) throws Exception {
+        com.aliyun.dingtalkoauth2_1_0.Client client = new com.aliyun.dingtalkoauth2_1_0.Client(getDingConfig());
+        GetUserTokenRequest getUserTokenRequest = new GetUserTokenRequest()
+                .setClientId("ding87uronmn84khshi8")
+                .setClientSecret("_BDntVuwA9abnbbZBH9ogmRT_XKm6OBbpevUTmunkeWrWsadcaGeBvKzmI_hKS-Y")
+                .setCode(code)
+                .setGrantType("authorization_code");
+        try {
+            GetUserTokenResponse userToken = client.getUserToken(getUserTokenRequest);
+            System.out.println(userToken.getBody().getAccessToken());
+            System.out.println(userToken.getBody().getRefreshToken());
+            return userToken.getBody().getAccessToken();
+        } catch (TeaException err) {
+            LOGGER.error("", err);
+        } catch (Exception _err) {
+            TeaException err = new TeaException(_err.getMessage(), _err);
+            LOGGER.error("", err);
+        }
+        return "";
+    }
+
+    /**
+     * 钉钉：使用 Token 初始化账号Client
+     *
+     * @return Client
+     */
+    private Config getDingConfig() {
+        Config config = new Config();
+        config.protocol = "https";
+        config.regionId = "central";
+        return config;
+    }
+
 }

@@ -91,6 +91,14 @@ body {
 	cursor: default;
 }
 
+#codeLoginContainer iframe .login_qrcode_content {
+    margin-top: 20px !important;
+}
+
+#codeLoginContainer {
+	height: 280px;
+}
+
 .layui-icon-username, .layui-icon-password, .layui-icon-vercode {
 	position: absolute;
 	left: 1px;

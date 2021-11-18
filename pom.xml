@@ -37,9 +37,16 @@
         <jna.version>5.5.0</jna.version>
         <poi.version>3.17</poi.version>
         <jodconverter-boot.version>4.4.2</jodconverter-boot.version>
+        <dingtalk.version>1.1.99</dingtalk.version>
     </properties>
 
     <dependencies>
+        <!--钉钉-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>dingtalk</artifactId>
+            <version>${dingtalk.version}</version>
+        </dependency>
         <!--Spring相关-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

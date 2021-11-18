@@ -7,6 +7,7 @@
     top.rsaPublicKey = "${rsaPublicKey!}";
 </script>
 <script type="text/javascript" src="${ctx}/static/login.js"></script>
+<script type="text/javascript" src="${ctx}/static/common/ddLogin.js"></script>
 <title>Qu管理平台-登录</title>
 <body>
 <div class="user-login-main vertical-horizontal-center layui-row">
@@ -29,6 +30,7 @@
                 <i id="pc-login-tip" class="hide code-login"></i>
             </div>
         </div>
+        <#-- 表单登录 -->
         <form class="layui-form pc-login" id="login-form" action="javascript:void(0);" method="post">
             <div class="layui-form-item">
                 <label class="layui-icon layui-icon-username" for="user-login-username"></label>
@@ -50,6 +52,11 @@
                 <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login">登 入</button>
             </div>
         </form>
+        <#-- 扫码登录 -->
+        <div id="codeLoginContainer" class="hide code-login">
+            <iframe frameborder="0"
+                    style="width: 100%;height: 100%;"></iframe>
+        </div>
     </div>
     <div class="layui-trans user-login-footer">
         <p>

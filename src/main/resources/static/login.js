@@ -37,10 +37,13 @@ layui.use(['form', 'layer'], function () {
         $(".pc-login").show();
     });
 
+    // 加载二维码
+    $("#codeLoginContainer iframe").attr("src", "https://login.dingtalk.com/oauth2/challenge.htm?client_id=ding87uronmn84khshi8&prompt=consent&response_type=code&scope=openid&state=STATE&iframe=true&redirect_uri=" + window.location.protocol + "//" + window.location.host + ctx + "/noNeedLogin/preScanCodeLoginCheck");
+
     /**
      * 加载验证码
      */
-    let loadCode = function() {
+    let loadCode = function () {
         $("#codeDiv").show();
         $("#user-login-code").attr("lay-verify", "required");
         form.render(null, 'validateCode');
