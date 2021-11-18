@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
+import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -45,7 +46,7 @@ public class RequestAspect {
     public void paramsLog(JoinPoint joinPoint) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
-        LOGGER.info("[{}] {}", request.getMethod(), request.getRequestURL().toString());
+        LOGGER.info("[{}][{}] {}", HttpServletUtils.getIpAddress(request), request.getMethod(), request.getRequestURL().toString());
         LOGGER.info("{}", joinPoint.getSignature());
         Map<String, String> paramMap = ServletUtil.getParamMap(request);
 
