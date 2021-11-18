@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *${table.comment!} 服务实现类
+ * ${table.comment!} 服务实现类
  * </p>
  *
  * @author ${author}
@@ -22,7 +22,6 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperNam
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> {
 
     public boolean saveOne(${entity} ${entity?uncap_first}) {
-
         return save(${entity?uncap_first});
     }
 
