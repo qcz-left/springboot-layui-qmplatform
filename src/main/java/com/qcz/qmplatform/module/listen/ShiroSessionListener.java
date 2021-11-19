@@ -41,6 +41,9 @@ public class ShiroSessionListener implements SessionListener {
     public void onExpiration(Session session) {
         String sessionId = session.getId().toString();
         User user = CacheUtils.SESSION_CACHE.get(sessionId);
+        if (user == null) {
+            return;
+        }
         ResponseResult<?> responseResult = new ResponseResult<>(ResponseCode.AUTHORIZED_EXPIRE, "会话过期！", user.getUsername());
         LOGGER.debug("[{}] {}", user.getLoginname(), responseResult);
         CacheUtils.SESSION_CACHE.remove(sessionId);
