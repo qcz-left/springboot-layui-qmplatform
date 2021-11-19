@@ -31,9 +31,8 @@ import com.qcz.qmplatform.module.system.service.MenuService;
 import com.qcz.qmplatform.module.system.service.MessageService;
 import com.qcz.qmplatform.module.system.service.UserService;
 import com.qcz.qmplatform.module.system.service.UserThirdpartyService;
-import com.qcz.qmplatform.module.system.vo.PasswordVO;
+import com.qcz.qmplatform.module.system.vo.LoginFormVO;
 import com.qcz.qmplatform.module.system.vo.PermissionVO;
-import com.qcz.qmplatform.module.system.vo.UserVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -44,7 +43,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +58,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Controller
 @Module("身份认证")
 public class LoginController {
@@ -128,15 +130,15 @@ public class LoginController {
     /**
      * 登录操作
      *
-     * @param passwordVO 前台传进参数，包含用户名和密码等
+     * @param loginFormVO 前台传进参数，包含用户名和密码等
      */
     @PostMapping("/login")
     @ResponseBody
     @RecordLog(type = OperateType.LOGIN)
     @Retryable(value = {PSQLException.class})
-    public ResponseResult<?> login(@RequestBody PasswordVO passwordVO, HttpServletRequest request) {
-        String loginname = passwordVO.getLoginname();
-        CustomToken token = new CustomToken(loginname, passwordVO.getPassword());
+    public ResponseResult<?> login(@RequestBody LoginFormVO loginFormVO, HttpServletRequest request) {
+        String loginname = loginFormVO.getLoginname();
+        CustomToken token = new CustomToken(loginname, loginFormVO.getPassword());
 
         String clientIp = HttpServletUtils.getIpAddress(request);
 
@@ -154,7 +156,7 @@ public class LoginController {
                 userService.lockAccount(loginname);
                 loginRecordService.addRemark(loginname, clientIp, "账号登录错误次数达到" + lockAtErrorTimes + "次，已被锁定");
             } else {
-                String validateCode = passwordVO.getValidateCode();
+                String validateCode = loginFormVO.getValidateCode();
                 if (StringUtils.isBlank(validateCode)) {
                     if (currLoginErrorTimes >= codeAtErrorTimes) {
                         // 需要输入验证码
@@ -172,6 +174,15 @@ public class LoginController {
             if (currLoginErrorTimes > 0) {
                 // 清空当前账号错误次数
                 loginRecordService.clearLoginRecord(loginname, clientIp);
+            }
+            // 绑定第三方账号
+            String thirdparty = loginFormVO.getThirdparty();
+            if (StringUtils.isNotBlank(thirdparty)) {
+                UserThirdparty userThirdparty = new UserThirdparty();
+                userThirdparty.setUserId(SubjectUtils.getUserId());
+                userThirdparty.setThirdpartyId(loginFormVO.getThirdparyId());
+                userThirdparty.setAccessType(thirdparty);
+                userThirdpartyService.saveOne(userThirdparty);
             }
             LOGGER.debug("login success, loginName : {}", loginname);
             return ResponseResult.ok();
@@ -213,25 +224,42 @@ public class LoginController {
     }
 
     /**
-     * 钉钉：扫码成功登录前的检查，获取 unionId 查询系统中绑定的账号，如果没查到，则需要先进行绑定账号
+     * 与第三方绑定页面
      *
-     * @param authCode Oauth2 临时授权码
+     * @param thirdparty   第三方服务商
+     * @param thirdpartyId 第三方系统账号唯一ID
      */
-    @RequestMapping("/noNeedLogin/preScanCodeLoginCheck")
-    public void preScanCodeLoginCheck(String authCode) throws Exception {
+    @RequestMapping("/noNeedLogin/bindingThirdpartyPage/{thirdparty}/{thirdpartyId}")
+    public String bindingThirdpartyPage(@PathVariable("thirdparty") String thirdparty,
+                                        @PathVariable("thirdpartyId") String thirdpartyId,
+                                        Map<String, Object> root) {
+        root.put("thirdparty", thirdparty);
+        root.put("thirdpartyId", thirdpartyId);
+        root.put("rsaPublicKey", ConfigLoader.getRsaPublicKey());
+        return "bindingThirdparty";
+    }
+
+    /**
+     * 扫码成功登录前的检查，获取第三方用户id查询系统中绑定的账号，如果没查到，则需要先进行绑定账号
+     *
+     * @param authCode  Oauth2 临时授权码
+     * @param thirdparty 第三方服务商
+     */
+    @RequestMapping("/noNeedLogin/preScanCodeLoginCheck/{thirdparty}")
+    public String preScanCodeLoginCheck(String authCode, @PathVariable("thirdparty") String thirdparty) throws Exception {
         String unionId = getUserInfo(authCode).getUnionId();
-        System.out.println(unionId);
-        UserThirdparty userThirdparty = userThirdpartyService.getUserIdByThirdparty(unionId, Thirdparty.DINGTALK);
+        UserThirdparty userThirdparty = userThirdpartyService.getUserIdByThirdparty(unionId, Enum.valueOf(Thirdparty.class, thirdparty.toUpperCase()));
         if (userThirdparty == null) {
             // 不存在绑定记录，跳转至绑定记录页面
-            return;
+            return "redirect:/noNeedLogin/bindingThirdpartyPage/" + thirdparty + "/" + unionId;
         }
 
         // 构造登录信息
-        UserVO userOne = userService.getUserOne(userThirdparty.getUserId());
-        CustomToken token = new CustomToken(userOne.getLoginname());
+        User user = userService.getById(userThirdparty.getUserId());
+        CustomToken token = new CustomToken(user.getLoginname());
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
+        return "redirect:/";
     }
 
     /**
@@ -265,8 +293,6 @@ public class LoginController {
                 .setGrantType("authorization_code");
         try {
             GetUserTokenResponse userToken = client.getUserToken(getUserTokenRequest);
-            System.out.println(userToken.getBody().getAccessToken());
-            System.out.println(userToken.getBody().getRefreshToken());
             return userToken.getBody().getAccessToken();
         } catch (TeaException err) {
             LOGGER.error("", err);
@@ -274,7 +300,7 @@ public class LoginController {
             TeaException err = new TeaException(_err.getMessage(), _err);
             LOGGER.error("", err);
         }
-        return "";
+        return "/";
     }
 
     /**

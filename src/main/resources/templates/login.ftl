@@ -7,7 +7,6 @@
     top.rsaPublicKey = "${rsaPublicKey!}";
 </script>
 <script type="text/javascript" src="${ctx}/static/login.js"></script>
-<script type="text/javascript" src="${ctx}/static/common/ddLogin.js"></script>
 <title>Qu管理平台-登录</title>
 <body>
 <div class="user-login-main vertical-horizontal-center layui-row">
@@ -24,7 +23,7 @@
                 <h1 class="pc-login">账户登录</h1>
                 <h1 class="hide code-login">扫码登录</h1>
             </div>
-            <div class="login-pattern">
+            <div class="hide login-pattern">
                 <div id="logo-code" class="login-pattern-logo pc-login"></div>
                 <div id="logo-pc" class="hide login-pattern-logo code-login"></div>
                 <i id="pc-login-tip" class="hide code-login"></i>
@@ -52,17 +51,18 @@
                 <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login">登 入</button>
             </div>
         </form>
-        <#-- 扫码登录 -->
-        <div id="codeLoginContainer" class="hide code-login">
-            <iframe frameborder="0"
-                    style="width: 100%;height: 100%;"></iframe>
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend style="font-size: unset;">其他方式登录</legend>
+        </fieldset>
+        <div id="otherLoginWayContainer">
+            <i id="dingdingLogin" class="iconfont icon-dingding-o" title="使用钉钉账号登录"></i>
         </div>
     </div>
-    <div class="layui-trans user-login-footer">
-        <p>
-            © 2021 <span><a href="https://github.com/qcz-left/springboot-layui-qmplatform" target="_blank">GitHub</a></span>
-        </p>
-    </div>
+</div>
+<div class="layui-trans user-login-footer">
+    <p>
+        © 2021 <span><a href="https://github.com/qcz-left/springboot-layui-qmplatform" target="_blank">GitHub</a></span>
+    </p>
 </div>
 </body>
 </html>

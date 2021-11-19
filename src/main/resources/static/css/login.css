@@ -129,3 +129,11 @@ body {
 	box-sizing: border-box;
 	color: rgba(0, 0, 0, .5);
 }
+
+.iconfont {
+	font-size: 32px;
+}
+
+#dingdingLogin {
+	cursor: pointer;
+}
