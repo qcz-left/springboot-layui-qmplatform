@@ -1,9 +1,9 @@
 package com.qcz.qmplatform.module.sync;
 
-import cn.hutool.core.thread.ThreadUtil;
 import com.qcz.qmplatform.common.bean.DBProperties;
 import com.qcz.qmplatform.common.bean.Observable;
 import com.qcz.qmplatform.common.bean.Observed;
+import com.qcz.qmplatform.common.utils.ThreadPoolUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,12 +22,12 @@ public class DBChangeCenter implements Observed, Runnable {
     /**
      * 观察者列表
      */
-    public static final List<Observable> OBSERVABLE_LIST = new ArrayList<>();
+    private static final List<Observable> OBSERVABLE_LIST = new ArrayList<>();
 
     /**
      * 消息队列
      */
-    public static final BlockingQueue<Object> MSG_QUEUE = new LinkedBlockingQueue<>();
+    private static final BlockingQueue<Object> MSG_QUEUE = new LinkedBlockingQueue<>();
 
     @Override
     public void addObserver(Observable observable) {
@@ -50,7 +50,7 @@ public class DBChangeCenter implements Observed, Runnable {
             try {
                 Object msg = MSG_QUEUE.take();
                 for (Observable observable : OBSERVABLE_LIST) {
-                    ThreadUtil.execute(() -> {
+                    ThreadPoolUtils.execute(() -> {
                         observable.receiveMessage(msg);
                     });
                 }
@@ -79,7 +79,7 @@ public class DBChangeCenter implements Observed, Runnable {
         private static final DBChangeCenter INSTANCE = new DBChangeCenter();
 
         static {
-            ThreadUtil.execute(INSTANCE);
+            ThreadPoolUtils.execute(INSTANCE);
         }
 
     }

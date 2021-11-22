@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.common.aop.aspect;
 
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.extra.mail.MailException;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
@@ -32,7 +33,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * 操作日志 拦截
@@ -52,7 +52,7 @@ public class OperateLogAspect {
     /**
      * 线程池服务
      */
-    private final ExecutorService executorService = Executors.newFixedThreadPool(50);
+    private final ExecutorService executorService = ThreadUtil.newExecutor(50);
 
     @Pointcut("@annotation(com.qcz.qmplatform.common.aop.annotation.RecordLog)")
     public void operateLogPointcut() {
