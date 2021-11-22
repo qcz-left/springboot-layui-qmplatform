@@ -2101,3 +2101,18 @@ COMMENT ON COLUMN "public"."tbl_notepad"."is_public" IS '是否公开（0：私�
 -- Primary Key structure for table tbl_notepad
 -- ----------------------------
 ALTER TABLE "public"."tbl_notepad" ADD CONSTRAINT "tbl_notepad_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- Table structure for sys_user_thirdparty
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."sys_user_thirdparty";
+CREATE TABLE "public"."sys_user_thirdparty" (
+  "user_id" varchar(50) COLLATE "pg_catalog"."default",
+  "thirdparty_id" varchar(50) COLLATE "pg_catalog"."default",
+  "access_type" varchar(50) COLLATE "pg_catalog"."default"
+)
+;
+COMMENT ON COLUMN "public"."sys_user_thirdparty"."user_id" IS '用户id';
+COMMENT ON COLUMN "public"."sys_user_thirdparty"."thirdparty_id" IS '第三方接入用户唯一id';
+COMMENT ON COLUMN "public"."sys_user_thirdparty"."access_type" IS '接入类型';
+COMMENT ON TABLE "public"."sys_user_thirdparty" IS '用户和第三方的绑定关系';
