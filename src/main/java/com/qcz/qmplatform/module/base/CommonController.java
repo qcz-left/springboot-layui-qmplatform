@@ -62,6 +62,11 @@ public class CommonController extends BaseController {
     @Autowired(required = false)
     private DocumentConverter converter;
 
+    @GetMapping("/showLogPage")
+    public String showLogPage() {
+        return PREFIX + "showLog";
+    }
+
     /**
      * 文件下载
      *
