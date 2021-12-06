@@ -26,6 +26,6 @@ rm -f ./ope_data_bak.sql
 
 echo "Finish."
 # 完成标志
-echo "$FINISH$"
+echo "\$FINISH\$"
 
 set +x
