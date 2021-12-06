@@ -1,7 +1,9 @@
 package com.qcz.qmplatform.module.socket;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.RuntimeUtil;
+import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 
 @ServerEndpoint("/socket/log")
@@ -26,18 +29,30 @@ public class LogWebSocketServer {
 
     private Process process;
     private InputStream inputStream;
+    private LogThread logThread;
 
     @OnOpen
     public void onOpen(Session session) {
-        process = RuntimeUtil.exec("tail -f " + FileUtils.WEB_PATH + "/logs/qmplatform.log");
+        List<String> logPathList = session.getRequestParameterMap().get("logPath");
+        if (CollectionUtil.isEmpty(logPathList)) {
+            onClose(session);
+            throw new CommonException("日志路径参数缺失！");
+        }
+        String logPath = logPathList.get(0);
+        if (!FileUtils.exist(logPath)) {
+            onClose(session);
+            throw new CommonException("日志文件不存在！");
+        }
+        process = RuntimeUtil.exec("tail -f " + logPath);
         inputStream = process.getInputStream();
-        LogThread logThread = new LogThread(session);
+        logThread = new LogThread(session);
         logThread.start();
     }
 
     @OnClose
     public void onClose(Session session) {
         LOGGER.debug("onClose: " + session.getId());
+        logThread.interrupt();
         IoUtil.close(inputStream);
         if (process != null) {
             process.destroy();
@@ -64,7 +79,7 @@ public class LogWebSocketServer {
         public void run() {
             String line;
             try {
-                while ((line = bufferedReader.readLine()) != null) {
+                while (!Thread.currentThread().isInterrupted() && (line = bufferedReader.readLine()) != null) {
                     session.getBasicRemote().sendText(line);
                 }
             } catch (IOException e) {

@@ -207,6 +207,11 @@ public class LoginController {
         return "redirect:/loginPage";
     }
 
+    @RequestMapping(value = "/clearLoginInfo")
+    public void clearLoginInfo() {
+        SubjectUtils.removeUser();
+    }
+
     /**
      * 获取登录的图形验证码
      */

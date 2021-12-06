@@ -28,13 +28,14 @@ public class ShellTools {
      *
      * @param database    数据库名称
      * @param bakFilePath 备份路径
+     * @param logPath     日志文件目录
      */
-    public static void databaseRecover(String database, String bakFilePath) {
+    public static void databaseRecover(String database, String bakFilePath, String logPath) {
         String recoverSh = FileUtils.WEB_PATH + "/shell/db_bak_recover.sh";
         if (!new File(recoverSh).exists()) {
             throw new CommonException("备份恢复所需脚本文件缺失！");
         }
-        LOGGER.debug(RuntimeUtil.execForStr(StringUtils.format("{} {} {}", recoverSh, bakFilePath, database)));
+        ThreadPoolUtils.execute(() -> RuntimeUtil.execForStr(StringUtils.format("{} {} {} > {}", recoverSh, bakFilePath, database, logPath)));
     }
 
     private ShellTools() {

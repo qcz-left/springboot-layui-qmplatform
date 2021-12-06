@@ -2,11 +2,9 @@ package com.qcz.qmplatform.module.operation.service;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.constant.ResponseCode;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.CronUtils;
@@ -15,13 +13,11 @@ import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.ShellTools;
 import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.common.utils.SystemUtils;
 import com.qcz.qmplatform.common.utils.YmlPropertiesUtils;
 import com.qcz.qmplatform.module.operation.domain.DataBak;
 import com.qcz.qmplatform.module.operation.mapper.DataBakMapper;
 import com.qcz.qmplatform.module.operation.vo.DataBakStrategyVO;
-import com.qcz.qmplatform.module.socket.SessionWebSocketServer;
 import com.qcz.qmplatform.module.sync.DBChangeCenter;
 import com.qcz.qmplatform.module.system.assist.IniDefine;
 import com.qcz.qmplatform.module.system.assist.MessageInstance;
@@ -201,13 +197,9 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         if (!new File(bakPath).exists()) {
             return ResponseResult.error("备份文件不存在！");
         }
+        String logPath = FileUtils.WEB_PATH + "/logs/recover_bak_log_" + DateUtils.format(DateUtils.date(), DatePattern.PURE_DATETIME_PATTERN) + ".log";
+        ShellTools.databaseRecover(database, bakPath, logPath);
 
-        ShellTools.databaseRecover(database, bakPath);
-
-        // 退出重新登录
-        ResponseResult<?> responseResult = new ResponseResult<>(ResponseCode.DATA_BAK_RECOVER, null, null);
-        SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), SubjectUtils.getSessionId());
-        SubjectUtils.removeUser();
-        return responseResult;
+        return ResponseResult.ok(logPath);
     }
 }

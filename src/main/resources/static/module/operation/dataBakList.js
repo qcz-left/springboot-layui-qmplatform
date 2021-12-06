@@ -124,6 +124,11 @@ layui.use(['table'], function () {
                 top.layer.closeAll();
                 if (!CommonUtil.respSuccess(data)) {
                     top.layer.error(data.msg || "恢复备份失败！");
+                } else {
+                    LayerUtil.openLayer({
+                        title: "恢复备份",
+                        content: ctx + "/showLogPage?needReLogin=true&logPath=" + data.msg,
+                    }, true);
                 }
             })
         });
