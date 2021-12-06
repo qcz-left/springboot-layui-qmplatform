@@ -35,11 +35,10 @@ public class ShellTools {
         if (!new File(recoverSh).exists()) {
             throw new CommonException("备份恢复所需脚本文件缺失！");
         }
+        FileUtils.touch(logPath);
         String exeSh = StringUtils.format("{} {} {} > {} 2>&1", recoverSh, bakFilePath, database, logPath);
         LOGGER.debug("recover exe shell: " + exeSh);
-        ThreadPoolUtils.execute(() -> {
-            RuntimeUtil.execForStr(exeSh);
-        });
+        ThreadPoolUtils.execute(() -> RuntimeUtil.exec(exeSh));
     }
 
     private ShellTools() {
