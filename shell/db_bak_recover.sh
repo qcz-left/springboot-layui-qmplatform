@@ -24,7 +24,6 @@ psql -U postgres -d $database -f ./ope_data_bak.sql
 # 删除备份表文件
 rm -f ./ope_data_bak.sql
 
-echo "Finish."
 # 完成标志
 echo "\$FINISH\$"
 

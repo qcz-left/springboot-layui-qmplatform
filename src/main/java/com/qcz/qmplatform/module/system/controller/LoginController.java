@@ -207,9 +207,11 @@ public class LoginController {
         return "redirect:/loginPage";
     }
 
-    @RequestMapping(value = "/clearLoginInfo")
-    public void clearLoginInfo() {
+    @PostMapping(value = "/clearLoginInfo")
+    @ResponseBody
+    public ResponseResult<?> clearLoginInfo() {
         SubjectUtils.removeUser();
+        return ResponseResult.ok();
     }
 
     /**

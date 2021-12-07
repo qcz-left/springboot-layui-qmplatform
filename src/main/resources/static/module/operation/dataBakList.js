@@ -96,7 +96,7 @@ layui.use(['table'], function () {
         top.layer.prompt({
             formType: 2,
             title: '请填写备份描述'
-        }, function(val, index){
+        }, function (val, index) {
             top.layer.close(index);
             let backIndex = top.layer.loadingWithText('正在备份，请稍后...');
             CommonUtil.postAjax(ctx + '/operation/data-bak/exeBackup', {
@@ -127,7 +127,9 @@ layui.use(['table'], function () {
                 } else {
                     LayerUtil.openLayer({
                         title: "恢复备份",
-                        content: ctx + "/showLogPage?needReLogin=true&logPath=" + data.msg,
+                        content: ctx + "/showLogPage?needReLogin=true&cmdId=" + data.data.cmdId + "&logPath=" + data.data.logPath,
+                        area: ['50%', '65%'],
+                        closeBtn: 0
                     }, true);
                 }
             })

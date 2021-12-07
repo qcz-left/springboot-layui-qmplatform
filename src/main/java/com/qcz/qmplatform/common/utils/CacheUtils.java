@@ -5,8 +5,12 @@ import cn.hutool.cache.impl.LFUCache;
 import cn.hutool.cache.impl.TimedCache;
 import cn.hutool.core.date.DateUnit;
 import com.qcz.qmplatform.module.system.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CacheUtils {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CacheUtils.class);
 
     /**
      * 公用缓存,100个容量，最少使用策略
@@ -22,6 +26,11 @@ public class CacheUtils {
      * 会话id 对应的用户信息
      */
     public static final TimedCache<String, User> SESSION_CACHE = CacheUtil.newTimedCache(DateUnit.HOUR.getMillis() * 2);
+
+    /**
+     * cmd 待执行命令缓存
+     */
+    private static final TimedCache<String, String> CMD_CACHE = CacheUtil.newTimedCache(DateUnit.HOUR.getMillis() * 2);
 
     public static String get(String key) {
         return COMMON_CACHE.get(key);
@@ -41,4 +50,16 @@ public class CacheUtils {
     public static void put(String key, String value) {
         COMMON_CACHE.put(key, value);
     }
+
+    public static void putCmd(String key, String value) {
+        CMD_CACHE.put(key, value);
+    }
+
+    public static void exeCmd(String key) {
+        String cmd = CacheUtils.CMD_CACHE.get(key);
+        LOGGER.debug("exe cache cmd: " + cmd);
+        ShellTools.exec(cmd);
+        CacheUtils.CMD_CACHE.remove(key);
+    }
+
 }

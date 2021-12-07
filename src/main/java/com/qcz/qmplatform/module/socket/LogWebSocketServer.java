@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.RuntimeUtil;
 import com.qcz.qmplatform.common.exception.CommonException;
+import com.qcz.qmplatform.common.utils.CacheUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,15 @@ public class LogWebSocketServer {
             onClose(session);
             throw new CommonException("日志路径参数缺失！");
         }
+        List<String> cmdIdList = session.getRequestParameterMap().get("cmdId");
+        if (CollectionUtil.isEmpty(cmdIdList)) {
+            onClose(session);
+            throw new CommonException("命令ID参数缺失！");
+        }
+
         String logPath = logPathList.get(0);
+        String cmdId = cmdIdList.get(0);
+
         if (!FileUtils.exist(logPath)) {
             onClose(session);
             throw new CommonException("日志文件不存在！");
@@ -47,6 +56,9 @@ public class LogWebSocketServer {
         inputStream = process.getInputStream();
         logThread = new LogThread(session);
         logThread.start();
+
+        // 执行缓存命令
+        CacheUtils.exeCmd(cmdId);
     }
 
     @OnClose

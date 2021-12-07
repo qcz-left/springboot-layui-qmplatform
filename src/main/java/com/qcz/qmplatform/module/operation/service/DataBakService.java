@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -198,8 +199,12 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
             return ResponseResult.error("备份文件不存在！");
         }
         String logPath = FileUtils.WEB_PATH + "/logs/recover_bak_log_" + DateUtils.format(DateUtils.date(), DatePattern.PURE_DATETIME_PATTERN) + ".log";
-        ShellTools.databaseRecover(database, bakPath, logPath);
+        FileUtils.touch(logPath);
+        String cmdId = ShellTools.databaseRecoverToCache(database, bakPath, logPath);
+        Map<String, String> data = new HashMap<>(4);
+        data.put("cmdId", cmdId);
+        data.put("logPath", logPath);
 
-        return ResponseResult.ok(logPath);
+        return ResponseResult.ok(data);
     }
 }
