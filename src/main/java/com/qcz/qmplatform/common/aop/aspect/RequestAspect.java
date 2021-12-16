@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.http.Header;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -30,7 +31,7 @@ import java.util.Map;
 @Component
 public class RequestAspect {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RequestAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("");
 
     @Pointcut("execution(* com.qcz.qmplatform.module..*.controller..*.*(..))")
     public void requestPointcut() {
@@ -46,17 +47,20 @@ public class RequestAspect {
     public void paramsLog(JoinPoint joinPoint) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
-        LOGGER.info("[{}][{}] {}", HttpServletUtils.getIpAddress(request), request.getMethod(), request.getRequestURL().toString());
+        LOGGER.info("【start】 - [{}] {}", request.getMethod(), request.getRequestURL().toString());
         LOGGER.info("{}", joinPoint.getSignature());
         Map<String, String> paramMap = ServletUtil.getParamMap(request);
 
+        String param = "";
+        String body = "";
+
         if (!paramMap.isEmpty()) {
-            LOGGER.info("[params] {");
+            StringBuilder sb = new StringBuilder();
             for (String paramKey : paramMap.keySet()) {
                 String value = paramMap.get(paramKey);
-                LOGGER.info("  {}: {}", paramKey, checkPwdFieldHidden(paramKey, value));
+                sb.append(StringUtils.format("\n    {}: {}", paramKey, checkPwdFieldHidden(paramKey, value)));
             }
-            LOGGER.info("}");
+            param = StringUtils.format("\n  [param] ==>{}\n", sb.toString());
         }
 
         Object[] args = joinPoint.getArgs();
@@ -68,20 +72,21 @@ public class RequestAspect {
                 for (Annotation annotation : itemParameterAnnotation) {
                     if (annotation.annotationType() == RequestBody.class) {
                         Class<?> argClass = arg.getClass();
-                        LOGGER.info("[body] {}: {", argClass.getSimpleName());
                         Map argMap = BeanUtil.beanToMap(arg);
                         if (arg instanceof Map) {
                             argMap = (Map) arg;
-                         }
+                        }
+                        StringBuilder sb = new StringBuilder();
                         for (Object paramKey : argMap.keySet()) {
                             Object paramValue = argMap.get(paramKey);
-                            LOGGER.info("  {}: {}", paramKey, checkPwdFieldHidden(String.valueOf(paramKey), paramValue));
+                            sb.append(StringUtils.format("\n    {}: {}", paramKey, checkPwdFieldHidden(String.valueOf(paramKey), paramValue)));
                         }
-                        LOGGER.info("}");
+                        body = StringUtils.format("\n  [body] {} ==>{}\n", argClass.getSimpleName(), sb.toString());
                     }
                 }
             }
         }
+        LOGGER.info("<<{}>> {}{}{}", HttpServletUtils.getIpAddress(request), request.getHeader(Header.USER_AGENT.toString()), param, body);
     }
 
     @Around(value = "requestPointcut()")
@@ -89,7 +94,7 @@ public class RequestAspect {
         long startTime = DateUtil.current(false);
         Object proceed = joinPoint.proceed();
         long endTime = DateUtil.current(false);
-        LOGGER.info("cost: {} ms", endTime - startTime);
+        LOGGER.info("【 end 】 - cost: {} ms", endTime - startTime);
         return proceed;
     }
 
