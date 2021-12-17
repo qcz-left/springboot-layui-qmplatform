@@ -33,11 +33,11 @@
         <form class="layui-form pc-login" id="login-form" action="javascript:void(0);" method="post">
             <div class="layui-form-item">
                 <label class="layui-icon layui-icon-username" for="user-login-username"></label>
-                <input type="text" name="loginname" id="user-login-username" lay-verify="required" placeholder="用户名" class="layui-input" value="admin">
+                <input type="text" name="loginname" id="user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
             </div>
             <div class="layui-form-item">
                 <label class="layui-icon layui-icon-password" for="user-login-password"></label>
-                <input type="password" name="password" id="user-login-password" lay-verify="required" placeholder="密码" class="layui-input" value="admin">
+                <input type="password" name="password" id="user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
             </div>
             <div id="codeDiv" class="layui-form-item hide">
                 <label class="layui-icon layui-icon-vercode" for="user-login-code"></label>
