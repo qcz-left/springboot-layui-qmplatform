@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring/>
 <#assign ctx = "${requestContext.contextPath}">
 <script type="text/javascript">
     let ctx = "${requestContext.contextPath}";

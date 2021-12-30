@@ -33,7 +33,7 @@ public class User implements Serializable {
      * 密码
      */
     @TableField("password")
-    @NotBlank(message = "密码不能为空")
+    @NotBlank(message = "{pwd_not_blank}")
     @Pattern(regexp = "^[\\S]{5,12}$", message = "密码必须5到12位，且不能出现空格")
     private String password;
 

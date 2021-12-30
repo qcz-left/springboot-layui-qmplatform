@@ -20,7 +20,7 @@
     <div class="layui-col-md6">
         <div class="login-header">
             <div class="login-title">
-                <h1 class="pc-login">账户登录</h1>
+                <h1 class="pc-login"><@spring.message "account_login"/></h1>
                 <h1 class="hide code-login">扫码登录</h1>
             </div>
             <div class="hide login-pattern">
