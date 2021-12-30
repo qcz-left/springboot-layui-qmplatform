@@ -77,9 +77,7 @@ public class OperateLogAspect {
         Timestamp currTimestamp = DateUtils.getCurrTimestamp();
         try {
             proceed = joinPoint.proceed();
-            executorService.submit(() -> {
-                insertOperateLog(1, currentUser, null, requestUrl, ipAddress, joinPoint, currTimestamp);
-            });
+            executorService.submit(() -> insertOperateLog(1, currentUser, null, requestUrl, ipAddress, joinPoint, currTimestamp));
         } catch (Exception e) {// 原逻辑程序有异常，这里抛回
             String msg;
             if (e instanceof MailException && StringUtils.containsAny(e.getMessage(), "AuthenticationFailedException", "535")) {
@@ -134,11 +132,11 @@ public class OperateLogAspect {
                 case LOGIN:
                     moduleName = "登录系统";
                     PasswordVO formUser = (PasswordVO) joinPoint.getArgs()[0];
-                    String loginname = formUser.getLoginname();
+                    String loginName = formUser.getLoginname();
                     String password = formUser.getPassword();
-                    currentUser = userService.findByLoginNameAndPassword(loginname, SecureUtils.simpleMD5(loginname, password));
+                    currentUser = userService.findByLoginNameAndPassword(loginName, SecureUtils.simpleMD5(loginName, password));
                     if (currentUser == null) {
-                        description = loginname + " 尝试登录系统，但失败了";
+                        description = loginName + " 尝试登录系统，但失败了";
                     } else {
                         description = currentUser.getUsername() + " 进入了系统";
                     }
@@ -194,7 +192,7 @@ public class OperateLogAspect {
         for (StackTraceElement stet : elements) {
             strBuff.append(stet).append("\n");
         }
-        String stackTrace = exceptionName + ":" + exceptionMessage + "\n\t" + strBuff.toString();
+        String stackTrace = exceptionName + ":" + exceptionMessage + "\n\t" + strBuff;
         return StringUtils.omit(stackTrace, 999);
     }
 

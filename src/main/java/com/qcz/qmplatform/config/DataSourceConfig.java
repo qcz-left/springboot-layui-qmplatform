@@ -26,7 +26,7 @@ public class DataSourceConfig {
      * 配置Druid后台监控
      */
     @Bean
-    public ServletRegistrationBean statViewServlet() {
+    public ServletRegistrationBean<StatViewServlet> statViewServlet() {
         ServletRegistrationBean<StatViewServlet> bean = new ServletRegistrationBean<>(new StatViewServlet(), "/druid/*");
 
         //增加配置
@@ -52,8 +52,8 @@ public class DataSourceConfig {
      * filter  设置后台监控过滤
      */
     @Bean
-    public FilterRegistrationBean webStatFilter() {
-        FilterRegistrationBean bean = new FilterRegistrationBean();
+    public FilterRegistrationBean<WebStatFilter> webStatFilter() {
+        FilterRegistrationBean<WebStatFilter> bean = new FilterRegistrationBean<>();
         WebStatFilter webStatFilter = new WebStatFilter();
         bean.setFilter(webStatFilter);
 

@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Aspect
 @Component
@@ -40,13 +41,11 @@ public class RequestAspect {
 
     /**
      * 打印请求参数
-     *
-     * @param joinPoint
      */
     @Before(value = "requestPointcut()")
     public void paramsLog(JoinPoint joinPoint) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes.getRequest();
+        HttpServletRequest request = Objects.requireNonNull(requestAttributes).getRequest();
         LOGGER.info("【start】 - [{}] {}", request.getMethod(), request.getRequestURL().toString());
         LOGGER.info("{}", joinPoint.getSignature());
         Map<String, String> paramMap = ServletUtil.getParamMap(request);
@@ -72,12 +71,13 @@ public class RequestAspect {
                 for (Annotation annotation : itemParameterAnnotation) {
                     if (annotation.annotationType() == RequestBody.class) {
                         Class<?> argClass = arg.getClass();
-                        Map argMap = BeanUtil.beanToMap(arg);
+                        Map<String, Object> argMap = BeanUtil.beanToMap(arg);
                         if (arg instanceof Map) {
-                            argMap = (Map) arg;
+                            //noinspection unchecked
+                            argMap = (Map<String, Object>) arg;
                         }
                         StringBuilder sb = new StringBuilder();
-                        for (Object paramKey : argMap.keySet()) {
+                        for (String paramKey : argMap.keySet()) {
                             Object paramValue = argMap.get(paramKey);
                             sb.append(StringUtils.format("\n    {}: {}", paramKey, checkPwdFieldHidden(String.valueOf(paramKey), paramValue)));
                         }

@@ -71,7 +71,7 @@ public class MybatisInterceptor implements Interceptor {
         CacheKey cacheKey;
         Executor executor = (Executor) invocation.getTarget();
         RowBounds rowBounds = (RowBounds) args[ROW_BOUNDS_INDEX];
-        ResultHandler resultHandler = (ResultHandler) args[RESULT_HANDLER_INDEX];
+        ResultHandler<?> resultHandler = (ResultHandler<?>) args[RESULT_HANDLER_INDEX];
         if (args.length == 4) {
             boundSql = ms.getBoundSql(parameter);
             cacheKey = executor.createCacheKey(ms, parameter, rowBounds, boundSql);
@@ -97,9 +97,9 @@ public class MybatisInterceptor implements Interceptor {
         return newMappedStatement;
     }
 
-    private class BoundSqlSource implements SqlSource {
+    private static class BoundSqlSource implements SqlSource {
 
-        private BoundSql boundSql;
+        private final BoundSql boundSql;
 
         private BoundSqlSource(BoundSql boundSql) {
             this.boundSql = boundSql;

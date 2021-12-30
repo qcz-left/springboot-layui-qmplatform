@@ -46,16 +46,15 @@ public class DBChangeCenter implements Observed, Runnable {
 
     @Override
     public void run() {
+        //noinspection InfiniteLoopStatement
         while (true) {
             try {
                 Object msg = MSG_QUEUE.take();
                 for (Observable observable : OBSERVABLE_LIST) {
-                    ThreadPoolUtils.execute(() -> {
-                        observable.receiveMessage(msg);
-                    });
+                    ThreadPoolUtils.execute(() -> observable.receiveMessage(msg));
                 }
             } catch (InterruptedException e) {
-                LOGGER.error("", e);
+                LOGGER.error("An error occurred in MSG_QUEUE.", e);
             }
         }
     }

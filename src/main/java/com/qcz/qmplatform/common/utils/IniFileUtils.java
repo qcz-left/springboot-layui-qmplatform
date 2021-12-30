@@ -9,7 +9,7 @@ public class IniFileUtils {
      */
     private static final String CONFIG_FILE_PATH = FileUtils.WEB_PATH + "/config/config.ini";
 
-    private static Setting configIniFile;
+    private static final Setting configIniFile;
 
     static {
         FileUtils.createIfNotExists(CONFIG_FILE_PATH);

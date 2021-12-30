@@ -21,7 +21,7 @@ public class SpringContextUtils implements ApplicationContextAware {
 
     // 设置上下文
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
+    public void setApplicationContext(@SuppressWarnings("NullableProblems") ApplicationContext applicationContext) {
         SpringContextUtils.applicationContext = applicationContext;
     }
 
