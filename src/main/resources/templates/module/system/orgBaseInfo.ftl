@@ -298,8 +298,9 @@
                 data.field.password = rsaEncrypt(data.field.password);
                 CommonUtil.postOrPut(nodeId, ctx + (nodeId ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
                     top.layer.close(index);
-                    reloadFrame();
-                    LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE)
+                    LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
+                        reloadFrame();
+                    });
                 });
                 return false;
             });

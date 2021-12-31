@@ -6,10 +6,14 @@ import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.session.InvalidSessionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -24,6 +28,26 @@ public class GlobalExceptionHandler {
     public ResponseResult<?> errorHandleByCommon(Exception ex) {
         LOGGER.error(ex.getMessage(), ex);
         return ResponseResult.error(ex.getMessage());
+    }
+
+    /**
+     * 数据校验异常
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public ResponseResult<?> errorHandleByValid(MethodArgumentNotValidException ex) {
+        LOGGER.error(ex.getMessage(), ex);
+        StringBuilder error = new StringBuilder();
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        int errorSize = fieldErrors.size();
+        if (errorSize == 1) {
+            error.append(fieldErrors.get(0).getDefaultMessage());
+        } else {
+            for (int i = 0; i < errorSize; i++) {
+                error.append(i + 1).append(". ").append(fieldErrors.get(i).getDefaultMessage()).append(".</br>");
+            }
+        }
+        return ResponseResult.error(error.toString());
     }
 
     /**
