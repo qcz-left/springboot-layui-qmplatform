@@ -156,7 +156,7 @@ public class OperateLogAspect {
         }
         OperateLog log = new OperateLog();
         log.setOperateModule(moduleName);
-        log.setLogId(IdUtils.simpleUUID());
+        log.setLogId(IdUtils.getUUID());
         if (currentUser != null) {
             log.setOperateUserId(currentUser.getId());
             log.setOperateUserName(currentUser.getUsername());

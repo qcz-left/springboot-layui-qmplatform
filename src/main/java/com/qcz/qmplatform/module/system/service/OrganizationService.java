@@ -42,7 +42,7 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
     }
 
     public boolean addOrgOne(Organization org) {
-        org.setOrganizationId(IdUtils.simpleUUID());
+        org.setOrganizationId(IdUtils.getUUID());
         org.setCreateTime(DateUtils.getCurrTimestamp());
         return save(org);
     }

@@ -103,7 +103,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
         Message tmpMessage = getOne(queryWarpper);
         if (tmpMessage == null) {
             if (StringUtils.isBlank(message.getMessageId())) {
-                message.setMessageId(IdUtils.simpleUUID());
+                message.setMessageId(IdUtils.getUUID());
             }
             message.setCreateTime(currTimestamp);
             save(message);
@@ -127,7 +127,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
             receiverIds = CollectionUtil.getFieldValues(userService.queryAllAdmin(), "id", String.class);
         }
         for (String receiverId : receiverIds) {
-            message.setMessageId(IdUtils.simpleUUID());
+            message.setMessageId(IdUtils.getUUID());
             message.setReceiver(receiverId);
             saveOne(message);
         }

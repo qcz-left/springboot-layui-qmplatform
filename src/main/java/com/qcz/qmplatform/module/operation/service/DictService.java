@@ -35,7 +35,7 @@ public class DictService extends ServiceImpl<DictMapper, Dict> {
     }
 
     public boolean addDictOne(Dict dict) {
-        dict.setDictId(IdUtils.simpleUUID());
+        dict.setDictId(IdUtils.getUUID());
         return save(dict);
     }
 

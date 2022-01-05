@@ -29,7 +29,7 @@ public class ButtonService extends ServiceImpl<ButtonMapper, Button> {
     }
 
     public boolean addButtonOne(Button button) {
-        button.setButtonId(IdUtils.simpleUUID());
+        button.setButtonId(IdUtils.getUUID());
         return save(button);
     }
 

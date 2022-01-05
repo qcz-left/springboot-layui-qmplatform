@@ -76,7 +76,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     public boolean insertUser(UserVO user) {
-        String userId = IdUtils.simpleUUID();
+        String userId = IdUtils.getUUID();
         user.setId(userId);
         user.setCreateTime(DateUtils.getCurrTimestamp());
         user.setCreateUserId(SubjectUtils.getUserId());
@@ -273,7 +273,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             String userSexName = userVO.getUserSexName();
             String lockedName = userVO.getLockedName();
             String organizationNames = userVO.getOrganizationName();
-            String userId = IdUtils.simpleUUID();
+            String userId = IdUtils.getUUID();
             userVO.setId(userId);
             userVO.setPassword(SecureUtils.simpleMD5(username, SecureUtils.DEFAULT_PASSWORD));
             userVO.setUserSex("男".equals(userSexName) ? "1" : ("女".equals(userSexName) ? "2" : ""));

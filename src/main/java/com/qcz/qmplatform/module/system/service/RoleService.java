@@ -36,7 +36,7 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
     }
 
     public boolean addRoleOne(Role role) {
-        role.setRoleId(IdUtils.simpleUUID());
+        role.setRoleId(IdUtils.getUUID());
         return save(role);
     }
 

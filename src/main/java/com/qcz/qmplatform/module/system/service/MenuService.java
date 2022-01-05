@@ -41,7 +41,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
     }
 
     public boolean addMenuOne(Menu menu) {
-        menu.setMenuId(IdUtils.simpleUUID());
+        menu.setMenuId(IdUtils.getUUID());
         return save(menu);
     }
 

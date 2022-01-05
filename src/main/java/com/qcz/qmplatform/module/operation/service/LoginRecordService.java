@@ -103,7 +103,7 @@ public class LoginRecordService extends ServiceImpl<LoginRecordMapper, LoginReco
         if (loginRecord == null) {
             // 新增记录
             loginRecord = new LoginRecord();
-            loginRecord.setRecordId(IdUtils.simpleUUID());
+            loginRecord.setRecordId(IdUtils.getUUID());
             loginRecord.setErrorTimes(1);
             loginRecord.setLastLoginIp(clientIp);
             loginRecord.setLastLoginTime(DateUtils.getCurrTimestamp());

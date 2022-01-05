@@ -23,7 +23,7 @@ import java.util.List;
 public class NotepadService extends ServiceImpl<NotepadMapper, Notepad> {
 
     public boolean saveOne(Notepad notepad) {
-        notepad.setId(IdUtils.simpleUUID());
+        notepad.setId(IdUtils.getUUID());
         notepad.setCreateUserId(SubjectUtils.getUserId());
         notepad.setCreateUserName(SubjectUtils.getUserName());
         notepad.setCreateTime(DateUtils.getCurrTimestamp());

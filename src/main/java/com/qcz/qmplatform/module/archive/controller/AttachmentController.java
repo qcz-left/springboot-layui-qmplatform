@@ -87,7 +87,7 @@ public class AttachmentController extends BaseController {
         ResponseResult<Map<String, String>> upload = upload(file);
         // 将文件路径保存到数据库
         if (upload.isOk()) {
-            attachment.setAttachmentId(IdUtils.simpleUUID());
+            attachment.setAttachmentId(IdUtils.getUUID());
             attachment.setAttachmentName(file.getOriginalFilename());
             attachment.setAttachmentUrl(upload.getData().get("filePath"));
             attachment.setUploadTime(DateUtils.getCurrTimestamp());

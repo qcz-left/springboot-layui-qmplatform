@@ -44,7 +44,7 @@ public class ShellTools {
      * @return 命令id
      */
     public static String databaseRecoverToCache(String database, String bakFilePath, String logPath) {
-        String cmdId = IdUtils.simpleUUID();
+        String cmdId = IdUtils.getUUID();
         CacheUtils.putCmd(cmdId, getDatabaseRecoverSh(database, bakFilePath, logPath));
         return cmdId;
     }

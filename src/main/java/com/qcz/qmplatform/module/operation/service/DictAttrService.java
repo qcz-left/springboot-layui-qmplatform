@@ -30,7 +30,7 @@ public class DictAttrService extends ServiceImpl<DictAttrMapper, DictAttr> {
     }
 
     public boolean addDictAttrOne(DictAttr dictAttr) {
-        dictAttr.setAttrId(IdUtils.simpleUUID());
+        dictAttr.setAttrId(IdUtils.getUUID());
         return save(dictAttr);
     }
 

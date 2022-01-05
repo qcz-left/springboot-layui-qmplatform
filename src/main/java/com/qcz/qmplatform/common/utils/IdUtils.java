@@ -15,8 +15,12 @@ public class IdUtils extends IdUtil implements InitializingBean {
 
     }
 
+    public static String getUUID() {
+        return fastSimpleUUID();
+    }
+
     @Override
     public void afterPropertiesSet() {
-        LOGGER.debug("Initializing IdUtils: {}", simpleUUID());
+        LOGGER.debug("Initializing IdUtils: {}", getUUID());
     }
 }

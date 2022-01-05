@@ -168,7 +168,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         ShellTools.databaseDump(database, bakFilePath);
 
         DataBak dataBak = new DataBak();
-        dataBak.setBakId(IdUtils.simpleUUID());
+        dataBak.setBakId(IdUtils.getUUID());
         dataBak.setBakName(bakName);
         dataBak.setBakPath(bakFilePath);
         dataBak.setCreateTime(DateUtils.timestamp(date));
