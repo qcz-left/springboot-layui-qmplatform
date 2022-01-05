@@ -4,6 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
+/**
+ * 外置Tomcat注释掉该类
+ */
 @Configuration
 public class WebSocketConfig {
     /**

@@ -181,6 +181,11 @@ public class FileUtils extends FileUtil {
             if (webPath.contains("target\\classes")) {
                 return new File("../").getCanonicalPath();
             }
+            // war 运行
+            String packing = YmlPropertiesUtils.getPacking();
+            if ("war".equals(packing)) {
+                return new File("../../").getCanonicalPath();
+            }
             // 以jar包部署方式路径则为jar所在目录
             return webPath;
         } catch (IOException e) {

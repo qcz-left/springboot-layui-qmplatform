@@ -73,4 +73,11 @@ public class YmlPropertiesUtils {
         return Boolean.parseBoolean(YML_PROP.getProperty("custom.redirect-https", "false"));
     }
 
+    /**
+     * 打包方式（jar或war）
+     */
+    public static String getPacking() {
+        return YML_PROP.getProperty("custom.packing", "jar");
+    }
+
 }

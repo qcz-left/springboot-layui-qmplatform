@@ -75,3 +75,4 @@ jodconverter:
 # 自定义属性
 custom:
   database: qmplatform_single
+  packing: @packaging@
