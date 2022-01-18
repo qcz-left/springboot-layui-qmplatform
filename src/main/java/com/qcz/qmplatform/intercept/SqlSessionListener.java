@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * 和PageHelper一起使用，在PageHelper拦截器后添加
@@ -19,6 +20,7 @@ public class SqlSessionListener {
     @PostConstruct
     public void addMyInterceptor() {
         MybatisInterceptor interceptor = new MybatisInterceptor();
+        interceptor.setProperties(new Properties());
         for (SqlSessionFactory sqlSessionFactory : sqlSessionFactoryList) {
             sqlSessionFactory.getConfiguration().addInterceptor(interceptor);
         }

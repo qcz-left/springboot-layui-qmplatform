@@ -23,12 +23,8 @@
         from
             sys_message
         where
-            read = #{read}
-        and receiver in(
-            <foreach collection="receivers" item="receiver" separator=",">
-                #{receiver}
-            </foreach>
-        )
+            read = #read#
+        and receiver in(#receivers#)
         group by
             type,
             receiver

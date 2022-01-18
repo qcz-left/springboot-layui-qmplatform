@@ -6,7 +6,18 @@
 3、集成websocket，定时检测会话，自动跳转登录页，自动检测系统通知提醒<br/>
 4、简易可动态添加的定时任务<br/>
 5、集成Jenkins持续部署配置，提交代码自动部署流程。<br/>
-6、Mybatis 拦截器实现使用注解控制数据权限<br/>
+6、Mybatis 拦截器实现使用注解控制数据权限，简化xml动态sql编写方式
+如：<br/>
+```xml
+<if test="name != null and name != ''"><br/>
+    and name = #{name}<br/>
+</if>
+```
+可转化为：<br/>
+```xml
+[[ and name = #name# ]]
+```
+<br/>
 7、自定义登录策略（验证码、锁定策略）<br/>
 8、密码参数RSA加解密（前端公钥加密，后端私钥解密），防止密码被窃取 <br/>
 9、支持文件上传预览（需要安装OpenOffice4，不使用可以在application*.yml中关闭开关）
