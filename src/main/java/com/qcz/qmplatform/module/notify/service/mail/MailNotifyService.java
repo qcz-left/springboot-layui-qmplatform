@@ -9,13 +9,9 @@ import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.notify.bean.MailConfig;
 import com.qcz.qmplatform.module.notify.bean.MailParam;
-import com.sun.mail.util.MailSSLSocketFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.security.GeneralSecurityException;
 import java.util.List;
 
 /**
@@ -23,8 +19,6 @@ import java.util.List;
  */
 @Service
 public class MailNotifyService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(MailNotifyService.class);
 
     /**
      * 发送邮件，使用已保存的配置
@@ -55,16 +49,6 @@ public class MailNotifyService {
         mailAccount.setFrom(mailConfig.getSenderHost());
         mailAccount.setPass(mailConfig.getSenderPwd());
         mailAccount.setAuth(true);
-        if (mailConfig.isEnableSSL()) {
-            try {
-                MailSSLSocketFactory sf = new MailSSLSocketFactory();
-                sf.setTrustAllHosts(true);
-                mailAccount.setSocketFactoryClass(sf.getClass().getName());
-                mailAccount.setSocketFactoryPort(mailConfig.getPort());
-            } catch (GeneralSecurityException e) {
-                LOGGER.error(e.getMessage(), e);
-            }
-        }
 
         List<File> files = mailParam.getFiles();
 
