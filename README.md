@@ -9,8 +9,8 @@
 6、Mybatis 拦截器实现使用注解控制数据权限，简化xml动态sql编写方式
 如：<br/>
 ```xml
-<if test="name != null and name != ''"><br/>
-    and name = #{name}<br/>
+<if test="name != null and name != ''">
+    and name = #{name}
 </if>
 ```
 可转化为：<br/>
