@@ -79,7 +79,7 @@ public class RequestAspect {
                         StringBuilder sb = new StringBuilder();
                         for (String paramKey : argMap.keySet()) {
                             Object paramValue = argMap.get(paramKey);
-                            sb.append(StringUtils.format("\n    {}: {}", paramKey, checkPwdFieldHidden(String.valueOf(paramKey), paramValue)));
+                            parseParamVal(sb, paramKey, paramValue, 1);
                         }
                         body = StringUtils.format("\n  [body] {} ==>{}\n", argClass.getSimpleName(), sb.toString());
                     }
@@ -99,13 +99,64 @@ public class RequestAspect {
     }
 
     /**
+     * 递归解析参数值
+     *
+     * @param level 第几次递归（首次递归填1）
+     */
+    private static void parseParamVal(StringBuilder sb, String key, Object value, int level) {
+        if (value == null || value instanceof String || isCommonDataType(value.getClass())) {
+            sb.append(StringUtils.format("\n{}{}: {}", retBlank(4 * level), key, checkPwdFieldHidden(key, value)));
+        } else {
+            parseParamVal(sb, key, "", level);
+            Map<String, Object> objectMap;
+            if (value instanceof Map) {
+                //noinspection unchecked
+                objectMap = (Map<String, Object>) value;
+            } else {
+                objectMap = BeanUtil.beanToMap(value);
+            }
+            if (objectMap == null) {
+                return;
+            }
+            level++;
+            for (String objectKey : objectMap.keySet()) {
+                parseParamVal(sb, objectKey, objectMap.get(objectKey), level);
+            }
+        }
+    }
+
+    /**
+     * 输出N个空格
+     *
+     * @param num 空格数量
+     */
+    private static String retBlank(int num) {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < num; i++) {
+            str.append(" ");
+        }
+        return str.toString();
+    }
+
+    /**
+     * 是否基本数据类型及其包装类
+     */
+    private static boolean isCommonDataType(Class<?> clazz) {
+        try {
+            return clazz.isPrimitive() || ((Class<?>) clazz.getField("TYPE").get(null)).isPrimitive();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
      * 检查参数名称是否密码字段，是则隐藏，不打印到日志里面
      *
      * @param fieldName  参数名称
      * @param fieldValue 参数值
      * @return 处理后的参数值，是密码字段则只打印字符长度
      */
-    private String checkPwdFieldHidden(String fieldName, Object fieldValue) {
+    private static String checkPwdFieldHidden(String fieldName, Object fieldValue) {
         String strFieldValue = String.valueOf(fieldValue);
         if (fieldValue instanceof Object[]) {
             Object[] arrFieldValue = (Object[]) fieldValue;
