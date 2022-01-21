@@ -38,6 +38,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label required">SecretKey</label>
                     <div class="layui-input-inline">
+                        <input type="password" autocomplete="new-password" style="display:none">
                         <input type="password" name="secretKey" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>

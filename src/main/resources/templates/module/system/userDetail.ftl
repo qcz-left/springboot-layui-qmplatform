@@ -26,6 +26,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">密码</label>
             <div class="layui-input-block">
+                <input type="password" autocomplete="new-password" style="display:none">
                 <input type="password" name="password" lay-verify="required|password" placeholder="请输入密码" autocomplete="off" class="layui-input">
             </div>
         </div>

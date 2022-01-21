@@ -85,6 +85,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label required">新密码</label>
                     <div class="layui-input-inline">
+                        <input type="password" autocomplete="new-password" style="display:none">
                         <input type="password" id="newPassword" name="newPassword" lay-verify="required|newPassword" autocomplete="off" class="layui-input">
                     </div>
                 </div>

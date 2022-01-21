@@ -51,6 +51,7 @@
             </div>
             <div class="layui-form-item">
                 <label class="layui-icon layui-icon-password" for="user-login-password"></label>
+                <input type="password" autocomplete="new-password" style="display:none">
                 <input type="password" name="password" id="user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
             </div>
             <div id="codeDiv" class="layui-form-item hide">

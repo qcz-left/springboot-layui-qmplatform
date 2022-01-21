@@ -20,12 +20,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label required">当前密码</label>
                     <div class="layui-input-inline">
+                        <input type="password" autocomplete="new-password" style="display:none">
                         <input type="password" name="password" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label required">新密码</label>
                     <div class="layui-input-inline">
+                        <input type="password" autocomplete="new-password" style="display:none">
                         <input type="password" id="newPassword" name="newPassword" lay-verify="required|newPassword" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux">密码必须5到12位，且不能出现空格</div>
@@ -33,6 +35,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label required">确认新密码</label>
                     <div class="layui-input-inline">
+                        <input type="password" autocomplete="new-password" style="display:none">
                         <input type="password" name="confirmNewPassword" lay-verify="required|confirmNewPassword" autocomplete="off" class="layui-input">
                     </div>
                 </div>

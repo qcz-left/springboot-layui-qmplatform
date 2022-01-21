@@ -39,6 +39,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label required">发送邮箱密码</label>
                     <div class="layui-input-inline">
+                        <#--  解决谷歌浏览器密码自动填充 -->
+                        <input type="password" autocomplete="new-password" style="display:none">
                         <input type="password" name="senderPwd" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -94,7 +96,7 @@
             initValue: [detail.host]
         });
 
-        form.on('checkbox(enableSSL)', function(data){
+        form.on('checkbox(enableSSL)', function (data) {
             if (uninitialized) {
                 form.val('mail-form', {
                     'port': data.elem.checked ? 465 : 25
@@ -116,7 +118,7 @@
             layer.prompt({
                 formType: 0,
                 title: '请输入接收邮件地址'
-            }, function(val, index){
+            }, function (val, index) {
                 layer.close(index);
                 let backIndex = layer.loadingWithText('正在发送邮件...');
                 let mailConfig = form.val('mail-form');
