@@ -89,7 +89,7 @@ public class NotifyController {
         String senderPwd = mailConfig.getSenderPwd();
         String encSenderPwd;
         if (SecureUtils.passwordChanged(senderPwd)) {
-            encSenderPwd = SecureUtils.rsaEncrypt(senderPwd);
+            encSenderPwd = SecureUtils.aesEncrypt(senderPwd);
         } else {
             encSenderPwd = FileUtils.readObjectFromFile(MailUtils.DAT_MAIL_CONFIG, MailConfig.class).getSenderPwd();
         }
@@ -113,7 +113,7 @@ public class NotifyController {
         MailConfig mailConfig = testMailVO.getMailConfig();
         if (!SecureUtils.passwordChanged(mailConfig.getSenderPwd())) {
             String encSenderPwd = FileUtils.readObjectFromFile(MailUtils.DAT_MAIL_CONFIG, MailConfig.class).getSenderPwd();
-            mailConfig.setSenderPwd(SecureUtils.rsaDecrypt(encSenderPwd));
+            mailConfig.setSenderPwd(SecureUtils.aesDecrypt(encSenderPwd));
         }
         mailNotifyService.send(mailConfig, testMailVO.getMailParam());
         return ResponseResult.ok();

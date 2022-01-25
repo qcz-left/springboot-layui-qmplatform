@@ -27,7 +27,7 @@ public class MailNotifyService {
      */
     public void send(MailParam mailParam) {
         MailConfig mailConfig = FileUtils.readObjectFromFile(MailUtils.DAT_MAIL_CONFIG, MailConfig.class);
-        mailConfig.setSenderPwd(SecureUtils.rsaDecrypt(mailConfig.getSenderPwd()));
+        mailConfig.setSenderPwd(SecureUtils.aesDecrypt(mailConfig.getSenderPwd()));
         send(mailConfig, mailParam);
     }
 
