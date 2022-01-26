@@ -25,7 +25,7 @@ public class DictAttrService extends ServiceImpl<DictAttrMapper, DictAttr> {
 
     public List<DictAttr> getDictAttrList(String dictId) {
         QueryWrapper<DictAttr> wrapper = new QueryWrapper<>();
-        wrapper.like(StringUtils.isNotBlank(dictId), "dict_id", dictId);
+        wrapper.eq("dict_id", dictId);
         return list(wrapper);
     }
 
