@@ -38,6 +38,12 @@ public class DictAttr implements Serializable {
     private String attrValue;
 
     /**
+     * 属性描述
+     */
+    @TableField("remark")
+    private String remark;
+
+    /**
      * 对应sys_dict的dict_id
      */
     @TableField("dict_id")
@@ -73,6 +79,14 @@ public class DictAttr implements Serializable {
 
     public void setDictId(String dictId) {
         this.dictId = dictId;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     @Override

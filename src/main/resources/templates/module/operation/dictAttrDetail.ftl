@@ -18,6 +18,12 @@
                 <input type="number" name="attrValue" lay-verify="required|attrValue" placeholder="请输入属性值" class="layui-input">
             </div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" id="remark" name="remark"></textarea>
+            </div>
+        </div>
         <div class="detail-operator">
             <button type="submit" class="layui-btn layui-btn-normal" lay-submit lay-filter="dictAttr-submit">保存</button>
             <button type="submit" class="layui-btn layui-btn-primary" onclick="closeCurrentIframe()">取消</button>

@@ -2116,3 +2116,6 @@ COMMENT ON COLUMN "public"."sys_user_thirdparty"."user_id" IS '用户id';
 COMMENT ON COLUMN "public"."sys_user_thirdparty"."thirdparty_id" IS '第三方接入用户唯一id';
 COMMENT ON COLUMN "public"."sys_user_thirdparty"."access_type" IS '接入类型';
 COMMENT ON TABLE "public"."sys_user_thirdparty" IS '用户和第三方的绑定关系';
+
+select _add_column('sys_dict_attr', 'remark', 'varchar(200)');
+COMMENT ON COLUMN "public"."sys_dict_attr"."remark" IS '属性描述';
