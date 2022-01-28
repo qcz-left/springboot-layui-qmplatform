@@ -15,7 +15,7 @@ public class CacheUtils {
     /**
      * 公用缓存,100个容量，最少使用策略
      */
-    private static final LFUCache<String, String> COMMON_CACHE = CacheUtil.newLFUCache(100);
+    private static final LFUCache<String, Object> COMMON_CACHE = CacheUtil.newLFUCache(100);
 
     /**
      * 在线用户信息缓存 userId -> com.qcz.qmplatform.module.system.domain.User
@@ -32,7 +32,7 @@ public class CacheUtils {
      */
     private static final TimedCache<String, String> CMD_CACHE = CacheUtil.newTimedCache(DateUnit.HOUR.getMillis() * 2);
 
-    public static String get(String key) {
+    public static Object get(String key) {
         return COMMON_CACHE.get(key);
     }
 
@@ -43,12 +43,16 @@ public class CacheUtils {
      * @param value   缓存值
      * @param timeout 超时时间（ms）
      */
-    public static void put(String key, String value, long timeout) {
+    public static void put(String key, Object value, long timeout) {
         COMMON_CACHE.put(key, value, timeout);
     }
 
-    public static void put(String key, String value) {
+    public static void put(String key, Object value) {
         COMMON_CACHE.put(key, value);
+    }
+
+    public static void remove(String key) {
+        COMMON_CACHE.remove(key);
     }
 
     public static void putCmd(String key, String value) {

@@ -63,7 +63,9 @@ public class DBChangeCenter implements Observed, Runnable {
      * 系统消息通知
      */
     public void notifyMessage() {
-        doNotify(DBProperties.Table.SYS_MESSAGE);
+        DBNotifyInfo dbNotifyInfo = new DBNotifyInfo();
+        dbNotifyInfo.setTableName(DBProperties.Table.SYS_MESSAGE);
+        doNotify(dbNotifyInfo);
     }
 
     public static DBChangeCenter getInstance() {

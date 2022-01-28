@@ -2119,3 +2119,21 @@ COMMENT ON TABLE "public"."sys_user_thirdparty" IS '用户和第三方的绑定�
 
 select _add_column('sys_dict_attr', 'remark', 'varchar(200)');
 COMMENT ON COLUMN "public"."sys_dict_attr"."remark" IS '属性描述';
+
+
+CREATE TABLE public.sys_thirdparty_app (
+                                       id varchar(50) NOT NULL,
+                                       "name" varchar(50) NOT NULL,
+                                       app_key varchar(100) NOT NULL,
+                                       app_secret varchar(200) NOT NULL,
+                                       remark varchar(200) NULL
+);
+COMMENT ON TABLE public.sys_thirdparty IS '第三方参数配置信息';
+
+-- Column comments
+
+COMMENT ON COLUMN public.sys_thirdparty_app.id IS '主键id';
+COMMENT ON COLUMN public.sys_thirdparty_app."name" IS '第三方系统名称';
+COMMENT ON COLUMN public.sys_thirdparty_app.app_key IS '系统应用id';
+COMMENT ON COLUMN public.sys_thirdparty_app.app_secret IS '应用秘钥';
+COMMENT ON COLUMN public.sys_thirdparty_app.remark IS '描述';

@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="${ctx}/static/css/login.css"/>
 <script type="text/javascript">
     let code = "${RequestParameters["code"]!}";
+    let dingTalkConfigAppKey = "${dingTalkConfigAppKey!}";
     top.rsaPublicKey = "${rsaPublicKey!}";
 </script>
 <script type="text/javascript" src="${ctx}/static/login.js"></script>

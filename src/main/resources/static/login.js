@@ -40,7 +40,7 @@ layui.use(['form', 'layer'], function () {
     });
 
     $("#dingdingLogin").click(function () {
-        location.href = "https://login.dingtalk.com/oauth2/auth?client_id=ding87uronmn84khshi8&prompt=consent&response_type=code&scope=openid&state=STATE&redirect_uri=" + window.location.protocol + "//" + window.location.host + ctx + "/noNeedLogin/preScanCodeLoginCheck/dingtalk";
+        location.href = "https://login.dingtalk.com/oauth2/auth?client_id=" + dingTalkConfigAppKey + "&prompt=consent&response_type=code&scope=openid&state=STATE&redirect_uri=" + window.location.protocol + "//" + window.location.host + ctx + "/noNeedLogin/preScanCodeLoginCheck/dingtalk";
     });
 
     // 是否是绑定第三方账号页面

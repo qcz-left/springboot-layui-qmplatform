@@ -199,7 +199,7 @@ public class UserController extends BaseController {
     public ResponseResult<?> changeUserPwd(@Valid @RequestBody PasswordVO passwordVO) {
         UserVO user = userService.queryUserByName(passwordVO.getLoginname());
 
-        String cacheCode = CacheUtils.get(user.getPhone());
+        String cacheCode = (String) CacheUtils.get(user.getPhone());
         if (StringUtils.isBlank(cacheCode)) {
             return ResponseResult.error("验证码不存在或已过期，请重新获取！");
         }
