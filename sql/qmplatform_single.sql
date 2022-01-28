@@ -2128,7 +2128,7 @@ CREATE TABLE public.sys_thirdparty_app (
                                        app_secret varchar(200) NOT NULL,
                                        remark varchar(200) NULL
 );
-COMMENT ON TABLE public.sys_thirdparty IS '第三方参数配置信息';
+COMMENT ON TABLE public.sys_thirdparty_app IS '第三方参数配置信息';
 
 -- Column comments
 
