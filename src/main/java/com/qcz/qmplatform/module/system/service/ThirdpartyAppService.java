@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.system.service;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.CacheUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
@@ -63,5 +64,12 @@ public class ThirdpartyAppService extends ServiceImpl<ThirdpartyAppMapper, Third
         queryWrapper.ne(StringUtils.isNotBlank(id), "id", id);
         queryWrapper.eq("name", name);
         return CollectionUtil.isEmpty(list(queryWrapper));
+    }
+
+    public boolean updateStatus(String id, int status) {
+        UpdateWrapper<ThirdpartyApp> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", id);
+        updateWrapper.set("status", status);
+        return update(updateWrapper);
     }
 }

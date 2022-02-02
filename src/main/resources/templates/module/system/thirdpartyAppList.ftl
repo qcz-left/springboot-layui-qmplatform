@@ -10,6 +10,9 @@
                 <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
             </div>
         </script>
+        <script type="text/html" id="status">
+            <input type="checkbox" lay-filter="status" lay-skin="switch" lay-text="启用|禁用" value="1" data-id="{{d.id}}" data-name="{{d.name}}" {{ d.status == 1 ? 'checked' : '' }}>
+        </script>
         <script type="text/html" id="operator">
             <button class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</button>
             <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>

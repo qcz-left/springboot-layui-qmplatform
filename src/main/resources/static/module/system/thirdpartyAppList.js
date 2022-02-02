@@ -1,4 +1,5 @@
-layui.use(['table'], function () {
+layui.use(['form', 'table'], function () {
+    let form = layui.form;
     let table = layui.table;
     let tableId = 'thirdpartyApp-list-tab';
     let layFilter = 'thirdpartyApp';
@@ -20,8 +21,21 @@ layui.use(['table'], function () {
                 }
             },
             {field: 'appKey', title: '应用ID', width: '20%', sort: true},
+            {field: 'status', title: '状态', align: 'center', width: '20%', templet: '#status'},
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
         ]]
+    });
+
+    form.on('switch(status)', function(obj){
+        console.log(obj);
+        let operateName = obj.othis[0].innerText;
+        CommonUtil.postAjax(baseUrl + "/updateStatus", {
+            id: $(obj.elem).attr("data-id"),
+            name: $(obj.elem).attr("data-name"),
+            status: obj.elem.checked ? 1 : 0
+        }, function (result) {
+            LayerUtil.respMsg(result, operateName + "成功", operateName + "失败");
+        });
     });
 
     sortEventListen(table, layFilter, tableId);

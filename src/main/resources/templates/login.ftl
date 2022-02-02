@@ -56,7 +56,9 @@
             <legend style="font-size: unset;">其他方式登录</legend>
         </fieldset>
         <div id="otherLoginWayContainer">
-            <i id="dingdingLogin" class="iconfont icon-dingding-o" title="使用钉钉账号登录"></i>
+            <#if dingTalkConfigAppKey??>
+                <i id="dingdingLogin" class="iconfont icon-dingding-o" title="使用钉钉账号登录"></i>
+            </#if>
         </div>
     </div>
 </div>

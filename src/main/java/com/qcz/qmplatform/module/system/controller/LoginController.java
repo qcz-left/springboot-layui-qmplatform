@@ -105,7 +105,10 @@ public class LoginController {
     @GetMapping("/loginPage")
     public String loginPage(Map<String, Object> root) {
         root.put("rsaPublicKey", ConfigLoader.getRsaPublicKey());
-        root.put("dingTalkConfigAppKey", thirdpartyAppService.getByName("dingtalk-code").getAppKey());
+        ThirdpartyApp dingTalkCode = thirdpartyAppService.getByName("dingtalk-code");
+        if (dingTalkCode != null && dingTalkCode.getStatus() == 1) {
+            root.put("dingTalkConfigAppKey", dingTalkCode.getAppKey());
+        }
         return "login";
     }
 

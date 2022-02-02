@@ -2137,3 +2137,6 @@ COMMENT ON COLUMN public.sys_thirdparty_app."name" IS '第三方系统名称';
 COMMENT ON COLUMN public.sys_thirdparty_app.app_key IS '系统应用id';
 COMMENT ON COLUMN public.sys_thirdparty_app.app_secret IS '应用秘钥';
 COMMENT ON COLUMN public.sys_thirdparty_app.remark IS '描述';
+
+select _add_column('sys_thirdparty_app', 'status', 'int2');
+COMMENT ON COLUMN "public"."sys_thirdparty_app"."status" IS '状态';

@@ -48,6 +48,12 @@ public class ThirdpartyApp implements Serializable {
     @TableField("remark")
     private String remark;
 
+    /**
+     * 状态
+     */
+    @TableField("status")
+    private int status;
+
     public String getId() {
         return id;
     }
@@ -88,6 +94,14 @@ public class ThirdpartyApp implements Serializable {
         this.remark = remark;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "ThirdpartyApp{" +
@@ -96,6 +110,7 @@ public class ThirdpartyApp implements Serializable {
                 ", appKey=" + appKey +
                 ", appSecret=" + appSecret +
                 ", remark=" + remark +
+                ", status=" + status +
                 "}";
     }
 }
