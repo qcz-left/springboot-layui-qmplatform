@@ -81,7 +81,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         user.setCreateTime(DateUtils.getCurrTimestamp());
         user.setCreateUserId(SubjectUtils.getUserId());
         if (StringUtils.isNotBlank(user.getPassword())) {
-            user.setPassword(SecureUtils.simpleMD5(user.getLoginname(), user.getPassword()));
+            user.setPassword(SecureUtils.accountEncrypt(user.getPassword()));
         }
         insertUserRole(userId, user.getRoleIds());
         insertUserOrg(userId, user.getOrganizationIds());
@@ -101,7 +101,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         String newPwd;
         String password = user.getPassword();
         if (SecureUtils.passwordChanged(password)) {
-            newPwd = SecureUtils.simpleMD5(user.getLoginname(), password);
+            newPwd = SecureUtils.accountEncrypt(password);
         } else {
             newPwd = getById(user.getId()).getPassword();
         }
@@ -198,7 +198,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * @param user       当前用户对象
      */
     public boolean changeCurrentUserPwd(PasswordVO passwordVO, User user) {
-        user.setPassword(SecureUtils.simpleMD5(user.getLoginname(), passwordVO.getNewPassword()));
+        user.setPassword(SecureUtils.accountEncrypt(passwordVO.getNewPassword()));
         SubjectUtils.setUser(user);
         return updateById(user);
     }
@@ -210,7 +210,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * @param user       当前用户对象
      */
     public boolean changeUserPwd(PasswordVO passwordVO, User user) {
-        user.setPassword(SecureUtils.simpleMD5(user.getLoginname(), passwordVO.getNewPassword()));
+        user.setPassword(SecureUtils.accountEncrypt(passwordVO.getNewPassword()));
         return updateById(user);
     }
 
@@ -275,7 +275,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             String organizationNames = userVO.getOrganizationName();
             String userId = IdUtils.getUUID();
             userVO.setId(userId);
-            userVO.setPassword(SecureUtils.simpleMD5(username, SecureUtils.DEFAULT_PASSWORD));
+            userVO.setPassword(SecureUtils.accountEncrypt(SecureUtils.DEFAULT_PASSWORD));
             userVO.setUserSex("男".equals(userSexName) ? "1" : ("女".equals(userSexName) ? "2" : ""));
             userVO.setLocked("正常".equals(lockedName) ? 1 : 0);
             if (StringUtils.isNotBlank(organizationNames)) {

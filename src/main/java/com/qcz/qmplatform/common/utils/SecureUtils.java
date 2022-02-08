@@ -3,11 +3,9 @@ package com.qcz.qmplatform.common.utils;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
+import cn.hutool.crypto.digest.BCrypt;
 import cn.hutool.crypto.symmetric.AES;
 import cn.hutool.crypto.symmetric.DES;
-import com.qcz.qmplatform.common.constant.Constant;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.util.ByteSource;
 
 /**
  * 加解密工具
@@ -25,17 +23,35 @@ public class SecureUtils {
     private static final RSA RSA_INSTANCE = SecureUtil.rsa(ConfigLoader.getRsaPrivateKey(), ConfigLoader.getRsaPublicKey());
 
     /**
-     * MD5加密
+     * 账号加密
      *
-     * @param saltName 盐
      * @param password 明文密码
      * @return 加密后的字符串
      */
-    public static String simpleMD5(String saltName, String password) {
-        Object salt = ByteSource.Util.bytes(saltName);
+    public static String accountEncrypt(String password) {
+        return bcrypt(password);
+    }
 
-        Object result = new SimpleHash(Constant.SUBJECT_ALGORITHM_NAME_MD5, password, salt, Constant.SUBJECT_HASHTERATIONS);
-        return result.toString();
+    /**
+     * 检查密码是否一致
+     *
+     * @param plaintext 明文密码
+     * @param hashed   数据库中加密的密码
+     * @return 加密后的字符串
+     */
+    public static boolean accountCheck(String plaintext, String hashed) {
+        return BCrypt.checkpw(plaintext, hashed);
+    }
+
+    /**
+     * BC加密
+     *
+     * @param password 明文密码
+     * @return 加密后的字符串
+     */
+    public static String bcrypt(String password) {
+        String salt = BCrypt.gensalt();
+        return BCrypt.hashpw(password, salt);
     }
 
     /**
@@ -115,11 +131,6 @@ public class SecureUtils {
      */
     public static boolean passwordChanged(String pwd) {
         return !StringUtils.equals(PASSWORD_UNCHANGED, pwd);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(rsaEncrypt("admin"));
-        System.out.println(rsaDecrypt("jd3psue/o5gMVJcG2WgeInibQlLBR2ddYh+w3sI/UdQHywwwbhiPw9ZrmQgENbuJjfLOCoT9G7ffBFcpndXSSq0Xui9QUqo+wlzhsRmkJBEK0K5/6G2bqZwEYLUtvtOYNaF1U1P5pnj41mBJCstgCTi2XArGycrsZSZTdPGjiZA="));
     }
 
 }

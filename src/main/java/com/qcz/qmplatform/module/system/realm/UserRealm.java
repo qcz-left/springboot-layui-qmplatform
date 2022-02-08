@@ -50,16 +50,12 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         CustomToken upToken = (CustomToken) token;
+
         String loginName = upToken.getUsername();
-        // 到这里已经是密文
+        String password = new String((char[]) upToken.getCredentials());
+
         UserService userService = SpringContextUtils.getBean(UserService.class);
         UserVO user = userService.queryUserByName(loginName);
-        String password;
-        if (upToken.getType() == LoginType.NO_PASSWORD) {
-            password = user.getPassword();
-        } else {
-            password = SecureUtils.simpleMD5(loginName, new String((char[]) upToken.getCredentials()));
-        }
         // 账号不存在
         if (user == null) {
             throw new UnknownAccountException("不存在该账号");
@@ -70,19 +66,15 @@ public class UserRealm extends AuthorizingRealm {
             throw new LockedAccountException("账号已被锁定,请联系管理员");
         }
         // 密码错误
-        if (!password.equals(user.getPassword())) {
+        if (upToken.getType() == LoginType.PASSWORD && !SecureUtils.accountCheck(password, user.getPassword())) {
             throw new IncorrectCredentialsException("密码错误");
         }
 
         // 盐值
         ByteSource credentialsSalt = ByteSource.Util.bytes(loginName);
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getId(), password, credentialsSalt, getName());
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getId(), user.getPassword(), credentialsSalt, getName());
         SubjectUtils.setUser(user);
         return info;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(SecureUtils.simpleMD5("admin", "admin"));
     }
 
 }

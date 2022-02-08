@@ -230,7 +230,7 @@ public class UserController extends BaseController {
         User user = SubjectUtils.getUser();
         assert user != null;
         // 比较原密码是否填写正确
-        if (!user.getPassword().equals(SecureUtils.simpleMD5(user.getLoginname(), passwordVO.getPassword()))) {
+        if (!SecureUtils.accountCheck(passwordVO.getPassword(), user.getPassword())) {
             return ResponseResult.error("当前密码填写错误，请重新填写！");
         }
 

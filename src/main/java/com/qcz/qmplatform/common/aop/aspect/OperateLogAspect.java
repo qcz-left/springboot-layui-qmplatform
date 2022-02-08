@@ -134,8 +134,8 @@ public class OperateLogAspect {
                     PasswordVO formUser = (PasswordVO) joinPoint.getArgs()[0];
                     String loginName = formUser.getLoginname();
                     String password = formUser.getPassword();
-                    currentUser = userService.findByLoginNameAndPassword(loginName, SecureUtils.simpleMD5(loginName, password));
-                    if (currentUser == null) {
+                    currentUser = userService.queryUserByName(loginName);
+                    if (currentUser == null || !SecureUtils.accountCheck(password, currentUser.getPassword())) {
                         description = loginName + " 尝试登录系统，但失败了";
                     } else {
                         description = currentUser.getUsername() + " 进入了系统";

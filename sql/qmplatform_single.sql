@@ -2140,3 +2140,6 @@ COMMENT ON COLUMN public.sys_thirdparty_app.remark IS '描述';
 
 select _add_column('sys_thirdparty_app', 'status', 'int2');
 COMMENT ON COLUMN "public"."sys_thirdparty_app"."status" IS '状态';
+
+
+update sys_user set "password" = '$2a$10$5Z1ICMt2rEOEEoxZEFOgfONyFo0/ildC84PvHWtGIstVW/YZpxPwO' where loginname = 'admin';

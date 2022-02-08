@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.system.realm;
 
+import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.module.system.assist.LoginType;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -17,6 +18,6 @@ public class CustomCredentialsMatch extends HashedCredentialsMatcher {
             return true;
         }
 
-        return super.doCredentialsMatch(token, info);
+        return SecureUtils.accountCheck(new String(customToken.getPassword()), info.getCredentials().toString());
     }
 }
