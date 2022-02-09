@@ -12,6 +12,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,6 +64,18 @@ public class RequestWrapper extends HttpServletRequestWrapper {
             return value;
         }
         return stripXSS(value);
+    }
+
+    @Override
+    public Map<String, String[]> getParameterMap() {
+        Map<String, String[]> parameterMap = super.getParameterMap();
+        for (String key : parameterMap.keySet()) {
+            String[] values = parameterMap.get(key);
+            for (int i = 0; i < values.length; i++) {
+                values[i] = stripXSS(stripENC(values[i]));
+            }
+        }
+        return parameterMap;
     }
 
     @Override
