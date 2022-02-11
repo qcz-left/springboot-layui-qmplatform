@@ -37,7 +37,7 @@
 
     </div>
     <div class="log-container">
-        <div class="log-main"></div>
+        <pre class="log-main"></pre>
     </div>
     <div class="hide detail-operator">
         <a id="reLogin" href="javascript:;" class="hide layui-btn layui-btn-normal" onclick="reLogin()">重新登录</a>
