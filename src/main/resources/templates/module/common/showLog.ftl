@@ -64,6 +64,7 @@
             </#if>
             $logTip.css("color", "green").text("执行成功！");
             $(".detail-operator").show();
+            socketLog.close();
         }
     };
 
