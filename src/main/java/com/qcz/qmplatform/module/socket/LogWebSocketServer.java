@@ -6,6 +6,7 @@ import cn.hutool.core.util.RuntimeUtil;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.CacheUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -58,7 +59,9 @@ public class LogWebSocketServer {
         logThread.start();
 
         // 执行缓存命令
-        CacheUtils.exeCmd(cmdId);
+        if (StringUtils.isNotBlank(cmdId)) {
+            CacheUtils.exeCmd(cmdId);
+        }
     }
 
     @OnClose

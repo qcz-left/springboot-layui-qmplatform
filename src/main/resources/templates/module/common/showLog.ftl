@@ -45,7 +45,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    let socketLogUrl = CommonUtil.getWsProtocol() + "://" + window.location.host + ctx + "/socket/log?logPath=${RequestParameters['logPath']}&cmdId=${RequestParameters['cmdId']}";
+    let socketLogUrl = CommonUtil.getWsProtocol() + "://" + window.location.host + ctx + "/socket/log?logPath=${RequestParameters['logPath']}&cmdId=${RequestParameters['cmdId']!}";
     let socketLog = new WebSocket(socketLogUrl);
 
     let $logMain = $(".log-main");
