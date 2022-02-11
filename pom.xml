@@ -41,8 +41,8 @@
         <jodconverter-boot.version>4.4.2</jodconverter-boot.version>
         <dingtalk.version>1.1.99</dingtalk.version>
         <jackson.version>2.9.10</jackson.version>
-        <jackson-databind.version>2.9.10.7</jackson-databind.version>
-        <json-smart.version>2.4.1</json-smart.version>
+        <jackson-databind.version>2.9.10.8</jackson-databind.version>
+        <json-smart.version>2.4.7</json-smart.version>
         <bcprov-jdk15on.version>1.67</bcprov-jdk15on.version>
         <snakeyaml.version>1.26</snakeyaml.version>
         <okhttp.version>2.7.4</okhttp.version>
