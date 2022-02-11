@@ -19,14 +19,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Aspect
 @Component
@@ -44,8 +41,7 @@ public class RequestAspect {
      */
     @Before(value = "requestPointcut()")
     public void paramsLog(JoinPoint joinPoint) {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = Objects.requireNonNull(requestAttributes).getRequest();
+        HttpServletRequest request = HttpServletUtils.getCurrRequest();
         LOGGER.info("【start】 - [{}] {}", request.getMethod(), request.getRequestURL().toString());
         LOGGER.info("{}", joinPoint.getSignature());
         Map<String, String> paramMap = ServletUtil.getParamMap(request);

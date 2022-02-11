@@ -26,12 +26,9 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -69,7 +66,7 @@ public class OperateLogAspect {
 
     @Around(value = "operateLogPointcut()")
     public Object operateLogAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        final HttpServletRequest request = getHttpServletRequest();
+        final HttpServletRequest request = HttpServletUtils.getCurrRequest();
         String requestUrl = request.getServletPath();
         String ipAddress = HttpServletUtils.getIpAddress(request);
         Object proceed;
@@ -98,7 +95,7 @@ public class OperateLogAspect {
      */
     @AfterThrowing(pointcut = "operateExceptionLogPointCut()", throwing = "e")
     public void saveExceptionLog(JoinPoint joinPoint, Throwable e) {
-        final HttpServletRequest request = getHttpServletRequest();
+        final HttpServletRequest request = HttpServletUtils.getCurrRequest();
         String requestUrl = request.getServletPath();
         String ipAddress = HttpServletUtils.getIpAddress(request);
         User currentUser = SubjectUtils.getUser();
@@ -170,14 +167,6 @@ public class OperateLogAspect {
         log.setExpMsg(expMsg);
 
         operateLogMapper.insert(log);
-    }
-
-    /**
-     * 获取request
-     */
-    private HttpServletRequest getHttpServletRequest() {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        return (HttpServletRequest) Objects.requireNonNull(requestAttributes).resolveReference(RequestAttributes.REFERENCE_REQUEST);
     }
 
     /**
