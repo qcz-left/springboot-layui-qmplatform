@@ -176,7 +176,9 @@ public class MybatisInterceptor implements Interceptor {
             return boundSql;
         }
 
-        String DYNAMIC_SQL_REG = "\\[\\[.*?\\]\\]";
+        Map<String, Object> additionalParameter = new HashMap<>();
+
+        String DYNAMIC_SQL_REG = "\\[\\[[\\s\\S]*?\\]\\]";
         Pattern ENC_PATTERN = Pattern.compile(DYNAMIC_SQL_REG);
         Matcher matcher = ENC_PATTERN.matcher(sql);
         while (matcher.find()) {
@@ -185,48 +187,16 @@ public class MybatisInterceptor implements Interceptor {
             Object value = parameterMap.get(name);
             if (ObjectUtil.isNotEmpty(value)) {
                 sql = sql.replaceFirst(DYNAMIC_SQL_REG, group.substring(2, group.length() - 2));
-                sql = sql.replaceFirst("#" + name + "#", "?");
-                ParameterMapping parameterMapping = new ParameterMapping.Builder(configuration, name, value.getClass()).build();
-                newParameterMappings.add(parameterMapping);
+                sql = setAdditionalParametersField(sql, name, value, newParameterMappings, configuration, additionalParameter);
             } else {
                 sql = sql.replaceFirst(DYNAMIC_SQL_REG, "");
             }
         }
 
-        Map<String, Object> additionalParameter = new HashMap<>();
-
         for (String key : parameterMap.keySet()) {
             if (Pattern.compile("#" + key + "#").matcher(sql).find()) {
                 Object value = parameterMap.get(key);
-
-                StringBuilder replacement = new StringBuilder();
-                if (value instanceof List) {
-                    List<?> valList = (List<?>) value;
-                    for (int i = 0; i < valList.size(); i++) {
-                        Object o = valList.get(i);
-                        replacement.append(",?");
-                        ParameterMapping parameterMapping = new ParameterMapping.Builder(configuration, "__frch_" + key + "_" + i, o.getClass()).build();
-                        newParameterMappings.add(parameterMapping);
-                        additionalParameter.put("__frch_" + key + "_" + i, o);
-                    }
-                    sql = sql.replaceFirst("#" + key + "#", replacement.deleteCharAt(0).toString());
-                } else if (value instanceof Object[]) {
-                    Object[] valArray = (Object[]) value;
-                    for (int i = 0; i < valArray.length; i++) {
-                        Object o = valArray[i];
-                        replacement.append(",?");
-                        ParameterMapping parameterMapping = new ParameterMapping.Builder(configuration, "__frch_" + key + "_" + i, o.getClass()).build();
-                        newParameterMappings.add(parameterMapping);
-                        additionalParameter.put("__frch_" + key + "_" + i, o);
-                    }
-                    sql = sql.replaceFirst("#" + key + "#", replacement.deleteCharAt(0).toString());
-                } else {
-                    // String
-                    sql = sql.replaceFirst("#" + key + "#", "?");
-                    ParameterMapping parameterMapping = new ParameterMapping.Builder(configuration, key, value.getClass()).build();
-                    newParameterMappings.add(parameterMapping);
-                    additionalParameter.put(key, value);
-                }
+                sql = setAdditionalParametersField(sql, key, value, newParameterMappings, configuration, additionalParameter);
             }
         }
 
@@ -240,6 +210,38 @@ public class MybatisInterceptor implements Interceptor {
         }
 
         return newBoundSql;
+    }
+
+    private String setAdditionalParametersField(String sql, String key, Object value, List<ParameterMapping> newParameterMappings, Configuration configuration, Map<String, Object> additionalParameter) {
+        StringBuilder replacement = new StringBuilder();
+        if (value instanceof List) {
+            List<?> valList = (List<?>) value;
+            for (int i = 0; i < valList.size(); i++) {
+                Object o = valList.get(i);
+                replacement.append(",?");
+                ParameterMapping parameterMapping = new ParameterMapping.Builder(configuration, "__frch_" + key + "_" + i, o.getClass()).build();
+                newParameterMappings.add(parameterMapping);
+                additionalParameter.put("__frch_" + key + "_" + i, o);
+            }
+            sql = sql.replaceFirst("#" + key + "#", replacement.deleteCharAt(0).toString());
+        } else if (value instanceof Object[]) {
+            Object[] valArray = (Object[]) value;
+            for (int i = 0; i < valArray.length; i++) {
+                Object o = valArray[i];
+                replacement.append(",?");
+                ParameterMapping parameterMapping = new ParameterMapping.Builder(configuration, "__frch_" + key + "_" + i, o.getClass()).build();
+                newParameterMappings.add(parameterMapping);
+                additionalParameter.put("__frch_" + key + "_" + i, o);
+            }
+            sql = sql.replaceFirst("#" + key + "#", replacement.deleteCharAt(0).toString());
+        } else {
+            // String
+            sql = sql.replaceFirst("#" + key + "#", "?");
+            ParameterMapping parameterMapping = new ParameterMapping.Builder(configuration, key, value.getClass()).build();
+            newParameterMappings.add(parameterMapping);
+            additionalParameter.put(key, value);
+        }
+        return sql;
     }
 
 }
