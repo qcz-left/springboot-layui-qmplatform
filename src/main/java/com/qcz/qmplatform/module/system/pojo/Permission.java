@@ -15,24 +15,24 @@ public class Permission implements Serializable {
 
     private String code;
 
-    private int iorder;
+    private Integer iorder;
 
     private String parentId;
 
-    private int permissionType;
+    private Integer permissionType;
 
     private String linkUrl;
 
     /**
      * 是否显示：0 不显示；1 显示
      */
-    private int display;
+    private Integer display;
 
     public int getDisplay() {
         return display;
     }
 
-    public void setDisplay(int display) {
+    public void setDisplay(Integer display) {
         this.display = display;
     }
 
@@ -80,7 +80,7 @@ public class Permission implements Serializable {
         return iorder;
     }
 
-    public void setIorder(int iorder) {
+    public void setIorder(Integer iorder) {
         this.iorder = iorder;
     }
 
@@ -96,7 +96,7 @@ public class Permission implements Serializable {
         return permissionType;
     }
 
-    public void setPermissionType(int permissionType) {
+    public void setPermissionType(Integer permissionType) {
         this.permissionType = permissionType;
     }
 
