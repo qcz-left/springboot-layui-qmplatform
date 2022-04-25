@@ -187,7 +187,7 @@ public class MybatisInterceptor implements Interceptor {
             Object value = parameterMap.get(name);
             if (ObjectUtil.isNotEmpty(value)) {
                 sql = sql.replaceFirst(DYNAMIC_SQL_REG, group.substring(2, group.length() - 2));
-                sql = setAdditionalParametersField(sql, name, value, newParameterMappings, configuration, additionalParameter);
+                sql = setParameterAndMapping(sql, name, value, newParameterMappings, configuration, additionalParameter);
             } else {
                 sql = sql.replaceFirst(DYNAMIC_SQL_REG, "");
             }
@@ -196,7 +196,7 @@ public class MybatisInterceptor implements Interceptor {
         for (String key : parameterMap.keySet()) {
             if (Pattern.compile("#" + key + "#").matcher(sql).find()) {
                 Object value = parameterMap.get(key);
-                sql = setAdditionalParametersField(sql, key, value, newParameterMappings, configuration, additionalParameter);
+                sql = setParameterAndMapping(sql, key, value, newParameterMappings, configuration, additionalParameter);
             }
         }
 
@@ -212,7 +212,7 @@ public class MybatisInterceptor implements Interceptor {
         return newBoundSql;
     }
 
-    private String setAdditionalParametersField(String sql, String key, Object value, List<ParameterMapping> newParameterMappings, Configuration configuration, Map<String, Object> additionalParameter) {
+    private String setParameterAndMapping(String sql, String key, Object value, List<ParameterMapping> newParameterMappings, Configuration configuration, Map<String, Object> additionalParameter) {
         StringBuilder replacement = new StringBuilder();
         if (value instanceof List) {
             List<?> valList = (List<?>) value;
