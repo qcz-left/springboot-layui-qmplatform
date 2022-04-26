@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -104,19 +105,17 @@ public class RequestAspect {
             sb.append(StringUtils.format("\n{}{}: {}", retBlank(4 * level), key, checkPwdFieldHidden(key, value)));
         } else {
             parseParamVal(sb, key, "", level);
-            Map<String, Object> objectMap;
+            Map<Object, Object> objectMap;
             if (value instanceof Map) {
                 //noinspection unchecked
-                objectMap = (Map<String, Object>) value;
+                objectMap = (Map<Object, Object>) value;
             } else {
-                objectMap = BeanUtil.beanToMap(value);
-            }
-            if (objectMap == null) {
-                return;
+                objectMap = new HashMap<>();
+                BeanUtil.copyProperties(value, objectMap);
             }
             level++;
-            for (String objectKey : objectMap.keySet()) {
-                parseParamVal(sb, objectKey, objectMap.get(objectKey), level);
+            for (Object objectKey : objectMap.keySet()) {
+                parseParamVal(sb, String.valueOf(objectKey), objectMap.get(objectKey), level);
             }
         }
     }
