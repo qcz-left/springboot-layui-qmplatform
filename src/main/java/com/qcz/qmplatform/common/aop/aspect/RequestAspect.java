@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,7 +102,10 @@ public class RequestAspect {
      * @param level 第几次递归（首次递归填1）
      */
     private static void parseParamVal(StringBuilder sb, String key, Object value, int level) {
-        if (value == null || value instanceof String || isCommonDataType(value.getClass())) {
+        if (value == null
+                || value instanceof String
+                || isCommonDataType(value.getClass())
+                || value instanceof Date) {
             sb.append(StringUtils.format("\n{}{}: {}", retBlank(4 * level), key, checkPwdFieldHidden(key, value)));
         } else {
             parseParamVal(sb, key, "", level);
