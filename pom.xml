@@ -45,7 +45,6 @@
         <json-smart.version>2.4.7</json-smart.version>
         <bcprov-jdk15on.version>1.67</bcprov-jdk15on.version>
         <snakeyaml.version>1.26</snakeyaml.version>
-        <okhttp.version>2.7.4</okhttp.version>
     </properties>
 
     <dependencies>
@@ -53,11 +52,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.squareup.okhttp</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>${okhttp.version}</version>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
