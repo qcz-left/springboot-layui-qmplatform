@@ -31,7 +31,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**/*.ftl").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/templates/");
         registry.addResourceHandler("/static/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/static/");
         registry.addResourceHandler(FileUtils.PATH_PRE + "**").addResourceLocations("file:" + ConfigLoader.getUploadFilePath());
     }

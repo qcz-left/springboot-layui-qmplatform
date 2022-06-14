@@ -40,13 +40,15 @@ spring:
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
   mvc:
-    view:
-      prefix: classpath:/templates/
-      suffix: .ftl
+    pathmatch:
+      matching-strategy: ant_path_matcher
   servlet:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
 
 mybatis-plus:
   configuration:
