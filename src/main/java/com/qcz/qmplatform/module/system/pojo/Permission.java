@@ -28,7 +28,7 @@ public class Permission implements Serializable {
      */
     private Integer display;
 
-    public int getDisplay() {
+    public Integer getDisplay() {
         return display;
     }
 
@@ -92,7 +92,7 @@ public class Permission implements Serializable {
         this.parentId = parentId;
     }
 
-    public int getPermissionType() {
+    public Integer getPermissionType() {
         return permissionType;
     }
 
