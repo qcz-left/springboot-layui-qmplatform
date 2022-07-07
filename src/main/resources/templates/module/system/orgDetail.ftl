@@ -13,7 +13,8 @@
     }
 
     .layui-tab-content {
-        height: calc(100% - 71px);
+        height: calc(100% - 60px);
+        padding-bottom: 0;
     }
 </style>
 <body>
