@@ -203,3 +203,7 @@ html {
     padding: 0;
     width: 260px;
 }
+
+.context-menu-item {
+    width: 100px;
+}
