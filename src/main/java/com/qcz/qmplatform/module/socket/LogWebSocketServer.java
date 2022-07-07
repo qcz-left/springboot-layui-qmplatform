@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.socket;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.RuntimeUtil;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.CacheUtils;
@@ -67,7 +68,7 @@ public class LogWebSocketServer {
     @OnClose
     public void onClose(Session session) {
         LOGGER.debug("onClose: " + session.getId());
-        logThread.interrupt();
+        ThreadUtil.interupt(logThread, true);
         IoUtil.close(inputStream);
         if (process != null) {
             process.destroy();
@@ -82,8 +83,8 @@ public class LogWebSocketServer {
 
     class LogThread extends Thread {
 
-        private BufferedReader bufferedReader;
-        private Session session;
+        private final BufferedReader bufferedReader;
+        private final Session session;
 
         private LogThread(Session session) {
             this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
