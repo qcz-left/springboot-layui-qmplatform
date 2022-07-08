@@ -52,7 +52,7 @@
                     type: 1,
                     title: '上传进度',
                     area: ['80%', '30%'],
-                    content:    '<div style="width: 90%; text-align: center" class="vertical-horizontal-center">' +
+                    content:    '<div style="width: 90%; text-align: center" class="vh-center">' +
                                 '   <div class="layui-progress layui-progress-big" lay-showpercent="yes" lay-filter="upload">' +
                                 '       <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>' +
                                 '   </div>' +

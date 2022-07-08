@@ -10,9 +10,9 @@
 <script type="text/javascript" src="${ctx}/static/login.js"></script>
 <title>Qu管理平台-登录</title>
 <body>
-<div class="user-login-main vertical-horizontal-center layui-row">
+<div class="user-login-main vh-center layui-row">
     <div class="login-left layui-col-md6">
-        <div class="vertical-horizontal-center">
+        <div class="vh-center">
             <p class="system-cn">QU管理平台</p>
             <br>
             <p class="system-en">QUGUANLIPINGTAI</p>

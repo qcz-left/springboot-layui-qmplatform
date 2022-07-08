@@ -27,8 +27,8 @@
     }
 </style>
 <body>
-<div class="user-login-main vertical-horizontal-center layui-row">
-    <div class="vertical-horizontal-center layui-col-md6">
+<div class="user-login-main vh-center layui-row">
+    <div class="vh-center layui-col-md6">
         <div id="binding-tip">继续以完成第三方帐号绑定</div>
         <div id="pic-tip">
             <div class="layui-inline">
