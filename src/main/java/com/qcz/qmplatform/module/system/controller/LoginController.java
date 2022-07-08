@@ -99,6 +99,11 @@ public class LoginController {
         return "index";
     }
 
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
+
     /**
      * 进入到登录页面
      */
