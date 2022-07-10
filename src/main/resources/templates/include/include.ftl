@@ -16,7 +16,7 @@ let ctx = "${requestContext.contextPath}";
     <#if params??>
         <#list params as item>
             <#if item == "echarts">
-                <script type="text/javascript" src="${ctx}/static/plugin/echarts3.3.2/echarts.min.js"></script>
+                <script type="text/javascript" src="${ctx}/static/plugin/echarts/echarts.min.js"></script>
             <#elseif item == "error">
             <link rel="stylesheet" href="${ctx}/static/error/error.css" />
             <#elseif item == "sparklines">

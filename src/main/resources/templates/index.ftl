@@ -2,6 +2,12 @@
 <html lang="en">
 <#include "./include/include.ftl">
 <title>Qu管理平台-首页</title>
+<style>
+    #main-tab-menu table {
+        margin: unset;
+        background: #e5e5e5;
+    }
+</style>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
@@ -89,13 +95,13 @@ layui.use(['element'], function () {
     // 监听选项卡切换
     element.on('tab(' + tabLayFilter + ')', function () {
         let layId = $(this).attr("lay-id");
-        $(".layui-nav-item ." + classLayuiThis).removeClass(classLayuiThis);
-        $(".layui-nav-item a[lay-id=" + layId + "]").parent().addClass(classLayuiThis);
+        $(".layui-side ." + classLayuiThis).removeClass(classLayuiThis);
+        $(".layui-side a[lay-id=" + layId + "]").parent().addClass(classLayuiThis);
     });
     // 监听选项卡删除
     element.on('tabDelete(' + tabLayFilter + ')', function () {
         let layId = $(this).parent().attr("lay-id");
-        $(".layui-nav-item a[lay-id=" + layId + "]").parent().removeClass(classLayuiThis);
+        $(".layui-side a[lay-id=" + layId + "]").parent().removeClass(classLayuiThis);
     });
 
     // 默认选中侧边栏第一个菜单
@@ -133,7 +139,7 @@ layui.use(['element'], function () {
                 //设置菜单的位置
                 tabRightClickMenu.style.position = "fixed";
                 tabRightClickMenu.style.left = (x - 5) + "px";
-                tabRightClickMenu.style.top = (y - 15) + "px";
+                tabRightClickMenu.style.top = (y - 5) + "px";
                 tabRightClickMenu.style.display = "block";
                 $("#main-tab-menu-header").click();
             } else if (e.button === 0) { //左键
@@ -185,7 +191,7 @@ layui.use(['element'], function () {
     }
 
     function getCurrentTabId() {
-        return $(".layui-nav-item ." + classLayuiThis + " a").attr("lay-id");
+        return $(".layui-side ." + classLayuiThis + " a").attr("lay-id");
     }
 
     function addTab(elem) {
