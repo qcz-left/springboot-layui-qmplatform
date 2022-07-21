@@ -2,10 +2,10 @@ package com.qcz.qmplatform.config;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.qcz.qmplatform.common.constant.Constant;
+import com.qcz.qmplatform.common.cache.ShiroCacheManager;
 import com.qcz.qmplatform.module.listen.ShiroSessionListener;
 import com.qcz.qmplatform.module.system.realm.CustomCredentialsMatch;
 import com.qcz.qmplatform.module.system.realm.UserRealm;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
@@ -25,9 +25,8 @@ import java.util.LinkedHashMap;
 public class ShiroConfig {
 
     @Bean
-    public EhCacheManager ehCacheManager() {
-        System.setProperty("net.sf.ehcache.skipUpdateCheck", "true");
-        return new EhCacheManager();
+    public ShiroCacheManager shiroCacheManager() {
+        return new ShiroCacheManager();
     }
 
     @Bean
@@ -36,7 +35,7 @@ public class ShiroConfig {
         sessionManager.setSessionIdCookieEnabled(true);
         sessionManager.setGlobalSessionTimeout(1800000L);
         sessionManager.setSessionIdCookie(simpleCookie());
-        sessionManager.setCacheManager(ehCacheManager());
+        sessionManager.setCacheManager(shiroCacheManager());
         sessionManager.setSessionListeners(CollectionUtil.newArrayList(sessionListener()));
         sessionManager.setSessionValidationInterval(5 * 60 * 1000L);
         return sessionManager;
@@ -69,7 +68,7 @@ public class ShiroConfig {
         // 设置认证密码算法及迭代复杂度
         userRealm.setCredentialsMatcher(credentialsMatcher);
         userRealm.setCachingEnabled(true);
-        userRealm.setCacheManager(ehCacheManager());
+        userRealm.setCacheManager(shiroCacheManager());
         // 认证
         userRealm.setAuthenticationCachingEnabled(false);
         // 授权
