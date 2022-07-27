@@ -54,6 +54,7 @@ public class NotifyController {
     public ResponseResult<SmsConfigVO> getSmsConfig() {
         SmsConfigVO smsConfigVO = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfigVO.class);
         smsConfigVO.setSecretKey(SecureUtils.PASSWORD_UNCHANGED);
+        smsConfigVO.setAppKey(SecureUtils.PASSWORD_UNCHANGED);
         return ResponseResult.ok(smsConfigVO);
     }
 
@@ -76,7 +77,15 @@ public class NotifyController {
         } else {
             encSecretKey = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfigVO.class).getSecretKey();
         }
+        String appKey = smsConfigVO.getAppKey();
+        String encAppKey;
+        if (SecureUtils.passwordChanged(appKey)) {
+            encAppKey = SecureUtils.aesEncrypt(appKey);
+        } else {
+            encAppKey = FileUtils.readObjectFromFile(SmsUtils.DAT_SMS_CONFIG, SmsConfigVO.class).getAppKey();
+        }
         smsConfigVO.setSecretKey(encSecretKey);
+        smsConfigVO.setAppKey(encAppKey);
         FileUtils.writeObjectToFile(smsConfigVO, SmsUtils.DAT_SMS_CONFIG);
         return ResponseResult.ok();
     }

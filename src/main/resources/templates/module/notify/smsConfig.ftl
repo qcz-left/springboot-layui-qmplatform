@@ -23,19 +23,26 @@
                         <div id="smsProvider"></div>
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item hide-or-show hide">
                     <label class="layui-form-label required">AppId</label>
                     <div class="layui-input-inline">
                         <input type="text" name="appId" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item hide-or-show hide">
+                    <label class="layui-form-label required">AppKey</label>
+                    <div class="layui-input-inline">
+                        <input type="password" autocomplete="new-password" style="display:none">
+                        <input type="password" name="appKey" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item hide-or-show hide">
                     <label class="layui-form-label required">SecretId</label>
                     <div class="layui-input-inline">
                         <input type="text" name="secretId" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item hide-or-show hide">
                     <label class="layui-form-label required">SecretKey</label>
                     <div class="layui-input-inline">
                         <input type="password" autocomplete="new-password" style="display:none">
@@ -81,6 +88,23 @@
             detail = result.data;
         });
 
+        // 根据不同的短信提供商展示不同的元素
+        let smsJson = {
+            "1": {
+                "displayElement": ["appId", "appKey"]
+            },
+            "2": {
+                "displayElement": ["secretId", "secretKey"]
+            }
+        };
+        let toggleProvider = function (provider) {
+            $(".hide-or-show").addClass("hide");
+            let displayElement = smsJson[provider]["displayElement"];
+            for (let i = 0; i < displayElement.length; i++) {
+                $("[name=" + displayElement[i] + "]").parents(".hide-or-show").removeClass("hide");
+            }
+        }
+
         // 短信数据加载
         xmSelect.render({
             el: '#smsProvider',
@@ -95,8 +119,13 @@
                 name: '阿里云',
                 value: '2'
             }],
-            initValue: [detail.smsProvider]
+            initValue: [detail.smsProvider],
+            on: function(data){
+                toggleProvider(data.arr[0].value)
+            },
         });
+
+        toggleProvider(detail.smsProvider)
 
         // 短信模板参数
         let tableId = 'template-list-tab';
@@ -177,6 +206,7 @@
             }
             data.field.templateParams = templateParams;
             data.field.secretKey = rsaEncrypt(data.field.secretKey);
+            data.field.appKey = rsaEncrypt(data.field.appKey);
             CommonUtil.postAjax(ctx + '/notify/saveSmsConfig', data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE);

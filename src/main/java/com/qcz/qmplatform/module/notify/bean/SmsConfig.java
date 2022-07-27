@@ -27,6 +27,11 @@ public class SmsConfig implements Serializable {
     private String appId;
 
     /**
+     * 短信应用Key
+     */
+    private String appKey;
+
+    /**
      * 短信签名
      */
     private String sign;
@@ -55,6 +60,14 @@ public class SmsConfig implements Serializable {
      * 手机号码
      */
     private List<String> phones;
+
+    public String getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
+    }
 
     public int getTemplateParamCnt() {
         return templateParamCnt;

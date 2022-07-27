@@ -26,6 +26,11 @@ public class SmsConfigVO implements Serializable {
     private String appId;
 
     /**
+     * 短信应用Key
+     */
+    private String appKey;
+
+    /**
      * 短信签名
      */
     private String sign;
@@ -34,6 +39,14 @@ public class SmsConfigVO implements Serializable {
      * @see SmsProvider
      */
     private int smsProvider;
+
+    public String getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
+    }
 
     /**
      * 模板参数列表

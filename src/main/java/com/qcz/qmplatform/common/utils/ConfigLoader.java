@@ -150,7 +150,7 @@ public class ConfigLoader {
      * 获取密码字段，多个用“,”符号隔开，
      */
     public static List<String> getPwdFields() {
-        String pwdFields = getStringConfig("PwdFields", "password,pwd,secretKey");
+        String pwdFields = getStringConfig("PwdFields", "password,pwd,secretKey,appKey");
         if (StringUtils.isBlank(pwdFields)) {
             return new ArrayList<>(0);
         }

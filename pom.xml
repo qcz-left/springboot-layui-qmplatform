@@ -29,7 +29,7 @@
         <shiro.version>1.8.0</shiro.version>
         <apache-commons-io.version>1.3.2</apache-commons-io.version>
         <commons-io.version>2.7</commons-io.version>
-        <tencentcloud.version>3.1.528</tencentcloud.version>
+        <qcloudsms.version>1.0.6</qcloudsms.version>
         <aliyun-sdk.version>2.0.1</aliyun-sdk.version>
         <jasypt.version>2.1.1</jasypt.version>
         <shiro-freemarker.version>1.0.2</shiro-freemarker.version>
@@ -121,6 +121,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--模板引擎-->
         <dependency>
@@ -240,9 +246,9 @@
 
         <!--腾讯云-->
         <dependency>
-            <groupId>com.tencentcloudapi</groupId>
-            <artifactId>tencentcloud-sdk-java</artifactId>
-            <version>${tencentcloud.version}</version>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>qcloudsms</artifactId>
+            <version>${qcloudsms.version}</version>
         </dependency>
 
         <!--阿里云-->

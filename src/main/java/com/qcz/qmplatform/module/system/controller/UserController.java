@@ -287,10 +287,11 @@ public class UserController extends BaseController {
         SmsConfig config = new SmsConfig();
         config.setSmsProvider(smsConfigVO.getSmsProvider());
         config.setAppId(smsConfigVO.getAppId());
+        config.setAppKey(SecureUtils.aesDecrypt(smsConfigVO.getAppKey()));
         config.setSecretId(smsConfigVO.getSecretId());
         config.setSecretKey(SecureUtils.aesDecrypt(smsConfigVO.getSecretKey()));
         config.setSign(smsConfigVO.getSign());
-        config.setPhones(CollectionUtil.newArrayList("+86" + phone));
+        config.setPhones(CollectionUtil.newArrayList(phone));
         config.setTemplateID(smsConfigVO.getTemplateParams().get(TemplateType.VALIDATE_CODE.type()).getTemplateID());
         Map<String, String> templateParams = new HashMap<>();
         templateParams.put("1", validateCode);
