@@ -61,7 +61,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         String permissionId = permission.getPermissionId();
         String code = permission.getCode();
         String icon = permission.getIcon();
-        int iorder = permission.getIorder();
+        Integer iorder = permission.getIorder();
         String parentId = permission.getParentId();
         if (parentId == null) {
             parentId = "";
