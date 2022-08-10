@@ -7,11 +7,21 @@ public class BillQO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private String remark;
+
     private Integer type;
 
     private Timestamp consumeTimeStart;
 
     private Timestamp consumeTimeEnd;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public Integer getType() {
         return type;

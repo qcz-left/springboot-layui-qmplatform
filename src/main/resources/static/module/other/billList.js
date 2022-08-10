@@ -44,7 +44,7 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
             {type: 'checkbox'},
             {field: 'typeName', title: '账单类型', width: '10%'},
             {field: 'amount', title: '金额', width: '10%', sort: true},
-            {field: 'consumeTime', title: '消费时间', width: '10%', sort: true},
+            {field: 'consumeTime', title: '消费时间', width: '15%', sort: true},
             {field: 'consumer', title: '消费人', width: '10%'},
             {field: 'remark', title: '备注', width: '20%'},
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
