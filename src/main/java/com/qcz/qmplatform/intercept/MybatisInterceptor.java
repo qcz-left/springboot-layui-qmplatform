@@ -1,7 +1,6 @@
 package com.qcz.qmplatform.intercept;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.qcz.qmplatform.common.constant.Constant;
@@ -172,8 +171,8 @@ public class MybatisInterceptor implements Interceptor {
             parameterMap = BeanUtil.beanToMap(parameterObject);
         }
         List<ParameterMapping> newParameterMappings = new ArrayList<>(boundSql.getParameterMappings());
-        if (CollectionUtil.isEmpty(parameterMap)) {
-            return boundSql;
+        if (parameterMap == null) {
+            parameterMap = new HashMap<>();
         }
 
         Map<String, Object> additionalParameter = new HashMap<>();
