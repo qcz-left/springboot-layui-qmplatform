@@ -1850,6 +1850,31 @@ COMMENT ON COLUMN "public"."ope_login_record"."last_login_ip" IS '最近登录IP
 COMMENT ON COLUMN "public"."ope_login_record"."remark" IS '备注';
 COMMENT ON TABLE "public"."ope_login_record" IS '账号登录系统记录';
 
+DROP TABLE IF EXISTS "public"."tbl_bill";
+CREATE TABLE public.tbl_bill (
+    id varchar(50) NOT NULL,
+    "type" int2 NULL DEFAULT 0,
+    amount decimal NULL,
+    consumer varchar(50) NULL,
+    remark varchar(200) NULL,
+    consume_time timestamp NULL,
+    create_time timestamp NULL,
+    create_user_id varchar(50) NULL,
+    CONSTRAINT tbl_bill_pk PRIMARY KEY (id)
+);
+
+-- Column comments
+
+COMMENT ON TABLE public.tbl_bill IS '账单';
+COMMENT ON COLUMN public.tbl_bill.id IS '账单id';
+COMMENT ON COLUMN public.tbl_bill."type" IS '账单类型';
+COMMENT ON COLUMN public.tbl_bill.amount IS '金额';
+COMMENT ON COLUMN public.tbl_bill.consumer IS '消费人';
+COMMENT ON COLUMN public.tbl_bill.remark IS '备注';
+COMMENT ON COLUMN public.tbl_bill.consume_time IS '消费日期';
+COMMENT ON COLUMN public.tbl_bill.create_time IS '账单创建时间';
+COMMENT ON COLUMN public.tbl_bill.create_user_id IS '账单创建人id';
+
 -- ----------------------------
 -- Primary Key structure for table ope_login_record
 -- ----------------------------
