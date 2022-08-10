@@ -76,7 +76,7 @@ public class Permission implements Serializable {
         this.code = code;
     }
 
-    public int getIorder() {
+    public Integer getIorder() {
         return iorder;
     }
 
