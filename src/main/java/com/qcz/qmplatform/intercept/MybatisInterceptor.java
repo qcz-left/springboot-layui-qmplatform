@@ -49,6 +49,10 @@ import java.util.regex.Pattern;
         type = Executor.class,
         method = "query",
         args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class}
+), @Signature(
+        type = Executor.class,
+        method = "update",
+        args = {MappedStatement.class, Object.class}
 )})
 public class MybatisInterceptor implements Interceptor {
 
@@ -73,15 +77,16 @@ public class MybatisInterceptor implements Interceptor {
         final Class<?> clazz = Class.forName(className);
 
         Object parameter = args[PARAM_OBJ_INDEX];
-        BoundSql boundSql;
-        CacheKey cacheKey;
+        BoundSql boundSql = ms.getBoundSql(parameter);;
+        CacheKey cacheKey = null;
         Executor executor = (Executor) invocation.getTarget();
-        RowBounds rowBounds = (RowBounds) args[ROW_BOUNDS_INDEX];
-        ResultHandler<?> resultHandler = (ResultHandler<?>) args[RESULT_HANDLER_INDEX];
+        RowBounds rowBounds = null;
+        ResultHandler<?> resultHandler = null;
         if (args.length == 4) {
-            boundSql = ms.getBoundSql(parameter);
+            rowBounds = (RowBounds) args[ROW_BOUNDS_INDEX];
+            resultHandler = (ResultHandler<?>) args[RESULT_HANDLER_INDEX];
             cacheKey = executor.createCacheKey(ms, parameter, rowBounds, boundSql);
-        } else {
+        } else if (args.length == 6) {
             boundSql = (BoundSql) args[BOUND_SQL_INDEX];
             cacheKey = (CacheKey) args[CACHE_KEY_INDEX];
         }
@@ -89,15 +94,19 @@ public class MybatisInterceptor implements Interceptor {
         boundSql = buildNewBoundSql(ms, boundSql);
         String sql = boundSql.getSql();
 
-        Method method = ReflectUtil.getMethodByName(clazz, methodName);
+        Method method;
         AuthQuery authQuery;
-        if (method != null
+        if (args.length > 2
+                && (method = ReflectUtil.getMethodByName(clazz, methodName)) != null
                 && (authQuery = method.getAnnotation(AuthQuery.class)) != null
                 && !SecurityUtils.getSubject().hasRole(Constant.SYSTEM_ADMIN)) {
             sql = StringUtils.format("select * from ({}) as tmp where {} = '{}'", sql, authQuery.userColumn(), SubjectUtils.getUserId());
         }
         MappedStatement newMappedStatement = setCurrentSql(ms, boundSql, sql);
 
+        if (args.length == 2) {
+            return executor.update(newMappedStatement, parameter);
+        }
         return executor.query(newMappedStatement, parameter, rowBounds, resultHandler, cacheKey, boundSql);
     }
 
