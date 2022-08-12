@@ -14,7 +14,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">账单类型</label>
             <div class="layui-input-block">
-                <div id="type"></div>
+                <div id="typeId"></div>
             </div>
         </div>
         <div class="layui-form-item">

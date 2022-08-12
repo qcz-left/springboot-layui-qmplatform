@@ -110,12 +110,20 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
                     });
 
                     let iframeTypeSelect = iframeXmSelect.render({
-                        el: '#type',
-                        name: 'type',
+                        el: '#typeId',
+                        name: 'typeId',
                         radio: true,
-                        clickClose: true,
-                        height: 'auto',
-                        model: {icon: 'hidden'},
+                        clickClose: true,//选中关闭
+                        tree: {
+                            strict: false,
+                            show: true,
+                            showLine: false,
+                            clickExpand: false
+                        },
+                        prop: {
+                            value: 'id',
+                            children: 'childes'
+                        },
                         data: []
                     });
 
@@ -123,7 +131,7 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
                     iframeForm.verify({});
 
                     let detail = {
-                        type: ''
+                        typeId: ''
                     };
                     if (id) {
                         CommonUtil.getSync(baseUrl + '/get/' + id, {}, function (result) {
@@ -132,11 +140,9 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
                         });
                     }
 
-                    CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
-                        code: 'bill-type'
-                    }, function (result) {
+                    CommonUtil.getAjax(ctx + '/other/bill-type/getBillTypeTree', {}, function (result) {
                         iframeTypeSelect.update({
-                            initValue: [detail.type],
+                            initValue: [detail.typeId],
                             data: result.data
                         })
                     });

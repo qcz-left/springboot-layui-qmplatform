@@ -9,7 +9,7 @@ public class BillQO implements Serializable {
 
     private String remark;
 
-    private Integer type;
+    private String typeId;
 
     private Timestamp consumeTimeStart;
 
@@ -23,12 +23,12 @@ public class BillQO implements Serializable {
         this.remark = remark;
     }
 
-    public Integer getType() {
-        return type;
+    public String getTypeId() {
+        return typeId;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     public Timestamp getConsumeTimeStart() {

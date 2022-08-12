@@ -1853,7 +1853,7 @@ COMMENT ON TABLE "public"."ope_login_record" IS '账号登录系统记录';
 DROP TABLE IF EXISTS "public"."tbl_bill";
 CREATE TABLE public.tbl_bill (
     id varchar(50) NOT NULL,
-    "type" int2 NULL DEFAULT 0,
+    "type_id" varchar(50) NULL,
     amount decimal NULL,
     consumer varchar(50) NULL,
     remark varchar(200) NULL,
@@ -1867,13 +1867,55 @@ CREATE TABLE public.tbl_bill (
 
 COMMENT ON TABLE public.tbl_bill IS '账单';
 COMMENT ON COLUMN public.tbl_bill.id IS '账单id';
-COMMENT ON COLUMN public.tbl_bill."type" IS '账单类型';
+COMMENT ON COLUMN public.tbl_bill."type_id" IS '账单类型id';
 COMMENT ON COLUMN public.tbl_bill.amount IS '金额';
 COMMENT ON COLUMN public.tbl_bill.consumer IS '消费人';
 COMMENT ON COLUMN public.tbl_bill.remark IS '备注';
 COMMENT ON COLUMN public.tbl_bill.consume_time IS '消费日期';
 COMMENT ON COLUMN public.tbl_bill.create_time IS '账单创建时间';
 COMMENT ON COLUMN public.tbl_bill.create_user_id IS '账单创建人id';
+
+
+CREATE TABLE public.tbl_bill_type (
+                                      id varchar(50) NOT NULL,
+                                      name varchar(100) NOT NULL,
+                                      parent_id varchar(50) NULL,
+                                      CONSTRAINT tbl_bill_type_pk PRIMARY KEY (id)
+);
+COMMENT ON TABLE public.tbl_bill_type IS '账单类型';
+
+-- Column comments
+
+COMMENT ON COLUMN public.tbl_bill_type.id IS '账单类型id';
+COMMENT ON COLUMN public.tbl_bill_type.name IS '账单类型名称';
+COMMENT ON COLUMN public.tbl_bill_type.parent_id IS '上级账单类型id';
+
+ALTER TABLE public.tbl_bill_type ADD remark varchar(500) NULL;
+COMMENT ON COLUMN public.tbl_bill_type.remark IS '备注';
+
+CREATE OR REPLACE FUNCTION "public"."casc_bill_type"(VARIADIC "id" _varchar)
+  RETURNS SETOF "public"."tbl_bill_type" AS $BODY$
+	declare
+ids_str varchar;
+	findAllQuery text;
+BEGIN
+for i in array_lower($1,1)..array_upper($1,1) loop
+		ids_str := concat(ids_str, '''', $1[i], '''', ',');
+end loop;
+	ids_str := substr(ids_str, 0, length(ids_str));
+
+	findAllQuery := 'with recursive r as(
+			select * from tbl_bill_type where id in(' || ids_str || ')
+			union all
+			select p.* from tbl_bill_type p, r where r.id = p.parent_id
+	)
+	select distinct * from r';
+
+RETURN QUERY EXECUTE findAllQuery;
+END$BODY$
+LANGUAGE plpgsql VOLATILE
+  COST 100
+  ROWS 1000;
 
 -- ----------------------------
 -- Primary Key structure for table ope_login_record

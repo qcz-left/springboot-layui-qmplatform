@@ -29,10 +29,10 @@ public class Bill implements Serializable {
     private String id;
 
     /**
-     * 账单类型
+     * 账单类型id
      */
-    @TableField("type")
-    private Integer type;
+    @TableField("type_id")
+    private String typeId;
 
     /**
      * 金额
@@ -79,12 +79,12 @@ public class Bill implements Serializable {
         this.id = id;
     }
 
-    public Integer getType() {
-        return type;
+    public String getTypeId() {
+        return typeId;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     public BigDecimal getAmount() {
@@ -139,7 +139,7 @@ public class Bill implements Serializable {
     public String toString() {
         return "Bill{" +
                 "id=" + id +
-                ", type=" + type +
+                ", typeId=" + typeId +
                 ", amount=" + amount +
                 ", consumer=" + consumer +
                 ", remark=" + remark +

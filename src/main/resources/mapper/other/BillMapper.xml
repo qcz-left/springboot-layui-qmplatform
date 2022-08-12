@@ -6,8 +6,8 @@
         <![CDATA[
             select
                 tb.id,
-                tb.type,
-                va.attr_name as typeName,
+                tb.type_id,
+                tbt.name as typeName,
                 tb.amount,
                 tb.consumer,
                 tb.remark,
@@ -16,10 +16,10 @@
                 tb.create_user_id
             from
                 tbl_bill tb
-            left join ( select attr_value, attr_name from v_sys_dict_attr where dict_code = 'bill-type' ) va on cast(va.attr_value as int) = tb.type
+            left join tbl_bill_type tbt on tbt.id = tb.type_id
             where 1=1
             [[ and tb.remark like '%' || #remark# || '%' ]]
-            [[ and tb.type = #type# ]]
+            [[ and tb.type_id = #typeId# ]]
             [[ and tb.consume_time >= #consumeTimeStart# ]]
             [[ and tb.consume_time < #consumeTimeEnd# ]]
         ]]>
@@ -27,6 +27,6 @@
 
     <select id="selectTest" resultType="com.qcz.qmplatform.module.other.vo.BillVO">
         select * from tbl_bill where 1=1
-        [[ and tb.type = #type# ]]
+        [[ and tb.type_id = #typeId# ]]
     </select>
 </mapper>
