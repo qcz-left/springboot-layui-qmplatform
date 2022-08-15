@@ -10,25 +10,32 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
 
     laydate.render({
         elem: '#consumeTimeStart',
-        type: 'datetime'
+        type: 'date'
     });
     laydate.render({
         elem: '#consumeTimeEnd',
-        type: 'datetime'
+        type: 'date'
     });
 
     let typeSelect = xmSelect.render({
-        el: '#type',
-        name: 'type',
+        el: '#typeId',
+        name: 'typeId',
         radio: true,
-        clickClose: true,
-        height: 'auto',
-        model: {icon: 'hidden'},
+        clickClose: true,//选中关闭
+        filterable: true,
+        tree: {
+            strict: false,
+            show: true,
+            showLine: false,
+            clickExpand: false
+        },
+        prop: {
+            value: 'id',
+            children: 'childes'
+        },
         data: []
     });
-    CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
-        code: 'bill-type'
-    }, function (result) {
+    CommonUtil.getAjax(ctx + '/other/bill-type/getBillTypeTree', {}, function (result) {
         typeSelect.update({
             data: result.data
         })
@@ -50,6 +57,8 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
         ]]
     });
+
+    loadStatisticsView()
 
     sortEventListen(table, layFilter, tableId);
 
@@ -89,6 +98,7 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
     // 搜索
     $("#btnSearch").click(function () {
         tableReload();
+        loadStatisticsView()
     });
 
     function open(id) {
@@ -105,8 +115,8 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
 
                     iframeLaydate.render({
                         elem: '#consumeTime',
-                        type: 'datetime',
-                        value: new Date().format('yyyy-MM-dd hh:mm:ss')
+                        type: 'date',
+                        value: new Date().format('yyyy-MM-dd')
                     });
 
                     let iframeTypeSelect = iframeXmSelect.render({
@@ -114,6 +124,7 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
                         name: 'typeId',
                         radio: true,
                         clickClose: true,//选中关闭
+                        filterable: true,
                         tree: {
                             strict: false,
                             show: true,
@@ -187,6 +198,103 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
             },
             where: form.val('bill-search')
         });
+    }
+
+    /**
+     * 数据统计
+     */
+    function loadStatisticsView() {
+        billTypeView();
+        billDateView();
+    }
+
+    /**
+     * 账单分类统计
+     */
+    function billTypeView() {
+        let chartDom = document.getElementById('billTypeView');
+        let myChart = echarts.init(chartDom);
+
+        let data;
+        CommonUtil.postSync(baseUrl + '/getAmountGroupByType', form.val('bill-search'), function (result) {
+            data = result.data;
+        });
+
+        let option = {
+            title: {
+                text: '账单分类统计',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b} : {c} ({d}%)'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left'
+            },
+            series: [
+                {
+                    type: 'pie',
+                    radius: '50%',
+                    data: data,
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+    }
+
+    /**
+     * 账单分类统计
+     */
+    function billDateView() {
+        let chartDom = document.getElementById('billDateView');
+        let myChart = echarts.init(chartDom);
+
+        let data;
+        CommonUtil.postSync(baseUrl + '/getAmountGroupByDate', form.val('bill-search'), function (result) {
+            data = result.data;
+        });
+
+        let xAxisData = [];
+        let yAxisData = [];
+        for (let i = 0; i < data.length; i++) {
+            xAxisData[i] = data[i].name;
+            yAxisData[i] = data[i].value;
+        }
+
+        let option = {
+            title: {
+                text: '日消费趋势',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            xAxis: {
+                type: 'category',
+                data: xAxisData
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    data: yAxisData,
+                    type: 'line'
+                }
+            ]
+        };
+
+        myChart.setOption(option);
     }
 
 });

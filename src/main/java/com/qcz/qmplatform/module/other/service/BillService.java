@@ -10,6 +10,7 @@ import com.qcz.qmplatform.module.other.vo.BillVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -28,6 +29,14 @@ public class BillService extends ServiceImpl<BillMapper, Bill> {
 
     public void selectTest() {
         baseMapper.selectTest();
+    }
+
+    public List<Map<String, Object>> selectAmountGroupByType(BillQO bill) {
+        return baseMapper.selectAmountGroupByType(bill);
+    }
+
+    public List<Map<String, Object>> selectAmountGroupByDate(BillQO bill) {
+        return baseMapper.selectAmountGroupByDate(bill);
     }
 
     public boolean saveOne(Bill bill) {

@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 账单 前端控制器
@@ -61,6 +64,24 @@ public class BillController extends BaseController {
     public ResponseResult<?> selectTest(PageRequest pageRequest) {
         billService.selectTest();
         return ResponseResult.ok();
+    }
+
+    /**
+     * 通过账单类型分组统计金额
+     */
+    @PostMapping("/getAmountGroupByType")
+    @ResponseBody
+    public ResponseResult<List<Map<String, Object>>> getAmountGroupByType(@RequestBody BillQO bill) {
+        return ResponseResult.ok(billService.selectAmountGroupByType(bill));
+    }
+
+    /**
+     * 通过账单消费时间分组统计金额
+     */
+    @PostMapping("/getAmountGroupByDate")
+    @ResponseBody
+    public ResponseResult<List<Map<String, Object>>> getAmountGroupByDate(@RequestBody BillQO bill) {
+        return ResponseResult.ok(billService.selectAmountGroupByDate(bill));
     }
 
     @GetMapping("/get/{id}")

@@ -1,7 +1,9 @@
 package com.qcz.qmplatform.module.other.qo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class BillQO implements Serializable {
 
@@ -11,9 +13,11 @@ public class BillQO implements Serializable {
 
     private String typeId;
 
-    private Timestamp consumeTimeStart;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date consumeTimeStart;
 
-    private Timestamp consumeTimeEnd;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date consumeTimeEnd;
 
     public String getRemark() {
         return remark;
@@ -31,19 +35,19 @@ public class BillQO implements Serializable {
         this.typeId = typeId;
     }
 
-    public Timestamp getConsumeTimeStart() {
+    public Date getConsumeTimeStart() {
         return consumeTimeStart;
     }
 
-    public void setConsumeTimeStart(Timestamp consumeTimeStart) {
+    public void setConsumeTimeStart(Date consumeTimeStart) {
         this.consumeTimeStart = consumeTimeStart;
     }
 
-    public Timestamp getConsumeTimeEnd() {
+    public Date getConsumeTimeEnd() {
         return consumeTimeEnd;
     }
 
-    public void setConsumeTimeEnd(Timestamp consumeTimeEnd) {
+    public void setConsumeTimeEnd(Date consumeTimeEnd) {
         this.consumeTimeEnd = consumeTimeEnd;
     }
 }

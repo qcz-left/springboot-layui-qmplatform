@@ -1857,7 +1857,7 @@ CREATE TABLE public.tbl_bill (
     amount decimal NULL,
     consumer varchar(50) NULL,
     remark varchar(200) NULL,
-    consume_time timestamp NULL,
+    consume_time date NULL,
     create_time timestamp NULL,
     create_user_id varchar(50) NULL,
     CONSTRAINT tbl_bill_pk PRIMARY KEY (id)
