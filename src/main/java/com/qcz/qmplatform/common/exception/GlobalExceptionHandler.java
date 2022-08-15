@@ -31,6 +31,10 @@ public class GlobalExceptionHandler {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
         binder.registerCustomEditor(Timestamp.class, new CustomDateEditor(dateFormat, true));
+
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat2, true));
+        binder.registerCustomEditor(Timestamp.class, new CustomDateEditor(dateFormat2, true));
     }
 
     /**

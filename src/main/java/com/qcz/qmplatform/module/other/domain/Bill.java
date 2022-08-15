@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * <p>
@@ -57,7 +58,7 @@ public class Bill implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @TableField("consume_time")
-    private Timestamp consumeTime;
+    private Date consumeTime;
 
     /**
      * 账单创建时间
@@ -111,11 +112,11 @@ public class Bill implements Serializable {
         this.remark = remark;
     }
 
-    public Timestamp getConsumeTime() {
+    public Date getConsumeTime() {
         return consumeTime;
     }
 
-    public void setConsumeTime(Timestamp consumeTime) {
+    public void setConsumeTime(Date consumeTime) {
         this.consumeTime = consumeTime;
     }
 
