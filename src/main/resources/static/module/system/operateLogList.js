@@ -107,11 +107,6 @@ layui.use(['table', 'form', 'laydate', 'xmSelect'], function () {
     });
 
     window.tableReload = function () {
-        table.reload(tableId, {
-            page: {
-                curr: 1
-            },
-            where: form.val('log-search')
-        });
+        layuiTableReload(table, tableId, form.val('log-search'));
     }
 });

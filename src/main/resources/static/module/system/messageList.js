@@ -101,11 +101,6 @@ layui.use(['table', 'form'], function () {
     }
 
     window.tableReload = function () {
-        table.reload(tableId, {
-            page: {
-                curr: 1
-            },
-            where: form.val('message-search')
-        });
+        layuiTableReload(table, tableId, form.val('message-search'));
     }
 });

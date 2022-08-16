@@ -118,6 +118,21 @@ function sortEventListen(layuiTable, layFilter, tableId) {
     });
 }
 
+function layuiTableReload(layuiTable, tableId, where) {
+    let config = layuiTable.getConfig(tableId);
+    let oldWhere = config.where;
+    if (where && oldWhere['orderName']) {
+        where['orderName'] = oldWhere['orderName']
+        where['order'] = oldWhere['order']
+    }
+    layuiTable.reload(tableId, {
+        page: {
+            curr: 1
+        },
+        where: where
+    });
+}
+
 function toUrlParam(param, key) {
     let paramStr = "";
     if (param instanceof String || param instanceof Number || param instanceof Boolean) {

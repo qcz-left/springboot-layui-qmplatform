@@ -126,12 +126,7 @@ layui.use(['table', 'form'], function () {
     }
 
     function tableReload() {
-        table.reload(tableId, {
-            page: {
-                curr: 1
-            },
-            where: form.val('notepad-search')
-        });
+        layuiTableReload(table, tableId, form.val('notepad-search'));
     }
 
 });

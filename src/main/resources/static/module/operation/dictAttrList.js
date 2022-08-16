@@ -82,11 +82,7 @@ layui.use(['table'], function () {
     }
 
     window.tableReload = function () {
-        table.reload(tableId, {
-            page: {
-                curr: 1
-            }
-        });
+        layuiTableReload(table, tableId, {});
     }
 
 });

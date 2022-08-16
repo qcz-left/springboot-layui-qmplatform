@@ -134,11 +134,7 @@ layui.use(['form', 'table'], function () {
     }
 
     function tableReload() {
-        table.reload(tableId, {
-            page: {
-                curr: 1
-            }
-        });
+        layuiTableReload(table, tableId, {});
     }
 
 });

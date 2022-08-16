@@ -128,12 +128,7 @@ layui.use(['table', 'form', 'element', 'layer', 'xmSelect'], function () {
     }
 
     window.tableReload = function () {
-        table.reload(tableId, {
-            page: {
-                curr: 1
-            },
-            where: form.val('user-search')
-        });
+        layuiTableReload(table, tableId, form.val('user-search'));
     }
 
 });

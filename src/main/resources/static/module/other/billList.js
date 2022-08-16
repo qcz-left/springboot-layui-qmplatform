@@ -47,6 +47,8 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
         height: 'full-80',
         page: true,
         toolbar: '#toolbar',
+        orderName: 'consumeTime',
+        order: 'desc',
         cols: [[
             {type: 'checkbox'},
             {field: 'typeName', title: '账单类型', width: '10%'},
@@ -98,7 +100,6 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
     // 搜索
     $("#btnSearch").click(function () {
         tableReload();
-        loadStatisticsView()
     });
 
     function open(id) {
@@ -192,12 +193,8 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
     }
 
     function tableReload() {
-        table.reload(tableId, {
-            page: {
-                curr: 1
-            },
-            where: form.val('bill-search')
-        });
+        layuiTableReload(table, tableId, form.val('bill-search'));
+        loadStatisticsView();
     }
 
     /**
@@ -253,7 +250,7 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
     }
 
     /**
-     * 账单分类统计
+     * 账单日消费折线图
      */
     function billDateView() {
         let chartDom = document.getElementById('billDateView');
