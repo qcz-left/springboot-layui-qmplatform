@@ -11,6 +11,8 @@ public class BillQO implements Serializable {
 
     private String remark;
 
+    private String consumer;
+
     private String typeId;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
@@ -18,6 +20,14 @@ public class BillQO implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date consumeTimeEnd;
+
+    public String getConsumer() {
+        return consumer;
+    }
+
+    public void setConsumer(String consumer) {
+        this.consumer = consumer;
+    }
 
     public String getRemark() {
         return remark;
