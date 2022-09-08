@@ -27,6 +27,12 @@
                     </div>
                 </div>
                 <div class="layui-inline">
+                    <label class="layui-form-label">消费人</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="consumer" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-inline">
                         <input type="text" name="remark" autocomplete="off" class="layui-input">
