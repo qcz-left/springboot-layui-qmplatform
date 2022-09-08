@@ -18,7 +18,12 @@ public enum SmsProvider {
     /**
      * 华为
      */
-    HUAWEI(3);
+    HUAWEI(3),
+
+    /**
+     * 百度
+     */
+    BAIDU(4);
 
     private final int code;
 

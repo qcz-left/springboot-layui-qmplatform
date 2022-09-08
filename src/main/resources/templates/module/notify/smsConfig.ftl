@@ -95,6 +95,9 @@
             },
             "2": {
                 "displayElement": ["secretId", "secretKey"]
+            },
+            "4": {
+                "displayElement": ["secretId", "secretKey"]
             }
         };
         let toggleProvider = function (provider) {
@@ -118,6 +121,9 @@
             }, {
                 name: '阿里云',
                 value: '2'
+            }, {
+                name: '百度云',
+                value: '4'
             }],
             initValue: [detail.smsProvider],
             on: function(data){
