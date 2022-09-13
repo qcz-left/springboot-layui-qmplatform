@@ -213,14 +213,26 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
         let myChart = echarts.init(chartDom);
 
         let data;
+        let sum = 0;
         CommonUtil.postSync(baseUrl + '/getAmountGroupByType', form.val('bill-search'), function (result) {
             data = result.data;
+            for (let i = 0; i < data.length; i++) {
+                sum += data[i].value;
+            }
         });
 
         let option = {
             title: {
                 text: '账单分类统计',
                 left: 'center'
+            },
+            graphic: {
+                type: "text",
+                left: "center",
+                top: "center",
+                style: {
+                    text: '总计：' + '\n' + sum
+                }
             },
             tooltip: {
                 trigger: 'item',
@@ -233,7 +245,7 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
             series: [
                 {
                     type: 'pie',
-                    radius: '50%',
+                    radius: ["35%", "65%"],
                     data: data,
                     emphasis: {
                         itemStyle: {
