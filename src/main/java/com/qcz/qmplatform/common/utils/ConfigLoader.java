@@ -184,4 +184,8 @@ public class ConfigLoader {
     public static long getSnowflakeWorkerId() {
         return getLongConfig("SnowflakeWorkerId", 1L);
     }
+
+    public static String getHwSmsServerAddressConfig() {
+        return getStringConfig("HwSmsServerAddress", "https://rtcsms.cn-north-1.myhuaweicloud.com:10743/sms/batchSendSms/v1");
+    }
 }

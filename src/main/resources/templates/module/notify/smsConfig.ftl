@@ -37,16 +37,22 @@
                     </div>
                 </div>
                 <div class="layui-form-item hide-or-show hide">
-                    <label class="layui-form-label required">SecretId</label>
+                    <label class="layui-form-label required" id="secretIdLabel">SecretId</label>
                     <div class="layui-input-inline">
                         <input type="text" name="secretId" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item hide-or-show hide">
-                    <label class="layui-form-label required">SecretKey</label>
+                    <label class="layui-form-label required" id="secretKeyLabel">SecretKey</label>
                     <div class="layui-input-inline">
                         <input type="password" autocomplete="new-password" style="display:none">
                         <input type="password" name="secretKey" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item hide-or-show hide">
+                    <label class="layui-form-label required">通道号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="channelNumber" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -96,16 +102,24 @@
             "2": {
                 "displayElement": ["secretId", "secretKey"]
             },
+            "3": {
+                "displayElement": ["secretId", "secretKey", "channelNumber"],
+                "secretIdLabel": "appKey",
+                "secretKeyLabel": "appSecret"
+            },
             "4": {
                 "displayElement": ["secretId", "secretKey"]
             }
         };
         let toggleProvider = function (provider) {
             $(".hide-or-show").addClass("hide");
-            let displayElement = smsJson[provider]["displayElement"];
+            var smsJsonElement = smsJson[provider];
+            let displayElement = smsJsonElement["displayElement"];
             for (let i = 0; i < displayElement.length; i++) {
                 $("[name=" + displayElement[i] + "]").parents(".hide-or-show").removeClass("hide");
             }
+            $("#secretIdLabel").text(smsJsonElement["secretIdLabel"] || "SecretId");
+            $("#secretKeyLabel").text(smsJsonElement["secretKeyLabel"] || "SecretKey");
         }
 
         // 短信数据加载
@@ -121,6 +135,9 @@
             }, {
                 name: '阿里云',
                 value: '2'
+            }, {
+                name: '华为云',
+                value: '3'
             }, {
                 name: '百度云',
                 value: '4'

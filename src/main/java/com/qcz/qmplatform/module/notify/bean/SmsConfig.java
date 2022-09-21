@@ -37,6 +37,11 @@ public class SmsConfig implements Serializable {
     private String sign;
 
     /**
+     * 通道号（华为云使用）
+     */
+    private String channelNumber;
+
+    /**
      * 模板id
      */
     private String templateID;
@@ -60,6 +65,14 @@ public class SmsConfig implements Serializable {
      * 手机号码
      */
     private List<String> phones;
+
+    public String getChannelNumber() {
+        return channelNumber;
+    }
+
+    public void setChannelNumber(String channelNumber) {
+        this.channelNumber = channelNumber;
+    }
 
     public String getAppKey() {
         return appKey;

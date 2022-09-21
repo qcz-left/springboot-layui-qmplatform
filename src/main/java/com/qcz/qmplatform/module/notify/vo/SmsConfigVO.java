@@ -36,6 +36,11 @@ public class SmsConfigVO implements Serializable {
     private String sign;
 
     /**
+     * 通道号（华为云使用）
+     */
+    private String channelNumber;
+
+    /**
      * @see SmsProvider
      */
     private int smsProvider;
@@ -46,6 +51,14 @@ public class SmsConfigVO implements Serializable {
 
     public void setAppKey(String appKey) {
         this.appKey = appKey;
+    }
+
+    public String getChannelNumber() {
+        return channelNumber;
+    }
+
+    public void setChannelNumber(String channelNumber) {
+        this.channelNumber = channelNumber;
     }
 
     /**

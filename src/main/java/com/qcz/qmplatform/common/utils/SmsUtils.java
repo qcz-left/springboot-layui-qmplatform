@@ -4,6 +4,7 @@ import com.qcz.qmplatform.module.notify.bean.SmsProvider;
 import com.qcz.qmplatform.module.notify.service.INotifyService;
 import com.qcz.qmplatform.module.notify.service.ali.AliyunSmsNotifyService;
 import com.qcz.qmplatform.module.notify.service.baidu.BaiduSmsNotifyService;
+import com.qcz.qmplatform.module.notify.service.huawei.HuaweiSmsNotifyService;
 import com.qcz.qmplatform.module.notify.service.tencent.TencentCloudSmsNotifyService;
 
 public class SmsUtils {
@@ -16,6 +17,8 @@ public class SmsUtils {
             clazz = TencentCloudSmsNotifyService.class;
         } else if (smsProvider == SmsProvider.ALI) {
             clazz = AliyunSmsNotifyService.class;
+        } else if (smsProvider == SmsProvider.HUAWEI) {
+            clazz = HuaweiSmsNotifyService.class;
         } else if (smsProvider == SmsProvider.BAIDU) {
             clazz = BaiduSmsNotifyService.class;
         }
