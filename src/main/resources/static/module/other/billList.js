@@ -231,7 +231,7 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
                 left: "center",
                 top: "center",
                 style: {
-                    text: '总计：' + '\n' + sum
+                    text: '总计：' + '\n' + sum.toFixed(2)
                 }
             },
             tooltip: {
