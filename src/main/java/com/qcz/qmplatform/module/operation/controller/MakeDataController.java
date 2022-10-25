@@ -32,7 +32,7 @@ public class MakeDataController {
     @PostMapping("/start")
     @ResponseBody
     public ResponseResult<?> start(@RequestBody MakeDataVO makeDataVO) {
-        makeDataService.start(makeDataVO.getDbDetail(), makeDataVO.getDataDetail());
+        makeDataService.start(makeDataVO.getDbDetail(), makeDataVO.getDataDetail(), makeDataVO.getInsertNumber());
         return ResponseResult.ok();
     }
 

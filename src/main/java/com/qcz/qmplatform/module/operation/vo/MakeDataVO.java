@@ -13,6 +13,16 @@ public class MakeDataVO implements Serializable {
 
     private DataDetail dataDetail;
 
+    private long insertNumber;
+
+    public long getInsertNumber() {
+        return insertNumber;
+    }
+
+    public void setInsertNumber(long insertNumber) {
+        this.insertNumber = insertNumber;
+    }
+
     public DBDetail getDbDetail() {
         return dbDetail;
     }

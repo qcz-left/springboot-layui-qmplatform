@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.operation.pojo;
 
+import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.RandomUtils;
 
 import java.io.Serializable;
@@ -95,7 +96,13 @@ public class DataDetail implements Serializable {
 
         public Object getValue() {
             if (valueType == 1) {
-                return value;
+                if ("number".equalsIgnoreCase(type)) {
+                    return Long.parseLong(value);
+                } else if ("date".equalsIgnoreCase(type)) {
+                    return DateUtils.parse(value, "yyyy-MM-dd HH:mm:ss");
+                } else {
+                    return value;
+                }
             }
 
             if (valueType == 2) {

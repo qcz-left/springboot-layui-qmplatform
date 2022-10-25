@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,22 +22,27 @@ public class MakeDataService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MakeDataService.class);
 
-    public void start(DBDetail dbDetail, DataDetail dataDetail) {
+    public void start(DBDetail dbDetail, DataDetail dataDetail, long insertNumber) {
         ThreadPoolUtils.execute(() -> {
             Connection connection = null;
             try {
                 connection = getConnection(dbDetail);
                 SqlConnRunner sqlConnRunner = DbUtil.newSqlConnRunner(connection);
 
-                Entity entity = new Entity();
-                entity.setTableName(dataDetail.getTableName());
+                List<Entity> entities = new ArrayList<>();
 
-                List<DataDetail.ColumnDetail> columnDetails = dataDetail.getColumnDetails();
-                for (DataDetail.ColumnDetail columnDetail : columnDetails) {
-                    entity.put(columnDetail.getName(), columnDetail.getValue());
+                for (int i = 0; i < insertNumber; i++) {
+                    Entity entity = new Entity();
+                    entity.setTableName(dataDetail.getTableName());
+
+                    List<DataDetail.ColumnDetail> columnDetails = dataDetail.getColumnDetails();
+                    for (DataDetail.ColumnDetail columnDetail : columnDetails) {
+                        entity.put(columnDetail.getName(), columnDetail.getValue());
+                    }
+                    entities.add(entity);
                 }
 
-                sqlConnRunner.insert(connection, entity);
+                sqlConnRunner.insert(connection, entities);
             } catch (Exception e) {
                 LOGGER.error("", e);
             } finally {
