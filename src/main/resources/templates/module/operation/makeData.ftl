@@ -78,8 +78,9 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label required">增加</label>
-                    <div class="layui-input-inline">
-                        <input type="number" name="insertNumber" lay-verify="required" autocomplete="off" class="layui-input" style="width: 60px;"> 条数据
+                    <div class="layui-input-block">
+                        <input type="number" name="insertNumber" lay-verify="required" autocomplete="off" class="layui-input layui-input-inline" style="width: 100px;">
+                        <div class="layui-form-mid">条数据</div>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -355,7 +356,7 @@ layui.use(['form', 'xmSelect', 'table'], function () {
             insertNumber: insertNumber
         }, function (result) {
             top.layer.closeAll();
-            LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE);
+            LayerUtil.respMsg(result, "任务执行成功", "任务执行失败");
         });
         return false;
     });
