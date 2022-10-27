@@ -20,7 +20,7 @@
 </style>
 <body class="detail-body">
 <div class="layui-fluid">
-    <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="make-data-form">
+    <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="database-form">
         <div class="layui-card">
             <div class="layui-card-header">数据库配置</div>
             <div class="layui-card-body">
@@ -64,46 +64,50 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"></label>
                     <div class="layui-input-inline">
-                        <button id="testConnect" class="layui-btn layui-btn-primary layui-border-black">测试连接</button>
+                        <button class="layui-btn layui-btn-primary layui-border-black" lay-submit lay-filter="connect-test-submit">测试连接</button>
                     </div>
                 </div>
             </div>
-            <div class="layui-card-header">表配置</div>
-            <div class="layui-card-body">
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">表名</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="tableName" lay-verify="required" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">增加</label>
-                    <div class="layui-input-block">
-                        <input type="number" name="insertNumber" lay-verify="required" autocomplete="off" class="layui-input layui-input-inline" style="width: 100px;">
-                        <div class="layui-form-mid">条数据</div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">字段</label>
-                    <div class="layui-input-inline" style="width: calc(100% - 200px);">
-                        <script type="text/html" id="toolbar">
-                        <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
-                        </div>
-                        </script>
-                        <script type="text/html" id="operator">
-                            <button class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</button>
-                            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
-                        </script>
-                        <table class="layui-hide" id="columnDetail-list-tab" lay-filter="columnDetail"></table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="detail-operator">
-            <button class="layui-btn" lay-submit lay-filter="make-data-submit">执行</button>
         </div>
     </form>
+    <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="table-form">
+        <div class="layui-card-header">表配置</div>
+        <div class="layui-card-body">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">增加</label>
+                <div class="layui-input-block">
+                    <input type="number" name="insertNumber" lay-verify="required" autocomplete="off" class="layui-input layui-input-inline" style="width: 100px;">
+                    <div class="layui-form-mid">条数据</div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label required">表名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="tableName" lay-verify="required" autocomplete="off" class="layui-input layui-input-inline">
+                    <button id="getColumnListBtn" class="layui-btn layui-btn-warm">获取字段信息</button>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">字段</label>
+                <div class="layui-input-inline" style="width: calc(100% - 200px);">
+                    <script type="text/html" id="toolbar">
+                    <div class="layui-btn-container">
+                        <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
+                    </div>
+                    </script>
+                    <script type="text/html" id="operator">
+                    <button class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</button>
+                    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
+                    </script>
+                    <table class="layui-hide" id="columnDetail-list-tab" lay-filter="columnDetail"></table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="detail-operator">
+    <button id="executeBtn" class="layui-btn">执行</button>
+</div>
 </div>
 <div id="columnDetailDiv" style="display: none">
     <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="column-detail-form">
@@ -202,9 +206,9 @@ layui.use(['form', 'xmSelect', 'table'], function () {
             {
                 field: 'valueType', title: '值类型', width: '15%', templet(row) {
                     switch (row.valueType) {
-                        case '1':
+                        case 1:
                             return '固定值';
-                        case '2':
+                        case 2:
                             return '随机值';
                     }
                 }
@@ -280,7 +284,7 @@ layui.use(['form', 'xmSelect', 'table'], function () {
             name: '随机值',
             value: 2
         }],
-        on: function(data){
+        on: function (data) {
             let value = data.arr[0].value;
             if (value === 1) {
                 $("#valueDiv").show();
@@ -301,7 +305,7 @@ layui.use(['form', 'xmSelect', 'table'], function () {
             title: "字段详情",
             content: $('#columnDetailDiv'),
             btn: ['确定', '取消'],
-            success: function() {
+            success: function () {
                 if (action === 'add') {
                     form.val('column-detail-form', {
                         name: '',
@@ -309,12 +313,12 @@ layui.use(['form', 'xmSelect', 'table'], function () {
                         length: ''
                     });
                     typeSelect.setValue(['string']);
-                    valueTypeSelect.setValue([1], null ,true);
+                    valueTypeSelect.setValue([1], null, true);
                 }
                 if (action === 'edit') {
                     form.val('column-detail-form', data);
                     typeSelect.setValue([data.type]);
-                    valueTypeSelect.setValue([data.valueType], null ,true);
+                    valueTypeSelect.setValue([data.valueType], null, true);
                 }
             },
             yes: function (index) {
@@ -332,23 +336,50 @@ layui.use(['form', 'xmSelect', 'table'], function () {
         })
     }
 
-    $("#testConnect").click(function () {
+    form.on('submit(connect-test-submit)', function (data) {
         let index = layer.loadingWithText('正在连接数据库...');
-        let makeDataForm = form.val('make-data-form');
-        makeDataForm.password = rsaEncrypt(makeDataForm.password);
-        CommonUtil.postAjax(ctx + '/operation/make-data/testConnect', makeDataForm, function (result) {
+        data.field.password = rsaEncrypt(data.field.password);
+        CommonUtil.postAjax(ctx + '/operation/make-data/testConnect', data.field, function (result) {
             LayerUtil.respMsg(result, "连接成功", "连接失败");
             layer.close(index);
         });
     })
 
-    form.on('submit(make-data-submit)', function (data) {
+    $("#getColumnListBtn").click(function () {
+        if (!form.doVerify($("[lay-filter=database-form]"))) {
+            return;
+        }
+        let tableName = $("input[name=tableName]").val();
+        if (!tableName) {
+            top.layer.warning("请填写表名");
+            return;
+        }
+
+        CommonUtil.postAjax(ctx + '/operation/make-data/getColumnList', {
+            dbDetail: form.val("database-form"),
+            dataDetail: {
+                tableName: tableName
+            }
+        }, function (result) {
+            columnDetailTableIns.reload({
+                data: result.data || []
+            });
+        })
+    });
+
+    $("#executeBtn").click( function () {
+        if (!form.doVerify($("[lay-filter=database-form]"))) {
+            return;
+        }
+        if (!form.doVerify($("[lay-filter=table-form]"))) {
+            return;
+        }
         top.layer.load(2);
         let selectAll = table.selectAll(columnDetailTableId);
-        let tableName = form.val("make-data-form").tableName;
-        let insertNumber = form.val("make-data-form").insertNumber;
+        let tableName = form.val("table-form").tableName;
+        let insertNumber = form.val("table-form").insertNumber;
         CommonUtil.postAjax(ctx + '/operation/make-data/start', {
-            dbDetail: form.val("make-data-form"),
+            dbDetail: form.val("database-form"),
             dataDetail: {
                 tableName: tableName,
                 columnDetails: selectAll
@@ -358,8 +389,7 @@ layui.use(['form', 'xmSelect', 'table'], function () {
             top.layer.closeAll();
             LayerUtil.respMsg(result, "任务执行成功", "任务执行失败");
         });
-        return false;
-    });
+    })
 })
 </script>
 </body>

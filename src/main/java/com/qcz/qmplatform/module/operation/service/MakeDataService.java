@@ -3,7 +3,10 @@ package com.qcz.qmplatform.module.operation.service;
 import cn.hutool.db.DbUtil;
 import cn.hutool.db.Entity;
 import cn.hutool.db.SqlConnRunner;
+import cn.hutool.db.meta.Column;
+import cn.hutool.db.meta.Table;
 import com.qcz.qmplatform.common.utils.CloseUtils;
+import com.qcz.qmplatform.common.utils.MetaUtils;
 import com.qcz.qmplatform.common.utils.ThreadPoolUtils;
 import com.qcz.qmplatform.module.operation.pojo.DBDetail;
 import com.qcz.qmplatform.module.operation.pojo.DBType;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +66,11 @@ public class MakeDataService {
         Connection connection = getConnection(dbDetail);
         System.out.println(connection);
 
+        Table tableMeta = MetaUtils.getTableMeta(connection, "tbl_ini");
+        for (Column column : tableMeta.getColumns()) {
+            System.out.println(column);
+        }
+
         CloseUtils.close(connection);
     }
 
@@ -85,4 +94,38 @@ public class MakeDataService {
         return DriverManager.getConnection(dbType.getUrl(dbDetail.getHost(), dbDetail.getPort(), dbDetail.getDatabase()), dbDetail.getUser(), dbDetail.getPassword());
     }
 
+    public List<DataDetail.ColumnDetail> getColumnList(DBDetail dbDetail, String tableName) {
+        List<DataDetail.ColumnDetail> columnDetails = new ArrayList<>();
+        try {
+            Connection connection = getConnection(dbDetail);
+            Table tableMeta = MetaUtils.getTableMeta(connection, tableName);
+            for (Column column : tableMeta.getColumns()) {
+                DataDetail.ColumnDetail columnDetail = new DataDetail.ColumnDetail();
+                columnDetail.setName(column.getName());
+                int type = column.getType();
+                if (type == Types.INTEGER
+                        || type == Types.BIGINT
+                        || type == Types.SMALLINT
+                        || type == Types.TINYINT) {
+                    columnDetail.setType("number");
+                    columnDetail.setLength(2);
+                } else if (type == Types.DATE
+                        || type == Types.TIME
+                        || type == Types.TIME_WITH_TIMEZONE
+                        || type == Types.TIMESTAMP
+                        || type == Types.TIMESTAMP_WITH_TIMEZONE) {
+                    columnDetail.setType("date");
+                } else {
+                    columnDetail.setType("string");
+                    columnDetail.setLength(10);
+                }
+                columnDetail.setValueType(2);
+
+                columnDetails.add(columnDetail);
+            }
+        } catch (Exception e) {
+            LOGGER.warn("test connect failed!", e);
+        }
+        return columnDetails;
+    }
 }
