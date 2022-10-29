@@ -74,7 +74,7 @@
             },
             orderName: 'username',
             order: 'desc',
-            height: 'full-80',
+            height: 'full-108',
             page: true,
             toolbar: '#toolbar',
             defaultToolbar: ['filter', {

@@ -32,6 +32,7 @@
                         <input type="text" name="consumer" autocomplete="off" class="layui-input">
                     </div>
                 </div>
+                <br>
                 <div class="layui-inline">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-inline">
@@ -40,15 +41,11 @@
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">消费时间</label>
-                </div>
-                <div class="layui-inline">
-                    <input type="text" class="layui-input" id="consumeTimeStart" name="consumeTimeStart">
-                </div>
-                <div class="layui-inline">
-                    -
-                </div>
-                <div class="layui-inline">
-                    <input type="text" class="layui-input" id="consumeTimeEnd" name="consumeTimeEnd">
+                    <div class="layui-input-inline" id="consumeTime" style="width: 420px;">
+                        <input type="text" id="consumeTimeStart" name="consumeTimeStart" autocomplete="off" class="layui-input layui-input-inline" placeholder="开始日期">
+                        <div class="layui-form-mid">-</div>
+                        <input type="text" id="consumeTimeEnd" name="consumeTimeEnd" autocomplete="off" class="layui-input layui-input-inline" placeholder="结束日期">
+                    </div>
                 </div>
             </span>
             <span class="searcher">

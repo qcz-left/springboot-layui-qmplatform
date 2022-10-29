@@ -8,7 +8,7 @@ layui.use(['table'], function () {
         where: {
             orderName: 'attrValue'
         },
-        height: 'full-30',
+        height: 'full-50',
         page: true,
         toolbar: '#toolbar',
         defaultToolbar: [],

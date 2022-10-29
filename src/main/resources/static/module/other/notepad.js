@@ -8,7 +8,7 @@ layui.use(['table', 'form'], function () {
     table.render({
         elem: '#' + tableId,
         url: baseUrl + '/list',
-        height: 'full-80',
+        height: 'full-108',
         page: true,
         toolbar: '#toolbar',
         orderName: 'createTime',

@@ -7,6 +7,10 @@
         margin: unset;
         background: #e5e5e5;
     }
+
+    .hide {
+        display: none!important;
+    }
 </style>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -49,6 +53,10 @@
     <!-- 页面标签 -->
     <div class="layui-body">
         <div class="layui-tab layui-tab-brief" lay-filter="main-tab" lay-stope="tabmore" lay-allowclose="true">
+            <div style="width: 100%; border-bottom: 1px solid #eee; padding: 0 10px 0 10px; background: white;">
+                <i id="collapseIcon" class="layui-icon layui-icon-shrink-right" style="line-height: 40px;cursor: pointer;"></i>
+                <i id="expandIcon" class="layui-icon layui-icon-spread-left" style="line-height: 40px;cursor: pointer;display: none"></i>
+            </div>
             <ul id="main-tab-title" class="layui-tab-title">
             </ul>
             <div class="layui-tab-content">
@@ -86,6 +94,10 @@ layui.use(['element'], function () {
     let classLayuiThis = 'layui-this';
     // 监听菜单导航点击
     element.on('nav(menu-tree)', function (elem) {
+        let layHref = elem.attr("lay-href");
+        if ($("#expandIcon").is(":visible") && !layHref) {
+            $("#expandIcon").click();
+        }
         addTab(elem);
     });
     // 监听右上角个人导航点击
@@ -115,6 +127,44 @@ layui.use(['element'], function () {
             content: ctx + "/user/uploadUserImgPage",
             area: ['40%', '40%']
         });
+    });
+
+    let collapseWidth = 200;
+    let $layuiSide = $(".layui-side");
+    let $layuiBody = $(".layui-body");
+    // 收缩菜单
+    $("#collapseIcon").click(function () {
+        $layuiSide.width($layuiSide.width() - collapseWidth);
+        $layuiSide.find(".layui-nav-item").width($layuiSide.width() - collapseWidth);
+        $layuiBody.width($layuiBody.width() + collapseWidth);
+        $layuiBody.offset({
+            left: $layuiBody.offset().left - collapseWidth
+        });
+        $layuiSide.find(".layui-nav-child").addClass("hide");
+
+        $layuiSide.find(".layui-nav-tree > li").each(function () {
+            LayerUtil.tips($(this).find(".menu-name").html(), $(this));
+        });
+        $("#collapseIcon,.layui-side .layui-nav-more,.menu-name").hide();
+        $("#expandIcon").show();
+    });
+
+    // 展开菜单
+    $("#expandIcon").click(function () {
+        $("#collapseIcon,.layui-side .layui-nav-more,.menu-name").show();
+        $layuiSide.find(".layui-nav-item").width($layuiSide.width() + collapseWidth);
+        $layuiSide.width($layuiSide.width() + collapseWidth);
+        $layuiBody.width($layuiBody.width() - collapseWidth);
+        $layuiBody.offset({
+            left: $layuiBody.offset().left + collapseWidth
+        });
+        $layuiSide.find(".layui-nav-child").removeClass("hide");
+
+        $layuiSide.find(".layui-nav-tree > li").each(function () {
+            $(this).mouseout().off('mouseover mouseout')
+        });
+
+        $("#expandIcon").hide();
     });
 
     tabRightClickEvent();
@@ -213,7 +263,7 @@ layui.use(['element'], function () {
                 element.tabDelete(tabLayFilter, $tabLis.first().attr("lay-id"));
             }
         } else {
-            document.getElementById("iframe-body-" + layId).contentWindow.location.reload(true);
+            document.getElementById("iframe-body-" + layId).contentWindow.location.reload();
         }
         element.tabChange(tabLayFilter, layId);
     }

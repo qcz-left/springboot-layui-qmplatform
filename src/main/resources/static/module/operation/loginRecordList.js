@@ -9,7 +9,7 @@ layui.use(['table'], function () {
             orderName: 'lastLoginTime',
             order: 'desc'
         },
-        height: 'full-30',
+        height: 'full-50',
         page: true,
         toolbar: '#toolbar',
         defaultToolbar: [],

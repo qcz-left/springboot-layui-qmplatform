@@ -55,7 +55,7 @@ layui.use(['table', 'form', 'laydate', 'xmSelect'], function () {
     });
 
     table.render({
-        height: 'full-80',
+        height: 'full-108',
         elem: '#' + tableId,
         url: ctx + '/operate-log/getLogList',
         page: true,

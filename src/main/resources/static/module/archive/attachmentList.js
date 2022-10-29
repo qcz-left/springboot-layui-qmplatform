@@ -5,7 +5,7 @@ layui.use(['table', 'form', 'element'], function () {
     let layFilter = 'attachment';
 
     table.render({
-        height: 'full-80',
+        height: 'full-108',
         elem: '#' + tableId,
         url: ctx + '/archive/attachment/getAttachmentList',
         page: true,

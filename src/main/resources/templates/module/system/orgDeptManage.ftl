@@ -35,7 +35,7 @@
             where: {
                 parentId: nodeId
             },
-            height: 'full-30',
+            height: 'full-50',
             treeColIndex: 0,	//树形图标显示在第几列
             treeSpid: nodeId,		//最上级的父级id
             treeIdName: 'id',	//id字段的名称

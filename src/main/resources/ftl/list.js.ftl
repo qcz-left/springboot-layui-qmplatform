@@ -6,7 +6,7 @@ layui.use(['table'], function () {
     table.render({
         elem: '#' + tableId,
         url: baseUrl + '/get${entity}List',
-        height: 'full-80',
+        height: 'full-108',
         page: true,
         toolbar: '#toolbar',
         cols: [[

@@ -9,12 +9,9 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
     let baseUrl = ctx + '/other/bill';
 
     laydate.render({
-        elem: '#consumeTimeStart',
-        type: 'date'
-    });
-    laydate.render({
-        elem: '#consumeTimeEnd',
-        type: 'date'
+        elem: '#consumeTime',
+        type: 'date',
+        range: ['#consumeTimeStart', '#consumeTimeEnd']
     });
 
     let typeSelect = xmSelect.render({
@@ -44,7 +41,7 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
     table.render({
         elem: '#' + tableId,
         url: baseUrl + '/getBillList',
-        height: 'full-80',
+        height: 'full-151',
         page: true,
         toolbar: '#toolbar',
         orderName: 'consumeTime',

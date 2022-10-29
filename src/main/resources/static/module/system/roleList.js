@@ -5,7 +5,7 @@ layui.use(['table'], function () {
     table.render({
         elem: '#' + tableId,
         url: ctx + '/role/getRoleList',
-        height: 'full-30',
+        height: 'full-50',
         page: true,
         toolbar: '#toolbar',
         cols: [[

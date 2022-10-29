@@ -7,7 +7,7 @@ layui.use(['table', 'form'], function () {
     table.render({
         elem: '#' + tableId,
         url: ctx + '/system/message/getMessageList',
-        height: 'full-80',
+        height: 'full-108',
         page: true,
         toolbar: '#toolbar',
         defaultToolbar: [],

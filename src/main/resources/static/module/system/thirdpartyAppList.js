@@ -11,7 +11,7 @@ layui.use(['form', 'table'], function () {
     table.render({
         elem: '#' + tableId,
         url: baseUrl + '/getThirdpartyAppList',
-        height: 'full-80',
+        height: 'full-50',
         page: true,
         toolbar: '#toolbar',
         cols: [[

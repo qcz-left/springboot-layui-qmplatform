@@ -41,7 +41,7 @@ public class MakeDataService {
 
                     List<DataDetail.ColumnDetail> columnDetails = dataDetail.getColumnDetails();
                     for (DataDetail.ColumnDetail columnDetail : columnDetails) {
-                        entity.put(columnDetail.getName(), columnDetail.getValue());
+                        entity.put(columnDetail.getName(), columnDetail.getFinallyValue());
                     }
                     entities.add(entity);
                 }

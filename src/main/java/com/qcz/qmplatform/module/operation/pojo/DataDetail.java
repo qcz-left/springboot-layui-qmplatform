@@ -94,7 +94,11 @@ public class DataDetail implements Serializable {
             this.length = length;
         }
 
-        public Object getValue() {
+        public String getValue() {
+            return value;
+        }
+
+        public Object getFinallyValue() {
             if (valueType == 1) {
                 if ("number".equalsIgnoreCase(type)) {
                     return Long.parseLong(value);

@@ -9,7 +9,7 @@ layui.use(['table', 'form'], function () {
         where: {
             orderName: 'sort'
         },
-        height: 'full-80',
+        height: 'full-108',
         page: true,
         toolbar: '#toolbar',
         cols: [[

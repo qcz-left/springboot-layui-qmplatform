@@ -327,13 +327,6 @@ $(function () {
             grid: {
                 right: '20%'
             },
-            toolbox: {
-                feature: {
-                    dataView: {show: true, readOnly: false},
-                    restore: {show: true},
-                    saveAsImage: {show: true}
-                }
-            },
             legend: {
                 data: ['蒸发量', '降水量', '温度']
             },
@@ -424,6 +417,11 @@ $(function () {
 });
 </script>
 <style>
+    html {
+        height: unset;
+        overflow-x: hidden;
+    }
+
     .layui-container {
         width: 100%;
     }
@@ -465,8 +463,8 @@ $(function () {
     }
 </style>
 <body>
-<div class="layui-container">
-    <div class="collect-data layui-row layui-col-space20">
+<div class="layui-container layui-fluid">
+    <div class="collect-data layui-row">
         <div class="layui-col-lg3">
             <div class="layui-panel">
                 <div class="layui-row">
@@ -528,7 +526,7 @@ $(function () {
             </div>
         </div>
     </div>
-    <div class="dashboard-data layui-row layui-col-space20">
+    <div class="dashboard-data layui-row">
         <div class="layui-col-lg6">
             <div class="layui-panel">
                 <div style="width: 100%; height: 100%" id="dashboardView"></div>
@@ -540,7 +538,7 @@ $(function () {
             </div>
         </div>
     </div>
-    <div class="temperature-data layui-row layui-col-space20">
+    <div class="temperature-data layui-row">
         <div class="layui-col-lg12">
             <div class="layui-panel">
                 <div style="width: 100%; height: 100%" id="temperatureView"></div>
