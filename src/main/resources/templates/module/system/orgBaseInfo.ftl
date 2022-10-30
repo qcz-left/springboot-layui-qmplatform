@@ -12,7 +12,7 @@
     }
 
 </style>
-<body>
+<body class="detail-body">
 <div class="layui-fluid">
     <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="org-form">
         <#if isDept>
