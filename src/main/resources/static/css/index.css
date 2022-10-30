@@ -211,3 +211,14 @@ html {
     width: 100px;
 }
 
+#main-tab-header,#main-tab-title {
+    width: calc(100% - 20px);
+    border-bottom: 1px solid #eee;
+    padding: 0 10px 0 10px;
+    background: white;
+}
+
+#main-tab-header .layui-icon {
+    line-height: 40px;
+    cursor: pointer;
+}

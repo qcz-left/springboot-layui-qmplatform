@@ -53,9 +53,9 @@
     <!-- 页面标签 -->
     <div class="layui-body">
         <div class="layui-tab layui-tab-brief" lay-filter="main-tab" lay-stope="tabmore" lay-allowclose="true">
-            <div style="width: 100%; border-bottom: 1px solid #eee; padding: 0 10px 0 10px; background: white;">
-                <i id="collapseIcon" class="layui-icon layui-icon-shrink-right" style="line-height: 40px;cursor: pointer;"></i>
-                <i id="expandIcon" class="layui-icon layui-icon-spread-left" style="line-height: 40px;cursor: pointer;display: none"></i>
+            <div id="main-tab-header">
+                <i id="collapseIcon" class="layui-icon layui-icon-shrink-right"></i>
+                <i id="expandIcon" class="layui-icon layui-icon-spread-left" style="display: none"></i>
             </div>
             <ul id="main-tab-title" class="layui-tab-title">
             </ul>
