@@ -120,7 +120,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         Matcher matcher = ENC_PATTERN.matcher(value);
         while (matcher.find()) {
             String group = matcher.group();
-            value = value.replaceFirst(ENC_REG, SecureUtils.rsaDecrypt(group.substring(4, group.length() - 1)));
+            value = value.replaceFirst(ENC_REG, Matcher.quoteReplacement(SecureUtils.rsaDecrypt(group.substring(4, group.length() - 1))));
         }
         return value;
     }
