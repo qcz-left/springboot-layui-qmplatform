@@ -40,7 +40,7 @@ public class DataDetail implements Serializable {
         this.columnDetails = columnDetails;
     }
 
-    public static class ColumnDetail {
+    public static class ColumnDetail implements Serializable {
         /**
          * 字段名
          */

@@ -1,6 +1,8 @@
 package com.qcz.qmplatform.module.operation.controller;
 
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.ConfigLoader;
+import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.module.operation.pojo.DBDetail;
 import com.qcz.qmplatform.module.operation.pojo.DataDetail;
 import com.qcz.qmplatform.module.operation.service.MakeDataService;
@@ -12,7 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -41,13 +46,27 @@ public class MakeDataController {
 
     @PostMapping("/testConnect")
     @ResponseBody
-    public ResponseResult<?> testConnect(@RequestBody DBDetail dbDetail) throws Exception {
+    public ResponseResult<?> testConnect(@RequestBody DBDetail dbDetail) {
         return ResponseResult.newInstance(makeDataService.testConnect(dbDetail));
     }
 
     @PostMapping("/getColumnList")
     @ResponseBody
-    public ResponseResult<List<DataDetail.ColumnDetail>> getColumnList(@RequestBody MakeDataVO makeDataVO) throws Exception {
+    public ResponseResult<List<DataDetail.ColumnDetail>> getColumnList(@RequestBody MakeDataVO makeDataVO) {
         return ResponseResult.ok(makeDataService.getColumnList(makeDataVO.getDbDetail(), makeDataVO.getDataDetail().getTableName()));
+    }
+
+    @PostMapping("/saveConfigToLocal")
+    @ResponseBody
+    public ResponseResult<String> saveConfigToLocal(@RequestBody MakeDataVO makeDataVO) {
+        String tmpFilePath = ConfigLoader.getDeleteTmpPath() + "/MakeData.dat";
+        FileUtils.writeObjectToFile(makeDataVO, tmpFilePath);
+        return ResponseResult.ok(null, tmpFilePath);
+    }
+
+    @PostMapping("/importLocalConfig")
+    @ResponseBody
+    public ResponseResult<MakeDataVO> importLocalConfig(MultipartFile file) throws IOException {
+        return ResponseResult.ok(FileUtils.readObjectFromFile(file.getInputStream(), MakeDataVO.class));
     }
 }

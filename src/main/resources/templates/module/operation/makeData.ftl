@@ -107,6 +107,8 @@
 </div>
 <div class="detail-operator">
     <button id="executeBtn" class="layui-btn">执行</button>
+    <button id="saveConfigToLocalBtn" class="layui-btn layui-btn-primary">保存配置到本地</button>
+    <button id="importLocalConfigBtn" class="layui-btn layui-btn-primary">导入本地配置</button>
 </div>
 </div>
 <div id="columnDetailDiv" style="display: none">
@@ -136,7 +138,7 @@
         <div class="layui-form-item hide" id="valueDiv">
             <label class="layui-form-label required">字段值</label>
             <div class="layui-input-inline">
-                <input type="text" name="value" autocomplete="off" class="layui-input">
+                <input type="text" name="value" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item hide" id="lengthDiv">
@@ -148,10 +150,11 @@
     </form>
 </div>
 <script lang="text/javascript">
-layui.use(['form', 'xmSelect', 'table'], function () {
+layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
     let form = layui.form;
     let xmSelect = layui.xmSelect;
     let table = layui.table;
+    let upload = layui.upload;
     // 表单数据校验
     form.verify({});
 
@@ -181,7 +184,8 @@ layui.use(['form', 'xmSelect', 'table'], function () {
     let columnDetailTableIns = table.render({
         elem: '#' + columnDetailTableId,
         toolbar: '#toolbar',
-        data: Object.values([]),
+        page: false,
+        data: [],
         cols: [[
             {type: 'numbers'},
             {field: 'name', title: '字段名', width: '20%'},
@@ -205,10 +209,10 @@ layui.use(['form', 'xmSelect', 'table'], function () {
             },
             {
                 field: 'valueType', title: '值类型', width: '15%', templet(row) {
-                    switch (row.valueType) {
-                        case 1:
+                    switch (row.valueType + "") {
+                        case "1":
                             return '固定值';
-                        case 2:
+                        case "2":
                             return '随机值';
                     }
                 }
@@ -322,6 +326,9 @@ layui.use(['form', 'xmSelect', 'table'], function () {
                 }
             },
             yes: function (index) {
+                if (!form.doVerify($("[lay-filter=column-detail-form]"))) {
+                    return;
+                }
                 if (action === "add") {
                     let allData = table.selectAll(columnDetailTableId);
                     allData.push(form.val('column-detail-form', data));
@@ -390,6 +397,44 @@ layui.use(['form', 'xmSelect', 'table'], function () {
             LayerUtil.respMsg(result, "任务执行成功", "任务执行失败");
         });
     })
+
+    $("#saveConfigToLocalBtn").click(function () {
+        top.layer.load(2);
+        let selectAll = table.selectAll(columnDetailTableId);
+        let tableName = form.val("table-form").tableName;
+        let insertNumber = form.val("table-form").insertNumber;
+        CommonUtil.postAjax(ctx + '/operation/make-data/saveConfigToLocal', {
+            dbDetail: form.val("database-form"),
+            dataDetail: {
+                tableName: tableName,
+                columnDetails: selectAll
+            },
+            insertNumber: insertNumber
+        }, function (result) {
+            top.layer.closeAll();
+            LayerUtil.respMsg(result, null, null, function () {
+                window.location = ctx + '/downloadExcelFile?filePath=' + encodeURIComponent(result.data) + "&fileName=制作数据配置.dat";
+            });
+        });
+    })
+
+    upload.render({
+        elem: '#importLocalConfigBtn',
+        accept: 'file',
+        url: ctx + '/operation/make-data/importLocalConfig',
+        done: function (result) {
+            let data = result.data;
+            form.val("database-form", data.dbDetail)
+            form.val("table-form", {
+                tableName: data.dataDetail.tableName,
+                insertNumber: data.insertNumber
+            })
+            columnDetailTableIns.reload({
+                data: data.dataDetail.columnDetails
+            });
+            LayerUtil.respMsg(result, "导入成功", "导入失败");
+        }
+    });
 })
 </script>
 </body>
