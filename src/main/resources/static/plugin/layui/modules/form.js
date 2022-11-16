@@ -68,7 +68,7 @@ layui.define('layer', function(exports){
     var stop = null //验证不通过状态
         ,verify = form.config.verify //验证规则
         ,DANGER = 'layui-form-danger' //警示样式
-        ,verifyElem = $form.find('*[lay-verify]') //获取需要校验的元素
+        ,verifyElem = $form.find('*[lay-verify]:visible') //获取需要校验的元素
 
     //开始校验
     layui.each(verifyElem, function(_, item){
@@ -707,7 +707,7 @@ layui.define('layer', function(exports){
     ,field = {}  //字段集合
     ,button = $(this) //当前触发的按钮
     ,elem = button.parents(ELEM).eq(0) //当前所在表单域
-    ,verifyElem = elem.find('*[lay-verify]') //获取需要校验的元素
+    ,verifyElem = elem.find('*[lay-verify]:visible') //获取需要校验的元素
     ,formElem = button.parents('form')[0] //获取当前所在的 form 元素，如果存在的话
     ,filter = button.attr('lay-filter'); //获取过滤器
    
