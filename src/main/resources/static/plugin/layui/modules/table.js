@@ -308,6 +308,11 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     
     options.index = that.index;
     that.key = options.id || options.index;
+
+    // 如果取消分页，则设置limit为最大值
+    if (typeof(options.page) == "undefined" || options.page === true) {
+      options.limit = Number.MAX_VALUE;
+    }
     
     //生成替代元素
     hasRender[0] && hasRender.remove(); //如果已经渲染，则Rerender
