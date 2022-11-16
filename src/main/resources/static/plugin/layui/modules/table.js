@@ -310,7 +310,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     that.key = options.id || options.index;
 
     // 如果取消分页，则设置limit为最大值
-    if (typeof(options.page) == "undefined" || options.page === true) {
+    if (typeof(options.page) == "undefined" || options.page === false) {
       options.limit = Number.MAX_VALUE;
     }
     
