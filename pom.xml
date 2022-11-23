@@ -357,8 +357,6 @@
                             <includes>
                                 com/qcz/qmplatform/**,application*.yml
                             </includes>
-                            <!-- 加密的密码 -->
-                            <password>qcz</password>
                             <!-- 加密后生成的jar-->
                             <targetJar>qmplatform.jar</targetJar>
                         </configuration>
