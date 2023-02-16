@@ -32,12 +32,7 @@ public class SpringContextUtils implements ApplicationContextAware {
 
     // 通过类型获取上下文中的bean
     public static <T> T getBean(Class<T> requiredType) {
-        try {
-            return applicationContext.getBean(requiredType);
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-        return null;
+        return applicationContext.getBean(requiredType);
     }
 
 }
