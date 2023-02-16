@@ -228,7 +228,7 @@ INSERT INTO "public"."sys_menu" VALUES ('4af487ea-9903-4116-970e-d82dce9d49ce', 
 INSERT INTO "public"."sys_menu" VALUES ('7cbaf4c5-f31d-48f0-ac5c-d7b2bd1d3134', '组织机构管理', 0, 'org-new', 'layui-icon-component', '/organization/orgManagePage', '1', 1);
 INSERT INTO "public"."sys_menu" VALUES ('b7231a740a1e423a8fe8ef4e747d7584', '邮箱配置', 51, 'mail', '', '/notify/mailConfigPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 INSERT INTO "public"."sys_menu" VALUES ('5f5325d64aca4206a73ed6ac0768dcff', '记事本', 10, 'notepad', '', '/other/notepad/listPage', '', 1);
-INSERT INTO "public"."sys_menu" VALUES ('39a3c2aa2d6347b393bc74adf5c63313', '首页', 0, 'home', '', '/home', '', 1);
+INSERT INTO "public"."sys_menu" VALUES ('39a3c2aa2d6347b393bc74adf5c63313', '首页', -1, 'home', '', '/home', '', 1);
 INSERT INTO public.sys_menu VALUES('3e5f325b89484e6eacf9642f29116bfc', '制作数据', NULL, 'make-data', '', '/operation/make-data/page', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 
 
@@ -1597,76 +1597,78 @@ COMMENT ON TABLE "public"."sys_role_permission" IS '角色-权限对应关系';
 -- ----------------------------
 -- Records of sys_role_permission
 -- ----------------------------
-INSERT INTO "public"."sys_role_permission" VALUES ('67d86434-c302-4924-a75a-dfe5fbc4affd', 'b555a066-c76d-4b8f-a834-4998cc000711');
-INSERT INTO "public"."sys_role_permission" VALUES ('67d86434-c302-4924-a75a-dfe5fbc4affd', 'e36040a7-f7cb-42f8-a55f-0a6f6e138958');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '326ad00b-2e0f-4941-9191-a573ada65410');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '80345dc4-cc15-405b-a371-82e50b64fcd9');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', 'e843dfa8-e868-4a83-aa35-215cbfbfd643');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '428493a8-5e23-4e64-a24c-78e61b3ed854');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '1d1f59eb-69d8-4894-abfd-54805f36b7df');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', 'd0ceae95-12d9-40ea-abe3-03df0b44dd2e');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '44ca4945-356e-499b-af2e-08035d39a619');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '318e6adb-e225-4636-9546-6b132b715c24');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', 'bc8a4903-3b5c-4b7e-a3e1-3c851603ff8b');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '0ec94352-4ea3-4f59-961c-38ca6779d714');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '44d656f2-86eb-4326-ad12-935ca160551d');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', 'cc2cbb01-f42f-4272-b02a-4c74484ca62a');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '37778f44-615d-4d69-bf8a-99ff0bafef40');
-INSERT INTO "public"."sys_role_permission" VALUES ('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '8c9768b7-3574-471b-bd51-6bd6188f24b5');
-INSERT INTO "public"."sys_role_permission" VALUES ('test_tv', '1');
-INSERT INTO "public"."sys_role_permission" VALUES ('test_tv', 'ef07f63f-4ec1-4053-bb53-db7891359339');
-INSERT INTO "public"."sys_role_permission" VALUES ('test_tv', '4489ccf9-fec5-4f81-b817-0c1cd2c7a171');
-INSERT INTO "public"."sys_role_permission" VALUES ('test_tv', '9ceffdf2-420e-40dc-9199-ab4ff049737b');
-INSERT INTO "public"."sys_role_permission" VALUES ('test_tv', 'bfba142d-6a80-417b-9e58-a3671283f2fb');
-INSERT INTO "public"."sys_role_permission" VALUES ('test_tv', 'b555a066-c76d-4b8f-a834-4998cc000711');
-INSERT INTO "public"."sys_role_permission" VALUES ('test_tv', 'e36040a7-f7cb-42f8-a55f-0a6f6e138958');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '1');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'ef07f63f-4ec1-4053-bb53-db7891359339');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '4489ccf9-fec5-4f81-b817-0c1cd2c7a171');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '9ceffdf2-420e-40dc-9199-ab4ff049737b');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '985cf497-f3f0-4bea-8844-70fdc3ab4cde');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'a9238df4-ca79-4ddb-afc9-74e01b808200');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'dd0268c3-1f3b-44f0-b94b-5d8df387019f');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '4af487ea-9903-4116-970e-d82dce9d49ce');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '117c2896-d27c-445d-bc88-240b8ac62032');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'e45cdf2e-692b-4ba3-aa65-464d8a9da97b');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'bfba142d-6a80-417b-9e58-a3671283f2fb');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '82241eeb-ed7c-44f3-b9f0-56e986363907');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '074f7b51-cb8c-4452-a188-e7afd4505930');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '529279d9-6b31-4ed7-b61b-127f4257810e');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'ec2d5dbf-ace1-4fe8-b85e-70fc84bf517e');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '9ac8ef82-57c9-461e-9ee0-e2c892e8bcac');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'f2a871d8-c1dd-4775-ad0d-8b8b3f53eede');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b7564f6a-5ce5-49d8-9d15-e8fe396eecaa');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '2e2e994a-da4f-4cb5-84fc-0324efae29f6');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '326ad00b-2e0f-4941-9191-a573ada65410');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '80345dc4-cc15-405b-a371-82e50b64fcd9');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'e843dfa8-e868-4a83-aa35-215cbfbfd643');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '428493a8-5e23-4e64-a24c-78e61b3ed854');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '1d1f59eb-69d8-4894-abfd-54805f36b7df');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'd0ceae95-12d9-40ea-abe3-03df0b44dd2e');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '44ca4945-356e-499b-af2e-08035d39a619');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '318e6adb-e225-4636-9546-6b132b715c24');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'bc8a4903-3b5c-4b7e-a3e1-3c851603ff8b');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '0ec94352-4ea3-4f59-961c-38ca6779d714');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '44d656f2-86eb-4326-ad12-935ca160551d');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'cc2cbb01-f42f-4272-b02a-4c74484ca62a');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '37778f44-615d-4d69-bf8a-99ff0bafef40');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '8c9768b7-3574-471b-bd51-6bd6188f24b5');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b555a066-c76d-4b8f-a834-4998cc000711');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'e36040a7-f7cb-42f8-a55f-0a6f6e138958');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '042a5960-785f-442e-a76a-576f7eb389c4');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'a9238df4-ca79-4ddb-afc9-74e01b808200');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '985cf497-f3f0-4bea-8844-70fdc3ab4cde');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'dd0268c3-1f3b-44f0-b94b-5d8df387019f');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b5ee5991-a01f-4978-bd58-3e71dcd163c6');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '15d0b9e4-7630-4826-975d-18d409bae421');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '5ef5be70-684a-4a65-b2ae-ba95bb4bc4df');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b7231a740a1e423a8fe8ef4e747d7584');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '5f5325d64aca4206a73ed6ac0768dcff');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'aa0362e2f74a4f39833cf5ddd77ad40b');
-INSERT INTO "public"."sys_role_permission" VALUES ('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '39a3c2aa2d6347b393bc74adf5c63313');
-INSERT INTO public.sys_role_permission VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b555a066-c76d-4b8f-a834-4998cc000711');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('67d86434-c302-4924-a75a-dfe5fbc4affd', 'b555a066-c76d-4b8f-a834-4998cc000711');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('67d86434-c302-4924-a75a-dfe5fbc4affd', 'e36040a7-f7cb-42f8-a55f-0a6f6e138958');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '326ad00b-2e0f-4941-9191-a573ada65410');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '80345dc4-cc15-405b-a371-82e50b64fcd9');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', 'e843dfa8-e868-4a83-aa35-215cbfbfd643');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '428493a8-5e23-4e64-a24c-78e61b3ed854');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '1d1f59eb-69d8-4894-abfd-54805f36b7df');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', 'd0ceae95-12d9-40ea-abe3-03df0b44dd2e');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '44ca4945-356e-499b-af2e-08035d39a619');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '318e6adb-e225-4636-9546-6b132b715c24');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', 'bc8a4903-3b5c-4b7e-a3e1-3c851603ff8b');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '0ec94352-4ea3-4f59-961c-38ca6779d714');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '44d656f2-86eb-4326-ad12-935ca160551d');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', 'cc2cbb01-f42f-4272-b02a-4c74484ca62a');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '37778f44-615d-4d69-bf8a-99ff0bafef40');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '8c9768b7-3574-471b-bd51-6bd6188f24b5');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('test_tv', '1');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('test_tv', 'ef07f63f-4ec1-4053-bb53-db7891359339');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('test_tv', '4489ccf9-fec5-4f81-b817-0c1cd2c7a171');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('test_tv', '9ceffdf2-420e-40dc-9199-ab4ff049737b');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('test_tv', 'bfba142d-6a80-417b-9e58-a3671283f2fb');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('test_tv', 'b555a066-c76d-4b8f-a834-4998cc000711');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('test_tv', 'e36040a7-f7cb-42f8-a55f-0a6f6e138958');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '1');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'ef07f63f-4ec1-4053-bb53-db7891359339');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '4489ccf9-fec5-4f81-b817-0c1cd2c7a171');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '9ceffdf2-420e-40dc-9199-ab4ff049737b');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '7cbaf4c5-f31d-48f0-ac5c-d7b2bd1d3134');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '042a5960-785f-442e-a76a-576f7eb389c4');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '985cf497-f3f0-4bea-8844-70fdc3ab4cde');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'a9238df4-ca79-4ddb-afc9-74e01b808200');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'dd0268c3-1f3b-44f0-b94b-5d8df387019f');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '4af487ea-9903-4116-970e-d82dce9d49ce');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '117c2896-d27c-445d-bc88-240b8ac62032');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'e45cdf2e-692b-4ba3-aa65-464d8a9da97b');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'bfba142d-6a80-417b-9e58-a3671283f2fb');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '82241eeb-ed7c-44f3-b9f0-56e986363907');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '074f7b51-cb8c-4452-a188-e7afd4505930');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '529279d9-6b31-4ed7-b61b-127f4257810e');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'ec2d5dbf-ace1-4fe8-b85e-70fc84bf517e');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'e3a24ef6-134f-498a-aa11-54a184de3b70');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'dd5db615-6b1a-4bfe-9e45-45b008d73e90');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '94c6fe0d-5c7f-42cd-85fe-60f6c096e230');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '39a3c2aa2d6347b393bc74adf5c63313');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '9ac8ef82-57c9-461e-9ee0-e2c892e8bcac');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'f2a871d8-c1dd-4775-ad0d-8b8b3f53eede');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b7564f6a-5ce5-49d8-9d15-e8fe396eecaa');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '2e2e994a-da4f-4cb5-84fc-0324efae29f6');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '5f5325d64aca4206a73ed6ac0768dcff');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '326ad00b-2e0f-4941-9191-a573ada65410');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b5ee5991-a01f-4978-bd58-3e71dcd163c6');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '15d0b9e4-7630-4826-975d-18d409bae421');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '5ef5be70-684a-4a65-b2ae-ba95bb4bc4df');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '80345dc4-cc15-405b-a371-82e50b64fcd9');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'e843dfa8-e868-4a83-aa35-215cbfbfd643');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '428493a8-5e23-4e64-a24c-78e61b3ed854');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'bc8a4903-3b5c-4b7e-a3e1-3c851603ff8b');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '318e6adb-e225-4636-9546-6b132b715c24');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '44ca4945-356e-499b-af2e-08035d39a619');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'd0ceae95-12d9-40ea-abe3-03df0b44dd2e');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '1d1f59eb-69d8-4894-abfd-54805f36b7df');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '0ec94352-4ea3-4f59-961c-38ca6779d714');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '44d656f2-86eb-4326-ad12-935ca160551d');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '8c9768b7-3574-471b-bd51-6bd6188f24b5');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '37778f44-615d-4d69-bf8a-99ff0bafef40');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'cc2cbb01-f42f-4272-b02a-4c74484ca62a');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'bd8cae46-b3bc-48e1-bc6d-c623493fe64c');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b7231a740a1e423a8fe8ef4e747d7584');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'aa0362e2f74a4f39833cf5ddd77ad40b');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '3e5f325b89484e6eacf9642f29116bfc');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b555a066-c76d-4b8f-a834-4998cc000711');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'e36040a7-f7cb-42f8-a55f-0a6f6e138958');
 
 
 -- ----------------------------
@@ -1915,7 +1917,7 @@ end loop;
 	select distinct * from r';
 
 RETURN QUERY EXECUTE findAllQuery;
-END$BODY$
+END $BODY$
 LANGUAGE plpgsql VOLATILE
   COST 100
   ROWS 1000;
@@ -2073,7 +2075,7 @@ CREATE OR REPLACE FUNCTION "public"."casc_org"(VARIADIC "org_id" _varchar)
 	select distinct * from r';
 
 	RETURN QUERY EXECUTE findAllQuery;
-END$BODY$
+END $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
   ROWS 1000;
