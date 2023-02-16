@@ -1,8 +1,9 @@
 package com.qcz.qmplatform.module.system.service;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.CacheUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
@@ -32,8 +33,8 @@ public class ThirdpartyAppService extends ServiceImpl<ThirdpartyAppMapper, Third
     public ThirdpartyApp getByName(String name) {
         ThirdpartyApp thirdpartyApp = (ThirdpartyApp) CacheUtils.get(name);
         if (thirdpartyApp == null) {
-            QueryWrapper<ThirdpartyApp> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("name", name);
+            LambdaQueryWrapper<ThirdpartyApp> queryWrapper = Wrappers.lambdaQuery(ThirdpartyApp.class)
+                    .eq(ThirdpartyApp::getName, name);
             thirdpartyApp = getOne(queryWrapper);
             if (thirdpartyApp != null) {
                 thirdpartyApp.setAppSecret(SecureUtils.aesDecrypt(thirdpartyApp.getAppSecret()));
@@ -62,16 +63,16 @@ public class ThirdpartyAppService extends ServiceImpl<ThirdpartyAppMapper, Third
     }
 
     public boolean validateName(String id, String name) {
-        QueryWrapper<ThirdpartyApp> queryWrapper = new QueryWrapper<>();
-        queryWrapper.ne(StringUtils.isNotBlank(id), "id", id);
-        queryWrapper.eq("name", name);
+        LambdaQueryWrapper<ThirdpartyApp> queryWrapper = Wrappers.lambdaQuery(ThirdpartyApp.class)
+                .ne(StringUtils.isNotBlank(id), ThirdpartyApp::getId, id)
+                .eq(ThirdpartyApp::getName, name);
         return CollectionUtil.isEmpty(list(queryWrapper));
     }
 
     public boolean updateStatus(String id, int status) {
-        UpdateWrapper<ThirdpartyApp> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("id", id);
-        updateWrapper.set("status", status);
+        LambdaUpdateWrapper<ThirdpartyApp> updateWrapper = Wrappers.lambdaUpdate(ThirdpartyApp.class)
+                .eq(ThirdpartyApp::getId, id)
+                .set(ThirdpartyApp::getStatus, status);
         return update(updateWrapper);
     }
 }

@@ -1,7 +1,8 @@
 package com.qcz.qmplatform.module.operation.service;
 
 import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -27,10 +28,10 @@ public class DictService extends ServiceImpl<DictMapper, Dict> {
     @Autowired
     private DictAttrService dictAttrService;
 
-    public List<Dict> getDictList(Dict Dict) {
-        QueryWrapper<Dict> wrapper = new QueryWrapper<>();
-        String DictName = Dict.getDictName();
-        wrapper.like(StringUtils.isNotBlank(DictName), "dict_name", DictName);
+    public List<Dict> getDictList(Dict dict) {
+        String dictName = dict.getDictName();
+        LambdaQueryWrapper<Dict> wrapper = Wrappers.lambdaQuery(Dict.class)
+                .like(StringUtils.isNotBlank(dictName), Dict::getDictName, dictName);
         return list(wrapper);
     }
 
@@ -44,17 +45,17 @@ public class DictService extends ServiceImpl<DictMapper, Dict> {
     }
 
     public boolean deleteDict(List<String> dictIds) {
-        QueryWrapper<DictAttr> dictAttrQueryWrapper = new QueryWrapper<>();
-        dictAttrQueryWrapper.in("dict_id", dictIds);
+        LambdaQueryWrapper<DictAttr> dictAttrQueryWrapper = Wrappers.lambdaQuery(DictAttr.class)
+                .in(DictAttr::getDictId, dictIds);
         dictAttrService.remove(dictAttrQueryWrapper);
         return removeByIds(dictIds);
     }
 
     public boolean validateDictCode(String dictId, String dictCode) {
         Assert.notBlank(dictCode);
-        QueryWrapper<Dict> wrapper = new QueryWrapper<>();
-        wrapper.ne(StringUtils.isNotBlank(dictId), "dict_id", dictId);
-        wrapper.eq("dict_code", dictCode);
+        LambdaQueryWrapper<Dict> wrapper = Wrappers.lambdaQuery(Dict.class)
+                .ne(StringUtils.isNotBlank(dictId), Dict::getDictId, dictId)
+                .eq(Dict::getDictCode, dictCode);
         return baseMapper.selectCount(wrapper) == 0;
     }
 }

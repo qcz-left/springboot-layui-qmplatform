@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.system.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.module.system.assist.Thirdparty;
 import com.qcz.qmplatform.module.system.domain.UserThirdparty;
@@ -33,9 +34,9 @@ public class UserThirdpartyService extends ServiceImpl<UserThirdpartyMapper, Use
      * @param thirdparty   三方服务商
      */
     public UserThirdparty getUserIdByThirdparty(String thirdpartyId, Thirdparty thirdparty) {
-        QueryWrapper<UserThirdparty> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("thirdparty_id", thirdpartyId);
-        queryWrapper.eq("access_type", thirdparty.getType());
+        LambdaQueryWrapper<UserThirdparty> queryWrapper = Wrappers.lambdaQuery(UserThirdparty.class)
+                .eq(UserThirdparty::getThirdpartyId, thirdpartyId)
+                .eq(UserThirdparty::getAccessType, thirdparty.getType());
         return baseMapper.selectOne(queryWrapper);
     }
 }

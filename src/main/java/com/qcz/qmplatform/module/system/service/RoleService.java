@@ -1,7 +1,8 @@
 package com.qcz.qmplatform.module.system.service;
 
 import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -29,9 +30,9 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
     private RolePermissionService rolePermissionService;
 
     public List<Role> getRoleList(Role role) {
-        QueryWrapper<Role> wrapper = new QueryWrapper<>();
         String roleName = role.getRoleName();
-        wrapper.like(StringUtils.isNotBlank(roleName), "role_name", roleName);
+        LambdaQueryWrapper<Role> wrapper = Wrappers.lambdaQuery(Role.class)
+                .like(StringUtils.isNotBlank(roleName), Role::getRoleName, roleName);
         return list(wrapper);
     }
 
@@ -56,8 +57,8 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
     }
 
     public boolean saveRolePermission(String roleId, List<String> permissionIds) {
-        QueryWrapper<RolePermission> wrapper = new QueryWrapper<>();
-        wrapper.eq("role_id", roleId);
+        LambdaQueryWrapper<RolePermission> wrapper = Wrappers.lambdaQuery(RolePermission.class)
+                .eq(RolePermission::getRoleId, roleId);
         rolePermissionService.remove(wrapper);
 
         List<RolePermission> saveRolePermissions = new ArrayList<>();
@@ -82,9 +83,9 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
      */
     public boolean validateRoleSign(String roleSign, String roleId) {
         Assert.notBlank(roleSign);
-        QueryWrapper<Role> wrapper = new QueryWrapper<>();
-        wrapper.ne(StringUtils.isNotBlank(roleId), "role_id", roleId);
-        wrapper.eq("role_sign", roleSign);
+        LambdaQueryWrapper<Role> wrapper = Wrappers.lambdaQuery(Role.class)
+                .ne(StringUtils.isNotBlank(roleId), Role::getRoleId, roleId)
+                .eq(Role::getRoleSign, roleSign);
         return baseMapper.selectCount(wrapper) == 0;
     }
 }

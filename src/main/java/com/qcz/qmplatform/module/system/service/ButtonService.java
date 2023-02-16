@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.system.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -22,9 +23,9 @@ import java.util.List;
 public class ButtonService extends ServiceImpl<ButtonMapper, Button> {
 
     public List<Button> getButtonList(Button button) {
-        QueryWrapper<Button> wrapper = new QueryWrapper<>();
         String buttonName = button.getButtonName();
-        wrapper.like(StringUtils.isNotBlank(buttonName), "button_name", buttonName);
+        LambdaQueryWrapper<Button> wrapper = Wrappers.lambdaQuery(Button.class)
+                .like(StringUtils.isNotBlank(buttonName), Button::getButtonName, buttonName);
         return list(wrapper);
     }
 

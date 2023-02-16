@@ -2,7 +2,8 @@ package com.qcz.qmplatform.module.operation.service;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.exception.CommonException;
@@ -150,9 +151,9 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         // 删除 day 天前的备份
         String saveDays = bakStrategy.get(IniDefine.DataBak.SAVE_DAYS);
         if (StringUtils.isNotBlank(saveDays)) {
-            QueryWrapper<DataBak> dataBakQueryWrapper = new QueryWrapper<>();
-            long beforeDaySeconds = DateUtils.currentSeconds() - Integer.parseInt(saveDays) * 24 * 60 * 60;
-            dataBakQueryWrapper.le("create_time", DateUtils.timestamp(beforeDaySeconds * 1000L));
+            long beforeDaySeconds = DateUtils.currentSeconds() - Long.parseLong(saveDays) * 24 * 60 * 60;
+            LambdaQueryWrapper<DataBak> dataBakQueryWrapper = Wrappers.lambdaQuery(DataBak.class)
+                    .le(DataBak::getCreateTime, DateUtils.timestamp(beforeDaySeconds * 1000L));
             List<DataBak> needDelDataBakes = list(dataBakQueryWrapper);
             // 删除数据库记录和对应备份文件
             for (DataBak needDelDataBake : needDelDataBakes) {
@@ -183,8 +184,8 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
     }
 
     public boolean deleteDataBak(List<String> dataBakIds) {
-        QueryWrapper<DataBak> queryWrapper = new QueryWrapper<>();
-        queryWrapper.in("bak_id", dataBakIds);
+        LambdaQueryWrapper<DataBak> queryWrapper = Wrappers.lambdaQuery(DataBak.class)
+                .in(DataBak::getBakId, dataBakIds);
         List<DataBak> dataBakes = list(queryWrapper);
         for (DataBak dataBake : dataBakes) {
             FileUtils.del(dataBake.getBakPath());

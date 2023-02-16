@@ -1,7 +1,8 @@
 package com.qcz.qmplatform.module.operation.service;
 
 import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -24,8 +25,8 @@ import java.util.Map;
 public class DictAttrService extends ServiceImpl<DictAttrMapper, DictAttr> {
 
     public List<DictAttr> getDictAttrList(String dictId) {
-        QueryWrapper<DictAttr> wrapper = new QueryWrapper<>();
-        wrapper.eq("dict_id", dictId);
+        LambdaQueryWrapper<DictAttr> wrapper = Wrappers.lambdaQuery(DictAttr.class)
+                .eq(DictAttr::getDictId, dictId);
         return list(wrapper);
     }
 
@@ -46,10 +47,10 @@ public class DictAttrService extends ServiceImpl<DictAttrMapper, DictAttr> {
         String attrValue = dictAttr.getAttrValue();
         String attrId = dictAttr.getAttrId();
         Assert.notBlank(attrValue);
-        QueryWrapper<DictAttr> wrapper = new QueryWrapper<>();
-        wrapper.ne(StringUtils.isNotBlank(attrId), "attr_id", attrId);
-        wrapper.eq("attr_value", attrValue);
-        wrapper.eq("dict_id", dictAttr.getDictId());
+        LambdaQueryWrapper<DictAttr> wrapper = Wrappers.lambdaQuery(DictAttr.class)
+                .ne(StringUtils.isNotBlank(attrId), DictAttr::getAttrId, attrId)
+                .eq(DictAttr::getAttrValue, attrValue)
+                .eq(DictAttr::getDictId, dictAttr.getDictId());
         return baseMapper.selectCount(wrapper) == 0;
     }
 

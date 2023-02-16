@@ -1,7 +1,8 @@
 package com.qcz.qmplatform.module.operation.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
@@ -68,9 +69,9 @@ public class LoginRecordService extends ServiceImpl<LoginRecordMapper, LoginReco
     }
 
     public LoginRecord getLoginRecord(String loginName, String clientIp) {
-        QueryWrapper<LoginRecord> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("login_name", loginName);
-        queryWrapper.eq("last_login_ip", clientIp);
+        LambdaQueryWrapper<LoginRecord> queryWrapper = Wrappers.lambdaQuery(LoginRecord.class)
+                .eq(LoginRecord::getLoginName, loginName)
+                .eq(LoginRecord::getLastLoginIp, clientIp);
         return this.getOne(queryWrapper);
     }
 
@@ -81,9 +82,9 @@ public class LoginRecordService extends ServiceImpl<LoginRecordMapper, LoginReco
      * @param clientIp  客户端
      */
     public void clearLoginRecord(String loginName, String clientIp) {
-        QueryWrapper<LoginRecord> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("login_name", loginName);
-        queryWrapper.eq("last_login_ip", clientIp);
+        LambdaQueryWrapper<LoginRecord> queryWrapper = Wrappers.lambdaQuery(LoginRecord.class)
+                .eq(LoginRecord::getLoginName, loginName)
+                .eq(LoginRecord::getLastLoginIp, clientIp);
         this.remove(queryWrapper);
     }
 
@@ -123,10 +124,10 @@ public class LoginRecordService extends ServiceImpl<LoginRecordMapper, LoginReco
      * @param remark    备注
      */
     public void addRemark(String loginName, String clientIp, String remark) {
-        UpdateWrapper<LoginRecord> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("login_name", loginName);
-        updateWrapper.eq("last_login_ip", clientIp);
-        updateWrapper.set("remark", remark);
+        LambdaUpdateWrapper<LoginRecord> updateWrapper = Wrappers.lambdaUpdate(LoginRecord.class)
+                .eq(LoginRecord::getLoginName, loginName)
+                .eq(LoginRecord::getLastLoginIp, clientIp)
+                .set(LoginRecord::getRemark, remark);
         this.update(updateWrapper);
     }
 
@@ -136,8 +137,8 @@ public class LoginRecordService extends ServiceImpl<LoginRecordMapper, LoginReco
      * @param recordIds id集合
      */
     public boolean deleteLoginRecord(List<String> recordIds) {
-        QueryWrapper<LoginRecord> queryWrapper = new QueryWrapper<>();
-        queryWrapper.in("record_id", recordIds);
+        LambdaQueryWrapper<LoginRecord> queryWrapper = Wrappers.lambdaQuery(LoginRecord.class)
+                .in(LoginRecord::getRecordId, recordIds);
         return this.remove(queryWrapper);
     }
 }

@@ -1,8 +1,9 @@
 package com.qcz.qmplatform.module.system.service;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
@@ -79,9 +80,9 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
      * @param messageIds 消息id
      */
     public boolean setHasRead(String[] messageIds) {
-        UpdateWrapper<Message> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.in("message_id", messageIds);
-        updateWrapper.set("read", 1);
+        LambdaUpdateWrapper<Message> updateWrapper = Wrappers.lambdaUpdate(Message.class)
+                .in(Message::getMessageId, messageIds)
+                .set(Message::getRead, 1);
         return this.update(updateWrapper);
     }
 
@@ -94,13 +95,13 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
         Timestamp currTimestamp = DateUtils.getCurrTimestamp();
         message.setLastUpdateTime(currTimestamp);
 
-        QueryWrapper<Message> queryWarpper = new QueryWrapper<>();
-        queryWarpper.eq("type", message.getType());
-        queryWarpper.eq("read", message.getRead());
-        queryWarpper.eq("instance", message.getInstance());
-        queryWarpper.eq("receiver", message.getReceiver());
+        LambdaQueryWrapper<Message> queryWrapper = Wrappers.lambdaQuery(Message.class)
+                .eq(Message::getType, message.getType())
+                .eq(Message::getRead, message.getRead())
+                .eq(Message::getInstance, message.getInstance())
+                .eq(Message::getReceiver, message.getReceiver());
 
-        Message tmpMessage = getOne(queryWarpper);
+        Message tmpMessage = getOne(queryWrapper);
         if (tmpMessage == null) {
             if (StringUtils.isBlank(message.getMessageId())) {
                 message.setMessageId(IdUtils.getUUID());

@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.system.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
@@ -55,8 +56,8 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
         List<String> cascOrgIds = baseMapper.selectCascOrgIds(orgIds);
         removeByIds(cascOrgIds);
         // 删除关联部门信息
-        QueryWrapper<UserOrganization> deleteWrapper = new QueryWrapper<>();
-        deleteWrapper.in("organization_id", cascOrgIds);
+        LambdaQueryWrapper<UserOrganization> deleteWrapper = Wrappers.lambdaQuery(UserOrganization.class)
+                .in(UserOrganization::getOrganizationId, cascOrgIds);
         userOrganizationService.remove(deleteWrapper);
         return true;
     }
@@ -69,8 +70,8 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
     }
 
     public Organization getByName(String orgName) {
-        QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("organization_name", orgName);
+        LambdaQueryWrapper<Organization> queryWrapper = Wrappers.lambdaQuery(Organization.class)
+                .in(Organization::getOrganizationName, orgName);
         return getOne(queryWrapper);
     }
 }

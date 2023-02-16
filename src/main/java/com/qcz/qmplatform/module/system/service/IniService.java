@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.system.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.system.domain.Ini;
@@ -24,8 +25,8 @@ public class IniService extends ServiceImpl<IniMapper, Ini> {
     public Map<String, String> getBySec(String sec) {
         Map<String, String> iniProperty = new HashMap<>();
 
-        QueryWrapper<Ini> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(StringUtils.isNotBlank(sec), "section", sec);
+        LambdaQueryWrapper<Ini> queryWrapper = Wrappers.lambdaQuery(Ini.class)
+                .eq(StringUtils.isNotBlank(sec), Ini::getSection, sec);
         for (Ini ini : list(queryWrapper)) {
             iniProperty.put(ini.getProperty(), ini.getValue());
         }
@@ -33,15 +34,15 @@ public class IniService extends ServiceImpl<IniMapper, Ini> {
     }
 
     public String getBySecAndPro(String sec, String pro) {
-        QueryWrapper<Ini> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(StringUtils.isNotBlank(sec), "section", sec);
-        queryWrapper.eq(StringUtils.isNotBlank(pro), "property", pro);
+        LambdaQueryWrapper<Ini> queryWrapper = Wrappers.lambdaQuery(Ini.class)
+                .eq(StringUtils.isNotBlank(sec), Ini::getSection, sec)
+                .eq(StringUtils.isNotBlank(pro), Ini::getProperty, pro);
         return getOne(queryWrapper).getValue();
     }
 
     public boolean deleteBySec(String sec) {
-        QueryWrapper<Ini> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(StringUtils.isNotBlank(sec), "section", sec);
+        LambdaQueryWrapper<Ini> queryWrapper = Wrappers.lambdaQuery(Ini.class)
+                .eq(StringUtils.isNotBlank(sec), Ini::getSection, sec);
         return remove(queryWrapper);
     }
 

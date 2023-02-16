@@ -3,8 +3,9 @@ package com.qcz.qmplatform.module.system.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.bean.ExcelRow;
 import com.qcz.qmplatform.common.bean.ImportFailReason;
@@ -65,9 +66,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     public User findByLoginNameAndPassword(String loginName, String password) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("loginname", loginName);
-        queryWrapper.eq("password", password);
+        LambdaQueryWrapper<User> queryWrapper = Wrappers.lambdaQuery(User.class)
+                .eq(User::getLoginname, loginName)
+                .eq(User::getPassword, password);
         return this.getOne(queryWrapper);
     }
 
@@ -118,9 +119,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      */
     public boolean validateLoginName(String loginname, String userId) {
         Assert.notBlank(loginname);
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.ne(StringUtils.isNotBlank(userId), "id", userId);
-        wrapper.eq("loginname", loginname);
+        LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery(User.class)
+                .ne(StringUtils.isNotBlank(userId), User::getId, userId)
+                .eq(User::getLoginname, loginname);
         return baseMapper.selectCount(wrapper) == 0;
     }
 
@@ -218,9 +219,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * 锁定账号
      */
     public void lockAccount(String loginName) {
-        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.set("locked", 1);
-        updateWrapper.eq("loginname", loginName);
+        LambdaUpdateWrapper<User> updateWrapper = Wrappers.lambdaUpdate(User.class)
+                .set(User::getLocked, 1)
+                .eq(User::getLoginname, loginName);
         this.update(updateWrapper);
     }
 

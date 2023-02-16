@@ -1,7 +1,8 @@
 package com.qcz.qmplatform.module.operation.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -72,8 +73,8 @@ public class DataBakController extends BaseController {
     @ResponseBody
     public ResponseResult<PageResult> getDataBakList(PageRequest pageRequest, DataBakVO dataBakVO) {
         PageResultHelper.startPage(pageRequest);
-        QueryWrapper<DataBak> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like(StringUtils.isNotBlank(dataBakVO.getBakName()), "bak_name", dataBakVO.getBakName());
+        LambdaQueryWrapper<DataBak> queryWrapper = Wrappers.lambdaQuery(DataBak.class)
+                .like(StringUtils.isNotBlank(dataBakVO.getBakName()), DataBak::getBakName, dataBakVO.getBakName());
         return ResponseResult.ok(PageResultHelper.parseResult(dataBakService.list(queryWrapper)));
     }
 

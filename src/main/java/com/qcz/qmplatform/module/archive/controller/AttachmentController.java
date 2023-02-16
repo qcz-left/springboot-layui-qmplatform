@@ -3,7 +3,8 @@ package com.qcz.qmplatform.module.archive.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -72,9 +73,9 @@ public class AttachmentController extends BaseController {
     @PostMapping("/getAttachmentList")
     @ResponseBody
     public ResponseResult<PageResult> getAttachmentList(PageRequest pageRequest, Attachment attachment) {
-        QueryWrapper<Attachment> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like(StringUtils.isNotBlank(attachment.getAttachmentName()), "attachment_name", attachment.getAttachmentName());
-        queryWrapper.like(StringUtils.isNotBlank(attachment.getUploadUserName()), "upload_user_name", attachment.getUploadUserName());
+        LambdaQueryWrapper<Attachment> queryWrapper = Wrappers.lambdaQuery(Attachment.class)
+                .like(StringUtils.isNotBlank(attachment.getAttachmentName()), Attachment::getAttachmentName, attachment.getAttachmentName())
+                .like(StringUtils.isNotBlank(attachment.getUploadUserName()), Attachment::getUploadUserName, attachment.getUploadUserName());
         PageResultHelper.startPage(pageRequest);
         return ResponseResult.ok(PageResultHelper.parseResult(attachmentService.list(queryWrapper)));
     }
@@ -105,9 +106,9 @@ public class AttachmentController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_FILE_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除文件")
     public ResponseResult<?> delAttachment(String attachmentIds) {
-        QueryWrapper<Attachment> queryWrapper = new QueryWrapper<>();
         List<String> idList = Arrays.asList(attachmentIds.split(","));
-        queryWrapper.in("attachment_id", idList);
+        LambdaQueryWrapper<Attachment> queryWrapper = Wrappers.lambdaQuery(Attachment.class)
+                .in(Attachment::getAttachmentId, idList);
         List<String> attachmentUrls = CollectionUtil.getFieldValues(attachmentService.list(queryWrapper), "attachmentUrl", String.class);
         for (String attachmentUrl : attachmentUrls) {
             FileUtil.del(FileUtils.getRealFilePath(attachmentUrl));
