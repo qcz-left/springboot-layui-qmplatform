@@ -35,8 +35,10 @@ public class ThirdpartyAppService extends ServiceImpl<ThirdpartyAppMapper, Third
             QueryWrapper<ThirdpartyApp> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("name", name);
             thirdpartyApp = getOne(queryWrapper);
-            thirdpartyApp.setAppSecret(SecureUtils.aesDecrypt(thirdpartyApp.getAppSecret()));
-            CacheUtils.put(name, thirdpartyApp);
+            if (thirdpartyApp != null) {
+                thirdpartyApp.setAppSecret(SecureUtils.aesDecrypt(thirdpartyApp.getAppSecret()));
+                CacheUtils.put(name, thirdpartyApp);
+            }
         }
 
         return thirdpartyApp;
