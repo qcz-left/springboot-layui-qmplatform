@@ -114,6 +114,9 @@
         let toggleProvider = function (provider) {
             $(".hide-or-show").addClass("hide");
             var smsJsonElement = smsJson[provider];
+            if (!smsJsonElement) {
+                return;
+            }
             let displayElement = smsJsonElement["displayElement"];
             for (let i = 0; i < displayElement.length; i++) {
                 $("[name=" + displayElement[i] + "]").parents(".hide-or-show").removeClass("hide");
