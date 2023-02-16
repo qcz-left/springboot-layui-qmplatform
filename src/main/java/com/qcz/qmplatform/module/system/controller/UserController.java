@@ -32,7 +32,6 @@ import com.qcz.qmplatform.module.system.vo.CurrentUserInfoVO;
 import com.qcz.qmplatform.module.system.vo.PasswordVO;
 import com.qcz.qmplatform.module.system.vo.UserVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +43,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +63,7 @@ public class UserController extends BaseController {
 
     private static final String PREFIX = "/module/system/";
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     @GetMapping("/userListPage")

@@ -1,10 +1,10 @@
 package com.qcz.qmplatform.intercept;
 
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Properties;
 
@@ -14,7 +14,7 @@ import java.util.Properties;
 @Configuration
 public class SqlSessionListener {
 
-    @Autowired
+    @Resource
     private List<SqlSessionFactory> sqlSessionFactoryList;
 
     @PostConstruct

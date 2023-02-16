@@ -30,9 +30,9 @@ import com.qcz.qmplatform.module.system.service.IniService;
 import com.qcz.qmplatform.module.system.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,10 +62,10 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
 
     private String database = YmlPropertiesUtils.getDatabase();
 
-    @Autowired
+    @Resource
     private IniService iniService;
 
-    @Autowired
+    @Resource
     private MessageService messageService;
 
     public boolean saveDataBakStrategy(DataBakStrategyVO dataBakStrategy) {

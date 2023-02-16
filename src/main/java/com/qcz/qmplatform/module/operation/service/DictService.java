@@ -9,9 +9,9 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.operation.domain.Dict;
 import com.qcz.qmplatform.module.operation.domain.DictAttr;
 import com.qcz.qmplatform.module.operation.mapper.DictMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -25,7 +25,7 @@ import java.util.List;
 @Service
 public class DictService extends ServiceImpl<DictMapper, Dict> {
 
-    @Autowired
+    @Resource
     private DictAttrService dictAttrService;
 
     public List<Dict> getDictList(Dict dict) {

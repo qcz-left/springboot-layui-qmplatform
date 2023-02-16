@@ -43,7 +43,6 @@ import org.apache.shiro.subject.Subject;
 import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -54,6 +53,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,19 +68,19 @@ public class LoginController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
-    @Autowired
+    @Resource
     MenuService menuService;
-    @Autowired
+    @Resource
     MessageService messageService;
-    @Autowired
+    @Resource
     LoginRecordService loginRecordService;
-    @Autowired
+    @Resource
     IniService iniService;
-    @Autowired
+    @Resource
     UserService userService;
-    @Autowired
+    @Resource
     UserThirdpartyService userThirdpartyService;
-    @Autowired
+    @Resource
     ThirdpartyAppService thirdpartyAppService;
 
     @GetMapping("/")

@@ -25,7 +25,6 @@ import com.qcz.qmplatform.module.archive.service.AttachmentService;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.domain.User;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -54,7 +54,7 @@ public class AttachmentController extends BaseController {
 
     private static final String PREFIX = "/module/archive/";
 
-    @Autowired
+    @Resource
     private AttachmentService attachmentService;
 
     @GetMapping("/attachmentListPage")

@@ -3,11 +3,12 @@ package com.qcz.qmplatform.common.cache;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.CacheManager;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
 
 public class ShiroCacheManager implements CacheManager {
 
-    @Autowired
+    @Resource
     private ShiroCache shiroCache;
 
     @Override

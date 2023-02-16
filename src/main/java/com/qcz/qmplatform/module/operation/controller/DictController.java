@@ -13,7 +13,6 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.operation.domain.Dict;
 import com.qcz.qmplatform.module.operation.service.DictService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +22,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -39,7 +40,7 @@ public class DictController extends BaseController {
 
     private static final String PATH_PREFIX = "/module/operation/";
 
-    @Autowired
+    @Resource
     private DictService dictService;
 
     @GetMapping("/dictListPage")

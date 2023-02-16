@@ -15,13 +15,14 @@ import com.qcz.qmplatform.module.notify.service.mail.MailNotifyService;
 import com.qcz.qmplatform.module.notify.vo.SmsConfigVO;
 import com.qcz.qmplatform.module.notify.vo.TestMailVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 @Controller
 @RequestMapping("/notify")
@@ -30,7 +31,7 @@ public class NotifyController {
 
     private static final String PREFIX = "/module/notify/";
 
-    @Autowired
+    @Resource
     MailNotifyService mailNotifyService;
 
     /**

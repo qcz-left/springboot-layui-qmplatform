@@ -9,7 +9,6 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.other.domain.BillType;
 import com.qcz.qmplatform.module.other.pojo.BillTypeTree;
 import com.qcz.qmplatform.module.other.service.BillTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -35,7 +35,7 @@ public class BillTypeController extends BaseController {
 
     private static final String PREFIX = "/module/other/";
 
-    @Autowired
+    @Resource
     BillTypeService billTypeService;
 
     @GetMapping("/billTypeListPage")

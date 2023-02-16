@@ -6,9 +6,9 @@ import com.qcz.qmplatform.module.operation.service.DataBakService;
 import com.qcz.qmplatform.module.system.assist.IniDefine;
 import com.qcz.qmplatform.module.system.service.IniService;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -17,10 +17,10 @@ import java.util.Map;
 @Component
 public class ScheduleComponent implements InitializingBean {
 
-    @Autowired
+    @Resource
     DataBakService dataBakService;
 
-    @Autowired
+    @Resource
     IniService iniService;
 
     @Override

@@ -12,9 +12,9 @@ import com.qcz.qmplatform.module.system.assist.MessageReceiver;
 import com.qcz.qmplatform.module.system.domain.Message;
 import com.qcz.qmplatform.module.system.mapper.MessageMapper;
 import com.qcz.qmplatform.module.system.vo.MessageVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ import java.util.Map;
 @Service
 public class MessageService extends ServiceImpl<MessageMapper, Message> {
 
-    @Autowired
+    @Resource
     UserService userService;
 
     public List<MessageVO> getList(Message message) {

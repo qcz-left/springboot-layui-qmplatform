@@ -13,7 +13,6 @@ import ${superControllerClassPackage};
 </#if>
 import ${package.Entity}.${entity};
 import ${package.Service}.${entity}Service;
-import org.springframework.beans.factory.annotation.Autowired;
 <#if restControllerStyle>
 import org.springframework.web.bind.annotation.RestController;
 <#else>
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 /**
  * <p>
  * ${table.comment!} 前端控制器
@@ -52,7 +52,7 @@ public class ${table.controllerName} {
 
     private static final String PREFIX = "/module/${package.ModuleName}/";
 
-    @Autowired
+    @Resource
     ${entity}Service ${entity?uncap_first}Service;
 
     @GetMapping("/${entity?uncap_first}ListPage")

@@ -14,7 +14,6 @@ import com.qcz.qmplatform.module.sync.DBChangeCenter;
 import com.qcz.qmplatform.module.sync.DBNotifyInfo;
 import com.qcz.qmplatform.module.system.domain.ThirdpartyApp;
 import com.qcz.qmplatform.module.system.service.ThirdpartyAppService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -38,7 +39,7 @@ public class ThirdpartyAppController extends BaseController {
 
     private static final String PREFIX = "/module/system/";
 
-    @Autowired
+    @Resource
     ThirdpartyAppService thirdpartyAppService;
 
     @GetMapping("/thirdpartyAppListPage")

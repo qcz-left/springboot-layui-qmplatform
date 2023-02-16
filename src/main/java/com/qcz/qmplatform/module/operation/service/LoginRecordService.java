@@ -13,9 +13,9 @@ import com.qcz.qmplatform.module.operation.vo.LoginStrategyVO;
 import com.qcz.qmplatform.module.system.assist.IniDefine;
 import com.qcz.qmplatform.module.system.domain.Ini;
 import com.qcz.qmplatform.module.system.service.IniService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +32,7 @@ public class LoginRecordService extends ServiceImpl<LoginRecordMapper, LoginReco
 
     private static final String SECTION = IniDefine.LOGIN_STRATEGY;
 
-    @Autowired
+    @Resource
     IniService iniService;
 
     /**

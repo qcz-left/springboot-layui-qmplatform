@@ -9,9 +9,9 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.system.domain.Role;
 import com.qcz.qmplatform.module.system.domain.RolePermission;
 import com.qcz.qmplatform.module.system.mapper.RoleMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +26,7 @@ import java.util.List;
 @Service
 public class RoleService extends ServiceImpl<RoleMapper, Role> {
 
-    @Autowired
+    @Resource
     private RolePermissionService rolePermissionService;
 
     public List<Role> getRoleList(Role role) {

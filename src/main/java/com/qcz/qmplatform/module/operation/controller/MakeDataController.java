@@ -7,7 +7,6 @@ import com.qcz.qmplatform.module.operation.pojo.DBDetail;
 import com.qcz.qmplatform.module.operation.pojo.DataDetail;
 import com.qcz.qmplatform.module.operation.service.MakeDataService;
 import com.qcz.qmplatform.module.operation.vo.MakeDataVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class MakeDataController {
 
     private static final String PATH_PREFIX = "/module/operation/";
 
-    @Autowired
+    @Resource
     MakeDataService makeDataService;
 
     @GetMapping("/page")

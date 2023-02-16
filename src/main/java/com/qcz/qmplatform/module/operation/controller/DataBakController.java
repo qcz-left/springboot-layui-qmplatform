@@ -21,7 +21,6 @@ import com.qcz.qmplatform.module.operation.vo.DataBakVO;
 import com.qcz.qmplatform.module.system.assist.IniDefine;
 import com.qcz.qmplatform.module.system.service.IniService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -53,10 +53,10 @@ public class DataBakController extends BaseController {
      */
     private static final String SECTION = IniDefine.DATA_BAK;
 
-    @Autowired
+    @Resource
     private DataBakService dataBakService;
 
-    @Autowired
+    @Resource
     private IniService iniService;
 
     @GetMapping("/dataBakListPage")

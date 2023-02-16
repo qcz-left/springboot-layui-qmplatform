@@ -29,9 +29,9 @@ import com.qcz.qmplatform.module.system.qo.UserQO;
 import com.qcz.qmplatform.module.system.vo.CurrentUserInfoVO;
 import com.qcz.qmplatform.module.system.vo.PasswordVO;
 import com.qcz.qmplatform.module.system.vo.UserVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,13 +48,13 @@ import java.util.Map;
 @Service
 public class UserService extends ServiceImpl<UserMapper, User> {
 
-    @Autowired
+    @Resource
     private UserOrganizationMapper userOrganizationMapper;
 
-    @Autowired
+    @Resource
     private UserRoleMapper userRoleMapper;
 
-    @Autowired
+    @Resource
     private OrganizationService organizationService;
 
     public List<UserVO> getUserList(UserQO user) {

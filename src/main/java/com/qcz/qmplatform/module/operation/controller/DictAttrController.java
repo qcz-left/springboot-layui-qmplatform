@@ -14,7 +14,6 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.operation.domain.DictAttr;
 import com.qcz.qmplatform.module.operation.service.DictAttrService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +43,7 @@ public class DictAttrController extends BaseController {
 
     private static final String PATH_PREFIX = "/module/operation/";
 
-    @Autowired
+    @Resource
     private DictAttrService dictAttrService;
 
     @GetMapping("/dictAttrListPage")

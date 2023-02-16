@@ -8,12 +8,13 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.service.OperateLogService;
 import com.qcz.qmplatform.module.system.vo.OperateLogTimeVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -29,7 +30,7 @@ public class OperateLogController extends BaseController {
 
     private static final String PREFIX = "/module/system/";
 
-    @Autowired
+    @Resource
     private OperateLogService operateLogService;
 
     @GetMapping("/logListPage")
