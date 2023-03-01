@@ -5,15 +5,15 @@ import java.io.Serializable;
 public class ExcelRow<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private int rowIndex;
+    private long rowIndex;
 
     private T row;
 
-    public int getRowIndex() {
+    public long getRowIndex() {
         return rowIndex;
     }
 
-    public void setRowIndex(int rowIndex) {
+    public void setRowIndex(long rowIndex) {
         this.rowIndex = rowIndex;
     }
 

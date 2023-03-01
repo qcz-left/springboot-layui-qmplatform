@@ -68,7 +68,7 @@ public class LogWebSocketServer {
     @OnClose
     public void onClose(Session session) {
         LOGGER.debug("onClose: " + session.getId());
-        ThreadUtil.interupt(logThread, true);
+        ThreadUtil.interrupt(logThread, true);
         IoUtil.close(inputStream);
         if (process != null) {
             process.destroy();

@@ -77,12 +77,12 @@ public class BaseController {
                 }
             } else {
                 ExcelRow<T> tExcelRow = new ExcelRow<>();
-                tExcelRow.setRowIndex(rowIndex + 1);
+                tExcelRow.setRowIndex((rowIndex + 1));
                 Map<String, Object> data = new HashMap<>();
                 for (int i = 0; i < row.size(); i++) {
                     data.put(fieldIndex.get(i), row.get(i));
                 }
-                tExcelRow.setRow(BeanUtil.mapToBean(data, beanClass, true));
+                tExcelRow.setRow(BeanUtil.toBeanIgnoreError(data, beanClass));
                 rows.add(tExcelRow);
             }
         });

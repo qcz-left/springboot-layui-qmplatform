@@ -8,7 +8,7 @@ public class ImportFailReason implements Serializable {
     /**
      * 行号
      */
-    private int rowIndex;
+    private long rowIndex;
 
     /**
      * 名称
@@ -20,11 +20,11 @@ public class ImportFailReason implements Serializable {
      */
     private String reason;
 
-    public int getRowIndex() {
+    public long getRowIndex() {
         return rowIndex;
     }
 
-    public void setRowIndex(int rowIndex) {
+    public void setRowIndex(long rowIndex) {
         this.rowIndex = rowIndex;
     }
 

@@ -49,7 +49,7 @@ public class MetaUtils extends MetaUtil {
             // 获得列
             rs = metaData.getColumns(catalog, schema, tableName, null);
             while (rs.next()) {
-                table.setColumn(Column.create(tableName, rs));
+                table.setColumn(Column.create(table, rs));
             }
         } catch (SQLException e) {
             throw new DbRuntimeException("Get columns error!", e);

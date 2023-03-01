@@ -89,9 +89,9 @@ public class RequestAspect {
 
     @Around(value = "requestPointcut()")
     public Object requestAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        long startTime = DateUtil.current(false);
+        long startTime = System.currentTimeMillis();
         Object proceed = joinPoint.proceed();
-        long endTime = DateUtil.current(false);
+        long endTime = System.currentTimeMillis();
         LOGGER.info("【 end 】 - cost: {} ms", endTime - startTime);
         return proceed;
     }

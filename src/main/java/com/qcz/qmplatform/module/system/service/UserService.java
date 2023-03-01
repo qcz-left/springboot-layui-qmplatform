@@ -235,7 +235,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         int successCount = 0;
         for (ExcelRow<UserVO> excelRow : excelRowList) {
             UserVO userVO = excelRow.getRow();
-            int rowIndex = excelRow.getRowIndex();
+            long rowIndex = excelRow.getRowIndex();
 
             ImportFailReason importFailReason = new ImportFailReason();
             importFailReason.setRowIndex(rowIndex);

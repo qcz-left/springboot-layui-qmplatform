@@ -2,9 +2,11 @@ package com.qcz.qmplatform.common.cache;
 
 import cn.hutool.cache.impl.CacheObj;
 import cn.hutool.cache.impl.WeakCache;
+import cn.hutool.core.lang.mutable.Mutable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 public class MyWeakCache<K, V> extends WeakCache<K, V> {
@@ -14,7 +16,12 @@ public class MyWeakCache<K, V> extends WeakCache<K, V> {
     }
 
     public Set<K> getKeys() {
-        return cacheMap.keySet();
+        Set<K> set = new HashSet<>();
+        Set<Mutable<K>> mutableSet = cacheMap.keySet();
+        for (Mutable<K> kMutable : mutableSet) {
+            set.add(kMutable.get());
+        }
+        return set;
     }
 
     public Collection<V> getValues() {
