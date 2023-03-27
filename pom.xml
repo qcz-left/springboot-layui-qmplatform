@@ -39,7 +39,7 @@
         <jodconverter-boot.version>4.4.2</jodconverter-boot.version>
         <dingtalk.version>1.1.99</dingtalk.version>
         <jackson.version>2.9.10</jackson.version>
-        <json-smart.version>2.4.7</json-smart.version>
+        <json-smart.version>2.4.9</json-smart.version>
         <bcprov-jdk15on.version>1.67</bcprov-jdk15on.version>
         <snakeyaml.version>1.33</snakeyaml.version>
         <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
