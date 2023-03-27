@@ -41,7 +41,7 @@
         <jackson.version>2.9.10</jackson.version>
         <json-smart.version>2.4.9</json-smart.version>
         <bcprov-jdk15on.version>1.67</bcprov-jdk15on.version>
-        <snakeyaml.version>1.33</snakeyaml.version>
+        <snakeyaml.version>2.0</snakeyaml.version>
         <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
         <junit.version>4.13.1</junit.version>
     </properties>
