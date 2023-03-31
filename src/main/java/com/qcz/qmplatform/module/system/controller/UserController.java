@@ -111,14 +111,11 @@ public class UserController extends BaseController {
     @PostMapping("/getUserList")
     @ResponseBody
     public ResponseResult<PageResult> getUserList(PageRequest pageRequest, UserQO user, boolean export) {
-        if (!export) {
-            PageResultHelper.startPage(pageRequest);
-        }
         String organizationIdsStr = user.getOrganizationIdsStr();
         if (StringUtils.isNotBlank(organizationIdsStr)) {
             user.setOrganizationIds(CollectionUtil.newArrayList(organizationIdsStr.split(",")));
         }
-        return ResponseResult.ok(PageResultHelper.parseResult(userService.getUserList(user)));
+        return ResponseResult.ok(PageResultHelper.parseResult(userService.getUserList(user, pageRequest, export)));
     }
 
     /**

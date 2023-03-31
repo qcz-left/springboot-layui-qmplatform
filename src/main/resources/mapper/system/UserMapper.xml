@@ -68,11 +68,9 @@
             and suo.organization_id in(
             <choose>
                 <when test="organizationExact == 0">
-                    select organization_id from casc_org(
-                    <foreach collection="organizationIds" item="organizationId" separator=",">
+                    <foreach collection="cascOrganizationIds" item="organizationId" separator=",">
                         #{organizationId}
                     </foreach>
-                    )
                 </when>
                 <otherwise>
                     <foreach collection="organizationIds" item="organizationId" separator=",">

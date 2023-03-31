@@ -13,11 +13,23 @@ public class UserQO implements Serializable {
     private String userSex;
     private List<String> organizationIds;
     private String organizationIdsStr;
+    /**
+     * 递归条件下的所有部门id
+     */
+    private List<String> cascOrganizationIds;
 
     /**
      * 所属部门是否精确查询
      */
     private int organizationExact;
+
+    public List<String> getCascOrganizationIds() {
+        return cascOrganizationIds;
+    }
+
+    public void setCascOrganizationIds(List<String> cascOrganizationIds) {
+        this.cascOrganizationIds = cascOrganizationIds;
+    }
 
     public int getOrganizationExact() {
         return organizationExact;

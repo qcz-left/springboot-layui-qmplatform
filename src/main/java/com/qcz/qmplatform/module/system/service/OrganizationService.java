@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.system.service;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -7,6 +8,7 @@ import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
+import com.qcz.qmplatform.module.system.domain.Menu;
 import com.qcz.qmplatform.module.system.domain.Organization;
 import com.qcz.qmplatform.module.system.domain.UserOrganization;
 import com.qcz.qmplatform.module.system.mapper.OrganizationMapper;
@@ -14,6 +16,7 @@ import com.qcz.qmplatform.module.system.pojo.OrgTree;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,13 +56,35 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
     }
 
     public boolean deleteOrg(List<String> orgIds) {
-        List<String> cascOrgIds = baseMapper.selectCascOrgIds(orgIds);
+        List<String> cascOrgIds = this.queryOrgIdRecursive(orgIds);
         removeByIds(cascOrgIds);
         // 删除关联部门信息
         LambdaQueryWrapper<UserOrganization> deleteWrapper = Wrappers.lambdaQuery(UserOrganization.class)
                 .in(UserOrganization::getOrganizationId, cascOrgIds);
         userOrganizationService.remove(deleteWrapper);
         return true;
+    }
+
+    /**
+     * 向下递归查询出所有部门id
+     */
+    public List<String> queryOrgIdRecursive(List<String> orgIds) {
+        List<String> allIds = new ArrayList<>();
+
+        if (CollectionUtil.isNotEmpty(orgIds)) {
+            CollectionUtil.addAll(allIds, orgIds);
+
+            List<String> childIds = new ArrayList<>();
+            CollectionUtil.addAll(childIds, baseMapper.selectObjs(
+                    Wrappers.lambdaQuery(Organization.class)
+                            .in(Organization::getParentId, orgIds)
+                            .select(Organization::getOrganizationId)
+            ));
+
+            CollectionUtil.addAll(allIds, queryOrgIdRecursive(childIds));
+        }
+
+        return allIds;
     }
 
     public boolean saveOrgOne(Organization org) {

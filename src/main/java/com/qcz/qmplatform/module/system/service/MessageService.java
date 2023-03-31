@@ -123,7 +123,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
     public void createMessage(Message message, MessageReceiver messageReceiver) {
         List<String> receiverIds = new ArrayList<>();
         if (messageReceiver == MessageReceiver.ALL) {
-            receiverIds = CollectionUtil.getFieldValues(userService.getUserList(null), "id", String.class);
+            receiverIds = CollectionUtil.getFieldValues(userService.getUserList(null, null, false), "id", String.class);
         } else if (messageReceiver == MessageReceiver.ADMIN) {
             receiverIds = CollectionUtil.getFieldValues(userService.queryAllAdmin(), "id", String.class);
         }

@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.bean.ExcelRow;
 import com.qcz.qmplatform.common.bean.ImportFailReason;
 import com.qcz.qmplatform.common.bean.ImportResult;
+import com.qcz.qmplatform.common.bean.PageRequest;
+import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.DateUtils;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -57,7 +60,20 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     @Resource
     private OrganizationService organizationService;
 
-    public List<UserVO> getUserList(UserQO user) {
+    /**
+     * 查询数据列表
+     *
+     * @param user        查询参数
+     * @param pageRequest 分页参数
+     * @param export      是否导出
+     */
+    public List<UserVO> getUserList(UserQO user, PageRequest pageRequest, boolean export) {
+        if (Objects.nonNull(user)) {
+            user.setCascOrganizationIds(organizationService.queryOrgIdRecursive(user.getOrganizationIds()));
+        }
+        if (!export) {
+            PageResultHelper.startPage(pageRequest);
+        }
         return baseMapper.queryUserList(user);
     }
 
