@@ -9,7 +9,7 @@
         from
             sys_message
         where
-            read = #{read}
+            readed = #{readed}
         and receiver = #{receiver}
         group by
             type
@@ -23,7 +23,7 @@
         from
             sys_message
         where
-            read = #read#
+            readed = #readed#
         and receiver in(#receivers#)
         group by
             type,

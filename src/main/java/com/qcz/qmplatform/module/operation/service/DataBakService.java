@@ -139,7 +139,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
             // 备份文件目录所在磁盘空间不足，产生告警信息
             String msg = "磁盘空间不足 " + limitDiskSpace + " G，不允许备份！";
             Message message = new Message();
-            message.setRead(0);
+            message.setReaded(0);
             message.setType(MessageType.ALARM);
             message.setInstance(MessageInstance.ALARM_DISK_SPACE);
             message.setSender(operator);

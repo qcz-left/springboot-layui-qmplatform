@@ -11,7 +11,7 @@ layui.use(['table', 'form'], function () {
         page: true,
         toolbar: '#toolbar',
         defaultToolbar: [],
-        orderName: 'read,createTime',
+        orderName: 'readed,createTime',
         order: 'asc,desc',
         cols: [[
             {type: 'checkbox'},
@@ -29,8 +29,8 @@ layui.use(['table', 'form'], function () {
             },
             {field: 'senderName', title: '发送人', width: '10%', sort: false},
             {
-                field: 'read', title: '状态', width: '10%', templet: function (row) {
-                    return row.read === 1 ? '<span class="layui-badge layui-bg-green">已读</span>' : '<span style="cursor:pointer;" class="layui-badge layui-bg-orange" lay-event="fail">未读</span>';
+                field: 'readed', title: '状态', width: '10%', templet: function (row) {
+                    return row.readed === 1 ? '<span class="layui-badge layui-bg-green">已读</span>' : '<span style="cursor:pointer;" class="layui-badge layui-bg-orange" lay-event="fail">未读</span>';
                 }
             },
             {fixed: 'right', title: '操作', excel: false, align: 'center', templet: '#operator'}

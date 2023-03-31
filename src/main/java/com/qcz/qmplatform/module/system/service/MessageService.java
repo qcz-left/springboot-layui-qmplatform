@@ -82,7 +82,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
     public boolean setHasRead(String[] messageIds) {
         LambdaUpdateWrapper<Message> updateWrapper = Wrappers.lambdaUpdate(Message.class)
                 .in(Message::getMessageId, messageIds)
-                .set(Message::getRead, 1);
+                .set(Message::getReaded, 1);
         return this.update(updateWrapper);
     }
 
@@ -97,7 +97,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
 
         LambdaQueryWrapper<Message> queryWrapper = Wrappers.lambdaQuery(Message.class)
                 .eq(Message::getType, message.getType())
-                .eq(Message::getRead, message.getRead())
+                .eq(Message::getReaded, message.getReaded())
                 .eq(Message::getInstance, message.getInstance())
                 .eq(Message::getReceiver, message.getReceiver());
 

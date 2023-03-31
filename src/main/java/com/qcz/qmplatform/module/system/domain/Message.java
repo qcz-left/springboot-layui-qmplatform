@@ -57,8 +57,8 @@ public class Message implements Serializable {
     /**
      * 是否已读
      */
-    @TableField("read")
-    private Integer read;
+    @TableField("readed")
+    private Integer readed;
 
     /**
      * 发送方
@@ -104,12 +104,12 @@ public class Message implements Serializable {
         this.createTime = createTime;
     }
 
-    public Integer getRead() {
-        return read;
+    public Integer getReaded() {
+        return readed;
     }
 
-    public void setRead(Integer read) {
-        this.read = read;
+    public void setReaded(Integer readed) {
+        this.readed = readed;
     }
 
     public String getSender() {
@@ -153,7 +153,7 @@ public class Message implements Serializable {
                 ", instance='" + instance + '\'' +
                 ", createTime=" + createTime +
                 ", lastUpdateTime=" + lastUpdateTime +
-                ", read=" + read +
+                ", readed=" + readed +
                 ", sender='" + sender + '\'' +
                 ", receiver='" + receiver + '\'' +
                 '}';

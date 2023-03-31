@@ -18,9 +18,9 @@ import java.util.Map;
  */
 public interface MessageMapper extends BaseMapper<Message> {
 
-    List<Map<String, Long>> selectTypeCount(@Param("read") int read, @Param("receiver") String receiver);
+    List<Map<String, Long>> selectTypeCount(@Param("readed") int readed, @Param("receiver") String receiver);
 
-    List<Map<String, Object>> selectTypeCountByUserIds(@Param("read") int read, @Param("receivers") List<String> receivers);
+    List<Map<String, Object>> selectTypeCountByUserIds(@Param("readed") int readed, @Param("receivers") List<String> receivers);
 
     List<MessageVO> selectList(Message message);
 

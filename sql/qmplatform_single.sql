@@ -1804,7 +1804,7 @@ CREATE TABLE "public"."sys_message" (
   "content" text COLLATE "pg_catalog"."default",
   "type" int2,
   "create_time" timestamp(6),
-  "read" int2 DEFAULT 0,
+  "readed" int2 DEFAULT 0,
   "sender" varchar(50) COLLATE "pg_catalog"."default",
   "receiver" varchar(50) COLLATE "pg_catalog"."default"
 )
@@ -1813,7 +1813,7 @@ COMMENT ON COLUMN "public"."sys_message"."message_id" IS '系统通知信息id';
 COMMENT ON COLUMN "public"."sys_message"."content" IS '消息内容';
 COMMENT ON COLUMN "public"."sys_message"."type" IS '消息类型';
 COMMENT ON COLUMN "public"."sys_message"."create_time" IS '创建时间';
-COMMENT ON COLUMN "public"."sys_message"."read" IS '是否已读';
+COMMENT ON COLUMN "public"."sys_message"."readed" IS '是否已读';
 COMMENT ON COLUMN "public"."sys_message"."sender" IS '发送方';
 COMMENT ON COLUMN "public"."sys_message"."receiver" IS '接收方';
 COMMENT ON TABLE "public"."sys_message" IS '系统消息';
