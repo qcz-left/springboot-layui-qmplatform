@@ -158,7 +158,7 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
     // 表单数据校验
     form.verify({});
 
-    xmSelect.render({
+    let dbNameSelect = xmSelect.render({
         el: '#dbName',
         name: 'dbName',
         radio: true,
@@ -425,6 +425,7 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
         done: function (result) {
             let data = result.data;
             form.val("database-form", data.dbDetail)
+            dbNameSelect.setValue([data.dbDetail.dbName])
             form.val("table-form", {
                 tableName: data.dataDetail.tableName,
                 insertNumber: data.insertNumber
