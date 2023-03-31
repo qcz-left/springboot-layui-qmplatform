@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.system.service;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -16,6 +17,7 @@ import com.qcz.qmplatform.module.system.vo.PermissionVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +35,11 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
     private ButtonService buttonService;
 
     public List<MenuTree> getMenuTree(PermissionVO permission) {
+        String permissionId = permission.getPermissionId();
+        if (StringUtils.isNotBlank(permissionId)
+                && permission.getPermissionType() == PermissionType.MENU.getType()) {
+            permission.setNotExistsMenuIds(queryMenuIdRecursive(CollectionUtil.newArrayList(permissionId)));
+        }
         return TreeUtils.buildTree(getMenuList(permission));
     }
 
@@ -98,18 +105,48 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
      */
     public boolean deletePermission(List<String> permissionIds) {
         List<Permission> permissions = baseMapper.getPermissionByIds(permissionIds);
+        List<String> menuIds = new ArrayList<>();
+        List<String> buttonIds = new ArrayList<>();
         for (Permission permission : permissions) {
             String permissionId = permission.getPermissionId();
             if (permission.getPermissionType() == PermissionType.MENU.getType()) {
-                // 删除菜单同时删除按钮
-                buttonService.deleteButtonByMenuId(permissionId);
-
-                baseMapper.deleteMenuById(permissionId);
+                menuIds.add(permissionId);
             } else {
-                buttonService.removeById(permissionId);
+                buttonIds.add(permissionId);
             }
         }
+        if (CollectionUtil.isNotEmpty(menuIds)) {
+            // 删除菜单同时删除按钮
+            menuIds = queryMenuIdRecursive(menuIds);
+            buttonService.deleteButtonByMenuId(menuIds);
+            super.removeByIds(menuIds);
+        }
+        if (CollectionUtil.isNotEmpty(buttonIds)) {
+            buttonService.removeByIds(buttonIds);
+        }
         return true;
+    }
+
+    /**
+     * 向下递归查询出所有菜单id
+     */
+    public List<String> queryMenuIdRecursive(List<String> menuIds) {
+        List<String> allIds = new ArrayList<>();
+
+        if (CollectionUtil.isNotEmpty(menuIds)) {
+            CollectionUtil.addAll(allIds, menuIds);
+
+            List<String> childIds = new ArrayList<>();
+            CollectionUtil.addAll(childIds, baseMapper.selectObjs(
+                    Wrappers.lambdaQuery(Menu.class)
+                            .in(Menu::getParentId, menuIds)
+                            .select(Menu::getMenuId)
+            ));
+
+            CollectionUtil.addAll(allIds, queryMenuIdRecursive(childIds));
+        }
+
+        return allIds;
     }
 
     public Permission getPermissionById(String permissionId) {

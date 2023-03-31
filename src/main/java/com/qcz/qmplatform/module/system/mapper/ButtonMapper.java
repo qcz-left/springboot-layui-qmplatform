@@ -2,7 +2,6 @@ package com.qcz.qmplatform.module.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qcz.qmplatform.module.system.domain.Button;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,5 +13,4 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface ButtonMapper extends BaseMapper<Button> {
 
-    void deleteButtonByMenuId(@Param("menuId") String menuId);
 }

@@ -49,7 +49,10 @@ public class ButtonService extends ServiceImpl<ButtonMapper, Button> {
         return removeByIds(buttonIds);
     }
 
-    public void deleteButtonByMenuId(String menuId) {
-        baseMapper.deleteButtonByMenuId(menuId);
+    public void deleteButtonByMenuId(List<String> menuIds) {
+        remove(
+                Wrappers.lambdaQuery(Button.class)
+                        .in(Button::getMenuId, menuIds)
+        );
     }
 }

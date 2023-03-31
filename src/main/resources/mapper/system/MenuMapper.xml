@@ -15,39 +15,21 @@
             display
         from v_sys_permission vsp
         where 1=1
-        <if test="permissionName != null and permissionName != ''">
-            and permission_name like #{permissionName}
-        </if>
-        <if test="permissionType != null and permissionType != ''">
-            and permission_type = #{permissionType}
-        </if>
-        <if test="display != null and display != ''">
-            and display = #{display}
-        </if>
-        <if test="userId != null and userId != ''">
-            and exists (
-                select 1 from sys_role_permission srp
-                where vsp.permission_id = srp.permission_id
+            [[ and permission_name like #permissionName# ]]
+            [[ and permission_type = #permissionType# ]]
+            [[ and display = #display# ]]
+            [[
                 and exists (
-                    select 1 from sys_user_role sur
-                    where srp.role_id = sur.role_id
-                    and sur.user_id = #{userId}
-                )
-            )
-        </if>
-        <if test="permissionId != null and permissionId != ''">
-            and not exists(
-                select permission_id from (
-                    with recursive r as(
-                        select * from v_sys_permission where permission_id = #{permissionId}
-                        union all
-                        select p.* from v_sys_permission p, r where r.permission_id = p.parent_id
+                    select 1 from sys_role_permission srp
+                    where vsp.permission_id = srp.permission_id
+                    and exists (
+                        select 1 from sys_user_role sur
+                        where srp.role_id = sur.role_id
+                        and sur.user_id = #userId#
                     )
-                    select permission_id from r
-                ) as tmp
-                where tmp.permission_id = vsp.permission_id
-            )
-        </if>
+                )
+            ]]
+            [[ and permission_id not in(#notExistsMenuIds#) ]]
         order by iorder
     </select>
 
@@ -78,14 +60,4 @@
         </if>
     </select>
 
-    <delete id="deleteMenuById">
-        delete from sys_menu where menu_id in(
-            with recursive r as(
-                select menu_id, parent_id from sys_menu where menu_id = #{menuId}
-                union all
-                select p.menu_id, p.parent_id from sys_menu p, r where r.menu_id = p.parent_id
-            )
-            select menu_id from r
-        )
-    </delete>
 </mapper>
