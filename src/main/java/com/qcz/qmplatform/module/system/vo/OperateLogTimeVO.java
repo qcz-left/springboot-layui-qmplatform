@@ -2,24 +2,32 @@ package com.qcz.qmplatform.module.system.vo;
 
 import com.qcz.qmplatform.module.system.domain.OperateLog;
 
+import java.sql.Timestamp;
+
 public class OperateLogTimeVO extends OperateLog {
 
-    private String operateTime_start;
-    private String operateTime_end;
+    /**
+     * 操作时间-开始
+     */
+    private Timestamp operateTimeStart;
+    /**
+     * 操作时间-截止
+     */
+    private Timestamp operateTimeEnd;
 
-    public String getOperateTime_start() {
-        return operateTime_start;
+    public Timestamp getOperateTimeStart() {
+        return operateTimeStart;
     }
 
-    public void setOperateTime_start(String operateTime_start) {
-        this.operateTime_start = operateTime_start;
+    public void setOperateTimeStart(Timestamp operateTimeStart) {
+        this.operateTimeStart = operateTimeStart;
     }
 
-    public String getOperateTime_end() {
-        return operateTime_end;
+    public Timestamp getOperateTimeEnd() {
+        return operateTimeEnd;
     }
 
-    public void setOperateTime_end(String operateTime_end) {
-        this.operateTime_end = operateTime_end;
+    public void setOperateTimeEnd(Timestamp operateTimeEnd) {
+        this.operateTimeEnd = operateTimeEnd;
     }
 }

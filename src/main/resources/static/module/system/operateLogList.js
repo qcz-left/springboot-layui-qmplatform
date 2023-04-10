@@ -9,12 +9,12 @@ layui.use(['table', 'form', 'laydate', 'xmSelect'], function () {
     let date = new Date();
     let yestDate = new Date(date.getTime() - 24 * 3600 * 1000).format('yyyy-MM-dd hh:mm:ss');
     laydate.render({
-        elem: '#operateTime_start',
+        elem: '#operateTimeStart',
         type: 'datetime',
         value: yestDate
     });
     laydate.render({
-        elem: '#operateTime_end',
+        elem: '#operateTimeEnd',
         type: 'datetime'
     });
 
@@ -60,7 +60,7 @@ layui.use(['table', 'form', 'laydate', 'xmSelect'], function () {
         url: ctx + '/operate-log/getLogList',
         page: true,
         where: {
-            operateTime_start: yestDate
+            operateTimeStart: yestDate
         },
         orderName: 'operateTime',
         order: 'desc',

@@ -44,13 +44,13 @@
                     <label class="layui-form-label">操作时间</label>
                 </div>
                 <div class="layui-inline">
-                    <input type="text" class="layui-input" id="operateTime_start" name="operateTime_start">
+                    <input type="text" class="layui-input" id="operateTimeStart" name="operateTimeStart">
                 </div>
                 <div class="layui-inline">
                     -
                 </div>
                 <div class="layui-inline">
-                    <input type="text" class="layui-input" id="operateTime_end" name="operateTime_end">
+                    <input type="text" class="layui-input" id="operateTimeEnd" name="operateTimeEnd">
                 </div>
             </span>
             <#--搜索栏-->

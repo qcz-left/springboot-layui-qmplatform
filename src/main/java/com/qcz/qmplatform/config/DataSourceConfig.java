@@ -3,6 +3,8 @@ package com.qcz.qmplatform.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -12,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 @Configuration
 public class DataSourceConfig {
@@ -20,6 +23,16 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         return new DruidDataSource();
+    }
+
+    @Bean
+    public DatabaseIdProvider getDatabaseIdProvider() {
+        DatabaseIdProvider databaseIdProvider = new VendorDatabaseIdProvider();
+        Properties p = new Properties();
+        p.setProperty("PostgreSQL", "pg");
+        p.setProperty("MySQL", "mysql");
+        databaseIdProvider.setProperties(p);
+        return databaseIdProvider;
     }
 
     /**

@@ -8,15 +8,19 @@
             va1.attr_name as operateTypeName,
             va2.attr_name as operateStatusName
         from sys_operate_log sol
-        left join (select attr_value, attr_name from v_sys_dict_attr where dict_code = 'operate-type') va1 on va1.attr_value = cast(sol.operate_type as varchar)
-        left join (select attr_value, attr_name from v_sys_dict_attr where dict_code = 'operate-status') va2 on va2.attr_value = cast(sol.operate_status as varchar)
+        left join (select attr_value, attr_name from v_sys_dict_attr where dict_code = 'operate-type') va1 on va1.attr_value =
+        <if test="_databaseId == 'pg'">cast(sol.operate_type as varchar)</if>
+        <if test="_databaseId == 'mysql'">sol.operate_type</if>
+        left join (select attr_value, attr_name from v_sys_dict_attr where dict_code = 'operate-status') va2 on va2.attr_value =
+        <if test="_databaseId == 'pg'">cast(sol.operate_status as varchar)</if>
+        <if test="_databaseId == 'mysql'">sol.operate_type</if>
         where 1 = 1
         [[ and sol.operate_user_name like concat('%', #operateUserName#, '%') ]]
         [[ and sol.description like concat('%', #description#, '%') ]]
         [[ and sol.operate_type = #operateType# ]]
         [[ and sol.operate_status = #operateStatus# ]]
-        [[ and sol.operate_time >= to_timestamp(#operateTime_start#,'yyyy-MM-dd hh24:mi:ss') ]]
-        [[ and sol.operate_time &lt; to_timestamp(#operateTime_end#,'yyyy-MM-dd hh24:mi:ss') ]]
+        [[ and sol.operate_time >= #operateTimeStart# ]]
+        [[ and sol.operate_time &lt; #operateTimeEnd# ]]
     </select>
 
 </mapper>
