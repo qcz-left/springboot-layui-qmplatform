@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <#include "./include/include.ftl">
-<title>Qu管理平台-首页</title>
+<title>Qu管理平台</title>
 <style>
     #main-tab-menu table {
         margin: unset;
