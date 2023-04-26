@@ -56,17 +56,21 @@ const LayerUtil = {
                 options.submit(iframeWin);
             }
         }
+
         if (!options.area) {
             options.area = ['50%', '50%'];
         }
         if (!options.type) {
             options.type = 2;
         }
+        let currentLayer;
         if (isTop) {
-            top.layer.open(options);
+            currentLayer = top.layer;
         } else {
-            layer.open(options);
+            currentLayer = layer;
         }
+        currentLayer.open(options);
+        return currentLayer;
     },
 
     tips: function (content, follow, options) {

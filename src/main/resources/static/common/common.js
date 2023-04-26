@@ -372,5 +372,23 @@ const CommonUtil = {
      */
     getFileSuf: function (fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
+    },
+
+    /**
+     * 选择用户树
+     */
+    chooseUserTree: function (option) {
+        let currentLayer = LayerUtil.openLayer({
+            title: '选择用户',
+            content: ctx + "/user/chooseUserTree",
+            area: ['30%', '80%'],
+            btn: ['选择', '取消'],
+            submit: function (iframeWin) {
+                if (typeof option.success == "function") {
+                    option.success(iframeWin.getCurrentNode());
+                    currentLayer.closeAll();
+                }
+            }
+        });
     }
 };

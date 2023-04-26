@@ -61,29 +61,27 @@ import java.util.Map;
 @Module("用户管理")
 public class UserController extends BaseController {
 
-    private static final String PREFIX = "/module/system/";
-
     @Resource
     private UserService userService;
 
     @GetMapping("/userListPage")
     public String userListPage() {
-        return PREFIX + "userList";
+        return "/module/system/userList";
     }
 
     @GetMapping("/userDetail")
     public String userDetail() {
-        return PREFIX + "userDetail";
+        return "/module/system/userDetail";
     }
 
     @GetMapping("/safeSettingPage")
     public String safeSettingPage() {
-        return PREFIX + "safeSetting";
+        return "/module/system/safeSetting";
     }
 
     @GetMapping("/uploadUserImgPage")
     public String uploadUserImgPage() {
-        return PREFIX + "uploadUserImg";
+        return "/module/system/uploadUserImg";
     }
 
     /**
@@ -91,7 +89,7 @@ public class UserController extends BaseController {
      */
     @GetMapping("/personalBasicInfoPage")
     public String personalBasicInfoPage() {
-        return PREFIX + "personalBasicInfo";
+        return "/module/system/personalBasicInfo";
     }
 
     /**
@@ -99,7 +97,15 @@ public class UserController extends BaseController {
      */
     @GetMapping("/noNeedLogin/retrievePasswordPage")
     public String retrievePasswordPage() {
-        return PREFIX + "retrievePassword";
+        return "/module/system/retrievePassword";
+    }
+
+    /**
+     * 选择用户树
+     */
+    @GetMapping("/chooseUserTree")
+    public String chooseUserTree() {
+        return "/module/system/chooseUserTree";
     }
 
     @GetMapping("/getUser/{userId}")
