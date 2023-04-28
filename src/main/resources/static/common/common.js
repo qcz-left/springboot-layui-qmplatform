@@ -376,10 +376,13 @@ const CommonUtil = {
 
     /**
      * 选择用户树
+     * @param option 参数选项
+     * <p> title: 弹窗标题（不填默认显示‘选择用户’）</p>
+     * <p> success: 保存后的回调函数</p>
      */
     chooseUserTree: function (option) {
         let currentLayer = LayerUtil.openLayer({
-            title: '选择用户',
+            title: option.title || '选择用户',
             content: ctx + "/user/chooseUserTree",
             area: ['30%', '80%'],
             btn: ['选择', '取消'],
@@ -388,6 +391,19 @@ const CommonUtil = {
                     option.success(iframeWin.getCurrentNode());
                     currentLayer.closeAll();
                 }
+            }
+        });
+    },
+
+    /**
+     * 回车键事件
+     * @param selector 选择器
+     * @param fun 回调函数
+     */
+    enterKeyEvent: function (selector, fun) {
+        $(selector).keyup(function (event) {
+            if (event.keyCode === 13) {
+                fun();
             }
         });
     }
