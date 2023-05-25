@@ -62,12 +62,9 @@ layui.use(['dtree'], function () {
     });
 
     let $username = $("input[name=username]");
-    CommonUtil.enterKeyEvent($username, function () {
-
-    });
-
     function searchData() {
         let username = $username.val();
+        orgTree.fuzzySearch(username);
     }
 
     window.getCurrentNode = function () {
