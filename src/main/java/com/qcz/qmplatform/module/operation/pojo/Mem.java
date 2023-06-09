@@ -1,10 +1,15 @@
 package com.qcz.qmplatform.module.operation.pojo;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
  * 内存
  */
+@Data
+@Accessors(chain = true)
 public class Mem implements Serializable {
     /**
      * 内存总量
@@ -26,46 +31,5 @@ public class Mem implements Serializable {
      */
     private double usage;
 
-    public String getTotal() {
-        return total;
-    }
-
-    public void setTotal(String total) {
-        this.total = total;
-    }
-
-    public String getUsed() {
-        return used;
-    }
-
-    public void setUsed(String used) {
-        this.used = used;
-    }
-
-    public String getFree() {
-        return free;
-    }
-
-    public void setFree(String free) {
-        this.free = free;
-    }
-
-    public double getUsage() {
-        return usage;
-    }
-
-    public void setUsage(double usage) {
-        this.usage = usage;
-    }
-
-    @Override
-    public String toString() {
-        return "Mem{" +
-                "total='" + total + '\'' +
-                ", used='" + used + '\'' +
-                ", free='" + free + '\'' +
-                ", usage=" + usage +
-                '}';
-    }
 }
 

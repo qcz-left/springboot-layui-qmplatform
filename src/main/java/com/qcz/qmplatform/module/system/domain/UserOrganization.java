@@ -2,6 +2,8 @@ package com.qcz.qmplatform.module.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -13,10 +15,10 @@ import java.io.Serializable;
  * @author quchangzhong
  * @since 2020-09-03
  */
+@Data
+@Accessors(chain = true)
 @TableName("sys_user_organization")
 public class UserOrganization implements Serializable {
-
-private static final long serialVersionUID=1L;
 
     /**
      * 用户id
@@ -30,28 +32,4 @@ private static final long serialVersionUID=1L;
     @TableField("organization_id")
     private String organizationId;
 
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getOrganizationId() {
-        return organizationId;
-    }
-
-    public void setOrganizationId(String organizationId) {
-        this.organizationId = organizationId;
-    }
-
-    @Override
-    public String toString() {
-        return "UserOrganization{" +
-        "userId=" + userId +
-        ", organizationId=" + organizationId +
-        "}";
-    }
 }

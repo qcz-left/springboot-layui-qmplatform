@@ -2,6 +2,8 @@ package com.qcz.qmplatform.module.operation.pojo;
 
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.RandomUtils;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,9 +12,9 @@ import java.util.List;
 /**
  * 制作数据 数据详情
  */
+@Data
+@Accessors(chain = true)
 public class DataDetail implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 表名
@@ -24,22 +26,8 @@ public class DataDetail implements Serializable {
      */
     private List<ColumnDetail> columnDetails;
 
-    public String getTableName() {
-        return tableName;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public List<ColumnDetail> getColumnDetails() {
-        return columnDetails;
-    }
-
-    public void setColumnDetails(List<ColumnDetail> columnDetails) {
-        this.columnDetails = columnDetails;
-    }
-
+    @Data
+    @Accessors(chain = true)
     public static class ColumnDetail implements Serializable {
         /**
          * 字段名
@@ -62,42 +50,6 @@ public class DataDetail implements Serializable {
          */
         int length;
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public int getValueType() {
-            return valueType;
-        }
-
-        public void setValueType(int valueType) {
-            this.valueType = valueType;
-        }
-
-        public int getLength() {
-            return length;
-        }
-
-        public void setLength(int length) {
-            this.length = length;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
         public Object getFinallyValue() {
             if (valueType == 1) {
                 if ("number".equalsIgnoreCase(type)) {
@@ -116,9 +68,6 @@ public class DataDetail implements Serializable {
             return null;
         }
 
-        public void setValue(String value) {
-            this.value = value;
-        }
     }
 
     /**

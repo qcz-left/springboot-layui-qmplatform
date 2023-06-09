@@ -1,8 +1,14 @@
 package com.qcz.qmplatform.module.system.vo;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Accessors(chain = true)
 public class LoginFormVO extends PasswordVO {
 
-    private static final long serialVersionUID = 1789788162400554173L;
     /**
      * 第三方系统
      */
@@ -12,19 +18,4 @@ public class LoginFormVO extends PasswordVO {
      */
     private String thirdparyId;
 
-    public String getThirdparty() {
-        return thirdparty;
-    }
-
-    public void setThirdparty(String thirdparty) {
-        this.thirdparty = thirdparty;
-    }
-
-    public String getThirdparyId() {
-        return thirdparyId;
-    }
-
-    public void setThirdparyId(String thirdparyId) {
-        this.thirdparyId = thirdparyId;
-    }
 }

@@ -1,8 +1,13 @@
 package com.qcz.qmplatform.module.operation.pojo;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 import java.util.List;
 
+@Data
+@Accessors(chain = true)
 public class Disk implements Serializable {
 
     private List<SysFile> sysFiles;
@@ -27,54 +32,4 @@ public class Disk implements Serializable {
      */
     private double usage;
 
-    public List<SysFile> getSysFiles() {
-        return sysFiles;
-    }
-
-    public void setSysFiles(List<SysFile> sysFiles) {
-        this.sysFiles = sysFiles;
-    }
-
-    public String getTotal() {
-        return total;
-    }
-
-    public void setTotal(String total) {
-        this.total = total;
-    }
-
-    public String getFree() {
-        return free;
-    }
-
-    public void setFree(String free) {
-        this.free = free;
-    }
-
-    public String getUsed() {
-        return used;
-    }
-
-    public void setUsed(String used) {
-        this.used = used;
-    }
-
-    public double getUsage() {
-        return usage;
-    }
-
-    public void setUsage(double usage) {
-        this.usage = usage;
-    }
-
-    @Override
-    public String toString() {
-        return "Disk{" +
-                "sysFiles=" + sysFiles +
-                ", total='" + total + '\'' +
-                ", free='" + free + '\'' +
-                ", used='" + used + '\'' +
-                ", usage=" + usage +
-                '}';
-    }
 }

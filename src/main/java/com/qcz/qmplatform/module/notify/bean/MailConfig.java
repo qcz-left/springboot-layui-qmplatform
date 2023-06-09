@@ -1,10 +1,15 @@
 package com.qcz.qmplatform.module.notify.bean;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
  * 邮件配置信息
  */
+@Data
+@Accessors(chain = true)
 public class MailConfig implements Serializable {
 
     /**
@@ -32,43 +37,4 @@ public class MailConfig implements Serializable {
      */
     private String senderPwd;
 
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public boolean isEnableSSL() {
-        return enableSSL;
-    }
-
-    public void setEnableSSL(boolean enableSSL) {
-        this.enableSSL = enableSSL;
-    }
-
-    public String getSenderHost() {
-        return senderHost;
-    }
-
-    public void setSenderHost(String senderHost) {
-        this.senderHost = senderHost;
-    }
-
-    public String getSenderPwd() {
-        return senderPwd;
-    }
-
-    public void setSenderPwd(String senderPwd) {
-        this.senderPwd = senderPwd;
-    }
 }

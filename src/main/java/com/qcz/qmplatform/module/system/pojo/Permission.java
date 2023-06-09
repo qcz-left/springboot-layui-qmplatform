@@ -1,10 +1,15 @@
 package com.qcz.qmplatform.module.system.pojo;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
- *
+ * 权限
  */
+@Data
+@Accessors(chain = true)
 public class Permission implements Serializable {
 
     private String permissionId;
@@ -28,90 +33,4 @@ public class Permission implements Serializable {
      */
     private Integer display;
 
-    public Integer getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Integer display) {
-        this.display = display;
-    }
-
-    public String getLinkUrl() {
-        return linkUrl;
-    }
-
-    public void setLinkUrl(String linkUrl) {
-        this.linkUrl = linkUrl;
-    }
-
-    public String getPermissionId() {
-        return permissionId;
-    }
-
-    public void setPermissionId(String permissionId) {
-        this.permissionId = permissionId;
-    }
-
-    public String getPermissionName() {
-        return permissionName;
-    }
-
-    public void setPermissionName(String permissionName) {
-        this.permissionName = permissionName;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Integer getIorder() {
-        return iorder;
-    }
-
-    public void setIorder(Integer iorder) {
-        this.iorder = iorder;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public Integer getPermissionType() {
-        return permissionType;
-    }
-
-    public void setPermissionType(Integer permissionType) {
-        this.permissionType = permissionType;
-    }
-
-    @Override
-    public String toString() {
-        return "Permission{" +
-                "permissionId='" + permissionId + '\'' +
-                ", permissionName='" + permissionName + '\'' +
-                ", icon='" + icon + '\'' +
-                ", code='" + code + '\'' +
-                ", iorder=" + iorder +
-                ", parentId='" + parentId + '\'' +
-                ", permissionType=" + permissionType +
-                ", linkUrl='" + linkUrl + '\'' +
-                ", display=" + display +
-                '}';
-    }
 }

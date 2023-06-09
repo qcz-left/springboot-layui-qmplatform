@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.qcz.qmplatform.common.anno.ExcelField;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -12,16 +14,16 @@ import java.sql.Timestamp;
 
 /**
  * <p>
- *
+ *  用户
  * </p>
  *
  * @author quchangzhong
  * @since 2020-09-03
  */
+@Data
+@Accessors(chain = true)
 @TableName("sys_user")
 public class User implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 主键id
@@ -104,117 +106,4 @@ public class User implements Serializable {
     @TableField("photo_path")
     private String photoPath;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getPhotoPath() {
-        return photoPath;
-    }
-
-    public void setPhotoPath(String photoPath) {
-        this.photoPath = photoPath;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getLoginname() {
-        return loginname;
-    }
-
-    public void setLoginname(String loginname) {
-        this.loginname = loginname;
-    }
-
-    public String getUserSex() {
-        return userSex;
-    }
-
-    public void setUserSex(String userSex) {
-        this.userSex = userSex;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(String createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmailAddr() {
-        return emailAddr;
-    }
-
-    public void setEmailAddr(String emailAddr) {
-        this.emailAddr = emailAddr;
-    }
-
-    public int getLocked() {
-        return locked;
-    }
-
-    public void setLocked(int locked) {
-        this.locked = locked;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", password='" + password + '\'' +
-                ", username='" + username + '\'' +
-                ", loginname='" + loginname + '\'' +
-                ", userSex='" + userSex + '\'' +
-                ", remark='" + remark + '\'' +
-                ", createTime=" + createTime +
-                ", createUserId='" + createUserId + '\'' +
-                ", phone='" + phone + '\'' +
-                ", emailAddr='" + emailAddr + '\'' +
-                ", locked=" + locked +
-                ", photoPath='" + photoPath + '\'' +
-                '}';
-    }
 }

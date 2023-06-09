@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -18,10 +20,10 @@ import java.util.Date;
  * @author quchangzhong
  * @since 2022-08-09
  */
+@Data
+@Accessors(chain = true)
 @TableName("tbl_bill")
 public class Bill implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 账单id
@@ -136,17 +138,4 @@ public class Bill implements Serializable {
         this.createUserId = createUserId;
     }
 
-    @Override
-    public String toString() {
-        return "Bill{" +
-                "id=" + id +
-                ", typeId=" + typeId +
-                ", amount=" + amount +
-                ", consumer=" + consumer +
-                ", remark=" + remark +
-                ", consumeTime=" + consumeTime +
-                ", createTime=" + createTime +
-                ", createUserId=" + createUserId +
-                "}";
-    }
 }

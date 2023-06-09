@@ -3,6 +3,8 @@ package com.qcz.qmplatform.module.operation.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -15,10 +17,10 @@ import java.sql.Timestamp;
  * @author quchangzhong
  * @since 2021-05-17
  */
+@Data
+@Accessors(chain = true)
 @TableName("ope_login_record")
 public class LoginRecord implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 记录id
@@ -56,63 +58,4 @@ public class LoginRecord implements Serializable {
     @TableField("remark")
     private String remark;
 
-    public String getRecordId() {
-        return recordId;
-    }
-
-    public void setRecordId(String recordId) {
-        this.recordId = recordId;
-    }
-
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
-
-    public Integer getErrorTimes() {
-        return errorTimes;
-    }
-
-    public void setErrorTimes(Integer errorTimes) {
-        this.errorTimes = errorTimes;
-    }
-
-    public Timestamp getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public void setLastLoginTime(Timestamp lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
-    }
-
-    public String getLastLoginIp() {
-        return lastLoginIp;
-    }
-
-    public void setLastLoginIp(String lastLoginIp) {
-        this.lastLoginIp = lastLoginIp;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return "OpeLoginRecord{" +
-                "recordId=" + recordId +
-                ", loginName=" + loginName +
-                ", errorTimes=" + errorTimes +
-                ", lastLoginTime=" + lastLoginTime +
-                ", lastLoginIp=" + lastLoginIp +
-                ", remark=" + remark +
-                "}";
-    }
 }

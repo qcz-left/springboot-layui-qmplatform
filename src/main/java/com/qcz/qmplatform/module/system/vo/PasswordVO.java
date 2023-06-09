@@ -1,8 +1,13 @@
 package com.qcz.qmplatform.module.system.vo;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
+@Data
+@Accessors(chain = true)
 public class PasswordVO implements Serializable {
 
     /**
@@ -37,51 +42,4 @@ public class PasswordVO implements Serializable {
      */
     private int validateType;
 
-    public String getLoginname() {
-        return loginname;
-    }
-
-    public void setLoginname(String loginname) {
-        this.loginname = loginname;
-    }
-
-    public String getValidateCode() {
-        return validateCode;
-    }
-
-    public void setValidateCode(String validateCode) {
-        this.validateCode = validateCode;
-    }
-
-    public int getValidateType() {
-        return validateType;
-    }
-
-    public void setValidateType(int validateType) {
-        this.validateType = validateType;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
-
-    public String getConfirmNewPassword() {
-        return confirmNewPassword;
-    }
-
-    public void setConfirmNewPassword(String confirmNewPassword) {
-        this.confirmNewPassword = confirmNewPassword;
-    }
 }

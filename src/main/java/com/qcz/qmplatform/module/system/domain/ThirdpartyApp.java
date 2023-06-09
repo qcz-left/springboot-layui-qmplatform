@@ -2,6 +2,8 @@ package com.qcz.qmplatform.module.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -13,10 +15,10 @@ import java.io.Serializable;
  * @author quchangzhong
  * @since 2022-01-26
  */
+@Data
+@Accessors(chain = true)
 @TableName("sys_thirdparty_app")
 public class ThirdpartyApp implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 主键id
@@ -54,63 +56,4 @@ public class ThirdpartyApp implements Serializable {
     @TableField("status")
     private int status;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAppKey() {
-        return appKey;
-    }
-
-    public void setAppKey(String appKey) {
-        this.appKey = appKey;
-    }
-
-    public String getAppSecret() {
-        return appSecret;
-    }
-
-    public void setAppSecret(String appSecret) {
-        this.appSecret = appSecret;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "ThirdpartyApp{" +
-                "id=" + id +
-                ", name=" + name +
-                ", appKey=" + appKey +
-                ", appSecret=" + appSecret +
-                ", remark=" + remark +
-                ", status=" + status +
-                "}";
-    }
 }

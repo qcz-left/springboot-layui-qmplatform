@@ -1,8 +1,15 @@
 package com.qcz.qmplatform.module.system.pojo;
 
 import com.qcz.qmplatform.common.bean.Tree;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Accessors(chain = true)
 public class OrgTree extends Tree {
+
     /**
      * 权限码（权限标识）
      */
@@ -18,27 +25,4 @@ public class OrgTree extends Tree {
      */
     private Integer itype;
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Integer getIorder() {
-        return iorder;
-    }
-
-    public void setIorder(Integer iorder) {
-        this.iorder = iorder;
-    }
-
-    public Integer getItype() {
-        return itype;
-    }
-
-    public void setItype(Integer itype) {
-        this.itype = itype;
-    }
 }

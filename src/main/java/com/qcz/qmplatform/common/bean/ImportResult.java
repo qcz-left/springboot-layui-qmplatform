@@ -1,10 +1,14 @@
 package com.qcz.qmplatform.common.bean;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 import java.util.List;
 
+@Data
+@Accessors(chain = true)
 public class ImportResult implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     /**
      * 标题
@@ -28,43 +32,4 @@ public class ImportResult implements Serializable {
 
     private List<ImportFailReason> importFailReasonList;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public int getSuccessCount() {
-        return successCount;
-    }
-
-    public void setSuccessCount(int successCount) {
-        this.successCount = successCount;
-    }
-
-    public int getFailCount() {
-        return failCount;
-    }
-
-    public void setFailCount(int failCount) {
-        this.failCount = failCount;
-    }
-
-    public List<ImportFailReason> getImportFailReasonList() {
-        return importFailReasonList;
-    }
-
-    public void setImportFailReasonList(List<ImportFailReason> importFailReasonList) {
-        this.importFailReasonList = importFailReasonList;
-    }
 }

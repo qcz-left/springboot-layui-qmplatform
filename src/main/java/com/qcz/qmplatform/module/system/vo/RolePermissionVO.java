@@ -1,25 +1,16 @@
 package com.qcz.qmplatform.module.system.vo;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.util.List;
 
+@Data
+@Accessors(chain = true)
 public class RolePermissionVO {
+
     private String roleId;
 
     private List<String> permissionIds;
 
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-
-    public List<String> getPermissionIds() {
-        return permissionIds;
-    }
-
-    public void setPermissionIds(List<String> permissionIds) {
-        this.permissionIds = permissionIds;
-    }
 }

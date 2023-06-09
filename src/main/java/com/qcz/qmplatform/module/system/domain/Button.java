@@ -3,6 +3,8 @@ package com.qcz.qmplatform.module.system.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -14,10 +16,10 @@ import java.io.Serializable;
  * @author quchangzhong
  * @since 2020-09-03
  */
+@Data
+@Accessors(chain = true)
 @TableName("sys_button")
 public class Button implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 按钮id
@@ -55,64 +57,4 @@ public class Button implements Serializable {
     @TableField("icon")
     private String icon;
 
-
-    public String getButtonId() {
-        return buttonId;
-    }
-
-    public void setButtonId(String buttonId) {
-        this.buttonId = buttonId;
-    }
-
-    public String getButtonName() {
-        return buttonName;
-    }
-
-    public void setButtonName(String buttonName) {
-        this.buttonName = buttonName;
-    }
-
-    public String getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(String menuId) {
-        this.menuId = menuId;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Integer getIorder() {
-        return iorder;
-    }
-
-    public void setIorder(Integer iorder) {
-        this.iorder = iorder;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    @Override
-    public String toString() {
-        return "Button{" +
-                "buttonId=" + buttonId +
-                ", buttonName=" + buttonName +
-                ", menuId=" + menuId +
-                ", code=" + code +
-                ", iorder=" + iorder +
-                ", icon=" + icon +
-                "}";
-    }
 }

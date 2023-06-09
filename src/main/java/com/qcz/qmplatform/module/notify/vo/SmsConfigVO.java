@@ -2,13 +2,15 @@ package com.qcz.qmplatform.module.notify.vo;
 
 import com.qcz.qmplatform.module.notify.bean.SmsProvider;
 import com.qcz.qmplatform.module.notify.bean.TemplateParam;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Map;
 
+@Data
+@Accessors(chain = true)
 public class SmsConfigVO implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 秘钥id
@@ -45,72 +47,9 @@ public class SmsConfigVO implements Serializable {
      */
     private int smsProvider;
 
-    public String getAppKey() {
-        return appKey;
-    }
-
-    public void setAppKey(String appKey) {
-        this.appKey = appKey;
-    }
-
-    public String getChannelNumber() {
-        return channelNumber;
-    }
-
-    public void setChannelNumber(String channelNumber) {
-        this.channelNumber = channelNumber;
-    }
-
     /**
      * 模板参数列表
      */
     private Map<Integer, TemplateParam> templateParams;
 
-    public String getSecretId() {
-        return secretId;
-    }
-
-    public void setSecretId(String secretId) {
-        this.secretId = secretId;
-    }
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
-
-    public int getSmsProvider() {
-        return smsProvider;
-    }
-
-    public void setSmsProvider(int smsProvider) {
-        this.smsProvider = smsProvider;
-    }
-
-    public Map<Integer, TemplateParam> getTemplateParams() {
-        return templateParams;
-    }
-
-    public void setTemplateParams(Map<Integer, TemplateParam> templateParams) {
-        this.templateParams = templateParams;
-    }
 }

@@ -1,10 +1,15 @@
 package com.qcz.qmplatform.module.operation.pojo;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
  * 数据备份策略
  */
+@Data
+@Accessors(chain = true)
 public class DataBakStrategy implements Serializable {
 
     /**
@@ -27,35 +32,4 @@ public class DataBakStrategy implements Serializable {
      */
     private int saveDays = 30;
 
-    public int getSaveDays() {
-        return saveDays;
-    }
-
-    public void setSaveDays(int saveDays) {
-        this.saveDays = saveDays;
-    }
-
-    public int getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(int period) {
-        this.period = period;
-    }
-
-    public int getLimitDiskSpace() {
-        return limitDiskSpace;
-    }
-
-    public void setLimitDiskSpace(int limitDiskSpace) {
-        this.limitDiskSpace = limitDiskSpace;
-    }
-
-    public int getEnable() {
-        return enable;
-    }
-
-    public void setEnable(int enable) {
-        this.enable = enable;
-    }
 }

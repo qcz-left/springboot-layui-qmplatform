@@ -1,9 +1,13 @@
 package com.qcz.qmplatform.module.other.vo;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
+@Data
+@Accessors(chain = true)
 public class NotepadVO implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     /**
      * 标题
@@ -15,19 +19,4 @@ public class NotepadVO implements Serializable {
      */
     private boolean onlySelf;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public boolean isOnlySelf() {
-        return onlySelf;
-    }
-
-    public void setOnlySelf(boolean onlySelf) {
-        this.onlySelf = onlySelf;
-    }
 }

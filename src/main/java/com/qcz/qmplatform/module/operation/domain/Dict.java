@@ -3,6 +3,8 @@ package com.qcz.qmplatform.module.operation.domain;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -14,10 +16,10 @@ import java.io.Serializable;
  * @author quchangzhong
  * @since 2020-12-19
  */
+@Data
+@Accessors(chain = true)
 @TableName("sys_dict")
 public class Dict implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 字典主键id
@@ -49,54 +51,4 @@ public class Dict implements Serializable {
     @TableField("sort")
     private Integer sort;
 
-    public String getDictCode() {
-        return dictCode;
-    }
-
-    public void setDictCode(String dictCode) {
-        this.dictCode = dictCode;
-    }
-
-    public String getDictId() {
-        return dictId;
-    }
-
-    public void setDictId(String dictId) {
-        this.dictId = dictId;
-    }
-
-    public String getDictName() {
-        return dictName;
-    }
-
-    public void setDictName(String dictName) {
-        this.dictName = dictName;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
-    @Override
-    public String toString() {
-        return "Dict{" +
-                "dictId='" + dictId + '\'' +
-                ", dictCode='" + dictCode + '\'' +
-                ", dictName='" + dictName + '\'' +
-                ", remark='" + remark + '\'' +
-                ", sort=" + sort +
-                '}';
-    }
 }

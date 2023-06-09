@@ -2,6 +2,8 @@ package com.qcz.qmplatform.module.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -13,10 +15,10 @@ import java.io.Serializable;
  * @author quchangzhong
  * @since 2020-09-03
  */
+@Data
+@Accessors(chain = true)
 @TableName("sys_user_role")
 public class UserRole implements Serializable {
-
-private static final long serialVersionUID=1L;
 
     @TableField("user_id")
     private String userId;
@@ -24,27 +26,4 @@ private static final long serialVersionUID=1L;
     @TableField("role_id")
     private String roleId;
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-
-    @Override
-    public String toString() {
-        return "UserRole{" +
-        "userId=" + userId +
-        ", roleId=" + roleId +
-        "}";
-    }
 }

@@ -1,13 +1,23 @@
 package com.qcz.qmplatform.common.bean;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
+ * 分页请求参数
+ *
  * @author quchangzhong
  * @since 2019年6月5日
  */
+@Data
+@Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class PageRequest implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     /**
      * 页数，默认第一页
@@ -29,42 +39,4 @@ public class PageRequest implements Serializable {
      */
     private String order;
 
-    public Integer getPage() {
-        return page;
-    }
-
-    public void setPage(Integer page) {
-        this.page = page;
-    }
-
-    public Integer getLimit() {
-        return limit;
-    }
-
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
-
-    public String getOrderName() {
-        return orderName;
-    }
-
-    public void setOrderName(String orderName) {
-        this.orderName = orderName;
-    }
-
-    public String getOrder() {
-        return order;
-    }
-
-    public void setOrder(String order) {
-        this.order = order;
-    }
-
-    public PageRequest(Integer page, Integer limit, String orderName, String order) {
-        this.page = page;
-        this.limit = limit;
-        this.orderName = orderName;
-        this.order = order;
-    }
 }

@@ -1,11 +1,14 @@
 package com.qcz.qmplatform.common.bean;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 import java.util.List;
 
+@Data
+@Accessors(chain = true)
 public class PageResult implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 数据长度
@@ -17,19 +20,4 @@ public class PageResult implements Serializable {
      */
     private List<?> list;
 
-    public Long getCount() {
-        return count;
-    }
-
-    public void setCount(Long count) {
-        this.count = count;
-    }
-
-    public List<?> getList() {
-        return list;
-    }
-
-    public void setList(List<?> list) {
-        this.list = list;
-    }
 }

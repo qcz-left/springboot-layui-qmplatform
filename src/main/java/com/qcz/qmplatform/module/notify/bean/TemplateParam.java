@@ -1,7 +1,12 @@
 package com.qcz.qmplatform.module.notify.bean;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
+@Data
+@Accessors(chain = true)
 public class TemplateParam implements Serializable {
     /**
      * 模板类型
@@ -18,27 +23,4 @@ public class TemplateParam implements Serializable {
      */
     private int paramCnt;
 
-    public int getTemplateType() {
-        return templateType;
-    }
-
-    public void setTemplateType(int templateType) {
-        this.templateType = templateType;
-    }
-
-    public String getTemplateID() {
-        return templateID;
-    }
-
-    public void setTemplateID(String templateID) {
-        this.templateID = templateID;
-    }
-
-    public int getParamCnt() {
-        return paramCnt;
-    }
-
-    public void setParamCnt(int paramCnt) {
-        this.paramCnt = paramCnt;
-    }
 }

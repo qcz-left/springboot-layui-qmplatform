@@ -1,9 +1,13 @@
 package com.qcz.qmplatform.common.bean;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
+@Data
+@Accessors(chain = true)
 public class ImportFailReason implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     /**
      * 行号
@@ -20,27 +24,4 @@ public class ImportFailReason implements Serializable {
      */
     private String reason;
 
-    public long getRowIndex() {
-        return rowIndex;
-    }
-
-    public void setRowIndex(long rowIndex) {
-        this.rowIndex = rowIndex;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
 }

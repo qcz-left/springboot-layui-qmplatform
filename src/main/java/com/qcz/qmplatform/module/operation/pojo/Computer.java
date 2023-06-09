@@ -1,7 +1,12 @@
 package com.qcz.qmplatform.module.operation.pojo;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
+@Data
+@Accessors(chain = true)
 public class Computer implements Serializable {
 
     /**
@@ -37,81 +42,4 @@ public class Computer implements Serializable {
      */
     private String runTime;
 
-    public String getComputerMac() {
-        return computerMac;
-    }
-
-    public void setComputerMac(String computerMac) {
-        this.computerMac = computerMac;
-    }
-
-    public String getLastStartTime() {
-        return lastStartTime;
-    }
-
-    public void setLastStartTime(String lastStartTime) {
-        this.lastStartTime = lastStartTime;
-    }
-
-    public String getRunTime() {
-        return runTime;
-    }
-
-    public void setRunTime(String runTime) {
-        this.runTime = runTime;
-    }
-
-    public String getComputerName() {
-        return computerName;
-    }
-
-    public void setComputerName(String computerName) {
-        this.computerName = computerName;
-    }
-
-    public String getComputerIp() {
-        return computerIp;
-    }
-
-    public void setComputerIp(String computerIp) {
-        this.computerIp = computerIp;
-    }
-
-    public String getOsName() {
-        return osName;
-    }
-
-    public void setOsName(String osName) {
-        this.osName = osName;
-    }
-
-    public String getOsArch() {
-        return osArch;
-    }
-
-    public void setOsArch(String osArch) {
-        this.osArch = osArch;
-    }
-
-    public String getUserDir() {
-        return userDir;
-    }
-
-    public void setUserDir(String userDir) {
-        this.userDir = userDir;
-    }
-
-    @Override
-    public String toString() {
-        return "Computer{" +
-                "computerName='" + computerName + '\'' +
-                ", computerIp='" + computerIp + '\'' +
-                ", computerMac='" + computerMac + '\'' +
-                ", osName='" + osName + '\'' +
-                ", osArch='" + osArch + '\'' +
-                ", userDir='" + userDir + '\'' +
-                ", lastStartTime='" + lastStartTime + '\'' +
-                ", runTime='" + runTime + '\'' +
-                '}';
-    }
 }

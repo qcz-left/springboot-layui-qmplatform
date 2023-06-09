@@ -1,7 +1,13 @@
 package com.qcz.qmplatform.common.bean;
 
 import com.qcz.qmplatform.common.constant.ResponseCode;
+import lombok.Data;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 
+@Data
+@Accessors(chain = true)
+@ToString
 public class ResponseResult<T> {
 
     private int code;
@@ -56,40 +62,8 @@ public class ResponseResult<T> {
         return new ResponseResult<>(success ? ResponseCode.SUCCESS : ResponseCode.ERROR, null, null);
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
     public boolean isOk() {
         return code == ResponseCode.SUCCESS.code();
     }
 
-    @Override
-    public String toString() {
-        return "ResponseResult{" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
-                ", data=" + data +
-                '}';
-    }
 }

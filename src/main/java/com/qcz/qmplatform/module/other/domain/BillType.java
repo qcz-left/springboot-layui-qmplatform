@@ -3,6 +3,8 @@ package com.qcz.qmplatform.module.other.domain;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -14,10 +16,10 @@ import java.io.Serializable;
  * @author quchangzhong
  * @since 2022-08-12
  */
+@Data
+@Accessors(chain = true)
 @TableName("tbl_bill_type")
 public class BillType implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 账单类型id
@@ -43,45 +45,4 @@ public class BillType implements Serializable {
     @TableField("remark")
     private String remark;
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    @Override
-    public String toString() {
-        return "BillType{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", parentId='" + parentId + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 }

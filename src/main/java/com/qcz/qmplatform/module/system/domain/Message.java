@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.qcz.qmplatform.common.bean.DBProperties;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -16,10 +18,10 @@ import java.sql.Timestamp;
  * @author quchangzhong
  * @since 2021-03-26
  */
+@Data
+@Accessors(chain = true)
 @TableName(DBProperties.Table.SYS_MESSAGE)
 public class Message implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 系统通知信息id
@@ -72,90 +74,4 @@ public class Message implements Serializable {
     @TableField("receiver")
     private String receiver;
 
-    public String getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getReaded() {
-        return readed;
-    }
-
-    public void setReaded(Integer readed) {
-        this.readed = readed;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
-    }
-
-    public String getInstance() {
-        return instance;
-    }
-
-    public void setInstance(String instance) {
-        this.instance = instance;
-    }
-
-    public Timestamp getLastUpdateTime() {
-        return lastUpdateTime;
-    }
-
-    public void setLastUpdateTime(Timestamp lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "messageId='" + messageId + '\'' +
-                ", content='" + content + '\'' +
-                ", type=" + type +
-                ", instance='" + instance + '\'' +
-                ", createTime=" + createTime +
-                ", lastUpdateTime=" + lastUpdateTime +
-                ", readed=" + readed +
-                ", sender='" + sender + '\'' +
-                ", receiver='" + receiver + '\'' +
-                '}';
-    }
 }

@@ -1,9 +1,15 @@
 package com.qcz.qmplatform.module.system.vo;
 
 import com.qcz.qmplatform.module.system.domain.OperateLog;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.sql.Timestamp;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Accessors(chain = true)
 public class OperateLogTimeVO extends OperateLog {
 
     /**
@@ -15,19 +21,4 @@ public class OperateLogTimeVO extends OperateLog {
      */
     private Timestamp operateTimeEnd;
 
-    public Timestamp getOperateTimeStart() {
-        return operateTimeStart;
-    }
-
-    public void setOperateTimeStart(Timestamp operateTimeStart) {
-        this.operateTimeStart = operateTimeStart;
-    }
-
-    public Timestamp getOperateTimeEnd() {
-        return operateTimeEnd;
-    }
-
-    public void setOperateTimeEnd(Timestamp operateTimeEnd) {
-        this.operateTimeEnd = operateTimeEnd;
-    }
 }

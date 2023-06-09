@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -15,10 +17,10 @@ import java.io.Serializable;
  * @author quchangzhong
  * @since 2020-09-03
  */
+@Data
+@Accessors(chain = true)
 @TableName("sys_menu")
 public class Menu implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     @TableId("menu_id")
     private String menuId;
@@ -65,81 +67,4 @@ public class Menu implements Serializable {
     @TableField(value = "parent_id", fill = FieldFill.INSERT_UPDATE)
     private String parentId;
 
-    public int getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(int display) {
-        this.display = display;
-    }
-
-    public String getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(String menuId) {
-        this.menuId = menuId;
-    }
-
-    public String getMenuName() {
-        return menuName;
-    }
-
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
-    }
-
-    public Integer getIorder() {
-        return iorder;
-    }
-
-    public void setIorder(Integer iorder) {
-        this.iorder = iorder;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getLinkUrl() {
-        return linkUrl;
-    }
-
-    public void setLinkUrl(String linkUrl) {
-        this.linkUrl = linkUrl;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "menuId='" + menuId + '\'' +
-                ", menuName='" + menuName + '\'' +
-                ", iorder=" + iorder +
-                ", code='" + code + '\'' +
-                ", icon='" + icon + '\'' +
-                ", linkUrl='" + linkUrl + '\'' +
-                ", display='" + display + '\'' +
-                ", parentId='" + parentId + '\'' +
-                '}';
-    }
 }
