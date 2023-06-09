@@ -81,7 +81,7 @@ public class GenerateCode {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setEntityLombokModel(false);
+        strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(false);
         strategy.setSuperControllerClass("com.qcz.qmplatform.module.base.BaseController");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
