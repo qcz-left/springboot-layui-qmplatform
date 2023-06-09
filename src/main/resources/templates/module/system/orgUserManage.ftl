@@ -90,10 +90,10 @@
                 {type: 'checkbox', excel: false},
                 {field: 'username', title: '用户名', width: '10%', sort: true},
                 {field: 'loginname', title: '登录名', width: '10%', sort: true},
-                {field: 'userSexName', title: '性别', width: '5%'},
+                {field: 'userSexName', title: '性别', width: '5%', exportSelect: true, exportSelectArray: ['男','女']},
                 {field: 'phone', title: '电话', width: '10%'},
                 {field: 'emailAddr', title: '邮箱', width: '10%', sort: true},
-                {field: 'lockedName', title: '状态', width: '5%'},
+                {field: 'lockedName', title: '状态', width: '5%', exportSelect: true, exportSelectArray: ['正常','锁定']},
                 {field: 'organizationName', title: '所属部门', width: '30%'},
                 {fixed: 'right', title: '操作', excel: false, align: 'center', templet: '#operator'}
             ]]

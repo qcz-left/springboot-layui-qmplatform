@@ -3,6 +3,7 @@ package com.qcz.qmplatform.module.system.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -50,6 +51,23 @@ import java.util.Objects;
  */
 @Service
 public class UserService extends ServiceImpl<UserMapper, User> {
+
+    /**
+     * Excel 属性映射
+     */
+    private static class ExcelPropertyMap {
+
+        public static final Map<String, String> USER_SEX = MapUtil.newHashMap();
+        public static final Map<String, Integer> LOCKED = MapUtil.newHashMap();
+
+        static {
+            USER_SEX.put("男", "1");
+            USER_SEX.put("女", "2");
+            LOCKED.put("正常", 0);
+            LOCKED.put("锁定", 1);
+        }
+
+    }
 
     @Resource
     private UserOrganizationMapper userOrganizationMapper;
@@ -293,8 +311,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             String userId = IdUtils.getUUID();
             userVO.setId(userId);
             userVO.setPassword(SecureUtils.accountEncrypt(SecureUtils.DEFAULT_PASSWORD));
-            userVO.setUserSex("男".equals(userSexName) ? "1" : ("女".equals(userSexName) ? "2" : ""));
-            userVO.setLocked("正常".equals(lockedName) ? 1 : 0);
+            userVO.setUserSex(ExcelPropertyMap.USER_SEX.get(userSexName));
+            userVO.setLocked(ExcelPropertyMap.LOCKED.get(lockedName));
             if (StringUtils.isNotBlank(organizationNames)) {
                 String[] orgNameArr = organizationNames.split(",");
                 List<String> orgIds = new ArrayList<>();

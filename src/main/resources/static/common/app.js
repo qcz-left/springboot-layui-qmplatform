@@ -162,7 +162,9 @@ function getColNames(tableIns) {
         if (excelAble) {
             colNames[item.field] = {
                 title: item.title,
-                width: item.exportWidth || 25
+                width: item.exportWidth || 25,
+                select: item.exportSelect || false,
+                selectArray: item.exportSelectArray || []
             };
         }
     }

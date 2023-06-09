@@ -1,8 +1,9 @@
-package com.qcz.qmplatform.module.base;
+package com.qcz.qmplatform.module.base.controller;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -18,7 +19,15 @@ import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.YmlPropertiesUtils;
+import com.qcz.qmplatform.module.base.BaseController;
+import com.qcz.qmplatform.module.base.ExcelTemplateVO;
+import com.qcz.qmplatform.module.base.ExportColumn;
+import com.qcz.qmplatform.module.base.ExportParamVO;
+import org.apache.poi.ss.usermodel.DataValidation;
+import org.apache.poi.ss.usermodel.DataValidationConstraint;
+import org.apache.poi.ss.usermodel.DataValidationHelper;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.util.CellRangeAddressList;
 import org.jodconverter.core.DocumentConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,7 +154,7 @@ public class CommonController extends BaseController {
      * 导出文件下载专用请求
      *
      * @param filePath 文件路径
-     * @see com.qcz.qmplatform.module.base.CommonController#downloadFile(java.lang.String, java.lang.String)
+     * @see CommonController#downloadFile(java.lang.String, java.lang.String)
      */
     @GetMapping("/downloadExcelFile")
     public ResponseEntity<InputStreamResource> downloadExcelFile(String filePath, String fileName) {
@@ -247,10 +256,21 @@ public class CommonController extends BaseController {
         int columnIndex = 0;
         List<String> titles = new ArrayList<>();
         for (String key : colNames.keySet()) {
-            writer.setColumnWidth(columnIndex++, colNames.get(key).getWidth());
-            String title = colNames.get(key).getTitle();
+            ExportColumn exportColumn = colNames.get(key);
+            writer.setColumnWidth(columnIndex, exportColumn.getWidth());
+            String title = exportColumn.getTitle();
             writer.addHeaderAlias(key, title);
+            if (exportColumn.isSelect()) {
+                DataValidationHelper dataValidationHelper = writer.getSheet().getDataValidationHelper();
+                //设置下拉框数据
+                DataValidationConstraint constraint = dataValidationHelper.createExplicitListConstraint(ArrayUtil.toArray(exportColumn.getSelectArray(), String.class));
+                //设置生效的起始行、终止行、起始列、终止列
+                CellRangeAddressList addressList = new CellRangeAddressList(1, 100, columnIndex, columnIndex);
+                DataValidation dataValidation = dataValidationHelper.createValidation(constraint, addressList);
+                writer.addValidationData(dataValidation);
+            }
             titles.add(title);
+            columnIndex++;
         }
         writer.writeHeadRow(titles);
     }
