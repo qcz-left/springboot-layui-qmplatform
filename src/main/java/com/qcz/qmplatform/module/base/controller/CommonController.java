@@ -265,7 +265,7 @@ public class CommonController extends BaseController {
                 //设置下拉框数据
                 DataValidationConstraint constraint = dataValidationHelper.createExplicitListConstraint(ArrayUtil.toArray(exportColumn.getSelectArray(), String.class));
                 //设置生效的起始行、终止行、起始列、终止列
-                CellRangeAddressList addressList = new CellRangeAddressList(1, 100, columnIndex, columnIndex);
+                CellRangeAddressList addressList = new CellRangeAddressList(1, Integer.MAX_VALUE, columnIndex, columnIndex);
                 DataValidation dataValidation = dataValidationHelper.createValidation(constraint, addressList);
                 writer.addValidationData(dataValidation);
             }
