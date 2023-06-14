@@ -36,6 +36,9 @@ import java.util.Properties;
 
 import static oshi.hardware.CentralProcessor.TickType;
 
+/**
+ * 系统工具类
+ */
 public class SystemUtils extends SystemUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SystemUtils.class);

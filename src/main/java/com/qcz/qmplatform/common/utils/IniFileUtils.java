@@ -2,6 +2,9 @@ package com.qcz.qmplatform.common.utils;
 
 import cn.hutool.setting.Setting;
 
+/**
+ * INI 配置文件工具类
+ */
 public class IniFileUtils {
 
     /**

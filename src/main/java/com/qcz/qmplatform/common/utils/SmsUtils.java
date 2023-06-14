@@ -7,6 +7,9 @@ import com.qcz.qmplatform.module.notify.service.baidu.BaiduSmsNotifyService;
 import com.qcz.qmplatform.module.notify.service.huawei.HuaweiSmsNotifyService;
 import com.qcz.qmplatform.module.notify.service.tencent.TencentCloudSmsNotifyService;
 
+/**
+ * 短信工具类
+ */
 public class SmsUtils {
 
     public static final String DAT_SMS_CONFIG = FileUtils.WEB_PATH + "/Dat/smsConfig.dat";

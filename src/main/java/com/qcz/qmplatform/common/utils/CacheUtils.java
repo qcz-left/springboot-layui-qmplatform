@@ -8,6 +8,9 @@ import com.qcz.qmplatform.module.system.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 缓存工具类
+ */
 public class CacheUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CacheUtils.class);
@@ -55,10 +58,21 @@ public class CacheUtils {
         COMMON_CACHE.remove(key);
     }
 
+    /**
+     * cmd执行名称存入缓存，等待执行
+     *
+     * @param key   缓存key
+     * @param value cmd命令
+     */
     public static void putCmd(String key, String value) {
         CMD_CACHE.put(key, value);
     }
 
+    /**
+     * 执行cmd缓存命令
+     *
+     * @param key 缓存key
+     */
     public static void exeCmd(String key) {
         String cmd = CacheUtils.CMD_CACHE.get(key);
         LOGGER.debug("exe cache cmd: " + cmd);

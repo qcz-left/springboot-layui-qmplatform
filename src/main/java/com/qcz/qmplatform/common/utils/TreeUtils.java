@@ -5,8 +5,18 @@ import com.qcz.qmplatform.common.bean.Tree;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 树型结构工具类
+ */
 public class TreeUtils {
 
+    /**
+     * 构建树型结构
+     *
+     * @param trees
+     * @param <T>
+     * @return
+     */
     public static <T extends Tree> List<T> buildTree(List<T> trees) {
         // 先找出所有的顶级节点
         List<T> topNodes = new ArrayList<>();

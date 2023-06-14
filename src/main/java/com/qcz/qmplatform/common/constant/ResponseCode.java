@@ -1,5 +1,8 @@
 package com.qcz.qmplatform.common.constant;
 
+/**
+ * 响应码
+ */
 public enum ResponseCode {
 
     /**

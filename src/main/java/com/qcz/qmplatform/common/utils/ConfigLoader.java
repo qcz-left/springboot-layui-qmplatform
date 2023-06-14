@@ -6,6 +6,9 @@ import cn.hutool.setting.Setting;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 可配置文件参数
+ */
 public class ConfigLoader {
 
     private static final Setting configFile = IniFileUtils.getConfigFile();
@@ -185,6 +188,9 @@ public class ConfigLoader {
         return getLongConfig("SnowflakeWorkerId", 1L);
     }
 
+    /**
+     * 获取华为短信云的网关地址
+     */
     public static String getHwSmsServerAddressConfig() {
         return getStringConfig("HwSmsServerAddress", "https://rtcsms.cn-north-1.myhuaweicloud.com:10743/sms/batchSendSms/v1");
     }

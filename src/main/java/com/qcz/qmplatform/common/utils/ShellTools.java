@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * shell命令工具类
+ */
 public class ShellTools {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ShellTools.class);

@@ -6,6 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
+/**
+ * ID获取工具类
+ */
 @Component
 public class IdUtils extends IdUtil implements InitializingBean {
 

@@ -2,6 +2,9 @@ package com.qcz.qmplatform.common.utils;
 
 import cn.hutool.core.util.StrUtil;
 
+/**
+ * 字符串操作工具类
+ */
 public class StringUtils extends StrUtil {
 
     /**

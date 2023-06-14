@@ -2,6 +2,9 @@ package com.qcz.qmplatform.common.utils;
 
 import cn.hutool.core.util.RandomUtil;
 
+/**
+ * 随机工具类
+ */
 public class RandomUtils extends RandomUtil {
 
     public static String randomIPV4() {

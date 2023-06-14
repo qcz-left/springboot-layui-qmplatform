@@ -6,6 +6,9 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * 导入结果
+ */
 @Data
 @Accessors(chain = true)
 public class ImportResult implements Serializable {

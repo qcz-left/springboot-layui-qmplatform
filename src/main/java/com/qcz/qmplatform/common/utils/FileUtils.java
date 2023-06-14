@@ -13,6 +13,9 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * 文件工具类
+ */
 public class FileUtils extends FileUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);

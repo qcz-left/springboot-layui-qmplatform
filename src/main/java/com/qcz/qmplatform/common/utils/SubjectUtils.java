@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
+/**
+ * 当前登录账号工具类
+ */
 public class SubjectUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SubjectUtils.class);

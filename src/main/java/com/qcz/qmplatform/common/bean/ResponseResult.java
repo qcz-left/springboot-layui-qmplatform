@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+/**
+ * 响应结果
+ */
 @Data
 @Accessors(chain = true)
 @ToString

@@ -12,7 +12,40 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum OperateType {
 
-    INSTANCE(0), LOGIN(1), LOGOUT(-1), FIND(2), INSERT(3), UPDATE(4), DELETE(5);
+    /**
+     * 无实际意义
+     */
+    INSTANCE(0),
+
+    /**
+     * 登录
+     */
+    LOGIN(1),
+
+    /**
+     * 登出
+     */
+    LOGOUT(-1),
+
+    /**
+     * 查询
+     */
+    QUERY(2),
+
+    /**
+     * 新增
+     */
+    INSERT(3),
+
+    /**
+     * 更新
+     */
+    UPDATE(4),
+
+    /**
+     * 删除
+     */
+    DELETE(5);
 
     private final int type;
 

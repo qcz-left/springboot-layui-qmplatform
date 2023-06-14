@@ -5,6 +5,9 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
+/**
+ * 导入失败原因
+ */
 @Data
 @Accessors(chain = true)
 public class ImportFailReason implements Serializable {
