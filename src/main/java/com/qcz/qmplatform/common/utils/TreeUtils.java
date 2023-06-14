@@ -12,10 +12,6 @@ public class TreeUtils {
 
     /**
      * 构建树型结构
-     *
-     * @param trees
-     * @param <T>
-     * @return
      */
     public static <T extends Tree> List<T> buildTree(List<T> trees) {
         // 先找出所有的顶级节点
