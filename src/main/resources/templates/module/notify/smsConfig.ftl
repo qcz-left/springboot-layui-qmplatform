@@ -147,7 +147,11 @@
             }],
             initValue: [detail.smsProvider],
             on: function(data){
-                toggleProvider(data.arr[0].value)
+                let smsProvider;
+                if (data.arr.length > 0) {
+                    smsProvider = data.arr[0].value;
+                }
+                toggleProvider(smsProvider)
             },
         });
 
