@@ -155,9 +155,9 @@ function getColNames(tableIns) {
     let cols = tableIns.config.cols[0];
     for (let i = 0; i < cols.length; i++) {
         let item = cols[i];
-        let excelAble;
-        if (typeof item.excel == "undefined") {
-            excelAble = true;
+        let excelAble = true;
+        if (typeof item.excel == "boolean" && !item.excel) {
+            excelAble = false;
         }
         if (excelAble) {
             colNames[item.field] = {
