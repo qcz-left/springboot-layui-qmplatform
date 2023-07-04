@@ -1,8 +1,9 @@
 package com.qcz.qmplatform.module.other.mapper;
 
-import com.qcz.qmplatform.module.other.domain.BillType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qcz.qmplatform.module.other.domain.BillType;
 import com.qcz.qmplatform.module.other.pojo.BillTypeTree;
+import com.qcz.qmplatform.module.other.qo.BillTypeQO;
 
 import java.util.List;
 
@@ -16,7 +17,6 @@ import java.util.List;
  */
 public interface BillTypeMapper extends BaseMapper<BillType> {
 
-    List<BillTypeTree> getBillTypeList(BillType billType);
+    List<BillTypeTree> getBillTypeList(BillTypeQO billTypeQO);
 
-    void deleteByIds(List<String> ids);
 }

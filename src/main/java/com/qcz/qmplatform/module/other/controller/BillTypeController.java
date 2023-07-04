@@ -8,6 +8,7 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.other.domain.BillType;
 import com.qcz.qmplatform.module.other.pojo.BillTypeTree;
+import com.qcz.qmplatform.module.other.qo.BillTypeQO;
 import com.qcz.qmplatform.module.other.service.BillTypeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,14 +51,14 @@ public class BillTypeController extends BaseController {
 
     @PostMapping("/getBillTypeList")
     @ResponseBody
-    public ResponseResult<List<BillTypeTree>> getBillTypeList(BillType billType) {
-        return ResponseResult.ok(billTypeService.getBillTypeList(billType));
+    public ResponseResult<List<BillTypeTree>> getBillTypeList() {
+        return ResponseResult.ok(billTypeService.getBillTypeList(new BillTypeQO()));
     }
 
     @GetMapping("/getBillTypeTree")
     @ResponseBody
-    public ResponseResult<List<BillTypeTree>> getBillTypeTree(BillType billType) {
-        return ResponseResult.ok(billTypeService.getBillTypeTree(billType));
+    public ResponseResult<List<BillTypeTree>> getBillTypeTree(BillTypeQO billTypeQO) {
+        return ResponseResult.ok(billTypeService.getBillTypeTree(billTypeQO));
     }
 
     @GetMapping("/get/{id}")
@@ -84,6 +85,6 @@ public class BillTypeController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除账单类型")
     public ResponseResult<?> delete(String ids) {
-        return ResponseResult.newInstance(billTypeService.removeByIds(StringUtils.split(ids, ',')));
+        return ResponseResult.newInstance(billTypeService.removeByBillTypeIds(StringUtils.split(ids, ',')));
     }
 }

@@ -11,16 +11,8 @@
         from
             tbl_bill_type tbt
         where 1=1
-        [[
-            and not exists (
-                select id from casc_bill_type(#id#) as tmp
-                where tmp.id = tbt.id
-            )
-        ]]
+        [[ and not in(#notExistsIds#) ]]
 
     </select>
 
-    <delete id="deleteByIds">
-        delete from tbl_bill_type where id in(select id from casc_bill_type(#ids#))
-    </delete>
 </mapper>
