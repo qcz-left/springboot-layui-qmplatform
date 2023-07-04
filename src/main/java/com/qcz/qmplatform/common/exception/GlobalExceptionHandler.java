@@ -38,11 +38,11 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 自定义异常
+     * 业务异常
      */
-    @ExceptionHandler(CommonException.class)
+    @ExceptionHandler(BusinessException.class)
     @ResponseBody
-    public ResponseResult<?> errorHandleByCommon(Exception ex) {
+    public ResponseResult<?> errorHandleByBusiness(Exception ex) {
         LOGGER.error(ex.getMessage(), ex);
         return ResponseResult.error(ex.getMessage());
     }
