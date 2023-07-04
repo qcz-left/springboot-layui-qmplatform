@@ -12,6 +12,7 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
@@ -215,13 +216,13 @@ public class CommonController extends BaseController {
     @ResponseBody
     public void previewFile(String filePath, HttpServletResponse response) {
         if (!YmlPropertiesUtils.enableJodConverter()) {
-            throw new CommonException("未开启OpenOffice服务");
+            throw new BusinessException("未开启OpenOffice服务");
         }
         File file = new File(FileUtils.getRealFilePath(filePath));
         String type = FileTypeUtil.getType(file);
         List<String> previewedSuffix = ConfigLoader.getPreviewedSuffix();
         if (!previewedSuffix.contains(type) && !previewedSuffix.contains(FileUtils.getFileSuf(filePath))) {
-            throw new CommonException(StringUtils.format("该文件类型 .{} 暂不提供预览", type));
+            throw new BusinessException(StringUtils.format("该文件类型 .{} 暂不提供预览", type));
         }
         File previewPDF = new File(ConfigLoader.getDeleteTmpPath() + "preview_" + file.getName() + ".pdf");
         ServletOutputStream outputStream = null;
@@ -234,7 +235,7 @@ public class CommonController extends BaseController {
             IoUtil.copy(inputStream, outputStream);
         } catch (Exception e) {
             logger.error("", e);
-            throw new CommonException("预览文件失败");
+            throw new BusinessException("预览文件失败");
         } finally {
             IoUtil.close(outputStream);
             IoUtil.close(inputStream);

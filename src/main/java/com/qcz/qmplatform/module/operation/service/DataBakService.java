@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.exception.CommonException;
+import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.CronUtils;
 import com.qcz.qmplatform.common.utils.DateUtils;
@@ -126,7 +126,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public ResponseResult<?> exeBackup(String bakRemark, String operator) {
         if (!SystemUtils.OS.isLinux()) {
-            throw new CommonException("非Linux环境不允许备份数据！");
+            throw new BusinessException("非Linux环境不允许备份数据！");
         }
         String dataBakPath = ConfigLoader.getDataBakPath();
         File file = new File(dataBakPath);

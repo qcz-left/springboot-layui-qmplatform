@@ -1,6 +1,6 @@
 package com.qcz.qmplatform.common.database;
 
-import com.qcz.qmplatform.common.exception.CommonException;
+import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 
@@ -32,7 +32,7 @@ public interface DBBackupRecovery {
     default String getRecoveryCmd(String database, String bakFilePath, String logPath) {
         String recoverSh = FileUtils.WEB_PATH + "/shell/db_bak_recover.sh";
         if (!new File(recoverSh).exists()) {
-            throw new CommonException("备份恢复所需脚本文件缺失！");
+            throw new BusinessException("备份恢复所需脚本文件缺失！");
         }
         return StringUtils.format("{} {} {} > {} 2>&1", recoverSh, bakFilePath, database, logPath);
     }

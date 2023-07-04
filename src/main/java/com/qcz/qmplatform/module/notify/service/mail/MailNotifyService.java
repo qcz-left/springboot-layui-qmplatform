@@ -2,7 +2,7 @@ package com.qcz.qmplatform.module.notify.service.mail;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.extra.mail.MailAccount;
-import com.qcz.qmplatform.common.exception.CommonException;
+import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.MailUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
@@ -39,7 +39,7 @@ public class MailNotifyService {
      */
     public void send(MailConfig mailConfig, MailParam mailParam) {
         if (StringUtils.isBlank(mailConfig.getHost())) {
-            throw new CommonException("未读取到邮件配置信息");
+            throw new BusinessException("未读取到邮件配置信息");
         }
 
         MailAccount mailAccount = new MailAccount();

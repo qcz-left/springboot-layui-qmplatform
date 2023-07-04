@@ -15,7 +15,7 @@ import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
-import com.qcz.qmplatform.common.exception.CommonException;
+import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -309,7 +309,7 @@ public class LoginController {
         com.aliyun.dingtalkoauth2_1_0.Client client = new com.aliyun.dingtalkoauth2_1_0.Client(getDingConfig());
         ThirdpartyApp thirdpartyApp = thirdpartyAppService.getByName("dingtalk-code");
         if (thirdpartyApp == null) {
-            throw new CommonException("钉钉扫码参数未设置，请联系系统管理员设置相应的参数！");
+            throw new BusinessException("钉钉扫码参数未设置，请联系系统管理员设置相应的参数！");
         }
         GetUserTokenRequest getUserTokenRequest = new GetUserTokenRequest()
                 .setClientId(thirdpartyApp.getAppKey())

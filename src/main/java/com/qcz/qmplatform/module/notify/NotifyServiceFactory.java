@@ -1,6 +1,6 @@
 package com.qcz.qmplatform.module.notify;
 
-import com.qcz.qmplatform.common.exception.CommonException;
+import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.SmsUtils;
 import com.qcz.qmplatform.module.notify.bean.SmsConfig;
 import com.qcz.qmplatform.module.notify.bean.SmsProvider;
@@ -15,7 +15,7 @@ public class NotifyServiceFactory {
             Class<? extends INotifyService> notifyServiceClass;
             if (clazz == null) {
                 if (smsProvider <= 0) {
-                    throw new CommonException("必须指定一个短信提供商！");
+                    throw new BusinessException("必须指定一个短信提供商！");
                 }
                 notifyServiceClass = SmsUtils.getNotifyServiceClass(SmsProvider.valueOf(smsProvider));
             } else {
