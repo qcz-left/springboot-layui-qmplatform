@@ -23,6 +23,7 @@ import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.notify.NotifyServiceFactory;
 import com.qcz.qmplatform.module.notify.bean.SmsConfig;
+import com.qcz.qmplatform.module.notify.bean.TemplateParam;
 import com.qcz.qmplatform.module.notify.bean.TemplateType;
 import com.qcz.qmplatform.module.notify.vo.SmsConfigVO;
 import com.qcz.qmplatform.module.system.domain.User;
@@ -295,7 +296,10 @@ public class UserController extends BaseController {
         config.setSecretKey(SecureUtils.aesDecrypt(smsConfigVO.getSecretKey()));
         config.setSign(smsConfigVO.getSign());
         config.setPhones(CollectionUtil.newArrayList(phone));
-        config.setTemplateID(smsConfigVO.getTemplateParams().get(TemplateType.VALIDATE_CODE.type()).getTemplateID());
+        // 短信模块参数
+        TemplateParam templateParam = smsConfigVO.getTemplateParams().get(TemplateType.VALIDATE_CODE.type());
+        config.setTemplateID(templateParam.getTemplateID());
+        config.setTemplateParamCnt(templateParam.getParamCnt());
         Map<String, String> templateParams = new HashMap<>();
         templateParams.put("1", validateCode);
         templateParams.put("2", String.valueOf(timeout));
