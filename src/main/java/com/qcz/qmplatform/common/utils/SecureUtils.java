@@ -71,6 +71,9 @@ public class SecureUtils {
      * @return 解密后的字符串
      */
     public static String aesDecrypt(String str) {
+        if (StringUtils.isBlank(str)) {
+            return StringUtils.EMPTY;
+        }
         return AES_INSTANCE.decryptStr(str);
     }
 

@@ -61,7 +61,7 @@ public class BaiduSmsNotifyService implements INotifyService {
         Map<String, Object> contentVar = new HashMap<>();
         int paramsSize = templateParamNames.size();
         if (paramsSize > 0) {
-            if (paramsSize != smsConfig.getTemplateParamCnt() - 1) {
+            if (paramsSize != smsConfig.getTemplateParamCnt()) {
                 LOGGER.warn("The number of template parameters does not match!");
             }
 
@@ -142,9 +142,7 @@ public class BaiduSmsNotifyService implements INotifyService {
             request.header("Authorization", authorizationHeader);
 
             if (bodyParams != null) {
-                request.getConnection().getOutputStream().write(JSONUtil.toJsonStr(bodyParams).getBytes());
-                request.getConnection().getOutputStream().flush();
-                request.getConnection().getOutputStream().close();
+                request.body(JSONUtil.toJsonStr(bodyParams));
             }
 
             HttpResponse response = request.execute();
