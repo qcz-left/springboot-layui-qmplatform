@@ -21,6 +21,8 @@ let ctx = "${requestContext.contextPath}";
             <link rel="stylesheet" href="${ctx}/static/error/error.css" />
             <#elseif item == "sparklines">
                 <script type="text/javascript" src="${ctx}/static/plugin/sparklines/jquery.sparkline.min.js"></script>
+            <#elseif item == "tinymce">
+                <script type="text/javascript" src="${ctx}/static/plugin/tinymce/tinymce.min.js"></script>
             <#elseif item == "jqgrid">
             <#--jqgrid-->
             <link rel="stylesheet" href="${ctx}/static/plugin/jqgrid/css/css/ui-lightness/jquery-ui-1.8.16.custom.css" />

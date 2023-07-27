@@ -66,39 +66,31 @@ layui.use(['table', 'form'], function () {
 
     function open(id) {
         id = id || '';
-        let layeditIndex;
         LayerUtil.openLayer({
             title: id ? "编辑记事本" : "添加记事本",
             content: baseUrl + "/detailPage?id=" + id,
             area: ['100%', '100%'],
             loaded: function (iframeWin) {
-                let form = iframeWin.layui.form;
-                let layedit = iframeWin.layui.layedit;
-                //建立编辑器
-                layeditIndex = layedit.build('content', {
-                    height: iframeWin.$("form").height() - 200
-                });
-                form.render();
-                form.verify({
-                    content: function () {
-                        layedit.sync(layeditIndex);
+                iframeWin.layui.use(['form'], function () {
+                    let form = iframeWin.layui.form;
+                    let tinymce = iframeWin.tinymce;
+
+                    if (id) {
+                        CommonUtil.getAjax(baseUrl + '/getOne/' + id, {}, function (result) {
+                            form.val('notepad-form', result.data);
+                            tinymce.get('content').setContent(result.data.content);
+                        })
                     }
                 });
-                if (id) {
-                    CommonUtil.getAjax(baseUrl + '/getOne/' + id, {}, function (result) {
-                        form.val('notepad-form', result.data);
-                        layedit.setContent(layeditIndex, result.data.content);
-                    })
-                }
             },
             submit: function (iframeWin) {
                 let form = iframeWin.layui.form;
-                let layedit = iframeWin.layui.layedit;
+                let tinymce = iframeWin.tinymce;
                 if (!form.doVerify(iframeWin.$("form"))) {
                     return false;
                 }
                 let params = form.val('notepad-form');
-                params.content = layedit.getContent(layeditIndex);
+                params.content = tinymce.get('content').getContent();
                 CommonUtil.postAjax(baseUrl + (id ? '/update' : '/insert'), params, function (result) {
                     layer.closeAll();
                     LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {

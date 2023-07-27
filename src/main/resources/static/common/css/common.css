@@ -65,6 +65,15 @@ html {
     color: green;
 }
 
+.layui-layer .layui-layer-title {
+    color: #fff;
+    background: #393D49;
+}
+
+.layui-layer .layui-layer-setwin .layui-icon {
+    color: #fff;
+}
+
 /* layui confirm皮肤扩展 */
 body .my-layer-danger .layui-layer-title {
     background: #FF5722;
@@ -199,4 +208,9 @@ body .layui-layer-iframe .layui-layer-btn- a {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+/* 隐藏tinycme富文本编辑器的广告按钮 */
+.tox-statusbar__branding {
+    display: none;
 }
