@@ -41,7 +41,7 @@ public class ResponseResult<T> {
         return new ResponseResult<>(ResponseCode.SUCCESS, msg, null);
     }
 
-    public static ResponseResult<?> ok() {
+    public static <T> ResponseResult<T> ok() {
         return new ResponseResult<>(ResponseCode.SUCCESS, null, null);
     }
 

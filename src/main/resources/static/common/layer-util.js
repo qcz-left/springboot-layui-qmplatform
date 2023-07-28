@@ -44,7 +44,7 @@ const LayerUtil = {
         if (options.loaded && typeof options.loaded == "function") {
             options.success = function (layerDom, index) {
                 let iframeWin = layerDom.find('iframe')[0].contentWindow;
-                options.loaded(iframeWin);
+                options.loaded(iframeWin, index);
             }
         }
         if (options.submit && typeof options.submit == "function") {
@@ -53,7 +53,7 @@ const LayerUtil = {
             }
             options.yes = function (index, layerDom) {
                 let iframeWin = layerDom.find('iframe')[0].contentWindow;
-                options.submit(iframeWin);
+                options.submit(iframeWin, index);
             }
         }
 

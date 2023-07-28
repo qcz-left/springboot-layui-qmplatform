@@ -15,6 +15,11 @@ public interface IniDefine {
      */
     String LOGIN_STRATEGY = "LoginStrategy";
 
+    /**
+     * 登录设置
+     */
+    String LOGIN_SETTING = "LoginSetting";
+
     interface DataBak {
         /**
          * 开启备份（0：关闭，1：开启）
@@ -48,5 +53,12 @@ public interface IniDefine {
          * 密码认证失败超过多少次时锁定账号
          */
         String LOCK_AT_ERROR_TIMES = "LockAtErrorTimes";
+    }
+
+    interface LoginSetting {
+        /**
+         * 其它登录方式
+         */
+        String OTHER_LOGIN_WAY = "otherLoginWay";
     }
 }

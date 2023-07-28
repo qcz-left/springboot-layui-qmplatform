@@ -66,6 +66,7 @@ html {
 }
 
 .layui-layer .layui-layer-title {
+    text-align: left;
     color: #fff;
     background: #393D49;
 }
@@ -204,13 +205,19 @@ body .layui-layer-iframe .layui-layer-btn- a {
 }
 
 .vh-center {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* 隐藏tinycme富文本编辑器的广告按钮 */
 .tox-statusbar__branding {
     display: none;
+}
+
+/* 禁用区域，不可点击 */
+.gray-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    color: #a9a9a9;
 }
