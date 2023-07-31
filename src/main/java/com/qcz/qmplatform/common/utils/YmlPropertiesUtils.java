@@ -24,6 +24,8 @@ public class YmlPropertiesUtils {
         List<ClassPathResource> classPathResources = new ArrayList<>();
         ClassPathResource appResources = new ClassPathResource("application.yml");
         classPathResources.add(appResources);
+
+        yamlPropertiesFactoryBean.setResources(appResources);
         Properties appProp = yamlPropertiesFactoryBean.getObject();
         if (appProp != null) {
             String activeProfiles = appProp.getProperty("spring.profiles.active");
