@@ -1,8 +1,11 @@
 package com.qcz.qmplatform.common.utils;
 
+import cn.hutool.core.util.ArrayUtil;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.ClassPathResource;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -18,16 +21,20 @@ public class YmlPropertiesUtils {
 
     static {
         YamlPropertiesFactoryBean yamlPropertiesFactoryBean = new YamlPropertiesFactoryBean();
+        List<ClassPathResource> classPathResources = new ArrayList<>();
         ClassPathResource appResources = new ClassPathResource("application.yml");
-        yamlPropertiesFactoryBean.setResources(appResources);
+        classPathResources.add(appResources);
         Properties appProp = yamlPropertiesFactoryBean.getObject();
         if (appProp != null) {
             String activeProfiles = appProp.getProperty("spring.profiles.active");
             if (StringUtils.isNotBlank(activeProfiles)) {
-                ClassPathResource activeResources = new ClassPathResource("application-" + activeProfiles + ".yml");
-                yamlPropertiesFactoryBean.setResources(appResources, activeResources);
+                for (String activeProfile : StringUtils.split(activeProfiles, ",")) {
+                    ClassPathResource activeResource = new ClassPathResource("application-" + activeProfile + ".yml");
+                    classPathResources.add(activeResource);
+                }
             }
         }
+        yamlPropertiesFactoryBean.setResources(ArrayUtil.toArray(classPathResources, ClassPathResource.class));
         YML_PROP = yamlPropertiesFactoryBean.getObject();
     }
 
