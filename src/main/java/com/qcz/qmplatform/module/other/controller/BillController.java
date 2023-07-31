@@ -59,7 +59,7 @@ public class BillController extends BaseController {
         return ResponseResult.ok(PageResultHelper.parseResult(billService.getList(bill)));
     }
 
-    @PostMapping("/noNeedLogin/selectTest")
+    @PostMapping("/nnl/selectTest")
     @ResponseBody
     public ResponseResult<?> selectTest(PageRequest pageRequest) {
         billService.selectTest();

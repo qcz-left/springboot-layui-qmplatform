@@ -40,7 +40,7 @@ layui.use(['form', 'layer'], function () {
     });
 
     $("#dingdingLogin").click(function () {
-        location.href = "https://login.dingtalk.com/oauth2/auth?client_id=" + dingTalkConfigAppKey + "&prompt=consent&response_type=code&scope=openid&state=STATE&redirect_uri=" + window.location.protocol + "//" + window.location.host + ctx + "/noNeedLogin/preScanCodeLoginCheck/dingtalk";
+        location.href = "https://login.dingtalk.com/oauth2/auth?client_id=" + dingTalkConfigAppKey + "&prompt=consent&response_type=code&scope=openid&state=STATE&redirect_uri=" + window.location.protocol + "//" + window.location.host + ctx + "/nnl/preScanCodeLoginCheck/dingtalk";
     });
 
     // 是否是绑定第三方账号页面
@@ -66,10 +66,10 @@ layui.use(['form', 'layer'], function () {
         }
         $("#user-login-code").attr("lay-verify", "required");
         form.render(null, 'validateCode');
-        $("#codeImg").attr("src", ctx + "/noNeedLogin/getLoginCode");
+        $("#codeImg").attr("src", ctx + "/nnl/getLoginCode");
     };
     $("#codeImg").click(function () {
-        $(this).attr("src", ctx + "/noNeedLogin/getLoginCode?v=" + new Date().getTime());
+        $(this).attr("src", ctx + "/nnl/getLoginCode?v=" + new Date().getTime());
     });
     form.on('submit(login)', function (data) {
         data.field.password = rsaEncrypt(data.field.password);

@@ -96,7 +96,7 @@ public class UserController extends BaseController {
     /**
      * 找回密码
      */
-    @GetMapping("/noNeedLogin/retrievePasswordPage")
+    @GetMapping("/nnl/retrievePasswordPage")
     public String retrievePasswordPage() {
         return "/module/system/retrievePassword";
     }
@@ -139,13 +139,13 @@ public class UserController extends BaseController {
         return ResponseResult.ok();
     }
 
-    @GetMapping("/noNeedLogin/queryUserByName")
+    @GetMapping("/nnl/queryUserByName")
     @ResponseBody
     public ResponseResult<UserVO> queryUserByName(String name) {
         return ResponseResult.ok(userService.queryUserByName(name));
     }
 
-    @GetMapping("/noNeedLogin/queryPhoneByName")
+    @GetMapping("/nnl/queryPhoneByName")
     @ResponseBody
     public ResponseResult<?> queryPhoneByName(String name) {
         UserVO userVO = userService.queryUserByName(name);
@@ -197,7 +197,7 @@ public class UserController extends BaseController {
         return ResponseResult.newInstance(userService.saveCurrentUserInfo(user));
     }
 
-    @PutMapping("/noNeedLogin/changeUserPwd")
+    @PutMapping("/nnl/changeUserPwd")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "找回密码")
     public ResponseResult<?> changeUserPwd(@Valid @RequestBody PasswordVO passwordVO) {
@@ -277,7 +277,7 @@ public class UserController extends BaseController {
     /**
      * 获取手机验证码
      */
-    @GetMapping("/noNeedLogin/getValidateCode")
+    @GetMapping("/nnl/getValidateCode")
     @ResponseBody
     public ResponseResult<?> getValidateCode(String phone) {
         Assert.notBlank(phone);

@@ -232,7 +232,7 @@ public class LoginController {
     /**
      * 获取登录的图形验证码
      */
-    @RequestMapping("/noNeedLogin/getLoginCode")
+    @RequestMapping("/nnl/getLoginCode")
     public void getLoginCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         RandomGenerator randomGenerator = new RandomGenerator("0123456789", 4);
         ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(100, 38);
@@ -251,7 +251,7 @@ public class LoginController {
      * @param thirdparty   第三方服务商
      * @param thirdpartyId 第三方系统账号唯一ID
      */
-    @RequestMapping("/noNeedLogin/bindingThirdpartyPage/{thirdparty}/{thirdpartyId}")
+    @RequestMapping("/nnl/bindingThirdpartyPage/{thirdparty}/{thirdpartyId}")
     public String bindingThirdpartyPage(@PathVariable("thirdparty") String thirdparty,
                                         @PathVariable("thirdpartyId") String thirdpartyId,
                                         Map<String, Object> root) {
@@ -267,13 +267,13 @@ public class LoginController {
      * @param authCode   Oauth2 临时授权码
      * @param thirdparty 第三方服务商
      */
-    @RequestMapping("/noNeedLogin/preScanCodeLoginCheck/{thirdparty}")
+    @RequestMapping("/nnl/preScanCodeLoginCheck/{thirdparty}")
     public String preScanCodeLoginCheck(String authCode, @PathVariable("thirdparty") String thirdparty) throws Exception {
         String unionId = getUserInfo(authCode).getUnionId();
         UserThirdparty userThirdparty = userThirdpartyService.getUserIdByThirdparty(unionId, Enum.valueOf(Thirdparty.class, thirdparty.toUpperCase()));
         if (userThirdparty == null) {
             // 不存在绑定记录，跳转至绑定记录页面
-            return "redirect:/noNeedLogin/bindingThirdpartyPage/" + thirdparty + "/" + unionId;
+            return "redirect:/nnl/bindingThirdpartyPage/" + thirdparty + "/" + unionId;
         }
 
         // 构造登录信息

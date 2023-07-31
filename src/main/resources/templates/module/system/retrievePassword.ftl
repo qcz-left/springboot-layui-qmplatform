@@ -148,7 +148,7 @@
          * 填写账号，确定下一步
          */
         form.on('submit(confirm-loginName)', function (data) {
-            CommonUtil.getAjax(ctx + '/user/noNeedLogin/queryPhoneByName', {
+            CommonUtil.getAjax(ctx + '/user/nnl/queryPhoneByName', {
                 name: data.field.loginName
             }, function (result) {
                 if (result.ok) {
@@ -170,7 +170,7 @@
             data.field.loginname = $("#loginName").val();
             data.field.newPassword = rsaEncrypt(data.field.newPassword);
             data.field.confirmNewPassword = rsaEncrypt(data.field.confirmNewPassword);
-            CommonUtil.putAjax(ctx + '/user/noNeedLogin/changeUserPwd', data.field, function (result) {
+            CommonUtil.putAjax(ctx + '/user/nnl/changeUserPwd', data.field, function (result) {
                 top.layer.close(index);
                 LayerUtil.respMsg(result, '修改密码成功，请重新登录验证', '修改密码失败', () => {
                     step.next('#stepForm');
@@ -190,7 +190,7 @@
         $("#btnCode").click(function () {
             let $this = $(this);
             let loading = layer.load(2);
-            CommonUtil.getAjax(ctx + '/user/noNeedLogin/getValidateCode', {
+            CommonUtil.getAjax(ctx + '/user/nnl/getValidateCode', {
                 phone: $("#phone").val()
             }, function (result) {
                 layer.close(loading);

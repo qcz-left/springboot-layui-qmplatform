@@ -55,7 +55,7 @@ CommonUtil.getAjax(ctx + '/operation/loginSetting/get', {}, function (result) {
                 <img id="codeImg" />
             </div>
             <div id="enableForgetPasswordDiv" class="layui-form-item hide">
-                <a href="${ctx}/user/noNeedLogin/retrievePasswordPage" class="layui-btn" style="color: #1760D7; background: unset; font-weight: bold; float: right;">忘记密码？</a>
+                <a href="${ctx}/user/nnl/retrievePasswordPage" class="layui-btn" style="color: #1760D7; background: unset; font-weight: bold; float: right;">忘记密码？</a>
             </div>
             <div class="layui-form-item">
                 <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login">登 入</button>

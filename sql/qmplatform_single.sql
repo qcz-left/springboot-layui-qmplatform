@@ -1461,7 +1461,7 @@ INSERT INTO "public"."sys_operate_log" VALUES ('d8051694-0b19-475e-9dd1-062042f7
 INSERT INTO "public"."sys_operate_log" VALUES ('66e5011e-b7f4-402a-a1b6-d032036cc624', 4, '用户管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-07 14:11:48.205', '/user/changeCurrentUserPwd', '修改当前用户密码', '127.0.0.1', 1, NULL);
 INSERT INTO "public"."sys_operate_log" VALUES ('66382cf3-fa64-4f27-994e-ad154391bc7c', 4, '用户管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-07 14:11:57.944', '/user/changeCurrentUserPwd', '修改当前用户密码', '127.0.0.1', 1, NULL);
 INSERT INTO "public"."sys_operate_log" VALUES ('7a8b02ee-0780-4c9a-982a-672e36493782', -1, '退出系统', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-07 14:12:22.199', '/logout', '系统管理员 退出了系统', '127.0.0.1', 1, NULL);
-INSERT INTO "public"."sys_operate_log" VALUES ('411d02ab-b63e-4db6-a5ad-ce946df76f3a', 0, NULL, NULL, NULL, '2021-01-07 14:48:01.092', '/user/noNeedLogin/getValidateCode', NULL, '127.0.0.1', 0, 'java.lang.NullPointerException:null
+INSERT INTO "public"."sys_operate_log" VALUES ('411d02ab-b63e-4db6-a5ad-ce946df76f3a', 0, NULL, NULL, NULL, '2021-01-07 14:48:01.092', '/user/nnl/getValidateCode', NULL, '127.0.0.1', 0, 'java.lang.NullPointerException:null
 	com.qcz.qmplatform.module.system.controller.UserController.getValidateCode(UserController.java:284)
 com.qcz.qmplatform.module.system.controller.UserController$$FastClassBySpringCGLIB$$6ac3e070.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
@@ -1472,7 +1472,7 @@ org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveM
 org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:88)
 com.qcz.qmplatform.common.aop.aspect.RequestAspect.requestAround(RequestAspect.java:51)
 sun.reflect.NativeMethodAcc');
-INSERT INTO "public"."sys_operate_log" VALUES ('f334f9e9-1e88-4895-aa8c-caa1b90f781e', 0, NULL, NULL, NULL, '2021-01-07 14:56:52.271', '/user/noNeedLogin/getValidateCode', NULL, '127.0.0.1', 0, 'java.lang.IllegalArgumentException:[Assertion failed] - this String argument must have text; it must not be null, empty, or blank
+INSERT INTO "public"."sys_operate_log" VALUES ('f334f9e9-1e88-4895-aa8c-caa1b90f781e', 0, NULL, NULL, NULL, '2021-01-07 14:56:52.271', '/user/nnl/getValidateCode', NULL, '127.0.0.1', 0, 'java.lang.IllegalArgumentException:[Assertion failed] - this String argument must have text; it must not be null, empty, or blank
 	cn.hutool.core.lang.Assert.notBlank(Assert.java:207)
 cn.hutool.core.lang.Assert.notBlank(Assert.java:225)
 com.qcz.qmplatform.module.system.controller.UserController.getValidateCode(UserController.java:284)
@@ -1485,9 +1485,9 @@ org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveM
 org.springframework.aop.aspectj.Meth');
 INSERT INTO "public"."sys_operate_log" VALUES ('01a6fea7-8184-4045-9333-9bcce82b6b1a', 1, '登录系统', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-07 15:08:48.506', '/login', '系统管理员 进入了系统', '127.0.0.1', 1, NULL);
 INSERT INTO "public"."sys_operate_log" VALUES ('767e8db4-bfd1-49a3-8ebd-3c371fefd22c', -1, '退出系统', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-07 15:10:45.18', '/logout', '系统管理员 退出了系统', '127.0.0.1', 1, NULL);
-INSERT INTO "public"."sys_operate_log" VALUES ('19a2220f-b155-43ed-b1a9-e9f8dc1d72bf', 4, '用户管理', NULL, NULL, '2021-01-07 16:15:01.088', '/user/noNeedLogin/changeUserPwd', '找回密码', '127.0.0.1', 1, NULL);
-INSERT INTO "public"."sys_operate_log" VALUES ('0e0d3fd0-9d1f-4ab2-afe3-1ebfc1161709', 4, '用户管理', NULL, NULL, '2021-01-07 16:17:53.306', '/user/noNeedLogin/changeUserPwd', '找回密码', '127.0.0.1', 1, NULL);
-INSERT INTO "public"."sys_operate_log" VALUES ('f7865be5-8e32-42c5-911f-4d4db0099efe', 4, '用户管理', NULL, NULL, '2021-01-07 16:22:15.588', '/user/noNeedLogin/changeUserPwd', '找回密码', '127.0.0.1', 1, NULL);
+INSERT INTO "public"."sys_operate_log" VALUES ('19a2220f-b155-43ed-b1a9-e9f8dc1d72bf', 4, '用户管理', NULL, NULL, '2021-01-07 16:15:01.088', '/user/nnl/changeUserPwd', '找回密码', '127.0.0.1', 1, NULL);
+INSERT INTO "public"."sys_operate_log" VALUES ('0e0d3fd0-9d1f-4ab2-afe3-1ebfc1161709', 4, '用户管理', NULL, NULL, '2021-01-07 16:17:53.306', '/user/nnl/changeUserPwd', '找回密码', '127.0.0.1', 1, NULL);
+INSERT INTO "public"."sys_operate_log" VALUES ('f7865be5-8e32-42c5-911f-4d4db0099efe', 4, '用户管理', NULL, NULL, '2021-01-07 16:22:15.588', '/user/nnl/changeUserPwd', '找回密码', '127.0.0.1', 1, NULL);
 INSERT INTO "public"."sys_operate_log" VALUES ('382c6e30-4cff-4ac5-a95b-76b4f3688430', 1, '登录系统', NULL, NULL, '2021-01-07 16:22:22.518', '/login', 'admin 尝试登录系统，但失败了', '127.0.0.1', 1, NULL);
 INSERT INTO "public"."sys_operate_log" VALUES ('ad30eab7-f7fd-450c-8c98-00d3c5751a85', 1, '登录系统', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-07 16:22:25.396', '/login', '系统管理员 进入了系统', '127.0.0.1', 1, NULL);
 INSERT INTO "public"."sys_operate_log" VALUES ('0f1bdad8-02b3-4432-a62d-298642eeebb0', 4, '用户管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-07 16:22:34.93', '/user/changeCurrentUserPwd', '修改当前用户密码', '127.0.0.1', 1, NULL);
