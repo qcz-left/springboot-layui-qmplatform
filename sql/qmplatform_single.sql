@@ -163,7 +163,7 @@ DROP TABLE IF EXISTS "public"."sys_ini";
 CREATE TABLE "public"."sys_ini" (
   "section" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
   "property" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-  "value" varchar(100) COLLATE "pg_catalog"."default"
+  "value" varchar(1024) COLLATE "pg_catalog"."default"
 )
 ;
 COMMENT ON COLUMN "public"."sys_ini"."section" IS '属性组';

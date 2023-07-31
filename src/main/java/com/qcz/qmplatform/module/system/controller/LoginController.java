@@ -21,6 +21,7 @@ import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.operation.service.LoginRecordService;
+import com.qcz.qmplatform.module.operation.service.LoginSettingService;
 import com.qcz.qmplatform.module.operation.vo.LoginStrategyVO;
 import com.qcz.qmplatform.module.system.assist.PermissionType;
 import com.qcz.qmplatform.module.system.assist.Thirdparty;
@@ -28,7 +29,6 @@ import com.qcz.qmplatform.module.system.domain.ThirdpartyApp;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.domain.UserThirdparty;
 import com.qcz.qmplatform.module.system.realm.CustomToken;
-import com.qcz.qmplatform.module.system.service.IniService;
 import com.qcz.qmplatform.module.system.service.MenuService;
 import com.qcz.qmplatform.module.system.service.MessageService;
 import com.qcz.qmplatform.module.system.service.ThirdpartyAppService;
@@ -75,13 +75,13 @@ public class LoginController {
     @Resource
     LoginRecordService loginRecordService;
     @Resource
-    IniService iniService;
-    @Resource
     UserService userService;
     @Resource
     UserThirdpartyService userThirdpartyService;
     @Resource
     ThirdpartyAppService thirdpartyAppService;
+    @Resource
+    LoginSettingService loginSettingService;
 
     @GetMapping("/")
     public String index(Map<String, Object> root) {
@@ -96,6 +96,7 @@ public class LoginController {
         root.put("maxTabs", ConfigLoader.getMaxTabs());
         root.put("messageCount", messageService.selectNoReadCount(userId));
         root.put("rsaPublicKey", ConfigLoader.getRsaPublicKey());
+        root.put("systemTitle", loginSettingService.get().getSystemChineseTitle());
         return "index";
     }
 
@@ -111,7 +112,7 @@ public class LoginController {
     public String loginPage(Map<String, Object> root) {
         root.put("rsaPublicKey", ConfigLoader.getRsaPublicKey());
         ThirdpartyApp dingTalkCode = thirdpartyAppService.getByName("dingtalk-code");
-        if (dingTalkCode != null && dingTalkCode.getStatus() == 1) {
+        if (dingTalkCode != null) {
             root.put("dingTalkConfigAppKey", dingTalkCode.getAppKey());
         }
         return "login";

@@ -21,7 +21,7 @@ layui.use(['form', 'table'], function () {
                 }
             },
             {field: 'appKey', title: '应用ID', width: '20%', sort: true},
-            {field: 'status', title: '状态', align: 'center', width: '20%', templet: '#status'},
+            // {field: 'status', title: '状态', align: 'center', width: '20%', templet: '#status'},
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
         ]]
     });

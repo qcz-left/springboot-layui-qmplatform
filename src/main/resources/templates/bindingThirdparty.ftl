@@ -6,7 +6,7 @@
     top.rsaPublicKey = "${rsaPublicKey!}";
 </script>
 <script type="text/javascript" src="${ctx}/static/login.js"></script>
-<title>完善信息-Qu管理平台</title>
+<title>完善信息</title>
 <style>
     #binding-tip {
         font-weight: 600;
@@ -25,10 +25,15 @@
     .iconfont {
         font-size: 40px;
     }
+
+    #login-form {
+        width: 50%;
+        margin: auto;
+    }
 </style>
-<body>
-<div class="user-login-main vh-center layui-row">
-    <div class="vh-center layui-col-md6">
+<body class="vh-center">
+<div class="user-login-main layui-row">
+    <div class="layui-col-md12">
         <div id="binding-tip">继续以完成第三方帐号绑定</div>
         <div id="pic-tip">
             <div class="layui-inline">

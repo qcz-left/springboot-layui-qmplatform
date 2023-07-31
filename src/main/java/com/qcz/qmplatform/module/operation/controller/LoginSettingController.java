@@ -34,12 +34,20 @@ public class LoginSettingController {
         return "/module/operation/loginSettingDetail";
     }
 
+    /**
+     * 获取登录设置信息
+     */
     @GetMapping("/get")
     @ResponseBody
     public ResponseResult<LoginSettingDTO> get() {
         return ResponseResult.ok(loginSettingService.get());
     }
 
+    /**
+     * 保存登录设置
+     *
+     * @param loginSettingDTO 登录设置参数
+     */
     @PostMapping("/save")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "保存登录设置")

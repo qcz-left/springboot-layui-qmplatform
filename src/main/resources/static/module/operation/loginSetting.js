@@ -20,8 +20,15 @@ layui.use(['form'], function () {
                     let tinymce = iframeWin.tinymce;
 
                     CommonUtil.getAjax(baseUrl + '/get', {}, function (result) {
-                        form.val('login-setting-form', result.data);
-                        tinymce.get('bottomInfo').setContent(result.data.bottomInfo);
+                        let data = result.data;
+
+                        if (data.otherLoginWay) {
+                            iframeWin.$.each(data.otherLoginWay.split(","), function (index, item) {
+                                iframeWin.$("[name^=otherLoginWay][value=" + item + "]").attr("checked", true);
+                            });
+                        }
+                        form.val('login-setting-form', data);
+                        tinymce.get('bottomInfo').setContent(data.bottomInfo);
                     })
                 })
             },
@@ -32,9 +39,15 @@ layui.use(['form'], function () {
                     return false;
                 }
                 let params = form.val('login-setting-form');
+                let otherLoginWayArray = [];
+                iframeWin.$("[name^=otherLoginWay]:checked").each(function () {
+                    otherLoginWayArray.push($(this).val());
+                });
+                params.otherLoginWay = CommonUtil.joinMulti(otherLoginWayArray, ",");
                 params.bottomInfo = tinymce.get('bottomInfo').getContent();
                 CommonUtil.postAjax(baseUrl + '/save', params, function (result) {
                     layer.close(index);
+                    reloadFrame();
                 });
             }
         });

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <#include "./include/include.ftl">
-<title>Qu管理平台</title>
+<title>${systemTitle}</title>
 <style>
     #main-tab-menu table {
         margin: unset;
@@ -15,7 +15,7 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">Qu管理平台</div>
+        <div class="layui-logo">${systemTitle}</div>
         <ul class="layui-nav layui-layout-right" lay-filter="personal">
             <img id="userImg" src="${ctx}${currentUser.photoPath!'/static/common/image/charon.png'}" class="layui-nav-img" layadmin-event>
             <li class="layui-nav-item">

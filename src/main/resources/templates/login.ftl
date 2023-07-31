@@ -7,7 +7,7 @@
     top.rsaPublicKey = "${rsaPublicKey!}";
 </script>
 <script type="text/javascript" src="${ctx}/static/login.js"></script>
-<title>Qu管理平台-登录</title>
+<title></title>
 <body class="vh-center">
 <#include "/include/loginInclude.ftl">
 </body>

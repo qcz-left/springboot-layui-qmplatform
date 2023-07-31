@@ -134,6 +134,10 @@ body {
 	font-size: 32px;
 }
 
-#dingdingLogin {
+#otherLoginWayContainer .iconfont {
 	cursor: pointer;
+}
+
+.layui-elem-field legend {
+	margin-left: unset;
 }

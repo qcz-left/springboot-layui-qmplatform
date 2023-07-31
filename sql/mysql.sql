@@ -121,7 +121,7 @@ DROP TABLE IF EXISTS sys_ini;
 CREATE TABLE sys_ini (
                          section varchar(100) NOT NULL COMMENT '属性组',
                          property varchar(100) NOT NULL COMMENT '属性名',
-                         value varchar(100) COMMENT '属性值'
+                         value varchar(1024) COMMENT '属性值'
 ) COMMENT='系统属性配置'
 ;
 

@@ -51,9 +51,10 @@ public class ThirdpartyApp implements Serializable {
     private String remark;
 
     /**
-     * 状态
+     * 状态（已废除）
      */
-    @TableField("status")
+    @Deprecated
+    @TableField(value = "status", exist = false)
     private int status;
 
 }
