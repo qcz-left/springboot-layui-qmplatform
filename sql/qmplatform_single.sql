@@ -178,6 +178,15 @@ INSERT INTO "public"."sys_ini" VALUES ('DataBak', 'EnableBak', '1');
 INSERT INTO "public"."sys_ini" VALUES ('DataBak', 'Period', '127');
 INSERT INTO "public"."sys_ini" VALUES ('DataBak', 'LimitDiskSpace', '20');
 INSERT INTO "public"."sys_ini" VALUES ('DataBak', 'SaveDays', '30');
+INSERT INTO public.sys_ini ("section", property, value) VALUES('LoginSetting', 'bottomInfo', '<p>&copy; 2023 <a href="https://github.com/qcz-left/springboot-layui-qmplatform" target="_blank" rel="noopener">GitHub</a></p>');
+INSERT INTO public.sys_ini ("section", property, value) VALUES('LoginSetting', 'accountLoginTitle', '账户登录');
+INSERT INTO public.sys_ini ("section", property, value) VALUES('LoginSetting', 'enableForgetPassword', '1');
+INSERT INTO public.sys_ini ("section", property, value) VALUES('LoginSetting', 'otherLoginWay', 'dingtalk-code,wechat-code');
+INSERT INTO public.sys_ini ("section", property, value) VALUES('LoginSetting', 'loginPageTitle', '登录管理平台');
+INSERT INTO public.sys_ini ("section", property, value) VALUES('LoginSetting', 'systemChineseTitle', 'QU管理平台');
+INSERT INTO public.sys_ini ("section", property, value) VALUES('LoginSetting', 'systemEnglishTitle', 'QUGUANLIPINGTAI');
+
+
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -230,6 +239,9 @@ INSERT INTO "public"."sys_menu" VALUES ('b7231a740a1e423a8fe8ef4e747d7584', '邮
 INSERT INTO "public"."sys_menu" VALUES ('5f5325d64aca4206a73ed6ac0768dcff', '记事本', 10, 'notepad', '', '/other/notepad/listPage', '', 1);
 INSERT INTO "public"."sys_menu" VALUES ('39a3c2aa2d6347b393bc74adf5c63313', '首页', -1, 'home', '', '/home', '', 1);
 INSERT INTO public.sys_menu VALUES('3e5f325b89484e6eacf9642f29116bfc', '制作数据', NULL, 'make-data', '', '/operation/make-data/page', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
+INSERT INTO public.sys_menu VALUES('649c1ac5bcc44ad085a3e1ee46f1d3c6', '登录设置', -1, 'login-setting', '', '/operation/loginSetting/index', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
+INSERT INTO public.sys_menu VALUES('d30538f4adc041f581f67baf819e9a96', '第三方应用参数', -1, 'thirdparty-app', '', '/system/thirdparty-app/thirdpartyAppListPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
+
 
 
 
@@ -1669,6 +1681,8 @@ INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4
 INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '3e5f325b89484e6eacf9642f29116bfc');
 INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'b555a066-c76d-4b8f-a834-4998cc000711');
 INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'e36040a7-f7cb-42f8-a55f-0a6f6e138958');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '649c1ac5bcc44ad085a3e1ee46f1d3c6');
+INSERT INTO public.sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'd30538f4adc041f581f67baf819e9a96');
 
 
 -- ----------------------------
