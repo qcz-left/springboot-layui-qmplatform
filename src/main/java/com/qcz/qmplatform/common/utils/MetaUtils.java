@@ -15,6 +15,7 @@ import java.sql.SQLException;
 public class MetaUtils extends MetaUtil {
 
     public static Table getTableMeta(Connection conn, String tableName) {
+        tableName = tableName.toLowerCase();
         final Table table = Table.create(tableName);
         ResultSet rs = null;
         try {
