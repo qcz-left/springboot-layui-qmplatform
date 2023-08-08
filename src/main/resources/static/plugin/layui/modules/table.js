@@ -295,7 +295,8 @@ layui.define(['lay', 'laytpl', 'laypage', 'form', 'util'], function(exports){
 
   // 初始默认配置
   Class.prototype.config = {
-    limit: 10, // 每页显示的数量
+    limit: 20, // 每页显示的数量
+    limits: [20, 100, 500, 1000],
     loading: true, // 请求数据时，是否显示 loading
     escape: true, // 是否开启 HTML 编码功能，即转义 html 原文
     cellMinWidth: 60, // 所有单元格默认最小宽度
