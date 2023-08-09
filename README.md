@@ -27,7 +27,7 @@
 后端：springboot+mybatis-plus+shiro<br/>
 前端：layui<br/>
 模板引擎：freemartker<br/>
-数据库：postgresql<br/>
+数据库：postgresql、mysql<br/>
 
 没什么高大上的东西，用来练手还是可以的
 
