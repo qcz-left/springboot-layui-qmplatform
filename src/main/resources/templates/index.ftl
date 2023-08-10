@@ -9,7 +9,7 @@
     }
 
     .hide {
-        display: none!important;
+        display: none !important;
     }
 </style>
 <body class="layui-layout-body">
@@ -54,11 +54,20 @@
     <div class="layui-body">
         <div class="layui-tab layui-tab-brief" lay-filter="main-tab" lay-stope="tabmore" lay-allowclose="true">
             <div id="main-tab-header">
-                <i id="collapseIcon" class="layui-icon layui-icon-shrink-right"></i>
-                <i id="expandIcon" class="layui-icon layui-icon-spread-left" style="display: none"></i>
+                <i id="collapseIcon" title="折叠菜单" class="layui-icon layui-icon-shrink-right"></i>
+                <i id="expandIcon" title="展开菜单" class="layui-icon layui-icon-spread-left" style="display: none"></i>
+                <span class="layui-font-gray">┋</span>
+                <span class="currentLocationContent">
+                    <span>当前位置：</span>
+                    <span id="currentLocation" class="layui-font-gray"></span>
+                </span>
             </div>
-            <ul id="main-tab-title" class="layui-tab-title">
+
+            <ul id="main-tab-title" class="layui-tab-title layui-inline">
             </ul>
+            <div class="refresh-btn-content layui-inline">
+                <i class="layui-icon layui-icon-refresh-3" title="刷新当前菜单页面" onclick="reloadFrame()" style="font-size: 30px;"></i>
+            </div>
             <div class="layui-tab-content">
             </div>
         </div>
@@ -87,6 +96,7 @@
 <link>
 <link rel="stylesheet" href="${ctx}/static/css/index.css" />
 <script>
+let menuTree = JSON.parse('${Json.toJsonStr(menuTree)}');
 top.rsaPublicKey = "${rsaPublicKey!}";
 layui.use(['element'], function () {
     let element = layui.element;
@@ -105,8 +115,10 @@ layui.use(['element'], function () {
         addTab(elem);
     });
     // 监听选项卡切换
-    element.on('tab(' + tabLayFilter + ')', function () {
+    element.on('tab(' + tabLayFilter + ')', function (data) {
         let layId = $(this).attr("lay-id");
+        let currentLocation = getFullMenuName(layId, " / ");
+        $("#currentLocation").text(currentLocation);
         $(".layui-side ." + classLayuiThis).removeClass(classLayuiThis);
         $(".layui-side a[lay-id=" + layId + "]").parent().addClass(classLayuiThis);
     });
@@ -307,6 +319,34 @@ layui.use(['element'], function () {
         }
     };
 });
+
+/**
+ * 获取完整的菜单名称
+ * @param menuId 菜单ID
+ * @param split 分隔符
+ */
+function getFullMenuName(menuId, split) {
+    return getMenuNameRecursive("", menuTree, menuId, split);
+}
+
+/**
+ * 递归的获取菜单名称
+ */
+function getMenuNameRecursive(pre, menuList, menuId, split) {
+    pre = (pre ? pre + split : pre);
+    for (let i = 0; i < menuList.length; i++) {
+        let menu = menuList[i];
+        if (menu.id === menuId) {
+            return pre + menu.name;
+        }
+        if (menu.hasChild) {
+            let menuName = getMenuNameRecursive(pre + menu.name, menu.childes, menuId, split);
+            if (menuName) {
+                return menuName;
+            }
+        }
+    }
+}
 </script>
 </body>
 </html>

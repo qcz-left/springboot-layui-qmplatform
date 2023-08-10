@@ -212,7 +212,7 @@ html {
 }
 
 #main-tab-header,#main-tab-title {
-    width: calc(100% - 20px);
+    width: calc(100% - 71px);
     border-bottom: 1px solid #eee;
     padding: 0 10px 0 10px;
     background: white;
@@ -221,4 +221,18 @@ html {
 #main-tab-header .layui-icon {
     line-height: 40px;
     cursor: pointer;
+}
+
+.refresh-btn-content {
+    float: right;
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.refresh-btn-content i {
+    cursor: pointer;
+}
+
+.currentLocationContent {
+    font-size: 12px;
 }
