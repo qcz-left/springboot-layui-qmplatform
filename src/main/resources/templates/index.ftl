@@ -118,7 +118,7 @@ layui.use(['element'], function () {
     element.on('tab(' + tabLayFilter + ')', function (data) {
         let layId = $(this).attr("lay-id");
         let currentLocation = getFullMenuName(layId, " / ");
-        $("#currentLocation").text(currentLocation);
+        $("#currentLocation").text(currentLocation || $(this).text());
         $(".layui-side ." + classLayuiThis).removeClass(classLayuiThis);
         $(".layui-side a[lay-id=" + layId + "]").parent().addClass(classLayuiThis);
     });
