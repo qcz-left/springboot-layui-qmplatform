@@ -34,19 +34,9 @@
 </div>
 </body>
 <script type="text/javascript">
-tinymce.init({
+EditorUtil.init({
     selector: '#content',
-    language: 'zh_CN',
-    height: '450px',
-    plugins: 'preview searchreplace autolink directionality visualchars fullscreen image link media code table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount emoticons',
-    toolbar: 'code forecolor backcolor bold italic underline strikethrough link anchor | \
-                alignleft aligncenter alignright indent2em lineheight | \
-                bullist numlist | blockquote subscript superscript removeformat | \
-                table image media bdmap emoticons charmap hr pagebreak insertdatetime \
-                | fullscreen',
-    fontsize_formats: '11px 12px 14px 16px 18px 24px 36px 48px',
-    menubar: false,
-    autosave_ask_before_unload: false
+    height: '450px'
 });
 </script>
 </html>
