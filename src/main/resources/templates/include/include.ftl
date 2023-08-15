@@ -39,5 +39,6 @@ let ctx = "${requestContext.contextPath}";
     <script type="text/javascript" src="${ctx}/static/common/common.js"></script>
     <script type="text/javascript" src="${ctx}/static/common/app.js"></script>
     <script type="text/javascript" src="${ctx}/static/common/layer-util.js"></script>
+    <script type="text/javascript" src="${ctx}/static/common/layui-search.js"></script>
     <script type="text/javascript" src="${ctx}/static/plugin/jsencrypt/jsencrypt.min.js"></script>
 </head>
