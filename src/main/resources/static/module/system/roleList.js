@@ -69,7 +69,7 @@ layui.use(['table'], function () {
         LayerUtil.openLayer({
             title: id ? "编辑角色" : "添加角色",
             content: ctx + "/role/roleDetailPage?id=" + id,
-            area: ['30%', '80%'],
+            area: ['30%', '40%'],
             loaded: function(iframeWin) {
                 let form = iframeWin.layui.form;
                 // 表单数据校验

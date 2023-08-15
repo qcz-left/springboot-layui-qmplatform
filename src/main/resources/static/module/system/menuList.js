@@ -65,7 +65,7 @@ layui.use(['treetable', 'table'], function () {
             type: 2,
             title: id ? "编辑菜单/按钮" : "添加菜单/按钮",
             content: ctx + "/menu/menuDetailPage?id=" + id,
-            area: ['30%', '80%']
+            area: ['30%', '60%']
         });
     }
 
