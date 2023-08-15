@@ -1,57 +1,38 @@
-layui.use(['table', 'form', 'laydate', 'xmSelect'], function () {
+layui.use(['table', 'form', 'laydate'], function () {
     let table = layui.table;
     let form = layui.form;
-    let laydate = layui.laydate;
-    let xmSelect = layui.xmSelect;
     let tableId = 'log-list-tab';
     let layFilter = 'log';
 
     let date = new Date();
     let yestDate = new Date(date.getTime() - 24 * 3600 * 1000).format('yyyy-MM-dd hh:mm:ss');
-    laydate.render({
-        elem: '#operateTimeStart',
-        type: 'datetime',
-        value: yestDate
-    });
-    laydate.render({
-        elem: '#operateTimeEnd',
-        type: 'datetime'
-    });
 
-    // 操作类型数据加载
-    let operateTypeSelect = xmSelect.render({
-        el: '#operateType',
-        name: 'operateType',
-        radio: true,
-        clickClose: true,
-        height: 'auto',
-        model: {icon: 'hidden'},
-        data: []
-    });
-    CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
+    let operateTypeData;
+    CommonUtil.getSync(ctx + '/operation/dict-attr/getDictAttrListByCode', {
         code: 'operate-type'
     }, function (result) {
-        operateTypeSelect.update({
-            data: result.data
-        })
+        operateTypeData = result.data
     });
 
-    // 操作状态数据加载
-    let operateStatusSelect = xmSelect.render({
-        el: '#operateStatus',
-        name: 'operateStatus',
-        radio: true,
-        clickClose: true,
-        height: 'auto',
-        model: {icon: 'hidden'},
-        data: []
-    });
-    CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
+    let operateStatusData;
+    CommonUtil.getSync(ctx + '/operation/dict-attr/getDictAttrListByCode', {
         code: 'operate-status'
     }, function (result) {
-        operateStatusSelect.update({
-            data: result.data
-        })
+        operateStatusData = result.data
+    });
+
+    $("#searchDiv").laySearch({
+        layFilter: "log-search",
+        data: [
+            {key: "operateUserName", label: "操作人", type: "text", placeholder: "根据操作人关键字搜索"},
+            {key: "description", label: "描述内容", type: "text"},
+            {key: "operateType", label: "操作类型", type: "select", values: operateTypeData},
+            {key: "operateStatus", label: "操作状态", type: "select", values: operateStatusData},
+            {key: "operateTime", label: "操作时间", type: "dateRanger", default: [yestDate]},
+        ],
+        doSearch: function () {
+            tableReload();
+        }
     });
 
     table.render({
@@ -99,11 +80,6 @@ layui.use(['table', 'form', 'laydate', 'xmSelect'], function () {
                 });
                 break;
         }
-    });
-
-    // 搜索
-    $("#btnSearch").click(function () {
-        tableReload();
     });
 
     window.tableReload = function () {
