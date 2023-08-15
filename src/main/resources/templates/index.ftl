@@ -56,7 +56,7 @@
             <div id="main-tab-header">
                 <i id="collapseIcon" title="折叠菜单" class="layui-icon layui-icon-shrink-right"></i>
                 <i id="expandIcon" title="展开菜单" class="layui-icon layui-icon-spread-left" style="display: none"></i>
-                <span class="layui-font-gray">┋</span>
+                <span class="layui-font-gray">&nbsp;&nbsp;</span>
                 <span class="currentLocationContent">
                     <span>当前位置：</span>
                     <span id="currentLocation" class="layui-font-gray"></span>
