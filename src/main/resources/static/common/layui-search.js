@@ -39,7 +39,7 @@ function ($) {
                 dataMap[key] = dataItem;
                 let label = dataItem.label;
 
-                optionHtml += '<option value="' + key + '" ' + (key === defaultDataSelected ? "selected" : "") + '>' + label + '</option>';
+                optionHtml += '<option value="' + key + '">' + label + '</option>';
             }
 
             /**
@@ -127,7 +127,7 @@ function ($) {
             let timeQueryHtml =
                 '       <div class="time-query layui-inline">' +
                 '           <div class="layui-input-inline" style="width: 100px;">' +
-                '               <select name="timeSelect" lay-filter="' + timeQueryLayFilter + '">' +
+                '               <select lay-filter="' + timeQueryLayFilter + '">' +
                 '                   <option value="today">今天</option>' +
                 '                   <option value="week">最近一周</option>' +
                 '                   <option value="month">最近一月</option>' +
@@ -165,14 +165,12 @@ function ($) {
 
             // 重新渲染选择搜索框
             form.render('select');
-            // 默认选择条件搜索
-            doSelectSearch(defaultDataSelected, $this.find(".layui-form-item:first select"));
-            form.val(layFilter, {
-                timeSelect: defaultTimeSelected
-            });
 
             if (timeQuery) {
+                // 默认选中时间查询项
+                $this.find(".time-query [lay-filter='" + timeQueryLayFilter + "']").val(defaultTimeSelected);
                 timeQueryEvent(defaultTimeSelected);
+
                 laydate.render({
                     elem: '[name=' + timeKey + 'Start]',
                     type: 'datetime'
@@ -182,6 +180,9 @@ function ($) {
                     type: 'datetime'
                 });
             }
+            // 默认选择条件搜索
+            $this.find(".search-where [lay-filter='" + selectLayFilter + "']").val(defaultDataSelected);
+            doSelectSearch(defaultDataSelected, $this.find(".layui-form-item:first select"));
 
             // 条件搜索选择框选择事件
             form.on('select(' + selectLayFilter + ')', function (data) {
