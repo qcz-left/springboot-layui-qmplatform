@@ -75,11 +75,11 @@ const LayerUtil = {
 
     tips: function (content, follow, options) {
         let tipIndex;
-        $(follow).mouseover(function () {
+        $(follow).mouseenter(function () {
             tipIndex = layer.tips(content, this, $.extend({
                 time: 0
             }, options));
-        }).mouseout(function () {
+        }).mouseleave(function () {
             layer.close(tipIndex);
         });
     }
