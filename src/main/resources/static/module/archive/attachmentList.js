@@ -20,11 +20,7 @@ layui.use(['table', 'form', 'element'], function () {
             {type: 'numbers'},
             {field: 'attachmentName', title: '文件名称', width: '20%', sort: true},
             {field: 'uploadUserName', title: '上传人', width: '10%', sort: true},
-            {
-                field: 'uploadTime', title: '上传时间', width: '15%', sort: true, templet: function (row) {
-                    return new Date(row.uploadTime).format('yyyy-MM-dd hh:mm:ss.S');
-                }
-            },
+            {field: 'uploadTime', title: '上传时间', width: '15%', sort: true},
             {
                 field: 'size', title: '文件大小', width: '10%', templet: function (row) {
                     return CommonUtil.convertByte(row.size);

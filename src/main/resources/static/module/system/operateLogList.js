@@ -5,7 +5,7 @@ layui.use(['table', 'form', 'laydate'], function () {
     let layFilter = 'log';
 
     let date = new Date();
-    let yestDate = new Date(date.getTime() - 24 * 3600 * 1000).format('yyyy-MM-dd hh:mm:ss');
+    let nowDate = DateUtil.getDate(date) + " 00:00:00";
 
     let operateTypeData;
     CommonUtil.getSync(ctx + '/operation/dict-attr/getDictAttrListByCode', {
@@ -24,12 +24,15 @@ layui.use(['table', 'form', 'laydate'], function () {
     $("#searchDiv").laySearch({
         layFilter: "log-search",
         data: [
-            {key: "operateUserName", label: "操作人", type: "text", placeholder: "根据操作人关键字搜索"},
-            {key: "description", label: "描述内容", type: "text"},
+            {key: "operateUserName", label: "操作人", type: "text", placeholder: "操作人关键字"},
+            {key: "description", label: "描述内容", type: "text", placeholder: "描述内容关键字"},
             {key: "operateType", label: "操作类型", type: "select", values: operateTypeData},
-            {key: "operateStatus", label: "操作状态", type: "select", values: operateStatusData},
-            {key: "operateTime", label: "操作时间", type: "dateRanger", default: [yestDate]},
+            {key: "operateStatus", label: "操作状态", type: "select", values: operateStatusData}
         ],
+        timeQuery: true,// 开启时间查询
+        timeKey: 'operateTime',
+        defaultTimeSelected: 'today',
+        defaultDataSelected: 'operateStatus',
         doSearch: function () {
             tableReload();
         }
@@ -41,7 +44,7 @@ layui.use(['table', 'form', 'laydate'], function () {
         url: ctx + '/operate-log/getLogList',
         page: true,
         where: {
-            operateTimeStart: yestDate
+            operateTimeStart: nowDate
         },
         orderName: 'operateTime',
         order: 'desc',
@@ -51,11 +54,7 @@ layui.use(['table', 'form', 'laydate'], function () {
             {field: 'operateUserName', title: '操作人', width: '10%', sort: true},
             {field: 'operateTypeName', title: '操作类型', width: '6%'},
             {field: 'ipAddr', title: '操作地址', width: '10%'},
-            {
-                field: 'operateTime', title: '操作时间', width: '15%', sort: true, templet: function (row) {
-                    return new Date(row.operateTime).format('yyyy-MM-dd hh:mm:ss.S');
-                }
-            },
+            {field: 'operateTime', title: '操作时间', width: '15%', sort: true},
             {field: 'requestUrl', title: '请求路径', width: '15%'},
             {field: 'description', title: '描述内容'},
             {

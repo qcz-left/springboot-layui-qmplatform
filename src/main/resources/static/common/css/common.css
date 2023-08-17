@@ -221,3 +221,12 @@ body .layui-layer-iframe .layui-layer-btn- a {
     opacity: 0.5;
     color: #a9a9a9;
 }
+
+.search-form .layui-form-label {
+    width: unset;
+}
+
+.search-form .input-content .layui-input {
+    width: 190px;
+}
+

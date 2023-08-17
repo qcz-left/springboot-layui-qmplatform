@@ -1,8 +1,10 @@
 package com.qcz.qmplatform.module.system.domain;
 
+import cn.hutool.core.date.DatePattern;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qcz.qmplatform.common.bean.DBProperties;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -48,12 +50,14 @@ public class Message implements Serializable {
      * 创建时间
      */
     @TableField("create_time")
+    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Timestamp createTime;
 
     /**
      * 上次更新时间
      */
     @TableField("last_update_time")
+    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Timestamp lastUpdateTime;
 
     /**

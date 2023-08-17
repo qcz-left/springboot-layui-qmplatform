@@ -17,16 +17,8 @@ layui.use(['table', 'form'], function () {
             {type: 'checkbox'},
             {field: 'typeName', title: '类型', width: '10%', sort: false},
             {field: 'content', title: '内容', width: '15%', sort: false},
-            {
-                field: 'createTime', title: '创建时间', width: '15%', templet: function (row) {
-                    return new Date(row.createTime).format('yyyy-MM-dd hh:mm:ss');
-                }
-            },
-            {
-                field: 'lastUpdateTime', title: '上次更新时间', width: '15%', templet: function (row) {
-                    return new Date(row.lastUpdateTime).format('yyyy-MM-dd hh:mm:ss');
-                }
-            },
+            {field: 'createTime', title: '创建时间', width: '15%'},
+            {field: 'lastUpdateTime', title: '上次更新时间', width: '15%'},
             {field: 'senderName', title: '发送人', width: '10%', sort: false},
             {
                 field: 'readed', title: '状态', width: '10%', templet: function (row) {

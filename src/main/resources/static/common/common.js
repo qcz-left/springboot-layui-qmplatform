@@ -428,3 +428,72 @@ const EditorUtil = {
         tinymce.init(config);
     }
 };
+
+const DateUtil = {
+
+    /**
+     * 获取年月日
+     * @param date 时间对象
+     */
+    getDate: function (date) {
+        date = date || new Date();
+        return date.format('yyyy-MM-dd');
+    },
+
+    /**
+     * 获取上一周
+     * @param date 时间对象
+     */
+    getLastWeek: function (date) {
+        return this.getBeforeDate(date, 7);
+    },
+
+    /**
+     * 获取 n 天前
+     * @param date 时间对象
+     * @param mount 数量
+     */
+    getBeforeDate: function (date, mount) {
+        date = date || new Date();
+        return new Date(date.getTime() - mount * 24 * 3600 * 1000).format('yyyy-MM-dd hh:mm:ss');
+    },
+
+    /**
+     * 获取上一个月
+     * @param date 时间对象
+     */
+    getLastMonth: function (date) {
+        return this.getBeforeMonth(date, 1);
+    },
+
+    /**
+     * 获取 n 个月前
+     * @param date 时间对象
+     * @param mount 数量
+     */
+    getBeforeMonth: function (date, mount) {
+        date = date || new Date();
+        date.setMonth(date.getMonth() - mount);
+        return date.format('yyyy-MM-dd hh:mm:ss');
+    },
+
+    /**
+     * 获取去年
+     * @param date 时间对象
+     */
+    getLastYear: function (date) {
+        date = date || new Date();
+        date.setMonth(date.getMonth() - 12);
+        return date.format('yyyy-MM-dd hh:mm:ss');
+    },
+
+    /**
+     * 格式化时间
+     * @param date 时间对象
+     * @param format 格式化样式
+     */
+    format: function (date, format) {
+        format = format || 'yyyy-MM-dd hh:mm:ss';
+        return date.format(format);
+    },
+};

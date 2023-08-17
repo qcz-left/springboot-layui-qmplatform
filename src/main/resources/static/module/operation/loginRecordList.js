@@ -17,11 +17,7 @@ layui.use(['table'], function () {
             {type: 'checkbox'},
             {field: 'loginName', title: '登录名', width: '20%', sort: true},
             {field: 'errorTimes', title: '登录错误次数', width: '10%', sort: true},
-            {
-                field: 'lastLoginTime', title: '最近登录时间', width: '15%', sort: true, templet: function (row) {
-                    return new Date(row.lastLoginTime).format('yyyy-MM-dd hh:mm:ss.S');
-                }
-            },
+            {field: 'lastLoginTime', title: '最近登录时间', width: '15%', sort: true},
             {field: 'lastLoginIp', title: '最近登录IP', width: '15%'},
             {field: 'remark', title: '备注', width: '15%'},
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}

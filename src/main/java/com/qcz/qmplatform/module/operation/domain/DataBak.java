@@ -1,8 +1,10 @@
 package com.qcz.qmplatform.module.operation.domain;
 
+import cn.hutool.core.date.DatePattern;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -44,6 +46,7 @@ public class DataBak implements Serializable {
      * 创建时间
      */
     @TableField("create_time")
+    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Timestamp createTime;
 
     /**

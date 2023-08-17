@@ -4,15 +4,32 @@
  */
 function ($) {
     $.extend($.fn, {
+        /**
+         * opt参数说明：<br>
+         * layFilter：from查询表单的lay-filter属性<br>
+         * data：查询过滤下拉列表<br>
+         * timeQuery：是否开启时间查询<br>
+         * timeKey：开启时间查询时传到后台的参数名<br>
+         * defaultTimeSelected：开启时间查询时默认选中的查询项<br>
+         * defaultDataSelected：条件过滤默认选中的项<br>
+         * doSearch：点击搜索按钮执行的回调函数<br>
+         * @param opt
+         */
         laySearch: function (opt) {
             let form = window.layui.form;
             let laydate = window.layui.laydate;
 
             let $this = this;
-            let data = opt.data || [];
             let layFilter = opt.layFilter;
+            let data = opt.data || [];
             let doSearchFun = opt.doSearch;
+            let timeQuery = (typeof opt.timeQuery === "boolean" && opt.timeQuery);
+            let timeKey = opt.timeKey;
+            let defaultTimeSelected = opt.defaultTimeSelected || 'today';
+            let defaultDataSelected = opt.defaultDataSelected || data[0].key;
+
             let selectLayFilter = $this.selector + "-select-filter";
+            let timeQueryLayFilter = $this.selector + "-timeQuery-filter";
 
             let dataMap = {};
             let optionHtml = '';
@@ -22,13 +39,13 @@ function ($) {
                 dataMap[key] = dataItem;
                 let label = dataItem.label;
 
-                optionHtml += '<option value="' + key + '" ' + (i === 0 ? "selected" : "") + '>' + label + '</option>';
+                optionHtml += '<option value="' + key + '" ' + (key === defaultDataSelected ? "selected" : "") + '>' + label + '</option>';
             }
 
             /**
              * 选择一个搜索条件
              */
-            let doSelectSearch = function (value) {
+            let doSelectSearch = function (value, selectDom) {
                 let item = dataMap[value];
                 let type = item.type;
                 let key = item.key;
@@ -62,7 +79,7 @@ function ($) {
                         '</div>';
                 }
 
-                $this.find(".input-content").html(inputHtml);
+                $(selectDom).parents(".search-where:first").find(".input-content").html(inputHtml);
 
                 if (type === "select") {
                     form.render('select');
@@ -78,24 +95,68 @@ function ($) {
                         value: defaultValue.length > 1 ? defaultValue[1] : ""
                     });
                 }
+
             }
 
-            $this.append('' +
-                '<div class="layui-form" lay-filter="' + layFilter + '">' +
-                '   <div class="layui-form-item">' +
+            /**
+             * 选择一个时间条件
+             */
+            let timeQueryEvent = function (value) {
+                let $timeSelectContent = $this.find(".time-select-content");
+                if (value === 'other') {
+                    $timeSelectContent.removeClass("hide");
+                    $timeSelectContent.find("[name^=" + timeKey + "]").val("");
+                } else {
+                    $timeSelectContent.addClass("hide");
+                }
+            }
+
+            let searchWhereHtml =
                 '       <div class="search-where layui-inline">' +
                 '           <label class="layui-form-label">在</label>' +
                 '           <div class="layui-input-inline">' +
-                '               <select class="layui-input-inline" lay-filter="' + selectLayFilter + '">' +
+                '               <select lay-filter="' + selectLayFilter + '">' +
                 optionHtml +
                 '               </select>' +
                 '           </div>' +
                 '           <label class="layui-form-label">中搜索</label>' +
                 '           <div class="layui-input-inline input-content" style="width: auto; max-height: 38px;">' +
                 '           </div>' +
-                '       </div>' +
+                '       </div>';
+
+            let timeQueryHtml =
+                '       <div class="time-query layui-inline">' +
+                '           <div class="layui-input-inline" style="width: 100px;">' +
+                '               <select name="timeSelect" lay-filter="' + timeQueryLayFilter + '">' +
+                '                   <option value="today">今天</option>' +
+                '                   <option value="week">最近一周</option>' +
+                '                   <option value="month">最近一月</option>' +
+                '                   <option value="threeMonth">最近三月</option>' +
+                '                   <option value="year">最近一年</option>' +
+                '                   <option value="other">其它时间</option>' +
+                '               </select>' +
+                '           </div>' +
+                '           <div class="layui-input-inline time-select-content hide" style="width: auto; max-height: 38px;">' +
+                '               <div class="layui-inline">' +
+                '                   <input type="text" class="layui-input" autocomplete="off" name="' + timeKey + 'Start">' +
+                '               </div>' +
+                '               <div class="layui-inline">' +
+                '                   -' +
+                '               </div>' +
+                '               <div class="layui-inline">' +
+                '                   <input type="text" class="layui-input" autocomplete="off" name="' + timeKey + 'End">' +
+                '               </div>' +
+                '           </div>' +
+                '           <label class="layui-form-label">的记录</label>' +
+                '       </div>';
+
+            $this.append('' +
+                '<div class="layui-form search-form" lay-filter="' + layFilter + '">' +
+                '   <div class="layui-form-item">' +
+                searchWhereHtml +
+                (timeQuery ? timeQueryHtml : '') +
                 '       <div class="searcher layui-inline">' +
-                '           <div class="layui-input-inline">' +
+                '           <div class="layui-btn-group">' +
                 '               <button type="button" class="layui-btn layui-btn-normal btn-search"><i class="layui-icon layui-icon-search"></i>搜索</button>' +
                 '           </div>' +
                 '       </div>' +
@@ -104,16 +165,54 @@ function ($) {
 
             // 重新渲染选择搜索框
             form.render('select');
-            // 默认选择第一个条件搜索
-            doSelectSearch(data[0].key);
-            // 条件搜索选择框选择事件
-            form.on('select(' + selectLayFilter + ')', function (data) {
-                doSelectSearch(data.value)
+            // 默认选择条件搜索
+            doSelectSearch(defaultDataSelected, $this.find(".layui-form-item:first select"));
+            form.val(layFilter, {
+                timeSelect: defaultTimeSelected
             });
 
-            $this.find(".layui-form-label").css("width", "unset");
+            if (timeQuery) {
+                timeQueryEvent(defaultTimeSelected);
+                laydate.render({
+                    elem: '[name=' + timeKey + 'Start]',
+                    type: 'datetime'
+                });
+                laydate.render({
+                    elem: '[name=' + timeKey + 'End]',
+                    type: 'datetime'
+                });
+            }
+
+            // 条件搜索选择框选择事件
+            form.on('select(' + selectLayFilter + ')', function (data) {
+                doSelectSearch(data.value, data.elem)
+            });
+
+            // 时间选择框选择事件
+            form.on('select(' + timeQueryLayFilter + ')', function (data) {
+                let value = data.value;
+                timeQueryEvent(value);
+            });
+
             // 点击搜索按钮事件
             $this.find(".btn-search").click(function () {
+                let timeSelect = form.val(layFilter).timeSelect;
+                if (timeQuery && timeSelect !== "other") {
+                    let nowDate = new Date();
+                    let timeStart = "";
+                    if (timeSelect === "today") {
+                        timeStart = DateUtil.getDate(nowDate) + " 00:00:00";
+                    } else if (timeSelect === "week") {
+                        timeStart = DateUtil.getLastWeek(nowDate);
+                    } else if (timeSelect === "month") {
+                        timeStart = DateUtil.getLastMonth(nowDate);
+                    } else if (timeSelect === "threeMonth") {
+                        timeStart = DateUtil.getBeforeMonth(nowDate, 3);
+                    } else if (timeSelect === "year") {
+                        timeStart = DateUtil.getLastYear(nowDate);
+                    }
+                    $this.find("[name=" + timeKey + "Start]").val(timeStart);
+                }
                 doSearchFun();
             });
         }

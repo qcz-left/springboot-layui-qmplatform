@@ -16,11 +16,7 @@ layui.use(['table', 'form'], function () {
         cols: [[
             {type: 'checkbox'},
             {field: 'title', title: '标题', width: '20%', sort: true},
-            {
-                field: 'createTime', title: '发布时间', width: '20%', sort: true, templet: function (row) {
-                    return new Date(row.createTime).format('yyyy-MM-dd hh:mm:ss.S');
-                }
-            },
+            {field: 'createTime', title: '发布时间', width: '20%', sort: true},
             {field: 'createUserName', title: '发布人', width: '20%'},
             {fixed: 'right', title: '操作', excel: false, align: 'center', templet: '#operator'}
         ]]
