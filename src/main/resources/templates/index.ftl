@@ -173,7 +173,7 @@ layui.use(['element'], function () {
         $layuiSide.find(".layui-nav-child").removeClass("hide");
 
         $layuiSide.find(".layui-nav-tree > li").each(function () {
-            $(this).mouseout().off('mouseover mouseout')
+            $(this).mouseout().off('mouseenter mouseleave')
         });
 
         $("#expandIcon").hide();
