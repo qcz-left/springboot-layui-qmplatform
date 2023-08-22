@@ -35,10 +35,12 @@ let ctx = "${requestContext.contextPath}";
     <!-- 自定义公共js库 -->
     <link rel="stylesheet" href="${ctx}/static/common/css/common.css" />
     <link rel="stylesheet" href="${ctx}/static/common/font/iconfont.css" />
+    <link rel="stylesheet" href="${ctx}/static/common/css/jq-steps.css" />
     <script type="text/javascript" src="${ctx}/static/common/constant.js"></script>
     <script type="text/javascript" src="${ctx}/static/common/common.js"></script>
     <script type="text/javascript" src="${ctx}/static/common/app.js"></script>
     <script type="text/javascript" src="${ctx}/static/common/layer-util.js"></script>
     <script type="text/javascript" src="${ctx}/static/common/layui-search.js"></script>
+    <script type="text/javascript" src="${ctx}/static/common/jq-steps.js"></script>
     <script type="text/javascript" src="${ctx}/static/plugin/jsencrypt/jsencrypt.min.js"></script>
 </head>

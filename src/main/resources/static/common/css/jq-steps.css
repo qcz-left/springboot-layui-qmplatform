@@ -1,0 +1,91 @@
+.step-circle-finished {
+    background-color: #16b777;
+    color: white;
+}
+
+.step-circle-process {
+    background-color: #16baaa;
+    color: white;
+}
+
+.step-circle-wait {
+    background-color: #F2F2F2;
+    color: #A4A4A4;
+}
+
+.step-circle {
+    width: 25px;
+    height: 25px;
+    border-radius: 50% 50% 50% 50%;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.step-circle .layui-icon {
+    font-size: 14px;
+}
+
+.steps {
+    margin: 10px;
+    height: calc(100% - 20px);
+    display: inline-flex;
+}
+
+.steps-vertical {
+    margin: 10px;
+    width: calc(100% - 20px);
+}
+
+.step-line-horizontal {
+    background: #E4E4E4;
+    width: 1px;
+    margin: 5px 12px 5px 12px;
+}
+
+.step-line-vertical {
+    background: #E4E4E4;
+    height: 1px;
+    margin: 12px 5px 12px 5px;
+}
+
+.steps-separator {
+    background: #E4E4E4;
+    width: 1px;
+    height: 100%;
+    margin: 0 0 0 20px;
+}
+
+.step-title {
+    margin: 5px;
+}
+
+.step-title-vertical {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+}
+
+.steps-content {
+    min-width: 200px;
+}
+
+.steps-form-content {
+    height: 100%;
+    width: 100%;
+    width: -moz-available; /* WebKit-based browsers will ignore this. */
+    width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+    width: fill-available;
+    padding: 0 10px 0 10px;
+}
+
+.steps-form-content .steps-form-item {
+    height: 100%;
+    position: relative;
+}
+
+.steps-item-vertical {
+    display: inline-flex;
+    margin-bottom: 26px;
+}
+

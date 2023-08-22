@@ -208,6 +208,7 @@ body .layui-layer-iframe .layui-layer-btn- a {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: auto;
 }
 
 /* 隐藏tinycme富文本编辑器的广告按钮 */
