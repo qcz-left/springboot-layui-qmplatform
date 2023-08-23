@@ -197,7 +197,7 @@ function ($) {
 
             // 点击搜索按钮事件
             $this.find(".btn-search").click(function () {
-                let timeSelect = form.val(layFilter).timeSelect;
+                let timeSelect = $this.find(".time-query [lay-filter='" + timeQueryLayFilter + "']").val();
                 if (timeQuery && timeSelect !== "other") {
                     let nowDate = new Date();
                     let timeStart = "";
