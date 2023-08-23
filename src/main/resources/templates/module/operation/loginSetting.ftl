@@ -32,7 +32,7 @@
     </button>
     <div class="layui-tab" lay-allowclose="true">
         <ul class="layui-tab-title">
-            <li class="layui-this" lay-id="1">登录系统</li>
+            <li id="loginPageTitle" class="layui-this" lay-id="1">登录系统</li>
         </ul>
         <div class="layui-tab-content vh-center">
             <#include "/include/loginInclude.ftl">

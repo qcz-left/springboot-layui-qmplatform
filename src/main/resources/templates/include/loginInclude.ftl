@@ -5,7 +5,7 @@ CommonUtil.getAjax(ctx + '/operation/loginSetting/get', {}, function (result) {
     $(".system-cn").text(data.systemChineseTitle);
     $(".system-en").text(data.systemEnglishTitle);
     $("#accountLoginTitle").text(data.accountLoginTitle);
-    $("title").text(data.loginPageTitle);
+    $("#loginPageTitle,title").text(data.loginPageTitle);
     $("#enableForgetPasswordDiv").toggle(data.enableForgetPassword === 1);
     if (data.otherLoginWay) {
         if (data.otherLoginWay.indexOf('dingtalk-code') !== -1) {
