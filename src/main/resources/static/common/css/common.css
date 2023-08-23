@@ -100,12 +100,14 @@ body .my-layer-warm .layui-layer-btn0 {
     border: none;
 }
 
-body .layui-layer .layui-layer-btn- {
+.layui-layer-iframe .layui-layer-btn-,
+.layui-layer-page .layui-layer-btn- {
     background: #f5f1f1;
     text-align: center;
 }
 
-body .layui-layer .layui-layer-btn- a {
+.layui-layer-iframe .layui-layer-btn- a,
+.layui-layer-page .layui-layer-btn- a{
     height: 36px;
     line-height: 36px;
     padding: 0 18px;
