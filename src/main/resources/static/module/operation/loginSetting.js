@@ -45,9 +45,12 @@ layui.use(['form'], function () {
                 });
                 params.otherLoginWay = CommonUtil.joinMulti(otherLoginWayArray, ",");
                 params.bottomInfo = tinymce.get('bottomInfo').getContent();
+                let saveIndex = layer.loadingWithText("正在保存...");
                 CommonUtil.postAjax(baseUrl + '/save', params, function (result) {
-                    layer.close(index);
-                    reloadFrame();
+                    layer.close(saveIndex);
+                    LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, function () {
+                        reloadFrame();
+                    });
                 });
             }
         });
