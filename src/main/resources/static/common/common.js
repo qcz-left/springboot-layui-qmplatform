@@ -497,3 +497,19 @@ const DateUtil = {
         return date.format(format);
     },
 };
+
+const TreeUtil = {
+    render: function (dtree, config) {
+        return dtree.render($.extend({
+            dataStyle: "layuiStyle",
+            skin: "laySimple",
+            record: true,
+            ficon: ["1", "8"],
+            spreadSelected: false,// 伸缩时是否选中状态
+            response: {
+                title: "name", //节点名称
+                childName: "childes" //子节点名称
+            }
+        }, config));
+    }
+};

@@ -23,18 +23,9 @@ layui.use(['dtree', 'table', 'form', 'element'], function () {
 
     buildData(orgData);
     // 树代码示例
-    let orgTree = dtree.render({
+    let orgTree = TreeUtil.render(dtree, {
         elem: "#orgTree",
         data: orgData,
-        dataStyle: "layuiStyle",
-        skin: "laySimple",
-        record: true,
-        ficon: "8",
-        spreadSelected: false,// 伸缩时是否选中状态
-        response: {
-            title: "name", //节点名称
-            childName: "childes" //子节点名称
-        },
         done: function () {
             dtree.click(orgTree, orgData[0].id);
         }
@@ -43,6 +34,15 @@ layui.use(['dtree', 'table', 'form', 'element'], function () {
     dtree.on("node('orgTree')", function (obj) {
         let param = obj.param;
         $("#orgContent").attr("src", "{0}?nodeId={1}&isDept={2}&context={3}".format(ctx + "/organization/orgDetailPage", param.nodeId, param.recordData.itype === 1, param.context));
+    });
+
+    $("#btnSearch").click(function () {
+        let inputName = $("input[name=inputName]").val();
+        orgTree.fuzzySearch(inputName);
+    });
+
+    CommonUtil.enterKeyEvent('[name="inputName"]', function () {
+        $("#btnSearch").click();
     });
 
     window.reloadEvent = function () {

@@ -11,8 +11,12 @@
 <body class="layui-fluid">
 <form class="layui-form" action="javascript:void(0);">
     <div class="layui-form-item">
-        <input type="text" name="username" autocomplete="off" class="layui-input layui-input-inline" placeholder="输入用户名查询">
-        <button id="btnSearch" class="layui-btn layui-btn-primary layui-inline"><i class="layui-icon layui-icon-search"></i></button>
+        <div class="layui-input-group">
+            <input type="text" name="username" autocomplete="off" class="layui-input" placeholder="输入用户名查询">
+            <div id="btnSearch" class="layui-input-split layui-input-suffix" style="cursor: pointer;">
+                <i class="layui-icon layui-icon-search"></i>
+            </div>
+        </div>
     </div>
 </form>
 <div id="orgTree"></div>
@@ -43,25 +47,21 @@ layui.use(['dtree'], function () {
 
     buildData(orgData);
 
-    let orgTree = dtree.render({
+    let orgTree = TreeUtil.render(dtree, {
         elem: "#orgTree",
-        data: orgData,
-        dataStyle: "layuiStyle",
-        skin: "laySimple",
-        record: true,
-        ficon: "8",
-        spreadSelected: false,// 伸缩时是否选中状态
-        response: {
-            title: "name", //节点名称
-            childName: "childes" //子节点名称
-        }
+        data: orgData
     });
 
     $("#btnSearch").click(function () {
         searchData();
     });
 
+    CommonUtil.enterKeyEvent('[name="username"]', function () {
+        searchData();
+    });
+
     let $username = $("input[name=username]");
+
     function searchData() {
         let username = $username.val();
         orgTree.fuzzySearch(username);
