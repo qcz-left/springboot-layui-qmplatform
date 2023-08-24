@@ -159,7 +159,7 @@
                 type: 2,
                 title: "添加用户",
                 content: ctx + "/user/userDetail?parentId=" + nodeId + "&parentName=" + context,
-                area: ['30%', '80%']
+                area: ['30%', '85%']
             });
         }
 

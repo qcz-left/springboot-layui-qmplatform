@@ -75,7 +75,7 @@
                 type: 2,
                 title: "添加部门",
                 content: ctx + "/organization/organizationDetailPage?parentId=" + nodeId + "&parentName=" + context,
-                area: ['30%', '80%']
+                area: ['30%', '50%']
             });
         }
 
