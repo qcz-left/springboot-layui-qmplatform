@@ -2,7 +2,7 @@
 <html lang="en">
 <#include "/include/include.ftl">
 <script type="text/javascript" src="${ctx}/static/module/system/orgManage.js"></script>
-<style>
+<style >
     body > div {
         height: 100%;
     }
@@ -30,7 +30,7 @@
     </form>
     <div id="orgTree"></div>
 </div>
-<div class="layui-col-xs10" style="height: calc(100% - 3px)">
+<div class="layui-col-xs10" style="height: 100%;">
     <iframe id="orgContent" name="orgContent" frameborder="0" style="width: 100%;height: 100%;"></iframe>
 </div>
 </body>
