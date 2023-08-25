@@ -29,6 +29,29 @@
                     <dd>
                         <a href="javascript:void(0);" lay-id="safe-setting" lay-href="${ctx}/user/safeSettingPage">安全设置</a>
                     </dd>
+                    <dd>
+                        <ul class="layui-menu" id="skinMenu" style="margin: 0;">
+                            <li class="layui-menu-item-parent">
+                                <div class="layui-menu-body-title">
+                                    一键换肤
+                                    <i class="layui-icon layui-icon-right"></i>
+                                </div>
+                                <div class="layui-panel layui-menu-body-panel">
+                                    <ul>
+                                        <li lay-options="{type: 'black'}">
+                                            <div class="layui-menu-body-title">商务黑</div>
+                                        </li>
+                                        <li lay-options="{type: 'blue'}">
+                                            <div class="layui-menu-body-title">科技蓝</div>
+                                        </li>
+                                        <li lay-options="{type: 'red'}">
+                                            <div class="layui-menu-body-title">烈焰红</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
@@ -42,7 +65,7 @@
             </li>
         </ul>
     </div>
-    <div class="layui-side layui-bg-black">
+    <div class="layui-side">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="menu-tree">
@@ -93,13 +116,14 @@
     </div>
 
 </div>
-<link>
 <link rel="stylesheet" href="${ctx}/static/css/index.css" />
 <script>
 let menuTree = JSON.parse('${Json.toJsonStr(menuTree)}');
 top.rsaPublicKey = "${rsaPublicKey!}";
-layui.use(['element'], function () {
+layui.use(['element', 'dropdown'], function () {
     let element = layui.element;
+    let dropdown = layui.dropdown;
+
     let tabLayFilter = 'main-tab';
     let classLayuiThis = 'layui-this';
     // 监听菜单导航点击
@@ -114,6 +138,13 @@ layui.use(['element'], function () {
     element.on('nav(personal)', function (elem) {
         addTab(elem);
     });
+
+    dropdown.on('click(skinMenu)', function (options) {
+        let type = options.type;
+        localStorage.setItem("skinType", type);
+        CommonUtil.changeSkin($, type);
+    });
+
     // 监听选项卡切换
     element.on('tab(' + tabLayFilter + ')', function (data) {
         let layId = $(this).attr("lay-id");
@@ -128,8 +159,8 @@ layui.use(['element'], function () {
         $(".layui-side a[lay-id=" + layId + "]").parent().removeClass(classLayuiThis);
     });
 
-    // 默认选中侧边栏第一个菜单
-    $(".layui-side a[lay-id]:first").click();
+    // 默认选中侧边栏第一个菜单，并自动展开父菜单
+    $(".layui-side a[lay-id]:first").click().parents("li.layui-nav-item").addClass("layui-nav-itemed");
 
     // 上传头像
     $("#userImg").click(function () {

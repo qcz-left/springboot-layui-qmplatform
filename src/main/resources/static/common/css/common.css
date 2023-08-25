@@ -107,7 +107,7 @@ body .my-layer-warm .layui-layer-btn0 {
 }
 
 .layui-layer-iframe .layui-layer-btn- a,
-.layui-layer-page .layui-layer-btn- a{
+.layui-layer-page .layui-layer-btn- a {
     height: 36px;
     line-height: 36px;
     padding: 0 18px;
@@ -233,3 +233,10 @@ body .my-layer-warm .layui-layer-btn0 {
     width: 190px;
 }
 
+.layui-header .layui-nav .layui-nav-child .layui-menu-body-title {
+    color: rgba(0, 0, 0, .8);
+}
+
+.layui-header .layui-menu .layui-menu-item-checked:after {
+    border-right: unset;
+}

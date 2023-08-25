@@ -406,6 +406,24 @@ const CommonUtil = {
                 fun();
             }
         });
+    },
+
+    /**
+     * 切换皮肤
+     * @param $jq jquery对象
+     * @param type 皮肤色（black: 黑；blue: 蓝）
+     */
+    changeSkin: function ($jq, type) {
+        type = type || "black";
+        if (!$jq) {
+            return;
+        }
+        $jq(".skinLink").html('<link rel="stylesheet" href="' + ctx + '/static/common/css/skin-' + type + '.css" />');
+        if ($jq("iframe").length > 0) {
+            $jq.each($jq("iframe"), function () {
+                CommonUtil.changeSkin(this.contentWindow.$, type);
+            });
+        }
     }
 };
 

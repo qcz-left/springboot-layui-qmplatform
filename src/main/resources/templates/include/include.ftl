@@ -44,3 +44,7 @@ let ctx = "${requestContext.contextPath}";
     <script type="text/javascript" src="${ctx}/static/common/jq-steps.js"></script>
     <script type="text/javascript" src="${ctx}/static/plugin/jsencrypt/jsencrypt.min.js"></script>
 </head>
+<div class="skinLink hide"></div>
+<script type="text/javascript">
+CommonUtil.changeSkin($, localStorage.getItem("skinType"));
+</script>

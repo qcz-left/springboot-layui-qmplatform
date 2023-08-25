@@ -1,0 +1,31 @@
+.layui-layout-admin .layui-header {
+    background: #004f89;
+}
+
+.layui-side, .layui-side .layui-nav,
+.layui-layer .layui-layer-title {
+    background-color: #005391 !important;
+}
+
+.layui-nav-tree .layui-this,
+.layui-nav-tree .layui-this > a,
+.layui-nav-tree .layui-this > a:hover,
+.layui-nav-tree .layui-nav-child dd.layui-this,
+.layui-nav-tree .layui-nav-child dd.layui-this a,
+.layui-nav-bar,
+.layui-nav .layui-this:after,
+.layui-nav-tree .layui-nav-bar,
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background-color: #01aaed;
+}
+
+.layui-layout-admin .layui-logo,
+.layui-tab-brief > .layui-tab-title .layui-this {
+    color: #01aaed;
+}
+
+.layui-tab-brief > .layui-tab-title .layui-this:after,
+.layui-tab-brief > .layui-tab-more li.layui-this:after {
+    border-bottom: 2px solid #01aaed;
+}
+
