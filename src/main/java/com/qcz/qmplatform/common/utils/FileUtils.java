@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.common.utils;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.ReflectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -76,11 +77,7 @@ public class FileUtils extends FileUtil {
     @SuppressWarnings("unchecked")
     public static <T> T readObjectFromFile(File file, Class<T> clazz) {
         if (!file.exists()) {
-            try {
-                return clazz.newInstance();
-            } catch (Exception e) {
-                LOGGER.error(null, e);
-            }
+            return ReflectUtil.newInstance(clazz);
         }
         FileInputStream fis = null;
         ObjectInputStream ois = null;
@@ -94,7 +91,7 @@ public class FileUtils extends FileUtil {
             CloseUtils.close(ois);
             CloseUtils.close(fis);
         }
-        return null;
+        return ReflectUtil.newInstance(clazz);
     }
 
     public static <T> T readObjectFromFile(InputStream inputStream, Class<T> clazz) {
@@ -107,7 +104,7 @@ public class FileUtils extends FileUtil {
         } finally {
             CloseUtils.close(ois);
         }
-        return null;
+        return ReflectUtil.newInstance(clazz);
     }
 
     public static Object readObjectFromFile(String filePath) {
@@ -134,7 +131,7 @@ public class FileUtils extends FileUtil {
             CloseUtils.close(ois);
             CloseUtils.close(fis);
         }
-        return null;
+        return new Object();
     }
 
     /**
