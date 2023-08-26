@@ -48,7 +48,11 @@
     <select id="queryUserList" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
         select
             su.*,
-            coalesce(string_agg( so.organization_name, ',' ), '') as organization_name,
+            coalesce(
+                <if test="_databaseId == 'mysql'">group_concat(so.organization_name)</if>
+                <if test="_databaseId == 'pg'">string_agg(so.organization_name, ',' )</if>
+                , ''
+            ) as organization_name,
             va1.attr_name as userSexName,
             va2.attr_name as lockedName
         from
