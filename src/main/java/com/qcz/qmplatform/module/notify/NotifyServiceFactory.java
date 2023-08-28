@@ -2,8 +2,8 @@ package com.qcz.qmplatform.module.notify;
 
 import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.SmsUtils;
-import com.qcz.qmplatform.module.notify.bean.SmsConfig;
-import com.qcz.qmplatform.module.notify.bean.SmsProvider;
+import com.qcz.qmplatform.module.notify.domain.pojo.SmsConfig;
+import com.qcz.qmplatform.module.notify.domain.pojo.SmsProvider;
 import com.qcz.qmplatform.module.notify.service.INotifyService;
 
 public class NotifyServiceFactory {

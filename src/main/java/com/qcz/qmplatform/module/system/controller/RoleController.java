@@ -13,7 +13,7 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.domain.Role;
 import com.qcz.qmplatform.module.system.service.RoleService;
-import com.qcz.qmplatform.module.system.vo.RolePermissionVO;
+import com.qcz.qmplatform.module.system.domain.vo.RolePermissionVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;

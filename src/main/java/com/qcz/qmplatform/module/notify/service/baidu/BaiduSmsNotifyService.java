@@ -6,7 +6,7 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.http.Method;
 import cn.hutool.json.JSONUtil;
 import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.module.notify.bean.SmsConfig;
+import com.qcz.qmplatform.module.notify.domain.pojo.SmsConfig;
 import com.qcz.qmplatform.module.notify.service.INotifyService;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;

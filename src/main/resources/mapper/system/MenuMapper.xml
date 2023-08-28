@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qcz.qmplatform.module.system.mapper.MenuMapper">
 
-    <select id="selectMenuTree" resultType="com.qcz.qmplatform.module.system.pojo.MenuTree">
+    <select id="selectMenuTree" resultType="com.qcz.qmplatform.module.system.domain.pojo.MenuTree">
         select
             permission_id as id,
             permission_name as name,
@@ -33,7 +33,7 @@
         order by iorder
     </select>
 
-    <select id="getPermissionByIds" resultType="com.qcz.qmplatform.module.system.pojo.Permission">
+    <select id="getPermissionByIds" resultType="com.qcz.qmplatform.module.system.domain.pojo.Permission">
         select
             permission_id,
             permission_name,

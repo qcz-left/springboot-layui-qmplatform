@@ -7,8 +7,8 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
 import com.qcz.qmplatform.module.other.domain.BillType;
 import com.qcz.qmplatform.module.other.mapper.BillTypeMapper;
-import com.qcz.qmplatform.module.other.pojo.BillTypeTree;
-import com.qcz.qmplatform.module.other.qo.BillTypeQO;
+import com.qcz.qmplatform.module.other.domain.pojo.BillTypeTree;
+import com.qcz.qmplatform.module.other.domain.qo.BillTypeQO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

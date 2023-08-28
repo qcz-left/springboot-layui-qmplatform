@@ -3,8 +3,8 @@ package com.qcz.qmplatform.module.system.service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.module.system.domain.OperateLog;
 import com.qcz.qmplatform.module.system.mapper.OperateLogMapper;
-import com.qcz.qmplatform.module.system.vo.OperateLogTimeVO;
-import com.qcz.qmplatform.module.system.vo.OperateLogVO;
+import com.qcz.qmplatform.module.system.domain.vo.OperateLogTimeVO;
+import com.qcz.qmplatform.module.system.domain.vo.OperateLogVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -17,7 +17,7 @@
         ${alias}.photo_path
     </sql>
 
-    <select id="queryUserByName" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
+    <select id="queryUserByName" resultType="com.qcz.qmplatform.module.system.domain.vo.UserVO">
         select
         <include refid="userColumns"><property name="alias" value="su"/></include>
         from sys_user su
@@ -45,7 +45,7 @@
                   )
     </select>
 
-    <select id="queryUserList" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
+    <select id="queryUserList" resultType="com.qcz.qmplatform.module.system.domain.vo.UserVO">
         select
             su.*,
             coalesce(
@@ -90,7 +90,7 @@
             lockedname
     </select>
 
-    <select id="queryByRoleSign" resultType="com.qcz.qmplatform.module.system.vo.UserVO">
+    <select id="queryByRoleSign" resultType="com.qcz.qmplatform.module.system.domain.vo.UserVO">
         select
         <include refid="userColumns"><property name="alias" value="su"/></include>
         from

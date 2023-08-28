@@ -16,7 +16,7 @@ import com.qcz.qmplatform.module.system.domain.OperateLog;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.mapper.OperateLogMapper;
 import com.qcz.qmplatform.module.system.service.UserService;
-import com.qcz.qmplatform.module.system.vo.PasswordVO;
+import com.qcz.qmplatform.module.system.domain.vo.PasswordVO;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;

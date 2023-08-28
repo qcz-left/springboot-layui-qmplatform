@@ -28,10 +28,10 @@ import com.qcz.qmplatform.module.system.domain.UserRole;
 import com.qcz.qmplatform.module.system.mapper.UserMapper;
 import com.qcz.qmplatform.module.system.mapper.UserOrganizationMapper;
 import com.qcz.qmplatform.module.system.mapper.UserRoleMapper;
-import com.qcz.qmplatform.module.system.qo.UserQO;
-import com.qcz.qmplatform.module.system.vo.CurrentUserInfoVO;
-import com.qcz.qmplatform.module.system.vo.PasswordVO;
-import com.qcz.qmplatform.module.system.vo.UserVO;
+import com.qcz.qmplatform.module.system.domain.qo.UserQO;
+import com.qcz.qmplatform.module.system.domain.vo.CurrentUserInfoVO;
+import com.qcz.qmplatform.module.system.domain.vo.PasswordVO;
+import com.qcz.qmplatform.module.system.domain.vo.UserVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

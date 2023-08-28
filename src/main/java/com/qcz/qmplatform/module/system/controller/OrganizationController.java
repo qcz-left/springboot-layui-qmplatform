@@ -9,7 +9,7 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.domain.Organization;
-import com.qcz.qmplatform.module.system.pojo.OrgTree;
+import com.qcz.qmplatform.module.system.domain.pojo.OrgTree;
 import com.qcz.qmplatform.module.system.service.OrganizationService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;

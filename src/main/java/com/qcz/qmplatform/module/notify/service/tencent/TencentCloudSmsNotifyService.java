@@ -2,7 +2,7 @@ package com.qcz.qmplatform.module.notify.service.tencent;
 
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
-import com.qcz.qmplatform.module.notify.bean.SmsConfig;
+import com.qcz.qmplatform.module.notify.domain.pojo.SmsConfig;
 import com.qcz.qmplatform.module.notify.service.INotifyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

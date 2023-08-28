@@ -3,7 +3,7 @@ package com.qcz.qmplatform.module.notify.service.huawei;
 import cn.hutool.json.JSONUtil;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.module.notify.bean.SmsConfig;
+import com.qcz.qmplatform.module.notify.domain.pojo.SmsConfig;
 import com.qcz.qmplatform.module.notify.service.INotifyService;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;

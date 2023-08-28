@@ -1,10 +1,6 @@
 package com.qcz.qmplatform.module.system.service;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.map.MapUtil;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -12,10 +8,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.module.system.assist.MessageReceiver;
+import com.qcz.qmplatform.module.system.domain.assist.MessageReceiver;
 import com.qcz.qmplatform.module.system.domain.Message;
 import com.qcz.qmplatform.module.system.mapper.MessageMapper;
-import com.qcz.qmplatform.module.system.vo.MessageVO;
+import com.qcz.qmplatform.module.system.domain.vo.MessageVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

@@ -4,7 +4,7 @@ import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.module.operation.dto.LoginSettingDTO;
+import com.qcz.qmplatform.module.operation.domain.dto.LoginSettingDTO;
 import com.qcz.qmplatform.module.operation.service.LoginSettingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;

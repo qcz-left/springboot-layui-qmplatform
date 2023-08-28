@@ -2,7 +2,7 @@ package com.qcz.qmplatform.module.other.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qcz.qmplatform.module.other.domain.Notepad;
-import com.qcz.qmplatform.module.other.vo.NotepadVO;
+import com.qcz.qmplatform.module.other.domain.vo.NotepadVO;
 
 import java.util.List;
 

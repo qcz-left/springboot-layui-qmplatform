@@ -2,9 +2,9 @@ package com.qcz.qmplatform.module.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qcz.qmplatform.module.system.domain.Menu;
-import com.qcz.qmplatform.module.system.pojo.MenuTree;
-import com.qcz.qmplatform.module.system.pojo.Permission;
-import com.qcz.qmplatform.module.system.vo.PermissionVO;
+import com.qcz.qmplatform.module.system.domain.pojo.MenuTree;
+import com.qcz.qmplatform.module.system.domain.pojo.Permission;
+import com.qcz.qmplatform.module.system.domain.vo.PermissionVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -6,7 +6,7 @@ import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.other.domain.Notepad;
 import com.qcz.qmplatform.module.other.mapper.NotepadMapper;
-import com.qcz.qmplatform.module.other.vo.NotepadVO;
+import com.qcz.qmplatform.module.other.domain.vo.NotepadVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

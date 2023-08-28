@@ -1,6 +1,6 @@
 package com.qcz.qmplatform.common.utils;
 
-import com.qcz.qmplatform.module.notify.bean.SmsProvider;
+import com.qcz.qmplatform.module.notify.domain.pojo.SmsProvider;
 import com.qcz.qmplatform.module.notify.service.INotifyService;
 import com.qcz.qmplatform.module.notify.service.ali.AliyunSmsNotifyService;
 import com.qcz.qmplatform.module.notify.service.baidu.BaiduSmsNotifyService;

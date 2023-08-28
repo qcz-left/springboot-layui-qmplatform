@@ -2,7 +2,7 @@ package com.qcz.qmplatform.module.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qcz.qmplatform.module.system.domain.Message;
-import com.qcz.qmplatform.module.system.vo.MessageVO;
+import com.qcz.qmplatform.module.system.domain.vo.MessageVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

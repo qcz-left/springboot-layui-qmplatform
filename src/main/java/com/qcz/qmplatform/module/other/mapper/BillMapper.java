@@ -2,8 +2,8 @@ package com.qcz.qmplatform.module.other.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qcz.qmplatform.module.other.domain.Bill;
-import com.qcz.qmplatform.module.other.qo.BillQO;
-import com.qcz.qmplatform.module.other.vo.BillVO;
+import com.qcz.qmplatform.module.other.domain.qo.BillQO;
+import com.qcz.qmplatform.module.other.domain.vo.BillVO;
 import org.apache.ibatis.annotations.MapKey;
 
 import java.util.List;

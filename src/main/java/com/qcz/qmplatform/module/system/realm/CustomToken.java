@@ -1,6 +1,6 @@
 package com.qcz.qmplatform.module.system.realm;
 
-import com.qcz.qmplatform.module.system.assist.LoginType;
+import com.qcz.qmplatform.module.system.domain.assist.LoginType;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
 /**

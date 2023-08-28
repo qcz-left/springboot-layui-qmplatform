@@ -3,7 +3,7 @@ package com.qcz.qmplatform.module.operation.controller;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.SystemUtils;
 import com.qcz.qmplatform.module.base.BaseController;
-import com.qcz.qmplatform.module.operation.pojo.ServerInfo;
+import com.qcz.qmplatform.module.operation.domain.pojo.ServerInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

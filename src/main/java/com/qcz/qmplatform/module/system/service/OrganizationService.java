@@ -8,11 +8,10 @@ import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
-import com.qcz.qmplatform.module.system.domain.Menu;
 import com.qcz.qmplatform.module.system.domain.Organization;
 import com.qcz.qmplatform.module.system.domain.UserOrganization;
 import com.qcz.qmplatform.module.system.mapper.OrganizationMapper;
-import com.qcz.qmplatform.module.system.pojo.OrgTree;
+import com.qcz.qmplatform.module.system.domain.pojo.OrgTree;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

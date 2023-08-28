@@ -2,8 +2,8 @@ package com.qcz.qmplatform.module.operation.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.module.operation.dto.LoginSettingDTO;
-import com.qcz.qmplatform.module.system.assist.IniDefine;
+import com.qcz.qmplatform.module.operation.domain.dto.LoginSettingDTO;
+import com.qcz.qmplatform.module.system.domain.assist.IniDefine;
 import com.qcz.qmplatform.module.system.domain.Ini;
 import com.qcz.qmplatform.module.system.service.IniService;
 import org.springframework.stereotype.Service;

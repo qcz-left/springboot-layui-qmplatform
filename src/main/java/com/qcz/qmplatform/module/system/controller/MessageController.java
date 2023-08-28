@@ -13,7 +13,7 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.sync.DBChangeCenter;
 import com.qcz.qmplatform.module.system.domain.Message;
 import com.qcz.qmplatform.module.system.service.MessageService;
-import com.qcz.qmplatform.module.system.vo.MessageVO;
+import com.qcz.qmplatform.module.system.domain.vo.MessageVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;

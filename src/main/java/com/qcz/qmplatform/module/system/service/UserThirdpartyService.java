@@ -3,7 +3,7 @@ package com.qcz.qmplatform.module.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qcz.qmplatform.module.system.assist.Thirdparty;
+import com.qcz.qmplatform.module.system.domain.assist.Thirdparty;
 import com.qcz.qmplatform.module.system.domain.UserThirdparty;
 import com.qcz.qmplatform.module.system.mapper.UserThirdpartyMapper;
 import org.springframework.stereotype.Service;

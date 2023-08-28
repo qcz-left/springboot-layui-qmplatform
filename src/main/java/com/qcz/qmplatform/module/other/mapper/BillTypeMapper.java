@@ -2,8 +2,8 @@ package com.qcz.qmplatform.module.other.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qcz.qmplatform.module.other.domain.BillType;
-import com.qcz.qmplatform.module.other.pojo.BillTypeTree;
-import com.qcz.qmplatform.module.other.qo.BillTypeQO;
+import com.qcz.qmplatform.module.other.domain.pojo.BillTypeTree;
+import com.qcz.qmplatform.module.other.domain.qo.BillTypeQO;
 
 import java.util.List;
 

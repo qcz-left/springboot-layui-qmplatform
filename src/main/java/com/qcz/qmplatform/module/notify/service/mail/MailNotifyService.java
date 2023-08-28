@@ -7,8 +7,8 @@ import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.MailUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.module.notify.bean.MailConfig;
-import com.qcz.qmplatform.module.notify.bean.MailParam;
+import com.qcz.qmplatform.module.notify.domain.pojo.MailConfig;
+import com.qcz.qmplatform.module.notify.domain.pojo.MailParam;
 import org.springframework.stereotype.Service;
 
 import java.io.File;

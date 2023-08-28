@@ -2,8 +2,8 @@ package com.qcz.qmplatform.module.system.mapper;
 
 import com.qcz.qmplatform.module.system.domain.OperateLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.qcz.qmplatform.module.system.vo.OperateLogTimeVO;
-import com.qcz.qmplatform.module.system.vo.OperateLogVO;
+import com.qcz.qmplatform.module.system.domain.vo.OperateLogTimeVO;
+import com.qcz.qmplatform.module.system.domain.vo.OperateLogVO;
 
 import java.util.List;
 

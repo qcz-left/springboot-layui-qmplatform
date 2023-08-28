@@ -12,7 +12,7 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.other.domain.Notepad;
 import com.qcz.qmplatform.module.other.service.NotepadService;
-import com.qcz.qmplatform.module.other.vo.NotepadVO;
+import com.qcz.qmplatform.module.other.domain.vo.NotepadVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

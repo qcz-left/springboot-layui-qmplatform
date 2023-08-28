@@ -1455,7 +1455,7 @@ INSERT INTO sys_operate_log VALUES ('55f587be-de58-4914-9cf8-254e34d17b20', -1, 
 INSERT INTO sys_operate_log VALUES ('b8d2ccd4-6626-48be-95c7-e882ffd70900', 1, '登录系统', '6b663de3-e983-4c8a-b900-dc0b66b2a801', '屈长忠', '2021-01-08 15:06:05.084', '/login', '屈长忠 进入了系统', '127.0.0.1', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('73e648d8-3910-4947-b229-cafd7438d195', 1, '登录系统', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-13 14:53:46.472', '/login', '系统管理员 进入了系统', '127.0.0.1', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('a8a26e15-fa02-4626-a9e6-3762b3df2bcb', 1, '登录系统', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-19 13:46:33.324', '/login', '系统管理员 进入了系统', '127.0.0.1', 1, NULL);
-INSERT INTO sys_operate_log VALUES ('ddb9f6e8-4817-4eff-94b3-64c09b3349ce', 0, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-19 13:46:37.534', '/notify/getSmsConfig', NULL, '127.0.0.1', 0, 'java.lang.ClassCastException:com.qcz.qmplatform.module.notify.bean.SmsConfig cannot be cast to com.qcz.qmplatform.module.notify.vo.SmsConfigVO
+INSERT INTO sys_operate_log VALUES ('ddb9f6e8-4817-4eff-94b3-64c09b3349ce', 0, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-19 13:46:37.534', '/notify/getSmsConfig', NULL, '127.0.0.1', 0, 'java.lang.ClassCastException:com.qcz.qmplatform.module.notify.domain.bean.SmsConfig cannot be cast to com.qcz.qmplatform.module.notify.domain.vo.SmsConfigVO
 	com.qcz.qmplatform.module.notify.controller.NotifyController.getSmsConfig(NotifyController.java:43)
 com.qcz.qmplatform.module.notify.controller.NotifyController$$FastClassBySpringCGLIB$$eac69a48.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)

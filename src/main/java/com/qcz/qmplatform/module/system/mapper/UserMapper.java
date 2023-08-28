@@ -2,8 +2,8 @@ package com.qcz.qmplatform.module.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qcz.qmplatform.module.system.domain.User;
-import com.qcz.qmplatform.module.system.qo.UserQO;
-import com.qcz.qmplatform.module.system.vo.UserVO;
+import com.qcz.qmplatform.module.system.domain.qo.UserQO;
+import com.qcz.qmplatform.module.system.domain.vo.UserVO;
 
 import java.util.List;
 

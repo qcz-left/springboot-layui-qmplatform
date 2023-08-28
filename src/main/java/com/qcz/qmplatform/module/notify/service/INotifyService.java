@@ -1,6 +1,6 @@
 package com.qcz.qmplatform.module.notify.service;
 
-import com.qcz.qmplatform.module.notify.bean.SmsConfig;
+import com.qcz.qmplatform.module.notify.domain.pojo.SmsConfig;
 
 /**
  * 通知服务

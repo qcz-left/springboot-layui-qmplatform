@@ -12,7 +12,7 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.operation.domain.LoginRecord;
 import com.qcz.qmplatform.module.operation.service.LoginRecordService;
-import com.qcz.qmplatform.module.operation.vo.LoginStrategyVO;
+import com.qcz.qmplatform.module.operation.domain.vo.LoginStrategyVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
