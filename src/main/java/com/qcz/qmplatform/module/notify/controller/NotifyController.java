@@ -70,7 +70,7 @@ public class NotifyController {
     @PostMapping("/saveSmsConfig")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改短信配置信息")
-    public ResponseResult<?> saveSmsConfig(@RequestBody SmsConfigVO smsConfigVO) {
+    public ResponseResult<Void> saveSmsConfig(@RequestBody SmsConfigVO smsConfigVO) {
         String secretKey = smsConfigVO.getSecretKey();
         String encSecretKey;
         if (SecureUtils.passwordChanged(secretKey)) {
@@ -95,7 +95,7 @@ public class NotifyController {
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改邮箱配置信息")
     @RequiresPermissions(PrivCode.BTN_CODE_MAIL_CONFIG_SAVE)
-    public ResponseResult<?> saveMailConfig(@RequestBody MailConfig mailConfig) {
+    public ResponseResult<Void> saveMailConfig(@RequestBody MailConfig mailConfig) {
         String senderPwd = mailConfig.getSenderPwd();
         String encSenderPwd;
         if (SecureUtils.passwordChanged(senderPwd)) {
@@ -111,7 +111,7 @@ public class NotifyController {
     @PostMapping("/sendMail")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "发送邮件")
-    public ResponseResult<?> sendMail(@RequestBody MailParam mailParam) {
+    public ResponseResult<Void> sendMail(@RequestBody MailParam mailParam) {
         mailNotifyService.send(mailParam);
         return ResponseResult.ok();
     }
@@ -119,7 +119,7 @@ public class NotifyController {
     @PostMapping("/testSendMail")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "测试发送邮件")
-    public ResponseResult<?> testSendMail(@RequestBody TestMailVO testMailVO) {
+    public ResponseResult<Void> testSendMail(@RequestBody TestMailVO testMailVO) {
         MailConfig mailConfig = testMailVO.getMailConfig();
         if (!SecureUtils.passwordChanged(mailConfig.getSenderPwd())) {
             String encSenderPwd = FileUtils.readObjectFromFile(MailUtils.DAT_MAIL_CONFIG, MailConfig.class).getSenderPwd();

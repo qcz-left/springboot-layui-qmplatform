@@ -37,24 +37,22 @@ import java.util.List;
 @Module("记事本")
 public class NotepadController extends BaseController {
 
-    private static final String PREFIX = "/module/other/";
-
     @Resource
     NotepadService notepadService;
 
     @GetMapping("/detailPage")
     public String detailPage() {
-        return PREFIX + "notepadDetail";
+        return "/module/other/notepadDetail";
     }
 
     @GetMapping("/listPage")
     public String listPage() {
-        return PREFIX + "notepadList";
+        return "/module/other/notepadList";
     }
 
     @PostMapping("/list")
     @ResponseBody
-    public ResponseResult<PageResult> list(PageRequest pageRequest, NotepadVO notepadVO) {
+    public ResponseResult<PageResult<Notepad>> list(PageRequest pageRequest, NotepadVO notepadVO) {
         PageResultHelper.startPage(pageRequest.getPage(), pageRequest.getLimit());
         List<Notepad> notepadList = notepadService.getList(notepadVO);
         return ResponseResult.ok(PageResultHelper.parseResult(notepadList));
@@ -69,21 +67,21 @@ public class NotepadController extends BaseController {
     @PostMapping("/insert")
     @ResponseBody
     @RecordLog(type = OperateType.INSERT, description = "添加记事本")
-    public ResponseResult<?> insert(@RequestBody Notepad notepad) {
+    public ResponseResult<Void> insert(@RequestBody Notepad notepad) {
         return ResponseResult.newInstance(notepadService.saveOne(notepad));
     }
 
     @PostMapping("/update")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "编辑记事本")
-    public ResponseResult<?> update(@RequestBody Notepad notepad) {
+    public ResponseResult<Void> update(@RequestBody Notepad notepad) {
         return ResponseResult.newInstance(notepadService.updateOne(notepad));
     }
 
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除记事本")
-    public ResponseResult<?> delete(String ids) {
+    public ResponseResult<Void> delete(String ids) {
         return ResponseResult.newInstance(notepadService.removeByIds(StringUtils.split(ids, ',')));
     }
 

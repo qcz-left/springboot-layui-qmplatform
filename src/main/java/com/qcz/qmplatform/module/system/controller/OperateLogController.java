@@ -8,6 +8,7 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.system.service.OperateLogService;
 import com.qcz.qmplatform.module.system.vo.OperateLogTimeVO;
+import com.qcz.qmplatform.module.system.vo.OperateLogVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,19 +29,17 @@ import javax.annotation.Resource;
 @RequestMapping("/operate-log")
 public class OperateLogController extends BaseController {
 
-    private static final String PREFIX = "/module/system/";
-
     @Resource
     private OperateLogService operateLogService;
 
     @GetMapping("/logListPage")
     public String logListPage() {
-        return PREFIX + "operateLogList";
+        return "/module/system/operateLogList";
     }
 
     @PostMapping("/getLogList")
     @ResponseBody
-    public ResponseResult<PageResult> getLogList(PageRequest pageRequest, OperateLogTimeVO operateLogTimeVO) {
+    public ResponseResult<PageResult<OperateLogVO>> getLogList(PageRequest pageRequest, OperateLogTimeVO operateLogTimeVO) {
         PageResultHelper.startPage(pageRequest);
         return ResponseResult.ok(PageResultHelper.parseResult(operateLogService.queryOperateLogList(operateLogTimeVO)));
     }

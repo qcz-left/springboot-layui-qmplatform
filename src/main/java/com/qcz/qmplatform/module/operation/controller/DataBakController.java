@@ -46,8 +46,6 @@ import java.util.Map;
 @Module("数据备份与恢复")
 public class DataBakController extends BaseController {
 
-    private static final String PREFIX = "/module/operation/";
-
     /**
      * sys_ini配置属性组
      */
@@ -61,17 +59,17 @@ public class DataBakController extends BaseController {
 
     @GetMapping("/dataBakListPage")
     public String dataBakListPage() {
-        return PREFIX + "dataBakList";
+        return "/module/operation/dataBakList";
     }
 
     @GetMapping("/dataBakStrategyPage")
     public String dataBakStrategyPage() {
-        return PREFIX + "dataBakStrategy";
+        return "/module/operation/dataBakStrategy";
     }
 
     @PostMapping("/getDataBakList")
     @ResponseBody
-    public ResponseResult<PageResult> getDataBakList(PageRequest pageRequest, DataBakVO dataBakVO) {
+    public ResponseResult<PageResult<DataBak>> getDataBakList(PageRequest pageRequest, DataBakVO dataBakVO) {
         PageResultHelper.startPage(pageRequest);
         LambdaQueryWrapper<DataBak> queryWrapper = Wrappers.lambdaQuery(DataBak.class)
                 .like(StringUtils.isNotBlank(dataBakVO.getBakName()), DataBak::getBakName, dataBakVO.getBakName());
@@ -111,7 +109,7 @@ public class DataBakController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_STRATEGY_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "调整数据备份策略")
-    public ResponseResult<?> saveDataBakStrategy(@RequestBody DataBakStrategyVO dataBakStrategyVO) {
+    public ResponseResult<Void> saveDataBakStrategy(@RequestBody DataBakStrategyVO dataBakStrategyVO) {
         return ResponseResult.newInstance(dataBakService.saveDataBakStrategy(dataBakStrategyVO));
     }
 
@@ -122,7 +120,7 @@ public class DataBakController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "立即备份")
-    public ResponseResult<?> exeBackup(@RequestBody DataBak dataBak) {
+    public ResponseResult<Void> exeBackup(@RequestBody DataBak dataBak) {
         return dataBakService.exeBackup(dataBak.getRemark(), SubjectUtils.getUserId());
     }
 
@@ -132,7 +130,7 @@ public class DataBakController extends BaseController {
     @PostMapping("/recoverDataBak/{dataBakId}")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_RECOVER)
-    public ResponseResult<?> recoverDataBak(@PathVariable String dataBakId) {
+    public ResponseResult<Map<String, String>> recoverDataBak(@PathVariable String dataBakId) {
         return dataBakService.recoverDataBak(dataBakId);
     }
 
@@ -140,7 +138,7 @@ public class DataBakController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除备份")
-    public ResponseResult<?> deleteDataBak(String dataBakIds) {
+    public ResponseResult<Void> deleteDataBak(String dataBakIds) {
         return ResponseResult.newInstance(dataBakService.deleteDataBak(StringUtils.split(dataBakIds, ',')));
     }
 }

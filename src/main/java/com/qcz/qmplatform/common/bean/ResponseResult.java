@@ -37,11 +37,11 @@ public class ResponseResult<T> {
         return new ResponseResult<>(ResponseCode.SUCCESS, null, data);
     }
 
-    public static ResponseResult<?> ok(String msg) {
+    public static ResponseResult<Void> ok(String msg) {
         return new ResponseResult<>(ResponseCode.SUCCESS, msg, null);
     }
 
-    public static <T> ResponseResult<T> ok() {
+    public static ResponseResult<Void> ok() {
         return new ResponseResult<>(ResponseCode.SUCCESS, null, null);
     }
 
@@ -49,7 +49,7 @@ public class ResponseResult<T> {
         return new ResponseResult<>(ResponseCode.ERROR, msg, data);
     }
 
-    public static ResponseResult<?> error(String msg) {
+    public static ResponseResult<Void> error(String msg) {
         return new ResponseResult<>(ResponseCode.ERROR, msg, null);
     }
 
@@ -57,11 +57,11 @@ public class ResponseResult<T> {
         return new ResponseResult<>(ResponseCode.ERROR, null, data);
     }
 
-    public static ResponseResult<?> error() {
+    public static ResponseResult<Void> error() {
         return new ResponseResult<>(ResponseCode.ERROR, null, null);
     }
 
-    public static ResponseResult<?> newInstance(boolean success) {
+    public static ResponseResult<Void> newInstance(boolean success) {
         return new ResponseResult<>(success ? ResponseCode.SUCCESS : ResponseCode.ERROR, null, null);
     }
 

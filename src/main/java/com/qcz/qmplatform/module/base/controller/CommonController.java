@@ -112,7 +112,7 @@ public class CommonController extends BaseController {
      */
     @DeleteMapping("/deleteFile")
     @ResponseBody
-    public ResponseResult<?> deleteFile(String filePath) {
+    public ResponseResult<Void> deleteFile(String filePath) {
         validateFile(filePath);
         FileUtils.del(FileUtils.getRealFilePath(filePath));
         return ResponseResult.ok();
@@ -123,7 +123,7 @@ public class CommonController extends BaseController {
      */
     @RequestMapping("/generateExportFile")
     @ResponseBody
-    public ResponseResult<?> generateExportFile(@RequestBody ExportParamVO exportParam, HttpServletRequest request) {
+    public ResponseResult<String> generateExportFile(@RequestBody ExportParamVO exportParam, HttpServletRequest request) {
         String tmpFilePath;
         try {
             ExcelWriter writer = ExcelUtil.getWriter();
@@ -175,7 +175,7 @@ public class CommonController extends BaseController {
      */
     @PostMapping("/generateTemplate")
     @ResponseBody
-    public ResponseResult<?> generateTemplate(@RequestBody ExcelTemplateVO templateVO) {
+    public ResponseResult<String> generateTemplate(@RequestBody ExcelTemplateVO templateVO) {
         ExcelWriter writer = ExcelUtil.getWriter();
         setExcel(writer, templateVO.getColNames());
 

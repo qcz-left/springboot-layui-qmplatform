@@ -41,19 +41,18 @@ import java.util.Map;
 @Module("字典管理")
 public class DictAttrController extends BaseController {
 
-    private static final String PATH_PREFIX = "/module/operation/";
 
     @Resource
     private DictAttrService dictAttrService;
 
     @GetMapping("/dictAttrListPage")
     public String dictAttrListPage() {
-        return PATH_PREFIX + "dictAttrList";
+        return "/module/operation/dictAttrList";
     }
 
     @GetMapping("/dictAttrDetailPage")
     public String dictAttrDetailPage() {
-        return PATH_PREFIX + "dictAttrDetail";
+        return "/module/operation/dictAttrDetail";
     }
 
     /**
@@ -63,7 +62,7 @@ public class DictAttrController extends BaseController {
      */
     @PostMapping("/getDictAttrList/{dictId}")
     @ResponseBody
-    public ResponseResult<PageResult> getDictList(PageRequest pageRequest, @PathVariable String dictId) {
+    public ResponseResult<PageResult<DictAttr>> getDictList(PageRequest pageRequest, @PathVariable String dictId) {
         PageResultHelper.startPage(pageRequest);
         return ResponseResult.ok(PageResultHelper.parseResult(dictAttrService.getDictAttrList(dictId)));
     }
@@ -86,7 +85,7 @@ public class DictAttrController extends BaseController {
      */
     @GetMapping("/validateAttrValue")
     @ResponseBody
-    public ResponseResult<?> validateAttrValue(DictAttr dictAttr) {
+    public ResponseResult<Void> validateAttrValue(DictAttr dictAttr) {
         return ResponseResult.newInstance(dictAttrService.validateAttrValue(dictAttr));
     }
 
@@ -110,7 +109,7 @@ public class DictAttrController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_ATTR_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增字典属性")
-    public ResponseResult<?> addDictAttr(@RequestBody DictAttr dictAttr) {
+    public ResponseResult<Void> addDictAttr(@RequestBody DictAttr dictAttr) {
         return ResponseResult.newInstance(dictAttrService.addDictAttrOne(dictAttr));
     }
 
@@ -123,7 +122,7 @@ public class DictAttrController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_ATTR_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改字典属性")
-    public ResponseResult<?> updateDictAttr(@RequestBody DictAttr dictAttr) {
+    public ResponseResult<Void> updateDictAttr(@RequestBody DictAttr dictAttr) {
         return ResponseResult.newInstance(dictAttrService.updateDictAttrOne(dictAttr));
     }
 
@@ -136,7 +135,7 @@ public class DictAttrController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_ATTR_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除字典属性")
-    public ResponseResult<?> deleteDictAttr(String attrIds) {
+    public ResponseResult<Void> deleteDictAttr(String attrIds) {
         return ResponseResult.newInstance(dictAttrService.deleteDictAttr(StringUtils.split(attrIds, ',')));
     }
 }

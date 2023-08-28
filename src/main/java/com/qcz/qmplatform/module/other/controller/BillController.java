@@ -12,6 +12,7 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.other.domain.Bill;
 import com.qcz.qmplatform.module.other.qo.BillQO;
 import com.qcz.qmplatform.module.other.service.BillService;
+import com.qcz.qmplatform.module.other.vo.BillVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,31 +38,29 @@ import java.util.Map;
 @Module("账单")
 public class BillController extends BaseController {
 
-    private static final String PREFIX = "/module/other/";
-
     @Resource
     BillService billService;
 
     @GetMapping("/billListPage")
     public String billListPage() {
-        return PREFIX + "billList";
+        return "/module/other/billList";
     }
 
     @GetMapping("/billDetailPage")
     public String billDetailPage() {
-        return PREFIX + "billDetail";
+        return "/module/other/billDetail";
     }
 
     @PostMapping("/getBillList")
     @ResponseBody
-    public ResponseResult<PageResult> getBillList(PageRequest pageRequest, BillQO bill) {
+    public ResponseResult<PageResult<BillVO>> getBillList(PageRequest pageRequest, BillQO bill) {
         PageResultHelper.startPage(pageRequest);
         return ResponseResult.ok(PageResultHelper.parseResult(billService.getList(bill)));
     }
 
     @PostMapping("/nnl/selectTest")
     @ResponseBody
-    public ResponseResult<?> selectTest(PageRequest pageRequest) {
+    public ResponseResult<Void> selectTest() {
         billService.selectTest();
         return ResponseResult.ok();
     }
@@ -93,21 +92,21 @@ public class BillController extends BaseController {
     @PostMapping("/insert")
     @ResponseBody
     @RecordLog(type = OperateType.INSERT, description = "新增账单")
-    public ResponseResult<?> insert(@RequestBody Bill bill) {
+    public ResponseResult<Void> insert(@RequestBody Bill bill) {
         return ResponseResult.newInstance(billService.saveOne(bill));
     }
 
     @PostMapping("/update")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改账单")
-    public ResponseResult<?> update(@RequestBody Bill bill) {
+    public ResponseResult<Void> update(@RequestBody Bill bill) {
         return ResponseResult.newInstance(billService.updateOne(bill));
     }
 
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除账单")
-    public ResponseResult<?> delete(String ids) {
+    public ResponseResult<Void> delete(String ids) {
         return ResponseResult.newInstance(billService.removeByIds(StringUtils.split(ids, ',')));
     }
 }

@@ -106,11 +106,10 @@ public class MenuController extends BaseController {
      *
      * @param permissionId 权限id
      * @param code         权限码
-     * @return
      */
     @GetMapping("/validatePermissionCode")
     @ResponseBody
-    public ResponseResult<?> validatePermissionCode(String permissionId, String code) {
+    public ResponseResult<Void> validatePermissionCode(String permissionId, String code) {
         return ResponseResult.newInstance(menuService.validatePermissionCode(permissionId, code));
     }
 
@@ -123,7 +122,7 @@ public class MenuController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_MENU_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增权限")
-    public ResponseResult<?> addPermission(@RequestBody Permission permission) {
+    public ResponseResult<Void> addPermission(@RequestBody Permission permission) {
         return savePermissionOne(permission);
     }
 
@@ -136,7 +135,7 @@ public class MenuController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_MENU_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改权限")
-    public ResponseResult<?> updatePermission(@RequestBody Permission permission) {
+    public ResponseResult<Void> updatePermission(@RequestBody Permission permission) {
         return savePermissionOne(permission);
     }
 
@@ -148,7 +147,7 @@ public class MenuController extends BaseController {
     @PostMapping("/savePermissionOne")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_MENU_SAVE)
-    public ResponseResult<?> savePermissionOne(@RequestBody Permission permission) {
+    public ResponseResult<Void> savePermissionOne(@RequestBody Permission permission) {
         return ResponseResult.newInstance(menuService.savePermissionOne(permission));
     }
 
@@ -160,7 +159,7 @@ public class MenuController extends BaseController {
     @DeleteMapping("/deletePermission")
     @RequiresPermissions(PrivCode.BTN_CODE_MENU_DELETE)
     @ResponseBody
-    public ResponseResult<?> deletePermission(String permissionIds) {
+    public ResponseResult<Void> deletePermission(String permissionIds) {
         return ResponseResult.newInstance(menuService.deletePermission(StringUtils.split(permissionIds, ',')));
     }
 }

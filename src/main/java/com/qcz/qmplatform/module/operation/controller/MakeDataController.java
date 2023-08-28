@@ -38,14 +38,14 @@ public class MakeDataController {
 
     @PostMapping("/start")
     @ResponseBody
-    public ResponseResult<?> start(@RequestBody MakeDataVO makeDataVO) {
+    public ResponseResult<Void> start(@RequestBody MakeDataVO makeDataVO) {
         makeDataService.start(makeDataVO.getDbDetail(), makeDataVO.getDataDetail(), makeDataVO.getInsertNumber());
         return ResponseResult.ok();
     }
 
     @PostMapping("/testConnect")
     @ResponseBody
-    public ResponseResult<?> testConnect(@RequestBody DBDetail dbDetail) {
+    public ResponseResult<Void> testConnect(@RequestBody DBDetail dbDetail) {
         return ResponseResult.newInstance(makeDataService.testConnect(dbDetail));
     }
 

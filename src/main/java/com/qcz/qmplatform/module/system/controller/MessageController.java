@@ -13,6 +13,7 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.sync.DBChangeCenter;
 import com.qcz.qmplatform.module.system.domain.Message;
 import com.qcz.qmplatform.module.system.service.MessageService;
+import com.qcz.qmplatform.module.system.vo.MessageVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,19 +41,17 @@ import java.util.Map;
 @Module("系统消息")
 public class MessageController extends BaseController {
 
-    private static final String PREFIX = "/module/system/";
-
     @Resource
     MessageService messageService;
 
     @GetMapping("/messageListPage")
     public String messageListPage() {
-        return PREFIX + "messageList";
+        return "/module/system/messageList";
     }
 
     @PostMapping("/getMessageList")
     @ResponseBody
-    public ResponseResult<PageResult> getMessageList(PageRequest pageRequest, Message message, boolean export) {
+    public ResponseResult<PageResult<MessageVO>> getMessageList(PageRequest pageRequest, Message message, boolean export) {
         if (!export) {
             PageResultHelper.startPage(pageRequest);
         }
@@ -65,24 +64,24 @@ public class MessageController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_MESSAGE_SET_READ)
     @RecordLog(type = OperateType.UPDATE, description = "设置已读")
-    public ResponseResult<?> setHasRead(@RequestBody Map<String, String[]> params) {
-        if (!messageService.setHasRead(params.get("messageIds"))) {
-            return ResponseResult.error();
+    public ResponseResult<Void> setHasRead(@RequestBody Map<String, String[]> params) {
+        boolean success = messageService.setHasRead(params.get("messageIds"));
+        if (success) {
+            DBChangeCenter.getInstance().notifyMessage();
         }
-        DBChangeCenter.getInstance().notifyMessage();
-        return ResponseResult.ok();
+        return ResponseResult.newInstance(success);
     }
 
     @DeleteMapping("/delete")
     @RequiresPermissions(PrivCode.BTN_CODE_MESSAGE_DELETE)
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除系统消息")
-    public ResponseResult<?> delete(String messageIds) {
-        if (!messageService.removeByIds(Arrays.asList(messageIds.split(",")))) {
-            return ResponseResult.error();
+    public ResponseResult<Void> delete(String messageIds) {
+        boolean success = messageService.removeByIds(Arrays.asList(messageIds.split(",")));
+        if (success) {
+            DBChangeCenter.getInstance().notifyMessage();
         }
-        DBChangeCenter.getInstance().notifyMessage();
-        return ResponseResult.ok();
+        return ResponseResult.newInstance(success);
     }
 
 }

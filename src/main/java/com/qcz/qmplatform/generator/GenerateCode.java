@@ -60,7 +60,7 @@ public class GenerateCode {
         dsc.setUrl("jdbc:postgresql://127.0.0.1:5432/qmplatform_single");
         dsc.setDriverName("org.postgresql.Driver");
         dsc.setUsername("postgres");
-        dsc.setPassword("postgres");
+        dsc.setPassword("123456");
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -82,6 +82,7 @@ public class GenerateCode {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
+        strategy.setChainModel(true);
         strategy.setRestControllerStyle(false);
         strategy.setSuperControllerClass("com.qcz.qmplatform.module.base.BaseController");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));

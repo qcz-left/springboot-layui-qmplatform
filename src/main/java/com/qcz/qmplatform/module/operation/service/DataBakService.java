@@ -124,7 +124,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
      * @param bakRemark 备份描述
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public ResponseResult<?> exeBackup(String bakRemark, String operator) {
+    public ResponseResult<Void> exeBackup(String bakRemark, String operator) {
         if (!SystemUtils.OS.isLinux()) {
             throw new BusinessException("非Linux环境不允许备份数据！");
         }
@@ -193,11 +193,11 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         return removeByIds(dataBakIds);
     }
 
-    public ResponseResult<?> recoverDataBak(String dataBakId) {
+    public ResponseResult<Map<String, String>> recoverDataBak(String dataBakId) {
         DataBak dataBak = getById(dataBakId);
         String bakPath = dataBak.getBakPath();
         if (!new File(bakPath).exists()) {
-            return ResponseResult.error("备份文件不存在！");
+            return ResponseResult.error("备份文件不存在！", null);
         }
         String logPath = FileUtils.WEB_PATH + "/logs/recover_bak_log_" + DateUtils.format(DateUtils.date(), DatePattern.PURE_DATETIME_PATTERN) + ".log";
         FileUtils.touch(logPath);

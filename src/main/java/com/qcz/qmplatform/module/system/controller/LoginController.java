@@ -102,7 +102,7 @@ public class LoginController {
 
     @GetMapping("/home")
     public String home() {
-        return "home";
+        return "steps_demo";
     }
 
     /**
@@ -224,7 +224,7 @@ public class LoginController {
 
     @PostMapping(value = "/clearLoginInfo")
     @ResponseBody
-    public ResponseResult<?> clearLoginInfo() {
+    public ResponseResult<Void> clearLoginInfo() {
         SubjectUtils.removeUser();
         return ResponseResult.ok();
     }

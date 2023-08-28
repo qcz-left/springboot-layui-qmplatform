@@ -70,21 +70,21 @@ public class BillTypeController extends BaseController {
     @PostMapping("/insert")
     @ResponseBody
     @RecordLog(type = OperateType.INSERT, description = "新增账单类型")
-    public ResponseResult<?> insert(@RequestBody BillType billType) {
+    public ResponseResult<Void> insert(@RequestBody BillType billType) {
         return ResponseResult.newInstance(billTypeService.saveOne(billType));
     }
 
     @PostMapping("/update")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改账单类型")
-    public ResponseResult<?> update(@RequestBody BillType billType) {
+    public ResponseResult<Void> update(@RequestBody BillType billType) {
         return ResponseResult.newInstance(billTypeService.updateOne(billType));
     }
 
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除账单类型")
-    public ResponseResult<?> delete(String ids) {
+    public ResponseResult<Void> delete(String ids) {
         return ResponseResult.newInstance(billTypeService.removeByBillTypeIds(StringUtils.split(ids, ',')));
     }
 }

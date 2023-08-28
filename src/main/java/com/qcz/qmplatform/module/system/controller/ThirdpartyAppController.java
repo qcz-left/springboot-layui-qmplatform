@@ -37,24 +37,22 @@ import javax.annotation.Resource;
 @Module("第三方应用参数配置信息")
 public class ThirdpartyAppController extends BaseController {
 
-    private static final String PREFIX = "/module/system/";
-
     @Resource
     ThirdpartyAppService thirdpartyAppService;
 
     @GetMapping("/thirdpartyAppListPage")
     public String thirdpartyAppListPage() {
-        return PREFIX + "thirdpartyAppList";
+        return "/module/system/thirdpartyAppList";
     }
 
     @GetMapping("/thirdpartyAppDetailPage")
     public String thirdpartyAppDetailPage() {
-        return PREFIX + "thirdpartyAppDetail";
+        return "/module/system/thirdpartyAppDetail";
     }
 
     @PostMapping("/getThirdpartyAppList")
     @ResponseBody
-    public ResponseResult<PageResult> getThirdpartyAppList(PageRequest pageRequest) {
+    public ResponseResult<PageResult<ThirdpartyApp>> getThirdpartyAppList(PageRequest pageRequest) {
         PageResultHelper.startPage(pageRequest);
         return ResponseResult.ok(PageResultHelper.parseResult(thirdpartyAppService.list()));
     }
@@ -68,7 +66,7 @@ public class ThirdpartyAppController extends BaseController {
     @PostMapping("/insert")
     @ResponseBody
     @RecordLog(type = OperateType.INSERT, description = "新增第三方应用参数配置信息")
-    public ResponseResult<?> insert(@RequestBody ThirdpartyApp thirdpartyApp) {
+    public ResponseResult<Void> insert(@RequestBody ThirdpartyApp thirdpartyApp) {
         boolean success = thirdpartyAppService.saveOne(thirdpartyApp);
         DBChangeCenter.getInstance().doNotify(DBNotifyInfo.newInstance(DBProperties.Table.SYS_THIRDPARTY_APP, thirdpartyApp.getName()));
         return ResponseResult.newInstance(success);
@@ -77,7 +75,7 @@ public class ThirdpartyAppController extends BaseController {
     @PostMapping("/update")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改第三方应用参数配置信息")
-    public ResponseResult<?> update(@RequestBody ThirdpartyApp thirdpartyApp) {
+    public ResponseResult<Void> update(@RequestBody ThirdpartyApp thirdpartyApp) {
         boolean success = thirdpartyAppService.updateOne(thirdpartyApp);
         DBChangeCenter.getInstance().doNotify(DBNotifyInfo.newInstance(DBProperties.Table.SYS_THIRDPARTY_APP, thirdpartyApp.getName()));
         return ResponseResult.newInstance(success);
@@ -86,7 +84,7 @@ public class ThirdpartyAppController extends BaseController {
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除第三方应用参数配置信息")
-    public ResponseResult<?> delete(String ids, String names) {
+    public ResponseResult<Void> delete(String ids, String names) {
         boolean success = thirdpartyAppService.removeByIds(StringUtils.split(ids, ','));
         DBChangeCenter.getInstance().doNotify(DBNotifyInfo.newInstance(DBProperties.Table.SYS_THIRDPARTY_APP, names));
         return ResponseResult.newInstance(success);
@@ -94,14 +92,14 @@ public class ThirdpartyAppController extends BaseController {
 
     @GetMapping("/validateName")
     @ResponseBody
-    public ResponseResult<?> validateName(String id, String name) {
+    public ResponseResult<Void> validateName(String id, String name) {
         return ResponseResult.newInstance(thirdpartyAppService.validateName(id, name));
     }
 
     @PostMapping("/updateStatus")
     @ResponseBody
     @Deprecated
-    public ResponseResult<?> updateStatus(@RequestBody ThirdpartyApp thirdpartyApp) {
+    public ResponseResult<Void> updateStatus(@RequestBody ThirdpartyApp thirdpartyApp) {
         boolean success = thirdpartyAppService.updateStatus(thirdpartyApp.getId(), thirdpartyApp.getStatus());
         DBChangeCenter.getInstance().doNotify(DBNotifyInfo.newInstance(DBProperties.Table.SYS_THIRDPARTY_APP, thirdpartyApp.getName()));
         return ResponseResult.newInstance(success);

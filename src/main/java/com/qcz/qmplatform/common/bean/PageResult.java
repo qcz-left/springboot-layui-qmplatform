@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class PageResult implements Serializable {
+public class PageResult<T> implements Serializable {
 
     /**
      * 数据长度
@@ -21,6 +21,6 @@ public class PageResult implements Serializable {
     /**
      * 返回的数据集合
      */
-    private List<?> list;
+    private List<T> list;
 
 }

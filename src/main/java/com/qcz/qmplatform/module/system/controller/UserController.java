@@ -117,7 +117,7 @@ public class UserController extends BaseController {
 
     @PostMapping("/getUserList")
     @ResponseBody
-    public ResponseResult<PageResult> getUserList(PageRequest pageRequest, UserQO user, boolean export) {
+    public ResponseResult<PageResult<UserVO>> getUserList(PageRequest pageRequest, UserQO user, boolean export) {
         String organizationIdsStr = user.getOrganizationIdsStr();
         if (StringUtils.isNotBlank(organizationIdsStr)) {
             user.setOrganizationIds(CollectionUtil.newArrayList(organizationIdsStr.split(",")));
@@ -172,7 +172,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增用户")
-    public ResponseResult<?> addUser(@Valid @RequestBody UserVO user) {
+    public ResponseResult<Void> addUser(@Valid @RequestBody UserVO user) {
         return ResponseResult.newInstance(userService.insertUser(user));
     }
 
@@ -180,7 +180,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改用户")
-    public ResponseResult<?> updateUser(@Valid @RequestBody UserVO user) {
+    public ResponseResult<Void> updateUser(@Valid @RequestBody UserVO user) {
         return ResponseResult.newInstance(userService.updateUser(user));
     }
 
@@ -193,7 +193,7 @@ public class UserController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户基本资料")
-    public ResponseResult<?> saveCurrentUserInfo(@Valid @RequestBody CurrentUserInfoVO user) {
+    public ResponseResult<Void> saveCurrentUserInfo(@Valid @RequestBody CurrentUserInfoVO user) {
         return ResponseResult.newInstance(userService.saveCurrentUserInfo(user));
     }
 
@@ -252,7 +252,7 @@ public class UserController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "更换用户头像")
-    public ResponseResult<?> uploadUserImg(MultipartFile file) {
+    public ResponseResult<Map<String, String>> uploadUserImg(MultipartFile file) {
         ResponseResult<Map<String, String>> upload = upload(file);
         // 将文件路径保存到数据库
         if (upload.isOk()) {
@@ -270,7 +270,7 @@ public class UserController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_USER_DELETE)
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除用户")
-    public ResponseResult<?> delUser(String userIds) {
+    public ResponseResult<Void> delUser(String userIds) {
         return ResponseResult.newInstance(userService.removeByIds(StringUtils.split(userIds, ',')));
     }
 
@@ -279,7 +279,7 @@ public class UserController extends BaseController {
      */
     @GetMapping("/nnl/getValidateCode")
     @ResponseBody
-    public ResponseResult<?> getValidateCode(String phone) {
+    public ResponseResult<Map<String, String>> getValidateCode(String phone) {
         Assert.notBlank(phone);
         String validateCode = String.valueOf(RandomUtil.randomInt(100000, 1000000));
         // 缓存时间，分钟

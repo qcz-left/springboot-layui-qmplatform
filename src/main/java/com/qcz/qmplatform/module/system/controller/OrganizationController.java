@@ -139,7 +139,7 @@ public class OrganizationController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增组织机构")
-    public ResponseResult<?> addOrgOne(@RequestBody Organization org) {
+    public ResponseResult<Void> addOrgOne(@RequestBody Organization org) {
         return saveOrgOne(org);
     }
 
@@ -151,7 +151,7 @@ public class OrganizationController extends BaseController {
     @PostMapping("/saveOrgOne")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
-    public ResponseResult<?> saveOrgOne(@RequestBody Organization org) {
+    public ResponseResult<Void> saveOrgOne(@RequestBody Organization org) {
         return ResponseResult.newInstance(organizationService.saveOrgOne(org));
     }
 
@@ -164,7 +164,7 @@ public class OrganizationController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改组织机构")
-    public ResponseResult<?> updateOrgOne(@RequestBody Organization org) {
+    public ResponseResult<Void> updateOrgOne(@RequestBody Organization org) {
         return saveOrgOne(org);
     }
 
@@ -177,7 +177,7 @@ public class OrganizationController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_ORG_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除组织机构")
-    public ResponseResult<?> deleteOrg(String orgIds) {
+    public ResponseResult<Void> deleteOrg(String orgIds) {
         return ResponseResult.newInstance(organizationService.deleteOrg(StringUtils.split(orgIds, ',')));
     }
 

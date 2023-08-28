@@ -10,6 +10,7 @@ import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
+import com.qcz.qmplatform.module.operation.domain.LoginRecord;
 import com.qcz.qmplatform.module.operation.service.LoginRecordService;
 import com.qcz.qmplatform.module.operation.vo.LoginStrategyVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -32,15 +33,13 @@ import java.util.Map;
 @Module("登录错误记录")
 public class LoginRecordController extends BaseController {
 
-    private static final String PREFIX = "/module/operation/";
-
     @Resource
     LoginRecordService loginRecordService;
 
     @GetMapping("/loginStrategyPage")
     public String loginStrategyPage(Map<String, Object> root) {
         root.put("loginStrategy", loginRecordService.getStrategy());
-        return PREFIX + "loginStrategy";
+        return "/module/operation/loginStrategy";
     }
 
     @GetMapping("/getLoginStrategy")
@@ -51,12 +50,12 @@ public class LoginRecordController extends BaseController {
 
     @GetMapping("/loginRecordListPage")
     public String loginRecordListPage() {
-        return PREFIX + "loginRecordList";
+        return "/module/operation/loginRecordList";
     }
 
     @PostMapping("/getLoginRecordList")
     @ResponseBody
-    public ResponseResult<PageResult> getLoginRecordList(PageRequest pageRequest) {
+    public ResponseResult<PageResult<LoginRecord>> getLoginRecordList(PageRequest pageRequest) {
         PageResultHelper.startPage(pageRequest);
         return ResponseResult.ok(PageResultHelper.parseResult(loginRecordService.list()));
     }
@@ -65,7 +64,7 @@ public class LoginRecordController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_LOGIN_STRATEGY_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "编辑登录策略")
-    public ResponseResult<?> saveLoginStrategy(@RequestBody LoginStrategyVO loginStrategyVO) {
+    public ResponseResult<Void> saveLoginStrategy(@RequestBody LoginStrategyVO loginStrategyVO) {
         return ResponseResult.newInstance(loginRecordService.saveLoginStrategy(loginStrategyVO));
     }
 
@@ -73,7 +72,7 @@ public class LoginRecordController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_LOGIN_RECORD_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除登录错误记录")
-    public ResponseResult<?> deleteLoginRecord(String recordIds) {
+    public ResponseResult<Void> deleteLoginRecord(String recordIds) {
         return ResponseResult.newInstance(loginRecordService.deleteLoginRecord(StringUtils.split(recordIds, ',')));
     }
 }

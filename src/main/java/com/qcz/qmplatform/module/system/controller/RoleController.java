@@ -41,24 +41,22 @@ import java.util.List;
 @Module("角色管理")
 public class RoleController extends BaseController {
 
-    private static final String PATH_PREFIX = "/module/system/";
-
     @Resource
     private RoleService roleService;
 
     @GetMapping("/roleListPage")
     public String roleListPage() {
-        return PATH_PREFIX + "roleList";
+        return "/module/system/roleList";
     }
 
     @GetMapping("/roleDetailPage")
     public String roleDetailPage() {
-        return PATH_PREFIX + "roleDetail";
+        return "/module/system/roleDetail";
     }
 
     @GetMapping("/permissionTreePage")
     public String permissionTreePage() {
-        return PATH_PREFIX + "permissionTree";
+        return "/module/system/permissionTree";
     }
 
     /**
@@ -69,7 +67,7 @@ public class RoleController extends BaseController {
      */
     @PostMapping("/getRoleList")
     @ResponseBody
-    public ResponseResult<PageResult> getRoleList(PageRequest pageRequest, Role role) {
+    public ResponseResult<PageResult<Role>> getRoleList(PageRequest pageRequest, Role role) {
         PageResultHelper.startPage(pageRequest);
         List<Role> roleList = roleService.getRoleList(role);
         return ResponseResult.ok(PageResultHelper.parseResult(roleList));
@@ -121,7 +119,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_ROLE_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增角色")
-    public ResponseResult<?> addRoleOne(@RequestBody Role role) {
+    public ResponseResult<Void> addRoleOne(@RequestBody Role role) {
         return saveRoleOne(role);
     }
 
@@ -133,7 +131,7 @@ public class RoleController extends BaseController {
     @PostMapping("/saveRoleOne")
     @RequiresPermissions(PrivCode.BTN_CODE_ROLE_SAVE)
     @ResponseBody
-    public ResponseResult<?> saveRoleOne(@RequestBody Role role) {
+    public ResponseResult<Void> saveRoleOne(@RequestBody Role role) {
         return ResponseResult.newInstance(roleService.saveRoleOne(role));
     }
 
@@ -146,7 +144,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_ROLE_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改角色")
-    public ResponseResult<?> updateRole(@RequestBody Role role) {
+    public ResponseResult<Void> updateRole(@RequestBody Role role) {
         return saveRoleOne(role);
     }
 
@@ -159,7 +157,7 @@ public class RoleController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_ROLE_DELETE)
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除角色")
-    public ResponseResult<?> deleteRole(String roleIds) {
+    public ResponseResult<Void> deleteRole(String roleIds) {
         return ResponseResult.newInstance(roleService.deleteRole(StringUtils.split(roleIds, ',')));
     }
 
@@ -172,7 +170,7 @@ public class RoleController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_ROLE_ALLOT)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "分配角色权限")
-    public ResponseResult<?> saveRolePermission(@RequestBody RolePermissionVO rolePermissionVo) {
+    public ResponseResult<Void> saveRolePermission(@RequestBody RolePermissionVO rolePermissionVo) {
         return ResponseResult.newInstance(roleService.saveRolePermission(rolePermissionVo.getRoleId(), rolePermissionVo.getPermissionIds()));
     }
 }

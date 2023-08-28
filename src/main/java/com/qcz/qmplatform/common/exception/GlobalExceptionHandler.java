@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
-    public ResponseResult<?> errorHandleByBusiness(Exception ex) {
+    public ResponseResult<Void> errorHandleByBusiness(Exception ex) {
         LOGGER.error(ex.getMessage(), ex);
         return ResponseResult.error(ex.getMessage());
     }
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public ResponseResult<?> errorHandleByValid(MethodArgumentNotValidException ex) {
+    public ResponseResult<Void> errorHandleByValid(MethodArgumentNotValidException ex) {
         LOGGER.error(ex.getMessage(), ex);
         StringBuilder error = new StringBuilder();
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseBody
-    public ResponseResult<?> errorHandleByPermission(UnauthorizedException ex) {
+    public ResponseResult<Void> errorHandleByPermission(UnauthorizedException ex) {
         LOGGER.error(ex.getMessage(), ex);
         return new ResponseResult<>(ResponseCode.PERMISSION_DENIED, "没有该资源权限！", null);
     }
@@ -96,7 +96,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public ResponseResult<?> errorHandleBy500(Exception ex) {
+    public ResponseResult<Void> errorHandleBy500(Exception ex) {
         LOGGER.error(ex.getMessage(), ex);
         return new ResponseResult<>(ResponseCode.INTERNAL_SERVER_ERROR, "服务器好像出现错误了，请联系管理员！", null);
     }

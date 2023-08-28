@@ -38,19 +38,17 @@ import javax.annotation.Resource;
 @Module("字典管理")
 public class DictController extends BaseController {
 
-    private static final String PATH_PREFIX = "/module/operation/";
-
     @Resource
     private DictService dictService;
 
     @GetMapping("/dictListPage")
     public String dictListPage() {
-        return PATH_PREFIX + "dictList";
+        return "/module/operation/dictList";
     }
 
     @GetMapping("/dictDetailPage")
     public String dictDetailPage() {
-        return PATH_PREFIX + "dictDetail";
+        return "/module/operation/dictDetail";
     }
 
     /**
@@ -61,7 +59,7 @@ public class DictController extends BaseController {
      */
     @PostMapping("/getDictList")
     @ResponseBody
-    public ResponseResult<PageResult> getDictList(PageRequest pageRequest, Dict dict) {
+    public ResponseResult<PageResult<Dict>> getDictList(PageRequest pageRequest, Dict dict) {
         PageResultHelper.startPage(pageRequest);
         return ResponseResult.ok(PageResultHelper.parseResult(dictService.getDictList(dict)));
     }
@@ -85,7 +83,7 @@ public class DictController extends BaseController {
      */
     @GetMapping("/validateDictCode")
     @ResponseBody
-    public ResponseResult<?> validateDictCode(String dictId, String dictCode) {
+    public ResponseResult<Void> validateDictCode(String dictId, String dictCode) {
         return ResponseResult.newInstance(dictService.validateDictCode(dictId, dictCode));
     }
 
@@ -98,7 +96,7 @@ public class DictController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增字典")
-    public ResponseResult<?> addDict(@RequestBody Dict dict) {
+    public ResponseResult<Void> addDict(@RequestBody Dict dict) {
         return ResponseResult.newInstance(dictService.addDictOne(dict));
     }
 
@@ -111,7 +109,7 @@ public class DictController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改字典")
-    public ResponseResult<?> updateDict(@RequestBody Dict dict) {
+    public ResponseResult<Void> updateDict(@RequestBody Dict dict) {
         return ResponseResult.newInstance(dictService.updateDictOne(dict));
     }
 
@@ -124,7 +122,7 @@ public class DictController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除字典")
-    public ResponseResult<?> deleteDict(String dictIds) {
+    public ResponseResult<Void> deleteDict(String dictIds) {
         return ResponseResult.newInstance(dictService.deleteDict(StringUtils.split(dictIds, ',')));
     }
 }

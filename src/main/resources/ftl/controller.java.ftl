@@ -50,19 +50,17 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 </#if>
 
-    private static final String PREFIX = "/module/${package.ModuleName}/";
-
     @Resource
     ${entity}Service ${entity?uncap_first}Service;
 
     @GetMapping("/${entity?uncap_first}ListPage")
     public String ${entity?uncap_first}ListPage() {
-        return PREFIX + "${entity?uncap_first}List";
+        return "/module/${package.ModuleName}/${entity?uncap_first}List";
     }
 
     @GetMapping("/${entity?uncap_first}DetailPage")
     public String ${entity?uncap_first}DetailPage() {
-        return PREFIX + "${entity?uncap_first}Detail";
+        return "/module/${package.ModuleName}/${entity?uncap_first}Detail";
     }
 
     @PostMapping("/get${entity}List")
@@ -81,21 +79,21 @@ public class ${table.controllerName} {
     @PostMapping("/insert")
     @ResponseBody
     @RecordLog(type = OperateType.INSERT, description = "新增${table.comment!}")
-    public ResponseResult<?> insert(@RequestBody ${entity} ${entity?uncap_first}) {
+    public ResponseResult<Void> insert(@RequestBody ${entity} ${entity?uncap_first}) {
         return ResponseResult.newInstance(${entity?uncap_first}Service.saveOne(${entity?uncap_first}));
     }
 
     @PostMapping("/update")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改${table.comment!}")
-    public ResponseResult<?> update(@RequestBody ${entity} ${entity?uncap_first}) {
+    public ResponseResult<Void> update(@RequestBody ${entity} ${entity?uncap_first}) {
         return ResponseResult.newInstance(${entity?uncap_first}Service.updateOne(${entity?uncap_first}));
     }
 
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除${table.comment!}")
-    public ResponseResult<?> delete(String ids) {
+    public ResponseResult<Void> delete(String ids) {
         return ResponseResult.newInstance(${entity?uncap_first}Service.removeByIds(StringUtils.split(ids, ',')));
     }
 }

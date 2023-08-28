@@ -34,15 +34,8 @@ import java.util.List;
 @RequestMapping("/button")
 public class ButtonController extends BaseController {
 
-    private static final String PREFIX = "/module/system/button/";
-
     @Resource
     private ButtonService buttonService;
-
-    @GetMapping("/buttonListPage")
-    public String buttonListPage() {
-        return PREFIX + "buttonList";
-    }
 
     /**
      * 获取按钮列表
@@ -52,7 +45,7 @@ public class ButtonController extends BaseController {
      */
     @PostMapping("/getButtonList")
     @ResponseBody
-    public ResponseResult<PageResult> getButtonList(PageRequest pageRequest, Button button) {
+    public ResponseResult<PageResult<Button>> getButtonList(PageRequest pageRequest, Button button) {
         PageResultHelper.startPage(pageRequest.getPage(), pageRequest.getLimit());
         List<Button> buttonList = buttonService.getButtonList(button);
         return ResponseResult.ok(PageResultHelper.parseResult(buttonList));
@@ -78,7 +71,7 @@ public class ButtonController extends BaseController {
      */
     @PostMapping("/addButtonOne")
     @ResponseBody
-    public ResponseResult<?> addButtonOne(@RequestBody Button button) {
+    public ResponseResult<Void> addButtonOne(@RequestBody Button button) {
         return ResponseResult.newInstance(buttonService.addButtonOne(button));
     }
 
@@ -89,7 +82,7 @@ public class ButtonController extends BaseController {
      */
     @PutMapping("/updateButtonOne")
     @ResponseBody
-    public ResponseResult<?> updateButtonOne(@RequestBody Button button) {
+    public ResponseResult<Void> updateButtonOne(@RequestBody Button button) {
         return ResponseResult.newInstance(buttonService.updateButtonOne(button));
     }
 
@@ -100,7 +93,7 @@ public class ButtonController extends BaseController {
      */
     @DeleteMapping("/deleteButton")
     @ResponseBody
-    public ResponseResult<?> deleteButton(String permissionIds) {
+    public ResponseResult<Void> deleteButton(String permissionIds) {
         return ResponseResult.newInstance(buttonService.deleteButton(StringUtils.split(permissionIds, ',')));
     }
 }

@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class PageResultHelper extends PageHelper {
 
-    public static <T> PageResult parseResult(List<T> list) {
-        PageResult res = new PageResult();
+    public static <T> PageResult<T> parseResult(List<T> list) {
+        PageResult<T> res = new PageResult<>();
         if (list instanceof Page) {
             Page<T> page = (Page<T>) list;
             res.setCount(page.getTotal());

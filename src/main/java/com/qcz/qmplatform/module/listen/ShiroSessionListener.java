@@ -44,7 +44,7 @@ public class ShiroSessionListener implements SessionListener {
         if (user == null) {
             return;
         }
-        ResponseResult<?> responseResult = new ResponseResult<>(ResponseCode.AUTHORIZED_EXPIRE, "会话过期！", user.getUsername());
+        ResponseResult<String> responseResult = new ResponseResult<>(ResponseCode.AUTHORIZED_EXPIRE, "会话过期！", user.getUsername());
         LOGGER.debug("[{}] {}", user.getLoginname(), responseResult);
         CacheUtils.SESSION_CACHE.remove(sessionId);
         SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), sessionId);

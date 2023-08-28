@@ -52,8 +52,6 @@ import java.util.Map;
 @Module("文件管理")
 public class AttachmentController extends BaseController {
 
-    private static final String PREFIX = "/module/archive/";
-
     @Resource
     private AttachmentService attachmentService;
 
@@ -61,18 +59,18 @@ public class AttachmentController extends BaseController {
     public String attachmentListPage(Map<String, Object> root) {
         root.put("previewedSuffix", ConfigLoader.getPreviewedSuffix());
         root.put("enableJodConverter", YmlPropertiesUtils.enableJodConverter());
-        return PREFIX + "attachmentList";
+        return "/module/archive/attachmentList";
     }
 
     @GetMapping("/uploadPage")
     public String uploadPage(Map<String, Object> root) {
         root.put("maxFileSize", YmlPropertiesUtils.getMaxFileSize());
-        return PREFIX + "attachmentDetail";
+        return "/module/archive/attachmentDetail";
     }
 
     @PostMapping("/getAttachmentList")
     @ResponseBody
-    public ResponseResult<PageResult> getAttachmentList(PageRequest pageRequest, Attachment attachment) {
+    public ResponseResult<PageResult<Attachment>> getAttachmentList(PageRequest pageRequest, Attachment attachment) {
         LambdaQueryWrapper<Attachment> queryWrapper = Wrappers.lambdaQuery(Attachment.class)
                 .like(StringUtils.isNotBlank(attachment.getAttachmentName()), Attachment::getAttachmentName, attachment.getAttachmentName())
                 .like(StringUtils.isNotBlank(attachment.getUploadUserName()), Attachment::getUploadUserName, attachment.getUploadUserName());
@@ -84,7 +82,7 @@ public class AttachmentController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_FILE_UPLOAD)
     @RecordLog(type = OperateType.INSERT, description = "上传文件")
-    public ResponseResult<?> uploadAttachment(MultipartFile file, Attachment attachment) throws IOException {
+    public ResponseResult<Map<String, String>> uploadAttachment(MultipartFile file, Attachment attachment) throws IOException {
         ResponseResult<Map<String, String>> upload = upload(file);
         // 将文件路径保存到数据库
         if (upload.isOk()) {
@@ -105,7 +103,7 @@ public class AttachmentController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_FILE_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除文件")
-    public ResponseResult<?> delAttachment(String attachmentIds) {
+    public ResponseResult<Void> delAttachment(String attachmentIds) {
         List<String> idList = Arrays.asList(attachmentIds.split(","));
         LambdaQueryWrapper<Attachment> queryWrapper = Wrappers.lambdaQuery(Attachment.class)
                 .in(Attachment::getAttachmentId, idList);
@@ -113,9 +111,7 @@ public class AttachmentController extends BaseController {
         for (String attachmentUrl : attachmentUrls) {
             FileUtil.del(FileUtils.getRealFilePath(attachmentUrl));
         }
-        if (attachmentService.removeByIds(idList)) {
-            return ResponseResult.ok();
-        }
-        return ResponseResult.error();
+
+        return ResponseResult.newInstance(attachmentService.removeByIds(idList));
     }
 }
