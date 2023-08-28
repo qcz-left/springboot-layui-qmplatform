@@ -35,6 +35,7 @@ public class MakeDataService {
 
                 List<Entity> entities = new ArrayList<>();
 
+                LOGGER.info("start sorting data...");
                 for (int i = 0; i < insertNumber; i++) {
                     Entity entity = new Entity();
                     entity.setTableName(dataDetail.getTableName().toLowerCase());
@@ -45,8 +46,9 @@ public class MakeDataService {
                     }
                     entities.add(entity);
                 }
-
+                LOGGER.info("end sorting data. and start insert data...");
                 sqlConnRunner.insert(connection, entities);
+                LOGGER.info("end insert data");
             } catch (Exception e) {
                 LOGGER.error("", e);
             } finally {

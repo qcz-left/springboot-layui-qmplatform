@@ -86,7 +86,7 @@ public class FileUtils extends FileUtil {
             ois = new ObjectInputStream(fis);
             return (T) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         } finally {
             CloseUtils.close(ois);
             CloseUtils.close(fis);
@@ -100,7 +100,7 @@ public class FileUtils extends FileUtil {
             ois = new ObjectInputStream(inputStream);
             return clazz.cast(ois.readObject());
         } catch (IOException | ClassNotFoundException e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         } finally {
             CloseUtils.close(ois);
         }
