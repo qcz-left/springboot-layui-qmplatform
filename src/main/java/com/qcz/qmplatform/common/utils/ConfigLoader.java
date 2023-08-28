@@ -175,6 +175,13 @@ public class ConfigLoader {
     }
 
     /**
+     * 可提供下载的文件夹路径
+     */
+    public static List<String> getDownloadFilePath() {
+        return CollectionUtil.newArrayList(getStringConfig("DownloadFilePath", StringUtils.format("{},{}", getUploadFilePath(), getTmpPath())).split(","));
+    }
+
+    /**
      * 获取雪花算法机房ID
      */
     public static long getSnowflakeDataCenterId() {

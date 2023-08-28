@@ -84,6 +84,7 @@ public class CommonController extends BaseController {
      */
     @GetMapping("/downloadFile")
     public ResponseEntity<InputStreamResource> downloadFile(String filePath, String fileName) {
+        validateFile(filePath);
         FileSystemResource file = new FileSystemResource(FileUtils.getRealFilePath(filePath));
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -112,6 +113,7 @@ public class CommonController extends BaseController {
     @DeleteMapping("/deleteFile")
     @ResponseBody
     public ResponseResult<?> deleteFile(String filePath) {
+        validateFile(filePath);
         FileUtils.del(FileUtils.getRealFilePath(filePath));
         return ResponseResult.ok();
     }
@@ -218,6 +220,8 @@ public class CommonController extends BaseController {
         if (!YmlPropertiesUtils.enableJodConverter()) {
             throw new BusinessException("未开启OpenOffice服务");
         }
+        validateFile(filePath);
+
         File file = new File(FileUtils.getRealFilePath(filePath));
         String type = FileTypeUtil.getType(file);
         List<String> previewedSuffix = ConfigLoader.getPreviewedSuffix();

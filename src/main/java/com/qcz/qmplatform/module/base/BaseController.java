@@ -7,12 +7,13 @@ import cn.hutool.poi.excel.ExcelUtil;
 import com.qcz.qmplatform.common.anno.ExcelField;
 import com.qcz.qmplatform.common.bean.ExcelRow;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.qcz.qmplatform.common.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -25,9 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class BaseController {
-
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public ResponseResult<Map<String, String>> upload(MultipartFile file) {
         File targetFileFolder = new File(ConfigLoader.getUploadFilePath());
@@ -93,9 +93,35 @@ public class BaseController {
         try {
             return getExcelData(file.getInputStream(), titleIndex, beanClass);
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return new ArrayList<>();
+    }
+
+    /**
+     * 校验文件路径是否合法
+     *
+     * @param filePath 文件路径
+     */
+    protected void validateFile(String filePath) {
+        filePath = FileUtils.getRealFilePath(filePath);
+        if (StringUtils.contains(filePath, "..")) {
+            log.error("file path must not contains '..'");
+            throw new BusinessException("文件不合法");
+        }
+
+        boolean isLegalPath = false;
+        List<String> downloadFilePath = ConfigLoader.getDownloadFilePath();
+        for (String path : downloadFilePath) {
+            if (StringUtils.startWith(filePath, path)) {
+                isLegalPath = true;
+                break;
+            }
+        }
+        if (!isLegalPath) {
+            log.error("file path must start with '" + downloadFilePath + "'");
+            throw new BusinessException("文件不合法");
+        }
     }
 
 }
