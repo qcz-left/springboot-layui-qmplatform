@@ -26,14 +26,12 @@ import java.util.List;
 @RequestMapping("/operation/make-data")
 public class MakeDataController {
 
-    private static final String PATH_PREFIX = "/module/operation/";
-
     @Resource
     MakeDataService makeDataService;
 
     @GetMapping("/page")
     public String page() {
-        return PATH_PREFIX + "makeData";
+        return "/module/operation/makeData";
     }
 
     @PostMapping("/start")

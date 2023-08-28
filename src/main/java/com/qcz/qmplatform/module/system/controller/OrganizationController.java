@@ -39,51 +39,44 @@ import java.util.Map;
 @Module("组织机构管理")
 public class OrganizationController extends BaseController {
 
-    private static final String PREFIX = "/module/system/";
-
     @Resource
     private OrganizationService organizationService;
 
     @GetMapping("/organizationListPage")
     public String departmentListPage() {
-        return PREFIX + "organizationList";
+        return "/module/system/organizationList";
     }
 
     @GetMapping("/orgManagePage")
     public String orgManagePage() {
-        return PREFIX + "orgManage";
+        return "/module/system/orgManage";
     }
 
     @GetMapping("/orgDetailPage")
     public String orgDetailPage(Map<String, Object> root, boolean isDept) {
         root.put("isDept", isDept);
-        return PREFIX + "orgDetail";
+        return "/module/system/orgDetail";
     }
 
     @GetMapping("/baseInfoPage")
     public String baseInfoPage(Map<String, Object> root, boolean isDept) {
         root.put("isDept", isDept);
-        return PREFIX + "orgBaseInfo";
+        return "/module/system/orgBaseInfo";
     }
 
     @GetMapping("/deptManagePage")
     public String deptManagePage() {
-        return PREFIX + "orgDeptManage";
+        return "/module/system/orgDeptManage";
     }
 
     @GetMapping("/userManagePage")
     public String userManagePage() {
-        return PREFIX + "orgUserManage";
+        return "/module/system/orgUserManage";
     }
 
     @GetMapping("/organizationDetailPage")
     public String organizationDetailPage() {
-        return PREFIX + "organizationDetail";
-    }
-
-    @GetMapping("/organizationTreePage")
-    public String departmentTreePage() {
-        return PREFIX + "organizationTree";
+        return "/module/system/organizationDetail";
     }
 
     /**

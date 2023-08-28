@@ -29,8 +29,6 @@ import javax.annotation.Resource;
 @Module("通讯配置")
 public class NotifyController {
 
-    private static final String PREFIX = "/module/notify/";
-
     @Resource
     MailNotifyService mailNotifyService;
 
@@ -39,7 +37,7 @@ public class NotifyController {
      */
     @GetMapping("/smsConfigPage")
     public String smsConfigPage() {
-        return PREFIX + "smsConfig";
+        return "/module/notify/smsConfig";
     }
 
     /**
@@ -47,7 +45,7 @@ public class NotifyController {
      */
     @GetMapping("/mailConfigPage")
     public String mailConfigPage() {
-        return PREFIX + "mailConfig";
+        return "/module/notify/mailConfig";
     }
 
     @GetMapping("/getSmsConfig")

@@ -51,7 +51,7 @@ public class ${table.controllerName} {
 </#if>
 
     @Resource
-    ${entity}Service ${entity?uncap_first}Service;
+    private ${entity}Service ${entity?uncap_first}Service;
 
     @GetMapping("/${entity?uncap_first}ListPage")
     public String ${entity?uncap_first}ListPage() {
@@ -80,14 +80,14 @@ public class ${table.controllerName} {
     @ResponseBody
     @RecordLog(type = OperateType.INSERT, description = "新增${table.comment!}")
     public ResponseResult<Void> insert(@RequestBody ${entity} ${entity?uncap_first}) {
-        return ResponseResult.newInstance(${entity?uncap_first}Service.saveOne(${entity?uncap_first}));
+        return ResponseResult.newInstance(${entity?uncap_first}Service.save(${entity?uncap_first}));
     }
 
     @PostMapping("/update")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改${table.comment!}")
     public ResponseResult<Void> update(@RequestBody ${entity} ${entity?uncap_first}) {
-        return ResponseResult.newInstance(${entity?uncap_first}Service.updateOne(${entity?uncap_first}));
+        return ResponseResult.newInstance(${entity?uncap_first}Service.updateById(${entity?uncap_first}));
     }
 
     @PostMapping("/delete")

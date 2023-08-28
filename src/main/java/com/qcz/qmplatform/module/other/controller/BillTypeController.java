@@ -34,19 +34,17 @@ import java.util.List;
 @Module("账单类型")
 public class BillTypeController extends BaseController {
 
-    private static final String PREFIX = "/module/other/";
-
     @Resource
     BillTypeService billTypeService;
 
     @GetMapping("/billTypeListPage")
     public String billTypeListPage() {
-        return PREFIX + "billTypeList";
+        return "/module/other/billTypeList";
     }
 
     @GetMapping("/billTypeDetailPage")
     public String billTypeDetailPage() {
-        return PREFIX + "billTypeDetail";
+        return "/module/other/billTypeDetail";
     }
 
     @PostMapping("/getBillTypeList")

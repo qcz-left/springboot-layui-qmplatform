@@ -67,14 +67,12 @@ public class CommonController extends BaseController {
 
     protected static Logger logger = LoggerFactory.getLogger(CommonController.class);
 
-    private static final String PREFIX = "/module/common/";
-
     @Autowired(required = false)
     private DocumentConverter converter;
 
     @GetMapping("/showLogPage")
     public String showLogPage() {
-        return PREFIX + "showLog";
+        return "/module/common/showLog";
     }
 
     /**
@@ -189,7 +187,7 @@ public class CommonController extends BaseController {
      */
     @GetMapping("/importExcelPage")
     public String importExcelPage() {
-        return PREFIX + "importExcel";
+        return "/module/common/importExcel";
     }
 
     /**
@@ -197,7 +195,7 @@ public class CommonController extends BaseController {
      */
     @GetMapping("/importResultPage")
     public String importResultPage() {
-        return PREFIX + "importResult";
+        return "/module/common/importResult";
     }
 
     /**
@@ -206,7 +204,7 @@ public class CommonController extends BaseController {
     @GetMapping("/previewFilePage")
     public String previewFilePage(String filePath, Map<String, Object> root) {
         root.put("fileName", FileUtils.mainName(FileUtils.getRealFilePath(filePath)));
-        return PREFIX + "previewFile";
+        return "/module/common/previewFile";
     }
 
     /**

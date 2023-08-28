@@ -18,14 +18,12 @@ import java.util.Map;
 @RequestMapping("/server")
 public class ServerController extends BaseController {
 
-    private static final String PREFIX = "/module/operation/";
-
     @GetMapping("/infoPage")
     public String infoPage(Map<String, Object> root) {
         root.put("computer", SystemUtils.getComputer());
         root.put("mem", SystemUtils.getMem());
         root.put("disk", SystemUtils.getDisk());
-        return PREFIX + "serverInfo";
+        return "/module/operation/serverInfo";
     }
 
     @GetMapping("/info")

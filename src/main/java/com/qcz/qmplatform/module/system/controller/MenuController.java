@@ -39,32 +39,17 @@ import java.util.List;
 @Module("菜单管理")
 public class MenuController extends BaseController {
 
-    private static final String PATH_PREFIX = "/module/system/";
-
     @Resource
     private MenuService menuService;
 
     @GetMapping("/menuListPage")
     public String menuListPage() {
-        return PATH_PREFIX + "menuList";
+        return "/module/system/menuList";
     }
 
     @GetMapping("/menuDetailPage")
     public String menuDetailPage() {
-        return PATH_PREFIX + "menuDetail";
-    }
-
-    @GetMapping("/menuTreePage")
-    public String menuTreePage() {
-        return PATH_PREFIX + "menuTree";
-    }
-
-    /**
-     * 选择图标页面
-     */
-    @GetMapping("/chooseIconPage")
-    public String chooseIconPage() {
-        return PATH_PREFIX + "chooseIcon";
+        return "/module/system/menuDetail";
     }
 
     /**
