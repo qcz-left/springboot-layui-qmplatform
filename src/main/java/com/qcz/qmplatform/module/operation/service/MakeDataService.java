@@ -49,7 +49,7 @@ public class MakeDataService {
                 LOGGER.info("end sorting data. and start insert data...");
                 sqlConnRunner.insert(connection, entities);
                 LOGGER.info("end insert data");
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 LOGGER.error("", e);
             } finally {
                 CloseUtils.close(connection);
