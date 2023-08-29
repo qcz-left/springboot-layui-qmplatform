@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,7 +35,18 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
     private UserOrganizationService userOrganizationService;
 
     public List<OrgTree> getOrgList(Organization organization) {
-        return baseMapper.selectOrgTree(organization);
+        String organizationId = organization.getOrganizationId();
+        String parentId = organization.getParentId();
+        Map<String, Object> queryParams = new HashMap<>();
+        // 查询当前部门下所有的部门id，包括当前部门
+        if (StringUtils.isNotBlank(organizationId)) {
+            queryParams.put("notInIds", this.queryOrgIdRecursive(CollectionUtil.newArrayList(organizationId)));
+        }
+        // 查询当前部门下所有的部门id，不包括当前部门
+        if (StringUtils.isNotBlank(parentId)) {
+            queryParams.put("inIds", this.queryOrgIdRecursive(CollectionUtil.newArrayList(parentId)));
+        }
+        return baseMapper.selectOrgTree(queryParams);
     }
 
     public List<OrgTree> getOrgUserTree(Organization organization) {

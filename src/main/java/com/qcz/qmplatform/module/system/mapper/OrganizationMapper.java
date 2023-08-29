@@ -5,6 +5,7 @@ import com.qcz.qmplatform.module.system.domain.Organization;
 import com.qcz.qmplatform.module.system.domain.pojo.OrgTree;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface OrganizationMapper extends BaseMapper<Organization> {
 
-    List<OrgTree> selectOrgTree(Organization organization);
+    List<OrgTree> selectOrgTree(Map<String, Object> queryParams);
 
     List<OrgTree> selectOrgUserTree(Organization organization);
 

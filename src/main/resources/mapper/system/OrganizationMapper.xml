@@ -10,32 +10,8 @@
             iorder
         from sys_organization so
         where 1=1
-        <if test="organizationId != null and organizationId != ''">
-            and not exists(
-                select organization_id from (
-                    with recursive r as(
-                        select * from sys_organization where organization_id = #{organizationId}
-                        union all
-                        select p.* from sys_organization p, r where r.organization_id = p.parent_id
-                    )
-                    select organization_id from r
-                ) as tmp
-                where tmp.organization_id = so.organization_id
-            )
-        </if>
-        <if test="parentId != null and parentId != ''">
-            and exists(
-                select organization_id from (
-                    with recursive r as(
-                        select * from sys_organization where parent_id = #{parentId}
-                        union all
-                        select p.* from sys_organization p, r where r.organization_id = p.parent_id
-                    )
-                    select organization_id from r
-                ) as tmp
-                where tmp.organization_id = so.organization_id
-            )
-        </if>
+        [[ and so.organization_id not in(#notInIds#) ]]
+        [[ and so.organization_id in(#inIds#) ]]
         order by iorder
     </select>
 
