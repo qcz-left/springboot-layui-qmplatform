@@ -9,8 +9,8 @@
         from
             sys_message
         where
-            readed = #{readed}
-        and receiver = #{receiver}
+            readed = #readed#
+        and receiver = #receiver#
         group by
             type
     </select>
@@ -42,12 +42,8 @@
             left join sys_user su2 on sm.receiver = su2.id
             left join ( select attr_value, attr_name from v_sys_dict_attr where dict_code = 'message-type' ) va on va.attr_value = concat(sm.type, '')
         where 1=1
-        <if test="content != null and content != ''">
-            and content like concat('%', #{content}, '%')
-        </if>
-        <if test="receiver != null and receiver != ''">
-            and sm.receiver = #{receiver}
-        </if>
+        [[ and content like concat(concat('%', #content#), '%') ]]
+        [[ and sm.receiver = #receiver# ]]
     </select>
 
 </mapper>

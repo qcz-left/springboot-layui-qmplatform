@@ -7,6 +7,6 @@
         FROM
             sys_user_organization
         where
-            user_id = #{userId}
+            user_id = #userId#
     </select>
 </mapper>

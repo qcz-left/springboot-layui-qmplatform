@@ -3,7 +3,7 @@
 <mapper namespace="com.qcz.qmplatform.module.operation.mapper.LoginRecordMapper">
 
     <select id="increaseErrorTimes">
-        update ope_login_record set error_times = (error_times + 1) where login_name = #{loginName} and last_login_ip = #{lastLoginIp}
+        update ope_login_record set error_times = (error_times + 1) where login_name = #loginName# and last_login_ip = #lastLoginIp#
     </select>
 
 </mapper>

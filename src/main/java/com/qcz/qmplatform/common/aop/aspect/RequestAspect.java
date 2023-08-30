@@ -1,10 +1,10 @@
 package com.qcz.qmplatform.common.aop.aspect;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.Header;
+import com.qcz.qmplatform.common.utils.ClassUtils;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -103,8 +103,7 @@ public class RequestAspect {
      */
     private static void parseParamVal(StringBuilder sb, String key, Object value, int level) {
         if (value == null
-                || value instanceof String
-                || isCommonDataType(value.getClass())
+                || ClassUtils.isCommonDataType(value.getClass())
                 || value instanceof Date) {
             sb.append(StringUtils.format("\n{}{}: {}", retBlank(4 * level), key, checkPwdFieldHidden(key, value)));
         } else {
@@ -135,17 +134,6 @@ public class RequestAspect {
             str.append(" ");
         }
         return str.toString();
-    }
-
-    /**
-     * 是否基本数据类型及其包装类
-     */
-    private static boolean isCommonDataType(Class<?> clazz) {
-        try {
-            return clazz.isPrimitive() || ((Class<?>) clazz.getField("TYPE").get(null)).isPrimitive();
-        } catch (Exception e) {
-            return false;
-        }
     }
 
     /**

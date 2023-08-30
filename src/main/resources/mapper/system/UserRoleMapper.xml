@@ -10,6 +10,6 @@
 			sys_user_role sur
 			JOIN sys_role sr ON sur.role_id = sr.role_id
 		WHERE
-			sur.user_id = #{userId}
+			sur.user_id = #userId#
     </select>
 </mapper>

@@ -18,8 +18,6 @@
             or is_public = 1
         </if>
         )
-        <if test="title != null and title != ''">
-            and title like concat('%', #{title}, '%')
-        </if>
+        [[ and title like concat(concat('%', #title#), '%') ]]
     </select>
 </mapper>

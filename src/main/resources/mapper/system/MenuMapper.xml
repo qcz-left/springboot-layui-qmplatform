@@ -47,17 +47,12 @@
         from
             v_sys_permission
         where
-            permission_id in
-            <foreach collection="ids" item="id" open="("  separator="," close=")">
-                #{id}
-            </foreach>
+            permission_id in(#ids#)
     </select>
 
     <select id="validatePermissionCode" resultType="int">
-        select count(1) from v_sys_permission where code = #{code}
-        <if test=" permissionId != null and permissionId != ''">
-            and permission_id != #{permissionId}
-        </if>
+        select count(1) from v_sys_permission where code = #code#
+        [[ and permission_id != #permissionId# ]]
     </select>
 
 </mapper>

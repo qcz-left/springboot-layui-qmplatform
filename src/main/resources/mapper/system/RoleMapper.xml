@@ -7,6 +7,6 @@
         FROM
             sys_role_permission
         where
-            role_id = #{roleId}
+            role_id = #roleId#
     </select>
 </mapper>

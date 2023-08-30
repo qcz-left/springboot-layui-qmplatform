@@ -3,7 +3,7 @@
 <mapper namespace="com.qcz.qmplatform.module.operation.mapper.DictAttrMapper">
 
     <select id="queryDictAttrListByCode" resultType="java.util.Map">
-        select attr_value as value, attr_name as name from v_sys_dict_attr where dict_code = #{code}
+        select attr_value as value, attr_name as name from v_sys_dict_attr where dict_code = #code#
     </select>
 
 </mapper>
