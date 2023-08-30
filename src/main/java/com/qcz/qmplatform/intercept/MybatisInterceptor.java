@@ -81,7 +81,6 @@ public class MybatisInterceptor implements Interceptor {
 
         Object parameter = args[PARAM_OBJ_INDEX];
         BoundSql boundSql = ms.getBoundSql(parameter);
-        ;
         CacheKey cacheKey = null;
         Executor executor = (Executor) invocation.getTarget();
         RowBounds rowBounds = null;
@@ -258,7 +257,7 @@ public class MybatisInterceptor implements Interceptor {
      */
     private String setNormalParameter(String sql, String key, Object value) {
         StringBuilder replacement = new StringBuilder();
-        String replacementStr = "";
+        String replacementStr;
         if (value instanceof List) {
             List<?> valList = (List<?>) value;
             for (Object o : valList) {
