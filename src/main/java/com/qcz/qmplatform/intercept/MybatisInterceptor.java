@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.qcz.qmplatform.common.constant.Constant;
+import com.qcz.qmplatform.common.utils.ClassUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -179,6 +180,16 @@ public class MybatisInterceptor implements Interceptor {
         Map<String, Object> parameterMap;
         if (parameterObject instanceof Map) {
             parameterMap = (Map<String, Object>) parameterObject;
+        } else if (ClassUtils.isCommonDataType(parameterObject.getClass())) {
+            // 单个参数的情况
+            parameterMap = new HashMap<>();
+
+            Matcher matcher = Pattern.compile("#[\\s\\S]*?#|\\$[\\s\\S]*?\\$").matcher(sql);
+            while (matcher.find()) {
+                String group = matcher.group();
+                String name = group.substring(1, group.length() - 1);
+                parameterMap.put(name, parameterObject);
+            }
         } else {
             parameterMap = BeanUtil.beanToMap(parameterObject);
         }
