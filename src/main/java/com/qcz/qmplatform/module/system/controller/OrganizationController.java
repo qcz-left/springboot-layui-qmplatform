@@ -80,6 +80,14 @@ public class OrganizationController extends BaseController {
     }
 
     /**
+     * 选择部门弹窗
+     */
+    @GetMapping("/chooseDept")
+    public String chooseDept() {
+        return "/module/system/chooseDept";
+    }
+
+    /**
      * 获取组织机构列表
      *
      * @param organization 请求参数

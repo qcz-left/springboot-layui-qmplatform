@@ -396,6 +396,30 @@ const CommonUtil = {
     },
 
     /**
+     * 选择部门
+     * @param option 参数选项
+     * <p> title: 弹窗标题（不填默认显示‘选择部门’）</p>
+     * <p> success: 保存后的回调函数</p>
+     * <p> checkbar: 是否开启复选框，true 或 false，默认false</p>
+     */
+    chooseDept: function (option) {
+        let title = option.title;
+        let checkbar = option.checkbar || false;
+        let currentLayer = LayerUtil.openLayer({
+            title: title || '选择部门',
+            content: ctx + "/organization/chooseDept?checkbar=" + checkbar,
+            area: ['30%', '80%'],
+            btn: ['选择', '取消'],
+            submit: function (iframeWin) {
+                if (typeof option.success == "function") {
+                    option.success(iframeWin.getCurrentNode());
+                    currentLayer.closeAll();
+                }
+            }
+        });
+    },
+
+    /**
      * 回车键事件
      * @param selector 选择器
      * @param fun 回调函数

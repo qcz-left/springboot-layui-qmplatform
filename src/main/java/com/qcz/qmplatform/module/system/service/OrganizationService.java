@@ -70,10 +70,7 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
     public boolean deleteOrg(List<String> orgIds) {
         List<String> cascOrgIds = this.queryOrgIdRecursive(orgIds);
         removeByIds(cascOrgIds);
-        // 删除关联部门信息
-        LambdaQueryWrapper<UserOrganization> deleteWrapper = Wrappers.lambdaQuery(UserOrganization.class)
-                .in(UserOrganization::getOrganizationId, cascOrgIds);
-        userOrganizationService.remove(deleteWrapper);
+        userOrganizationService.deleteByDeptIds(cascOrgIds);
         return true;
     }
 
