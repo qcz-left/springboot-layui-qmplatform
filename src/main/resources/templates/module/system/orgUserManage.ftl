@@ -39,8 +39,8 @@
     <div class="layui-col-xs12">
         <script type="text/html" id="toolbar">
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="move"><i class="layui-icon layui-icon-transfer"></i>移动</button>
             <@shiro.hasPermission name="${PrivCode.BTN_CODE_USER_SAVE}">
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="move"><i class="layui-icon layui-icon-transfer"></i>移动</button>
                 <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
             </@shiro.hasPermission>
             <@shiro.hasPermission name="${PrivCode.BTN_CODE_USER_DELETE}">
@@ -180,7 +180,7 @@ layui.use(['table', 'form', 'layer'], function () {
                     userIds: userIds,
                     deptId: deptId
                 }, function (result) {
-                    LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, function () {
+                    LayerUtil.respMsg(result, Msg.OPERATE_SUCCESS, Msg.OPERATE_FAILURE, function () {
                         reloadFrame();
                     });
                 });
