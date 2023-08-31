@@ -322,7 +322,7 @@ layui.use(['element', 'dropdown'], function () {
         let result = JSON.parse(msg.data);
         let code = result.code;
         if (code === 402 || code === 405) {
-            top.window.location = ctx + "/loginPage?code=" + code;
+            top.window.location = ctx + "/nnl/loginAgain?code=" + code;
         }
     };
     //关闭事件

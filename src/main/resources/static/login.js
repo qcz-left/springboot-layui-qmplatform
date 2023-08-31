@@ -2,7 +2,7 @@
  * 登录
  */
 layui.use(['form', 'layer'], function () {
-    if (window != top)
+    if (window !== top)
         top.location.href = location.href;
     let layer = layui.layer; // 获取layer模块
     let form = layui.form;
@@ -23,7 +23,7 @@ layui.use(['form', 'layer'], function () {
             layer.alert(msg, {
                 icon: icon,
                 title: null,
-                btn: [],
+                btn: null,
                 offset: '30px'
             });
         }
@@ -44,8 +44,9 @@ layui.use(['form', 'layer'], function () {
     });
 
     // 是否是绑定第三方账号页面
-    if ($("#thirdparty").val()) {
-        let thirdparty = $("#thirdparty").val();
+    let $thirdparty = $("#thirdparty");
+    if ($thirdparty.val()) {
+        let thirdparty = $thirdparty.val();
         let thirdpartyName;
         let thirdpartyIcon;
         if (thirdparty === "dingtalk") {
@@ -60,9 +61,11 @@ layui.use(['form', 'layer'], function () {
      * 加载验证码
      */
     let loadCode = function () {
-        if ($("#codeDiv").is(":hidden")) {
-            $("#codeDiv").show();
-            $(".user-login-main").css("height", $(".user-login-main").height() + 53);
+        let $codeDiv = $("#codeDiv");
+        if ($codeDiv.is(":hidden")) {
+            $codeDiv.show();
+            let $userLoginMain = $(".user-login-main");
+            $userLoginMain.css("height", $userLoginMain.height() + 53);
         }
         $("#user-login-code").attr("lay-verify", "required");
         form.render(null, 'validateCode');
@@ -80,8 +83,9 @@ layui.use(['form', 'layer'], function () {
             if (!response.ok) {
                 if (response.data && response.data['needCode']) {
                     loadCode();
-                    if ($("#codeImg").attr("src")) {
-                        $("#codeImg").click();
+                    let $codeImg = $("#codeImg");
+                    if ($codeImg.attr("src")) {
+                        $codeImg.click();
                     }
                 }
                 layer.error(response.msg);

@@ -20,22 +20,22 @@ import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.HttpServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
+import com.qcz.qmplatform.module.operation.domain.vo.LoginStrategyVO;
 import com.qcz.qmplatform.module.operation.service.LoginRecordService;
 import com.qcz.qmplatform.module.operation.service.LoginSettingService;
-import com.qcz.qmplatform.module.operation.domain.vo.LoginStrategyVO;
-import com.qcz.qmplatform.module.system.domain.assist.PermissionType;
-import com.qcz.qmplatform.module.system.domain.assist.Thirdparty;
 import com.qcz.qmplatform.module.system.domain.ThirdpartyApp;
 import com.qcz.qmplatform.module.system.domain.User;
 import com.qcz.qmplatform.module.system.domain.UserThirdparty;
+import com.qcz.qmplatform.module.system.domain.assist.PermissionType;
+import com.qcz.qmplatform.module.system.domain.assist.Thirdparty;
+import com.qcz.qmplatform.module.system.domain.vo.LoginFormVO;
+import com.qcz.qmplatform.module.system.domain.vo.PermissionVO;
 import com.qcz.qmplatform.module.system.realm.CustomToken;
 import com.qcz.qmplatform.module.system.service.MenuService;
 import com.qcz.qmplatform.module.system.service.MessageService;
 import com.qcz.qmplatform.module.system.service.ThirdpartyAppService;
 import com.qcz.qmplatform.module.system.service.UserService;
 import com.qcz.qmplatform.module.system.service.UserThirdpartyService;
-import com.qcz.qmplatform.module.system.domain.vo.LoginFormVO;
-import com.qcz.qmplatform.module.system.domain.vo.PermissionVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -52,6 +52,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -103,6 +104,12 @@ public class LoginController {
     @GetMapping("/home")
     public String home() {
         return "steps_demo";
+    }
+
+    @GetMapping("/nnl/loginAgain")
+    public String loginAgain(RedirectAttributes redirectAttributes, String code) {
+        redirectAttributes.addFlashAttribute("code", code);
+        return "redirect:/loginPage";
     }
 
     /**

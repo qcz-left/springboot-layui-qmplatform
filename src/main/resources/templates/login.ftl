@@ -2,7 +2,7 @@
 <html lang="en">
 <#include "/include/include.ftl">
 <script type="text/javascript">
-    let code = "${RequestParameters["code"]!}";
+    let code = "${code!}";
     let dingTalkConfigAppKey = "${dingTalkConfigAppKey!}";
     top.rsaPublicKey = "${rsaPublicKey!}";
 </script>
