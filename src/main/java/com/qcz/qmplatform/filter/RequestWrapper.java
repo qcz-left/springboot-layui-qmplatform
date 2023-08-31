@@ -3,6 +3,7 @@ package com.qcz.qmplatform.filter;
 import cn.hutool.core.io.IoUtil;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Slf4j
 public class RequestWrapper extends HttpServletRequestWrapper {
 
     private static final String ENC_REG = "ENC\\([a-zA-Z0-9\\+/=]+\\)";
@@ -86,6 +88,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         stream = request.getInputStream();
         body = IoUtil.read(stream, StandardCharsets.UTF_8);
         body = URLDecoder.decode(body, StandardCharsets.UTF_8.name());
+        log.debug("request body: {}", body);
         body = stripXSS(stripENC(body));
 
         byte[] buffer;
