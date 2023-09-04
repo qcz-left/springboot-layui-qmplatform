@@ -1,11 +1,11 @@
 package com.qcz.qmplatform.common.utils;
 
-import com.qcz.qmplatform.module.notify.domain.pojo.SmsProvider;
-import com.qcz.qmplatform.module.notify.service.INotifyService;
-import com.qcz.qmplatform.module.notify.service.ali.AliyunSmsNotifyService;
-import com.qcz.qmplatform.module.notify.service.baidu.BaiduSmsNotifyService;
-import com.qcz.qmplatform.module.notify.service.huawei.HuaweiSmsNotifyService;
-import com.qcz.qmplatform.module.notify.service.tencent.TencentCloudSmsNotifyService;
+import com.qcz.qmplatform.module.business.notify.domain.pojo.SmsProvider;
+import com.qcz.qmplatform.module.business.notify.service.INotifyService;
+import com.qcz.qmplatform.module.business.notify.service.ali.AliyunSmsNotifyService;
+import com.qcz.qmplatform.module.business.notify.service.baidu.BaiduSmsNotifyService;
+import com.qcz.qmplatform.module.business.notify.service.huawei.HuaweiSmsNotifyService;
+import com.qcz.qmplatform.module.business.notify.service.tencent.TencentCloudSmsNotifyService;
 
 /**
  * 短信工具类

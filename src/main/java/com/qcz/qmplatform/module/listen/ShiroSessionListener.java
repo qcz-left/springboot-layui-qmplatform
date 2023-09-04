@@ -5,7 +5,7 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.ResponseCode;
 import com.qcz.qmplatform.common.utils.CacheUtils;
 import com.qcz.qmplatform.module.socket.SessionWebSocketServer;
-import com.qcz.qmplatform.module.system.domain.User;
+import com.qcz.qmplatform.module.business.system.domain.User;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionListener;
 import org.slf4j.Logger;

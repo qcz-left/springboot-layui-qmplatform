@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qcz.qmplatform.module.system.mapper.MessageMapper">
+<mapper namespace="com.qcz.qmplatform.module.business.system.mapper.MessageMapper">
 
     <select id="selectTypeCount" resultType="map">
         select
@@ -30,7 +30,7 @@
             receiver
     </select>
 
-    <select id="selectList" resultType="com.qcz.qmplatform.module.system.domain.vo.MessageVO">
+    <select id="selectList" resultType="com.qcz.qmplatform.module.business.system.domain.vo.MessageVO">
         select
             sm.*,
             va.attr_name typeName,

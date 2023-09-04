@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qcz.qmplatform.module.system.mapper.OperateLogMapper">
+<mapper namespace="com.qcz.qmplatform.module.business.system.mapper.OperateLogMapper">
 
-    <select id="queryOperateLogList" resultType="com.qcz.qmplatform.module.system.domain.vo.OperateLogVO">
+    <select id="queryOperateLogList" resultType="com.qcz.qmplatform.module.business.system.domain.vo.OperateLogVO">
         select
             sol.*,
             va1.attr_name as operateTypeName,

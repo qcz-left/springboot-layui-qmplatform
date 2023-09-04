@@ -242,7 +242,7 @@ INSERT INTO sys_operate_log VALUES ('2c057297-d871-4bf4-8a36-3b544725e970', 4, '
 ### Error updating database.  Cause: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint unique_loginname
   详细：Key (loginname)=(为首的发生) already exists.
 ### The error may exist in com/qcz/qmplatform/module/system/mapper/UserMapper.java (best guess)
-### The error may involve com.qcz.qmplatform.module.system.mapper.UserMapper.insert-Inline
+### The error may involve com.qcz.qmplatform.module.business.system.mapper.UserMapper.insert-Inline
 ### The error occurred while setting parameters
 ### SQL: INSERT INTO sys_user  ( id, password, username, loginname, user_sex, remark, create_time, create_user_id, phone, email_addr, locked )  VALUES  ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
 ### Cause: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint unique_loginname
@@ -268,8 +268,8 @@ org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveM
 org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:93)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
 org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688)
-com.qcz.qmplatform.module.system.controller.UserController$$EnhancerBySpringCGLIB$$8891b3d3.updateUser(<generated>)
-com.qcz.qmplatform.module.system.controller.UserController$$FastClassBySpringCGLIB$$6ac3e070.invoke(<generated>)
+com.qcz.qmplatform.module.business.system.controller.UserController$$EnhancerBySpringCGLIB$$8891b3d3.updateUser(<generated>)
+com.qcz.qmplatform.module.business.system.controller.UserController$$FastClassBySpringCGLIB$$6ac3e070.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
@@ -278,7 +278,7 @@ org.apache.shiro.authz.aop.AuthorizingMethodInterceptor.invoke(AuthorizingMethod
 org.apache.shiro.spring.security.interceptor.AopAllianceAnnotationsAuthorizingMethodInterceptor.invoke(AopAllianceAnnotationsAuthorizingMethodInterceptor.java:115)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
 org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688)
-com.qcz.qmplatform.module.system.controller.UserController$$EnhancerBySpringCGLIB$$83d0f777.updateUser(<generated>)
+com.qcz.qmplatform.module.business.system.controller.UserController$$EnhancerBySpringCGLIB$$83d0f777.updateUser(<generated>)
 sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -380,8 +380,8 @@ org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveM
 org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:93)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
 org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688)
-com.qcz.qmplatform.module.system.controller.UserController$$EnhancerBySpringCGLIB$$bc402976.updateUser(<generated>)
-com.qcz.qmplatform.module.system.controller.UserController$$FastClassBySpringCGLIB$$6ac3e070.invoke(<generated>)
+com.qcz.qmplatform.module.business.system.controller.UserController$$EnhancerBySpringCGLIB$$bc402976.updateUser(<generated>)
+com.qcz.qmplatform.module.business.system.controller.UserController$$FastClassBySpringCGLIB$$6ac3e070.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
@@ -390,7 +390,7 @@ org.apache.shiro.authz.aop.AuthorizingMethodInterceptor.invoke(AuthorizingMethod
 org.apache.shiro.spring.security.interceptor.AopAllianceAnnotationsAuthorizingMethodInterceptor.invoke(AopAllianceAnnotationsAuthorizingMethodInterceptor.java:115)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
 org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688)
-com.qcz.qmplatform.module.system.controller.UserController$$EnhancerBySpringCGLIB$$edeca250.updateUser(<generated>)
+com.qcz.qmplatform.module.business.system.controller.UserController$$EnhancerBySpringCGLIB$$edeca250.updateUser(<generated>)
 sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -983,7 +983,7 @@ INSERT INTO sys_operate_log VALUES ('5185ef93-ffdc-4c1d-a478-8bcef447d5f2', 1, '
 INSERT INTO sys_operate_log VALUES ('773cd3e4-8521-4b50-8968-275ff1ed28d4', 3, '字典管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 14:09:12.792', '/operation/dict-attr/addDictAttr', '新增字典属性', '127.0.0.1', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('b73a542f-49e5-4200-93c5-44db322ae158', 3, '字典管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 14:09:42.478', '/operation/dict-attr/addDictAttr', '新增字典属性', '127.0.0.1', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('2ab78444-228f-4ba2-96e2-424ae4e6337b', 3, '字典管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 14:09:48.541', '/operation/dict-attr/addDictAttr', '新增字典属性', '127.0.0.1', 1, NULL);
-INSERT INTO sys_operate_log VALUES ('a2f07fbb-eeb0-4d93-8a68-20d062223c5e', 3, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 13:28:55.081', '/operation/dict-attr/addDictAttr', '新增字典属性', '127.0.0.1', 0, 'java.lang.Exception:org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.reflection.ReflectionException: Could not set property ''attrId'' of ''class com.qcz.qmplatform.module.operation.domain.DictAttr'' with value ''1340529591370461185'' Cause: java.lang.IllegalArgumentException: argument type mismatch
+INSERT INTO sys_operate_log VALUES ('a2f07fbb-eeb0-4d93-8a68-20d062223c5e', 3, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 13:28:55.081', '/operation/dict-attr/addDictAttr', '新增字典属性', '127.0.0.1', 0, 'java.lang.Exception:org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.reflection.ReflectionException: Could not set property ''attrId'' of ''class com.qcz.qmplatform.module.business.operation.domain.DictAttr'' with value ''1340529591370461185'' Cause: java.lang.IllegalArgumentException: argument type mismatch
 	com.qcz.qmplatform.common.aop.aspect.OperateLogAspect.operateLogAround(OperateLogAspect.java:77)
 sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -992,7 +992,7 @@ java.lang.reflect.Method.invoke(Method.java:498)
 org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:644)
 org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:633)
 org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice');
-INSERT INTO sys_operate_log VALUES ('f2f1093a-bc8d-4c54-9228-1f9774ddbc45', 3, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 13:30:15.848', '/operation/dict-attr/addDictAttr', '新增字典属性', '127.0.0.1', 0, 'java.lang.Exception:org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.reflection.ReflectionException: Could not set property ''attrId'' of ''class com.qcz.qmplatform.module.operation.domain.DictAttr'' with value ''1340529930140200961'' Cause: java.lang.IllegalArgumentException: argument type mismatch
+INSERT INTO sys_operate_log VALUES ('f2f1093a-bc8d-4c54-9228-1f9774ddbc45', 3, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-20 13:30:15.848', '/operation/dict-attr/addDictAttr', '新增字典属性', '127.0.0.1', 0, 'java.lang.Exception:org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.reflection.ReflectionException: Could not set property ''attrId'' of ''class com.qcz.qmplatform.module.business.operation.domain.DictAttr'' with value ''1340529930140200961'' Cause: java.lang.IllegalArgumentException: argument type mismatch
 	com.qcz.qmplatform.common.aop.aspect.OperateLogAspect.operateLogAround(OperateLogAspect.java:77)
 sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -1070,7 +1070,7 @@ INSERT INTO sys_operate_log VALUES ('1936165f-09a8-4de3-9744-27d4d6ed0d20', 4, '
 ### Error updating database.  Cause: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint uq_dict_code
   详细：Key (dict_code)=(user-status) already exists.
 ### The error may exist in com/qcz/qmplatform/module/operation/mapper/DictMapper.java (best guess)
-### The error may involve com.qcz.qmplatform.module.operation.mapper.DictMapper.updateById-Inline
+### The error may involve com.qcz.qmplatform.module.business.operation.mapper.DictMapper.updateById-Inline
 ### The error occurred while setting parameters
 ### SQL: UPDATE sys_dict  SET dict_code=?, dict_name=?, remark=?, sort=?  WHERE dict_id=?
 ### Cause: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint uq_dict_code
@@ -1083,7 +1083,7 @@ INSERT INTO sys_operate_log VALUES ('0c3ee308-6478-482d-bb0c-8d789061ca26', 4, '
 ### Error updating database.  Cause: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint uq_dict_code
   详细：Key (dict_code)=(user-status) already exists.
 ### The error may exist in com/qcz/qmplatform/module/operation/mapper/DictMapper.java (best guess)
-### The error may involve com.qcz.qmplatform.module.operation.mapper.DictMapper.updateById-Inline
+### The error may involve com.qcz.qmplatform.module.business.operation.mapper.DictMapper.updateById-Inline
 ### The error occurred while setting parameters
 ### SQL: UPDATE sys_dict  SET dict_code=?, dict_name=?, remark=?, sort=?  WHERE dict_id=?
 ### Cause: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint uq_dict_code
@@ -1121,8 +1121,8 @@ INSERT INTO sys_operate_log VALUES ('80d8f405-af7d-4562-9e20-fee91ff130ec', 1, '
 INSERT INTO sys_operate_log VALUES ('0441e106-9882-42e0-accb-d4810fd94d78', 0, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-26 23:18:31.711', '/operation/data-bak/getDataBakStrategy', NULL, '127.0.0.1', 0, 'java.lang.NumberFormatException:null
 	java.lang.Integer.parseInt(Integer.java:542)
 java.lang.Integer.parseInt(Integer.java:615)
-com.qcz.qmplatform.module.operation.controller.DataBakController.getDataBakStrategy(DataBakController.java:78)
-com.qcz.qmplatform.module.operation.controller.DataBakController$$FastClassBySpringCGLIB$$aa947ae9.invoke(<generated>)
+com.qcz.qmplatform.module.business.operation.controller.DataBakController.getDataBakStrategy(DataBakController.java:78)
+com.qcz.qmplatform.module.business.operation.controller.DataBakController$$FastClassBySpringCGLIB$$aa947ae9.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
@@ -1157,8 +1157,8 @@ INSERT INTO sys_operate_log VALUES ('f8023f2c-602e-4b2b-a472-0fbd739a621b', 1, '
 INSERT INTO sys_operate_log VALUES ('0a6ec98b-dd82-4927-b831-c06814eb6e42', 4, '数据备份与恢复', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-31 19:06:51.511', '/operation/data-bak/saveDataBakStrategy', '调整数据备份策略', '127.0.0.1', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('5ee2a0e8-ea86-41fe-9a3e-444d8d329e9b', 0, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2020-12-31 22:00:25.773', '/server/infoPage', NULL, '27.46.46.43', 0, 'java.lang.NoClassDefFoundError:oshi/SystemInfo
 	com.qcz.qmplatform.common.utils.SystemUtils.<clinit>(SystemUtils.java:27)
-com.qcz.qmplatform.module.operation.controller.ServerController.infoPage(ServerController.java:25)
-com.qcz.qmplatform.module.operation.controller.ServerController$$FastClassBySpringCGLIB$$9cf63c34.invoke(<generated>)
+com.qcz.qmplatform.module.business.operation.controller.ServerController.infoPage(ServerController.java:25)
+com.qcz.qmplatform.module.business.operation.controller.ServerController$$FastClassBySpringCGLIB$$9cf63c34.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
@@ -1205,8 +1205,8 @@ INSERT INTO sys_operate_log VALUES ('7b13e22a-8a58-4d08-b54d-8f5b6f4b41c4', 3, '
 INSERT INTO sys_operate_log VALUES ('8b102180-b36b-4fd1-b43d-113053d57110', 5, '数据备份与恢复', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-02 15:09:39.153', '/operation/data-bak/deleteDataBak', '删除备份', '27.46.47.99', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('e213bcad-2afb-4c4d-8fbd-a76d36f2258e', 1, '登录系统', NULL, NULL, '2021-01-02 15:12:37.122', '/login', '系统管理员 进入了系统', '27.46.47.99', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('66b125f3-5d8e-4287-ad17-e4f482c12ef0', 0, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-02 15:12:42.472', '/notify/getSmsConfig', NULL, '27.46.47.99', 0, 'java.lang.NullPointerException:null
-	com.qcz.qmplatform.module.notify.controller.NotifyController.getSmsConfig(NotifyController.java:38)
-com.qcz.qmplatform.module.notify.controller.NotifyController$$FastClassBySpringCGLIB$$eac69a48.invoke(<generated>)
+	com.qcz.qmplatform.module.business.notify.controller.NotifyController.getSmsConfig(NotifyController.java:38)
+com.qcz.qmplatform.module.business.notify.controller.NotifyController$$FastClassBySpringCGLIB$$eac69a48.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
@@ -1216,8 +1216,8 @@ org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(M
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
 org.springframework.aop.as');
 INSERT INTO sys_operate_log VALUES ('48797552-a2f5-4367-8157-2b663c002249', 0, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-02 15:12:53.651', '/notify/getSmsConfig', NULL, '27.46.47.99', 0, 'java.lang.NullPointerException:null
-	com.qcz.qmplatform.module.notify.controller.NotifyController.getSmsConfig(NotifyController.java:38)
-com.qcz.qmplatform.module.notify.controller.NotifyController$$FastClassBySpringCGLIB$$eac69a48.invoke(<generated>)
+	com.qcz.qmplatform.module.business.notify.controller.NotifyController.getSmsConfig(NotifyController.java:38)
+com.qcz.qmplatform.module.business.notify.controller.NotifyController$$FastClassBySpringCGLIB$$eac69a48.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
@@ -1231,8 +1231,8 @@ INSERT INTO sys_operate_log VALUES ('70ce49e3-e922-4cec-833b-04f921e4c129', 4, '
 INSERT INTO sys_operate_log VALUES ('b63a1ee4-995f-4f49-9fa0-d360f8a03dc8', 4, '数据备份与恢复', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-03 12:53:46.359', '/operation/data-bak/saveDataBakStrategy', '调整数据备份策略', '127.0.0.1', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('e87d98eb-c600-4dc0-aa8d-20ea5b429d8b', 1, '登录系统', NULL, NULL, '2021-01-03 13:33:50.963', '/login', '系统管理员 进入了系统', '127.0.0.1', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('fec6afae-4db2-4348-97ea-493badc66468', 0, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-02 15:13:30.082', '/notify/getSmsConfig', NULL, '27.46.47.99', 0, 'java.lang.NullPointerException:null
-	com.qcz.qmplatform.module.notify.controller.NotifyController.getSmsConfig(NotifyController.java:38)
-com.qcz.qmplatform.module.notify.controller.NotifyController$$FastClassBySpringCGLIB$$eac69a48.invoke(<generated>)
+	com.qcz.qmplatform.module.business.notify.controller.NotifyController.getSmsConfig(NotifyController.java:38)
+com.qcz.qmplatform.module.business.notify.controller.NotifyController$$FastClassBySpringCGLIB$$eac69a48.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
@@ -1284,8 +1284,8 @@ INSERT INTO sys_operate_log VALUES ('1809a585-63ab-44f0-8fcb-94fdd9be6420', 1, '
 INSERT INTO sys_operate_log VALUES ('7d50572d-3c8c-4347-a671-e13f04473e30', 0, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-03 16:21:04.793', '/operation/data-bak/getDataBakStrategy', NULL, '127.0.0.1', 0, 'java.lang.NumberFormatException:null
 	java.lang.Integer.parseInt(Integer.java:542)
 java.lang.Integer.parseInt(Integer.java:615)
-com.qcz.qmplatform.module.operation.controller.DataBakController.getDataBakStrategy(DataBakController.java:85)
-com.qcz.qmplatform.module.operation.controller.DataBakController$$FastClassBySpringCGLIB$$aa947ae9.invoke(<generated>)
+com.qcz.qmplatform.module.business.operation.controller.DataBakController.getDataBakStrategy(DataBakController.java:85)
+com.qcz.qmplatform.module.business.operation.controller.DataBakController$$FastClassBySpringCGLIB$$aa947ae9.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
@@ -1405,8 +1405,8 @@ INSERT INTO sys_operate_log VALUES ('66e5011e-b7f4-402a-a1b6-d032036cc624', 4, '
 INSERT INTO sys_operate_log VALUES ('66382cf3-fa64-4f27-994e-ad154391bc7c', 4, '用户管理', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-07 14:11:57.944', '/user/changeCurrentUserPwd', '修改当前用户密码', '127.0.0.1', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('7a8b02ee-0780-4c9a-982a-672e36493782', -1, '退出系统', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-07 14:12:22.199', '/logout', '系统管理员 退出了系统', '127.0.0.1', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('411d02ab-b63e-4db6-a5ad-ce946df76f3a', 0, NULL, NULL, NULL, '2021-01-07 14:48:01.092', '/user/nnl/getValidateCode', NULL, '127.0.0.1', 0, 'java.lang.NullPointerException:null
-	com.qcz.qmplatform.module.system.controller.UserController.getValidateCode(UserController.java:284)
-com.qcz.qmplatform.module.system.controller.UserController$$FastClassBySpringCGLIB$$6ac3e070.invoke(<generated>)
+	com.qcz.qmplatform.module.business.system.controller.UserController.getValidateCode(UserController.java:284)
+com.qcz.qmplatform.module.business.system.controller.UserController$$FastClassBySpringCGLIB$$6ac3e070.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
@@ -1418,8 +1418,8 @@ sun.reflect.NativeMethodAcc');
 INSERT INTO sys_operate_log VALUES ('f334f9e9-1e88-4895-aa8c-caa1b90f781e', 0, NULL, NULL, NULL, '2021-01-07 14:56:52.271', '/user/nnl/getValidateCode', NULL, '127.0.0.1', 0, 'java.lang.IllegalArgumentException:[Assertion failed] - this String argument must have text; it must not be null, empty, or blank
 	cn.hutool.core.lang.Assert.notBlank(Assert.java:207)
 cn.hutool.core.lang.Assert.notBlank(Assert.java:225)
-com.qcz.qmplatform.module.system.controller.UserController.getValidateCode(UserController.java:284)
-com.qcz.qmplatform.module.system.controller.UserController$$FastClassBySpringCGLIB$$6ac3e070.invoke(<generated>)
+com.qcz.qmplatform.module.business.system.controller.UserController.getValidateCode(UserController.java:284)
+com.qcz.qmplatform.module.business.system.controller.UserController$$FastClassBySpringCGLIB$$6ac3e070.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
@@ -1455,9 +1455,9 @@ INSERT INTO sys_operate_log VALUES ('55f587be-de58-4914-9cf8-254e34d17b20', -1, 
 INSERT INTO sys_operate_log VALUES ('b8d2ccd4-6626-48be-95c7-e882ffd70900', 1, '登录系统', '6b663de3-e983-4c8a-b900-dc0b66b2a801', '屈长忠', '2021-01-08 15:06:05.084', '/login', '屈长忠 进入了系统', '127.0.0.1', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('73e648d8-3910-4947-b229-cafd7438d195', 1, '登录系统', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-13 14:53:46.472', '/login', '系统管理员 进入了系统', '127.0.0.1', 1, NULL);
 INSERT INTO sys_operate_log VALUES ('a8a26e15-fa02-4626-a9e6-3762b3df2bcb', 1, '登录系统', '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-19 13:46:33.324', '/login', '系统管理员 进入了系统', '127.0.0.1', 1, NULL);
-INSERT INTO sys_operate_log VALUES ('ddb9f6e8-4817-4eff-94b3-64c09b3349ce', 0, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-19 13:46:37.534', '/notify/getSmsConfig', NULL, '127.0.0.1', 0, 'java.lang.ClassCastException:com.qcz.qmplatform.module.notify.domain.bean.SmsConfig cannot be cast to com.qcz.qmplatform.module.notify.domain.vo.SmsConfigVO
-	com.qcz.qmplatform.module.notify.controller.NotifyController.getSmsConfig(NotifyController.java:43)
-com.qcz.qmplatform.module.notify.controller.NotifyController$$FastClassBySpringCGLIB$$eac69a48.invoke(<generated>)
+INSERT INTO sys_operate_log VALUES ('ddb9f6e8-4817-4eff-94b3-64c09b3349ce', 0, NULL, '20a008c3-bc54-42a6-9822-ea4674aa5d1f', '系统管理员', '2021-01-19 13:46:37.534', '/notify/getSmsConfig', NULL, '127.0.0.1', 0, 'java.lang.ClassCastException:com.qcz.qmplatform.module.business.notify.domain.bean.SmsConfig cannot be cast to com.qcz.qmplatform.module.business.notify.domain.vo.SmsConfigVO
+	com.qcz.qmplatform.module.business.notify.controller.NotifyController.getSmsConfig(NotifyController.java:43)
+com.qcz.qmplatform.module.business.notify.controller.NotifyController$$FastClassBySpringCGLIB$$eac69a48.invoke(<generated>)
 org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
 org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)

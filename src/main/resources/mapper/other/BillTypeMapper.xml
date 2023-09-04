@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qcz.qmplatform.module.other.mapper.BillTypeMapper">
+<mapper namespace="com.qcz.qmplatform.module.business.other.mapper.BillTypeMapper">
 
-    <select id="getBillTypeList" resultType="com.qcz.qmplatform.module.other.domain.pojo.BillTypeTree">
+    <select id="getBillTypeList" resultType="com.qcz.qmplatform.module.business.other.domain.pojo.BillTypeTree">
         select
             id,
             name,

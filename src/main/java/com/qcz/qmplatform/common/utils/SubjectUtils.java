@@ -1,7 +1,7 @@
 package com.qcz.qmplatform.common.utils;
 
-import com.qcz.qmplatform.module.system.domain.User;
-import com.qcz.qmplatform.module.system.service.UserService;
+import com.qcz.qmplatform.module.business.system.domain.User;
+import com.qcz.qmplatform.module.business.system.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;

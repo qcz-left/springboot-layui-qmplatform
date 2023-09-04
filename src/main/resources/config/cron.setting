@@ -1,2 +1,2 @@
-[com.qcz.qmplatform.module.sche]
+[com.qcz.qmplatform.module.schedule]
 DeleteTmpFileSchedule.run = */3 * * * *

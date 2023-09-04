@@ -4,7 +4,7 @@ import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.LFUCache;
 import cn.hutool.cache.impl.TimedCache;
 import cn.hutool.core.date.DateUnit;
-import com.qcz.qmplatform.module.system.domain.User;
+import com.qcz.qmplatform.module.business.system.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +21,7 @@ public class CacheUtils {
     private static final LFUCache<String, Object> COMMON_CACHE = CacheUtil.newLFUCache(100);
 
     /**
-     * 在线用户信息缓存 userId -> com.qcz.qmplatform.module.system.domain.User
+     * 在线用户信息缓存 userId -> com.qcz.qmplatform.module.business.system.domain.User
      */
     public static final TimedCache<String, User> USER_CACHE = CacheUtil.newTimedCache(DateUnit.HOUR.getMillis() * 2);
 

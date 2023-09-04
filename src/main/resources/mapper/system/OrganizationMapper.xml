@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qcz.qmplatform.module.system.mapper.OrganizationMapper">
-    <select id="selectOrgTree" resultType="com.qcz.qmplatform.module.system.domain.pojo.OrgTree">
+<mapper namespace="com.qcz.qmplatform.module.business.system.mapper.OrganizationMapper">
+    <select id="selectOrgTree" resultType="com.qcz.qmplatform.module.business.system.domain.pojo.OrgTree">
         select
             organization_id as id,
             organization_name as name,
@@ -15,7 +15,7 @@
         order by iorder
     </select>
 
-    <select id="selectOrgUserTree" resultType="com.qcz.qmplatform.module.system.domain.pojo.OrgTree">
+    <select id="selectOrgUserTree" resultType="com.qcz.qmplatform.module.business.system.domain.pojo.OrgTree">
         select
             organization_id as id,
             organization_name as name,
