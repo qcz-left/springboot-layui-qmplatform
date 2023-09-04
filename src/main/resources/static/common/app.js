@@ -116,7 +116,7 @@ function sortEventListen(layuiTable, layFilter, tableId) {
             where['orderName'] = obj.field;
             where['order'] = obj.type;
         }
-        layuiTable.reload(tableId, {
+        layuiTable.reloadData(tableId, {
             where: where
         });
     });
@@ -129,7 +129,7 @@ function layuiTableReload(layuiTable, tableId, where) {
         where['orderName'] = oldWhere['orderName']
         where['order'] = oldWhere['order']
     }
-    layuiTable.reload(tableId, {
+    layuiTable.reloadData(tableId, {
         page: {
             curr: 1
         },
