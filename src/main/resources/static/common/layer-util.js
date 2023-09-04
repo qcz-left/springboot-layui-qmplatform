@@ -106,12 +106,23 @@ const LayerUtil = {
             }, tipsOptions));
 
             if (isClickTrigger) {
-                $(follow).parents("body").children().click(function () {
-                    let id = $(this).attr("id");
-                    if (id !== "layui-layer" + tipIndex) {
-                        layer.close(tipIndex)
-                    }
+                $("#layui-layer" + tipIndex).click(function (event) {
+                    event.stopPropagation();
                 });
+
+                let closeTips = function (window) {
+                    if (!window) {
+                        return;
+                    }
+                    window.$("html").click(function () {
+                        layer.close(tipIndex)
+                    });
+                    if (window !== top) {
+                        closeTips(window.parent);
+                    }
+                }
+
+                closeTips(window);
             }
         });
 
