@@ -272,7 +272,7 @@ public class MybatisInterceptor implements Interceptor {
             replacementStr = replacement.deleteCharAt(0).toString();
         } else if (value instanceof String) {
             replacementStr = "'" + value + "'";
-        } else if (value instanceof Integer) {
+        } else if (value instanceof Number) {
             replacementStr = "" + value + "";
         } else {
             log.warn("the parameter type[{}] is not supported!", value.getClass());
