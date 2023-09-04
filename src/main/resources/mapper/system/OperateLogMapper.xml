@@ -11,8 +11,8 @@
         left join (select attr_value, attr_name from v_sys_dict_attr where dict_code = 'operate-type') va1 on va1.attr_value = concat(sol.operate_type, '')
         left join (select attr_value, attr_name from v_sys_dict_attr where dict_code = 'operate-status') va2 on va2.attr_value = concat(sol.operate_status, '')
         where 1 = 1
-        [[ and sol.operate_user_name like concat('%', #operateUserName#, '%') ]]
-        [[ and sol.description like concat('%', #description#, '%') ]]
+        [[ and sol.operate_user_name like concat(concat('%', #operateUserName#), '%') ]]
+        [[ and sol.description like concat(concat('%', #description#), '%') ]]
         [[ and sol.operate_type = #operateType# ]]
         [[ and sol.operate_status = #operateStatus# ]]
         [[ and sol.operate_time >= #operateTimeStart# ]]
