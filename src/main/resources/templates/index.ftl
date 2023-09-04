@@ -186,7 +186,10 @@ layui.use(['element', 'dropdown'], function () {
         $layuiSide.find(".layui-nav-child").addClass("hide");
 
         $layuiSide.find(".layui-nav-tree > li").each(function () {
-            LayerUtil.tips($(this).find(".menu-name").html(), $(this));
+            LayerUtil.tips({
+                content: $(this).find(".menu-name").html(),
+                follow: $(this)
+            });
         });
         $("#collapseIcon,.layui-side .layui-nav-more,.menu-name").hide();
         $("#expandIcon").show();

@@ -73,14 +73,53 @@ const LayerUtil = {
         return currentLayer;
     },
 
-    tips: function (content, follow, options) {
+    /**
+     * layer的tooltips
+     *
+     * @param options
+     * content: 显示内容<br>
+     * follow: 展示位置<br>
+     * trigger: 触发事件，鼠标移上去展示（move）或鼠标左键点击展示（click），默认 move<br>
+     * @param tipsOptions
+     */
+    tips: function (options, tipsOptions) {
+        let content = options.content;
+        let follow = options.follow;
+        let trigger = options.trigger || 'move';
+
         let tipIndex;
-        $(follow).mouseenter(function () {
+        let tipsTrigger;
+        let cancelTipsTrigger;
+        let isClickTrigger = trigger === 'click';
+        if (isClickTrigger) {
+            tipsTrigger = "click";
+        } else {
+            tipsTrigger = "mouseenter";
+            cancelTipsTrigger = "mouseleave";
+        }
+
+        $(follow).css("cursor", "pointer");
+        $(follow).on(tipsTrigger, function (event) {
+            event.stopPropagation();
             tipIndex = layer.tips(content, this, $.extend({
                 time: 0
-            }, options));
-        }).mouseleave(function () {
-            layer.close(tipIndex);
+            }, tipsOptions));
+
+            if (isClickTrigger) {
+                $(follow).parents("body").children().click(function () {
+                    let id = $(this).attr("id");
+                    if (id !== "layui-layer" + tipIndex) {
+                        layer.close(tipIndex)
+                    }
+                });
+            }
         });
+
+        if (cancelTipsTrigger) {
+            $(follow).on(cancelTipsTrigger, function () {
+                layer.close(tipIndex)
+            })
+        }
+
     }
 };
