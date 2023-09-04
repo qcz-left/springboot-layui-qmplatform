@@ -103,7 +103,7 @@ public class LoginController {
 
     @GetMapping("/home")
     public String home() {
-        return "steps_demo";
+        return "home";
     }
 
     @GetMapping("/nnl/loginAgain")
