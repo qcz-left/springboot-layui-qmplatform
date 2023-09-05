@@ -69,7 +69,7 @@ layui.define(['lay', 'layer', 'util'], function(exports){
     var stop = null //验证不通过状态
         ,verify = form.config.verify //验证规则
         ,DANGER = 'layui-form-danger' //警示样式
-        ,verifyElem = $form.find('*[lay-verify]:visible') //获取需要校验的元素
+        ,verifyElem = $form.find('*[lay-verify]:not([novalid])') //获取需要校验的元素
 
     //开始校验
     layui.each(verifyElem, function(_, item){
@@ -1086,7 +1086,7 @@ layui.define(['lay', 'layer', 'util'], function(exports){
     : button.parents(ELEM).eq(0);
 
     // 获取需要校验的元素
-    var verifyElem = elem.find('*[lay-verify]:visible');
+    var verifyElem = elem.find('*[lay-verify]:not([novalid])');
 
     // 开始校验
     if(!form.validate(verifyElem)) return false;

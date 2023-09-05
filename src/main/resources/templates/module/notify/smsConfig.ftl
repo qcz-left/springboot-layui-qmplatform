@@ -26,33 +26,33 @@
                 <div class="layui-form-item hide-or-show hide">
                     <label class="layui-form-label required">AppId</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="appId" lay-verify="required" autocomplete="off" class="layui-input">
+                        <input type="text" name="appId" lay-verify="required" novalid autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item hide-or-show hide">
                     <label class="layui-form-label required">AppKey</label>
                     <div class="layui-input-inline">
                         <input type="password" autocomplete="new-password" style="display:none">
-                        <input type="password" name="appKey" lay-verify="required" autocomplete="off" class="layui-input">
+                        <input type="password" name="appKey" lay-verify="required" novalid autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item hide-or-show hide">
                     <label class="layui-form-label required" id="secretIdLabel">SecretId</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="secretId" lay-verify="required" autocomplete="off" class="layui-input">
+                        <input type="text" name="secretId" lay-verify="required" novalid autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item hide-or-show hide">
                     <label class="layui-form-label required" id="secretKeyLabel">SecretKey</label>
                     <div class="layui-input-inline">
                         <input type="password" autocomplete="new-password" style="display:none">
-                        <input type="password" name="secretKey" lay-verify="required" autocomplete="off" class="layui-input">
+                        <input type="password" name="secretKey" lay-verify="required" novalid autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item hide-or-show hide">
                     <label class="layui-form-label required">通道号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="channelNumber" lay-verify="required" autocomplete="off" class="layui-input">
+                        <input type="text" name="channelNumber" lay-verify="required" novalid autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -112,14 +112,14 @@
             }
         };
         let toggleProvider = function (provider) {
-            $(".hide-or-show").addClass("hide");
-            var smsJsonElement = smsJson[provider];
+            $(".hide-or-show").addClass("hide").find("input").attr("novalid", true);
+            let smsJsonElement = smsJson[provider];
             if (!smsJsonElement) {
                 return;
             }
             let displayElement = smsJsonElement["displayElement"];
             for (let i = 0; i < displayElement.length; i++) {
-                $("[name=" + displayElement[i] + "]").parents(".hide-or-show").removeClass("hide");
+                $("[name=" + displayElement[i] + "]").removeAttr("novalid").parents(".hide-or-show").removeClass("hide");
             }
             $("#secretIdLabel").text(smsJsonElement["secretIdLabel"] || "SecretId");
             $("#secretKeyLabel").text(smsJsonElement["secretKeyLabel"] || "SecretKey");
