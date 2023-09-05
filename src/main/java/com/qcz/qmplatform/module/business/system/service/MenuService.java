@@ -34,6 +34,9 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
     @Resource
     private ButtonService buttonService;
 
+    @Resource
+    private RolePermissionService rolePermissionService;
+
     public List<MenuTree> getMenuTree(PermissionVO permission) {
         String permissionId = permission.getPermissionId();
         if (StringUtils.isNotBlank(permissionId)
@@ -120,9 +123,11 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
             menuIds = queryMenuIdRecursive(menuIds);
             buttonService.deleteButtonByMenuId(menuIds);
             super.removeByIds(menuIds);
+            rolePermissionService.deleteByPermissionIds(menuIds);
         }
         if (CollectionUtil.isNotEmpty(buttonIds)) {
             buttonService.removeByIds(buttonIds);
+            rolePermissionService.deleteByPermissionIds(buttonIds);
         }
         return true;
     }

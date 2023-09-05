@@ -25,18 +25,15 @@ import com.qcz.qmplatform.module.business.system.domain.Role;
 import com.qcz.qmplatform.module.business.system.domain.User;
 import com.qcz.qmplatform.module.business.system.domain.UserOrganization;
 import com.qcz.qmplatform.module.business.system.domain.UserRole;
-import com.qcz.qmplatform.module.business.system.mapper.UserMapper;
-import com.qcz.qmplatform.module.business.system.mapper.UserOrganizationMapper;
-import com.qcz.qmplatform.module.business.system.mapper.UserRoleMapper;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserQO;
 import com.qcz.qmplatform.module.business.system.domain.vo.CurrentUserInfoVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.PasswordVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
+import com.qcz.qmplatform.module.business.system.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -70,10 +67,10 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     @Resource
-    private UserOrganizationMapper userOrganizationMapper;
+    private UserOrganizationService userOrganizationService;
 
     @Resource
-    private UserRoleMapper userRoleMapper;
+    private UserRoleService userRoleService;
 
     @Resource
     private OrganizationService organizationService;
@@ -99,13 +96,6 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         return baseMapper.queryByRoleSign(Constant.SYSTEM_ADMIN);
     }
 
-    public User findByLoginNameAndPassword(String loginName, String password) {
-        LambdaQueryWrapper<User> queryWrapper = Wrappers.lambdaQuery(User.class)
-                .eq(User::getLoginname, loginName)
-                .eq(User::getPassword, password);
-        return this.getOne(queryWrapper);
-    }
-
     public UserVO queryUserByName(String loginName) {
         return baseMapper.queryUserByName(loginName);
     }
@@ -126,10 +116,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public boolean updateUser(UserVO user) {
         String userId = user.getId();
         // 先删除关联的组织机构和角色，在增加
-        Map<String, Object> params = new HashMap<>(2);
-        params.put("user_id", userId);
-        userOrganizationMapper.deleteByMap(params);
-        userRoleMapper.deleteByMap(params);
+        userOrganizationService.deleteByUserIds(CollectionUtil.newArrayList(userId));
+        userRoleService.deleteByUserIds(CollectionUtil.newArrayList(userId));
         insertUserOrg(userId, user.getOrganizationIds());
         insertUserRole(userId, user.getRoleIds());
         // 处理密码
@@ -163,8 +151,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         User user = getById(userId);
         UserVO userVo = new UserVO();
         BeanUtil.copyProperties(user, userVo);
-        userVo.setOrganizationIds(userOrganizationMapper.getOrganizationIdsByUserId(userId));
-        userVo.setRoleIds(CollectionUtil.getFieldValues(userRoleMapper.getRoleByUserId(userId), "roleId", String.class));
+        userVo.setOrganizationIds(userOrganizationService.getBaseMapper().getOrganizationIdsByUserId(userId));
+        userVo.setRoleIds(CollectionUtil.getFieldValues(userRoleService.getBaseMapper().getRoleByUserId(userId), "roleId", String.class));
         return userVo;
     }
 
@@ -176,7 +164,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             UserOrganization userOrganization = new UserOrganization();
             userOrganization.setUserId(userId);
             userOrganization.setOrganizationId(organizationId);
-            userOrganizationMapper.insert(userOrganization);
+            userOrganizationService.save(userOrganization);
         }
     }
 
@@ -188,7 +176,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             UserRole userRole = new UserRole();
             userRole.setUserId(userId);
             userRole.setRoleId(roleId);
-            userRoleMapper.insert(userRole);
+            userRoleService.save(userRole);
         }
     }
 
@@ -205,7 +193,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         currentUserInfoVO.setPhone(user.getPhone());
         currentUserInfoVO.setRemark(user.getRemark());
         currentUserInfoVO.setUserSex(user.getUserSex());
-        List<Role> roles = userRoleMapper.getRoleByUserId(user.getId());
+        List<Role> roles = userRoleService.getBaseMapper().getRoleByUserId(user.getId());
         currentUserInfoVO.setRoleName(CollectionUtil.join(CollectionUtil.getFieldValues(roles, "roleName", String.class), ","));
         return currentUserInfoVO;
     }
@@ -342,5 +330,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         importResult.setSuccessCount(successCount);
         importResult.setFailCount(total - successCount);
         return ResponseResult.ok(importResult);
+    }
+
+    public void deleteUserByIds(List<String> userIds) {
+        removeByIds(userIds);
+        userOrganizationService.deleteByUserIds(userIds);
+        userRoleService.deleteByUserIds(userIds);
     }
 }

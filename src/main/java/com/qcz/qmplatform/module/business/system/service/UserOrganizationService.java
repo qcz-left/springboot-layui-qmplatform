@@ -44,4 +44,16 @@ public class UserOrganizationService extends ServiceImpl<UserOrganizationMapper,
                         .in(UserOrganization::getOrganizationId, deptIds)
         );
     }
+
+    /**
+     * 根据用户ID删除用户部门关联信息
+     *
+     * @param userIds 用户ID集合
+     */
+    public void deleteByUserIds(List<String> userIds) {
+        super.remove(
+                Wrappers.lambdaQuery(UserOrganization.class)
+                        .in(UserOrganization::getUserId, userIds)
+        );
+    }
 }

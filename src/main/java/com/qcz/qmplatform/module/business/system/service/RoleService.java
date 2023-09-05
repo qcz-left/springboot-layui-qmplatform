@@ -29,6 +29,9 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
     @Resource
     private RolePermissionService rolePermissionService;
 
+    @Resource
+    private UserRoleService userRoleService;
+
     public List<Role> getRoleList(Role role) {
         String roleName = role.getRoleName();
         LambdaQueryWrapper<Role> wrapper = Wrappers.lambdaQuery(Role.class)
@@ -45,8 +48,10 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
         return updateById(role);
     }
 
-    public boolean deleteRole(List<String> roleIds) {
-        return removeByIds(roleIds);
+    public void deleteRole(List<String> roleIds) {
+        removeByIds(roleIds);
+        userRoleService.deleteByRoleIds(roleIds);
+        rolePermissionService.deleteByRoleIds(roleIds);
     }
 
     public boolean saveRoleOne(Role role) {

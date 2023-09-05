@@ -271,7 +271,8 @@ public class UserController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除用户")
     public ResponseResult<Void> delUser(String userIds) {
-        return ResponseResult.newInstance(userService.removeByIds(StringUtils.split(userIds, ',')));
+        userService.deleteUserByIds(StringUtils.split(userIds, ","));
+        return ResponseResult.ok();
     }
 
     /**

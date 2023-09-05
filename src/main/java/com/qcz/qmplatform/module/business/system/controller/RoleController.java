@@ -158,7 +158,8 @@ public class RoleController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除角色")
     public ResponseResult<Void> deleteRole(String roleIds) {
-        return ResponseResult.newInstance(roleService.deleteRole(StringUtils.split(roleIds, ',')));
+        roleService.deleteRole(StringUtils.split(roleIds, ','));
+        return ResponseResult.ok();
     }
 
     /**
