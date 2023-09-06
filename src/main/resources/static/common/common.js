@@ -185,30 +185,6 @@ const CommonUtil = {
     },
 
     /**
-     * js动态导入static静态文件（js、css）
-     * resourceNames ：资源名称，多个以逗号“,”隔开（如：'layui,vue'）
-     */
-    loadStaticResources: function (resourceNames) {
-        let resourceNameArr = resourceNames.split(",");
-        for (let i in resourceNameArr) {
-            let item = resourceNameArr[i];
-            if (item == "layui") {
-                document.write("<link rel='stylesheet' href='" + ctx + "/static/plugin/layui/css/layui.css'>");
-                document.write("<script type='text/javascript' src='" + ctx + "/static/plugin/layui/layui.js'><\/script>");
-            } else if (item == "jquery") {
-                document.write("<script type='text/javascript' src='" + ctx + "/static/plugin/jquery/jquery-2.2.2.min.js'><\/script>");
-            } else if (item == "echarts") {
-                document.write("<script type='text/javascript' src='" + ctx + "/static/plugin/echarts/echarts.min.js'><\/script>");
-            } else if (item == "layer") {
-                document.write("<link rel='stylesheet' href='" + ctx + "/static/plugin/layer/layer-v3.1.0/theme/default/layer.css'>");
-                document.write("<script type='text/javascript' src='" + ctx + "/static/plugin/layer/layer-v3.1.0/layer.js'><\/script>");
-            } else if (item == "vue") {
-                document.write("<script type='text/javascript' src='" + ctx + "/static/plugin/vuejs/vue-2.3.0/vue.min.js'><\/script>");
-            }
-        }
-    },
-
-    /**
      * http 响应成功
      * @param res
      * @returns {boolean}

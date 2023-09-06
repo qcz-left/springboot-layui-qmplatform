@@ -5,7 +5,7 @@ let ctx = "${requestContext.contextPath}";
 </script>
 <#include './priv_code.ftl'>
 <head>
-    <script type="text/javascript" src="${ctx}/static/plugin/jquery/jquery-2.2.2.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/plugin/jquery/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="${ctx}/static/plugin/layui/css/layui.css" />
     <script type="text/javascript" src="${ctx}/static/plugin/layui/layui.js"></script>
     <script type="text/javascript" src="${ctx}/static/common/layui-extends.js"></script>
@@ -23,12 +23,6 @@ let ctx = "${requestContext.contextPath}";
                 <script type="text/javascript" src="${ctx}/static/plugin/sparklines/jquery.sparkline.min.js"></script>
             <#elseif item == "tinymce">
                 <script type="text/javascript" src="${ctx}/static/plugin/tinymce/tinymce.min.js"></script>
-            <#elseif item == "jqgrid">
-            <#--jqgrid-->
-            <link rel="stylesheet" href="${ctx}/static/plugin/jqgrid/css/css/ui-lightness/jquery-ui-1.8.16.custom.css" />
-            <link rel="stylesheet" href="${ctx}/static/plugin/jqgrid/css/ui.jqgrid.css" />
-                <script type="text/javascript" src="${ctx}/static/plugin/jqgrid/js/i18n/grid.locale-cn.js"></script>
-                <script type="text/javascript" src="${ctx}/static/plugin/jqgrid/js/jquery.jqGrid.src.js"></script>
             </#if>
         </#list>
     </#if>
