@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.system.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -38,6 +39,13 @@ public class IniService extends ServiceImpl<IniMapper, Ini> {
                 .eq(StringUtils.isNotBlank(sec), Ini::getSection, sec)
                 .eq(StringUtils.isNotBlank(pro), Ini::getProperty, pro);
         return getOne(queryWrapper).getValue();
+    }
+
+    public void deleteBySecAndPro(String sec, String pro) {
+        Wrapper<Ini> wrapper = Wrappers.lambdaQuery(Ini.class)
+                .eq(StringUtils.isNotBlank(sec), Ini::getSection, sec)
+                .eq(StringUtils.isNotBlank(pro), Ini::getProperty, pro);
+        remove(wrapper);
     }
 
     public boolean deleteBySec(String sec) {

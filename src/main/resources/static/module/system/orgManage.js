@@ -1,5 +1,71 @@
-layui.use(['dtree', 'table', 'form', 'element'], function () {
+layui.use(['dtree', 'table', 'form', 'element', 'util', 'xmSelect'], function () {
     let dtree = layui.dtree;
+    let util = layui.util;
+    let xmSelect = layui.xmSelect;
+
+    // 自定义固定条
+    util.fixbar({
+        bars: [{
+            type: 'setting',
+            icon: 'layui-icon-set'
+        }],
+        css: {
+            top: 70
+        },
+        click: function (type) {
+            if (type === 'setting') {
+                layer.open({
+                    type: 1,
+                    title: '组织架构通用设置',
+                    offset: 'r',
+                    anim: 'slideLeft', // 从右往左
+                    area: ['380px', '100%'],
+                    shade: 0.1,
+                    shadeClose: true,
+                    id: 'org-setting',
+                    content: $("#orgCommonSetting")
+                });
+                let deptSelectValue;
+                CommonUtil.postSync(ctx + '/organization/getOrgCommonConfig', {}, function (result) {
+                    let data = result.data;
+                    deptSelectValue = data.unknownDept || '';
+                });
+                let deptSelectData;
+                CommonUtil.getSync(ctx + '/organization/getOrgTree', {}, function (result) {
+                    deptSelectData = result.data;
+                });
+                // 侧边设置，部门数据
+                xmSelect.render({
+                    el: '#commonSettingDept',
+                    name: 'commonSettingDept',
+                    radio: true,
+                    clickClose: true,//选中关闭
+                    tree: {
+                        strict: false,
+                        show: true,
+                        showLine: false,
+                        clickExpand: false
+                    },
+                    model: {label: {type: 'text'}},
+                    prop: {
+                        value: 'id',
+                        children: 'childes'
+                    },
+                    data: deptSelectData,
+                    initValue: [deptSelectValue],
+                    on: function (data) {
+                        if (data.arr.length === 0) {
+                            return;
+                        }
+                        let value = data.arr[0].id;
+                        CommonUtil.postAjax(ctx + '/organization/updateUnknownDept/' + value, {}, function (result) {
+                            LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE);
+                        });
+                    }
+                });
+            }
+        }
+    });
 
     let orgData = [];
     CommonUtil.getSync(ctx + '/organization/getOrgUserTree', {}, function (result) {

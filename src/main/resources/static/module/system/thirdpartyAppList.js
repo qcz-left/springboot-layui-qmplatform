@@ -6,7 +6,8 @@ layui.use(['form', 'table'], function () {
     let baseUrl = ctx + '/system/thirdparty-app';
 
     let nameDef = {
-        "dingtalk-code": "钉钉扫码"
+        "dingtalk-code": "钉钉扫码",
+        "dingtalk-synchro": "钉钉组织架构同步"
     }
     table.render({
         elem: '#' + tableId,
@@ -26,7 +27,7 @@ layui.use(['form', 'table'], function () {
         ]]
     });
 
-    form.on('switch(status)', function(obj){
+    form.on('switch(status)', function (obj) {
         console.log(obj);
         let operateName = obj.othis[0].innerText;
         CommonUtil.postAjax(baseUrl + "/updateStatus", {
@@ -59,7 +60,7 @@ layui.use(['form', 'table'], function () {
                 open(id);
                 break;
             case 'delete':
-                remove([id], [nameDef[name]]);
+                remove(id, name);
                 break;
         }
     });
@@ -116,14 +117,18 @@ layui.use(['form', 'table'], function () {
         });
     }
 
-    function remove(ids, names) {
-        layer.confirm("是否要删除第三方应用参数配置信息：<span class='text-success'>" + CommonUtil.joinMultiByLen(names, 3) + "</span>，删除后将不可恢复！", {
+    function tableReload() {
+        layuiTableReload(table, tableId, {});
+    }
+
+    function remove(id, name) {
+        layer.confirm("是否要删除第三方应用参数配置信息：<span class='text-success'>" + CommonUtil.joinMultiByLen(nameDef[name], 3) + "</span>，删除后将不可恢复！", {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
             CommonUtil.postAjax(baseUrl + "/delete", {
-                ids: CommonUtil.joinMulti(ids),
-                names: CommonUtil.joinMulti(names)
+                id: id,
+                name: name
             }, function (data) {
                 LayerUtil.respMsg(data, Msg.DELETE_SUCCESS, Msg.DELETE_FAILURE, function () {
                     tableReload();
@@ -131,10 +136,6 @@ layui.use(['form', 'table'], function () {
                 layer.close(index);
             }, null, true, false);
         });
-    }
-
-    function tableReload() {
-        layuiTableReload(table, tableId, {});
     }
 
 });

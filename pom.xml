@@ -43,9 +43,17 @@
         <bcprov-jdk15on.version>1.67</bcprov-jdk15on.version>
         <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
         <junit.version>4.13.1</junit.version>
+        <tinypinyin.version>2.0.3.RELEASE</tinypinyin.version>
     </properties>
 
     <dependencies>
+        <!-- 拼音 -->
+        <dependency>
+            <groupId>io.github.biezhi</groupId>
+            <artifactId>TinyPinyin</artifactId>
+            <version>${tinypinyin.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

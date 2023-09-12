@@ -84,9 +84,9 @@ public class ThirdpartyAppController extends BaseController {
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除第三方应用参数配置信息")
-    public ResponseResult<Void> delete(String ids, String names) {
-        boolean success = thirdpartyAppService.removeByIds(StringUtils.split(ids, ','));
-        DBChangeCenter.getInstance().doNotify(DBNotifyInfo.newInstance(DBProperties.Table.SYS_THIRDPARTY_APP, names));
+    public ResponseResult<Void> delete(String id, String name) {
+        boolean success = thirdpartyAppService.removeByIds(StringUtils.split(id, ','));
+        DBChangeCenter.getInstance().doNotify(DBNotifyInfo.newInstance(DBProperties.Table.SYS_THIRDPARTY_APP, name));
         return ResponseResult.newInstance(success);
     }
 

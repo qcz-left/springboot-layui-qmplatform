@@ -17,4 +17,9 @@ public class Constant {
      * 系统超级管理员角色标识
      */
     public static final String SYSTEM_ADMIN = "system-admin";
+
+    /**
+     * Root部门ID
+     */
+    public static final String ROOT_DEPT_ID = "526f57b8-6b09-407d-9099-96fa38719814";
 }

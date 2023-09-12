@@ -56,4 +56,18 @@ public class UserOrganizationService extends ServiceImpl<UserOrganizationMapper,
                         .in(UserOrganization::getUserId, userIds)
         );
     }
+
+    /**
+     * 更新部门ID
+     *
+     * @param newDeptId  新部门ID
+     * @param oldDeptIds 旧部门ID集合
+     */
+    public void updateDeptByDeptId(String newDeptId, List<String> oldDeptIds) {
+        super.update(
+                Wrappers.lambdaUpdate(UserOrganization.class)
+                        .set(UserOrganization::getOrganizationId, newDeptId)
+                        .in(UserOrganization::getOrganizationId, oldDeptIds)
+        );
+    }
 }

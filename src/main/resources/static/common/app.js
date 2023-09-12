@@ -179,3 +179,19 @@ function rsaEncrypt(data) {
     encrypt.setPublicKey(top.rsaPublicKey);
     return "ENC({0})".format(encrypt.encrypt(data));
 }
+
+/**
+ * 清除表单上的校验
+ * @param selector 选择器
+ */
+function clearFormValid(selector) {
+    $(selector).attr("novalid", true);
+}
+
+/**
+ * 添加表单上的校验
+ * @param selector 选择器
+ */
+function addFormValid(selector) {
+    $(selector).removeAttr("novalid");
+}

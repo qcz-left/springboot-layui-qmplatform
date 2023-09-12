@@ -20,6 +20,16 @@ public interface IniDefine {
      */
     String LOGIN_SETTING = "LoginSetting";
 
+    /**
+     * 组织架构同步设置
+     */
+    String SYNCHRO_CONFIG = "SynchroConfig";
+
+    /**
+     * 组织架构通用设置
+     */
+    String ORG_COMMON_CONFIG = "OrgCommonConfig";
+
     interface DataBak {
         /**
          * 开启备份（0：关闭，1：开启）
@@ -55,10 +65,14 @@ public interface IniDefine {
         String LOCK_AT_ERROR_TIMES = "LockAtErrorTimes";
     }
 
-    interface LoginSetting {
+    /**
+     * 组织架构通用设置
+     */
+    interface OrgCommonConfig {
         /**
-         * 其它登录方式
+         * 未知部门
          */
-        String OTHER_LOGIN_WAY = "otherLoginWay";
+        String UNKNOWN_DEPT = "unknownDept";
     }
+
 }

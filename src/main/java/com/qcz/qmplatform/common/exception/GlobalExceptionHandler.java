@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
     /**
      * 业务异常
      */
-    @ExceptionHandler(BusinessException.class)
+    @ExceptionHandler({BusinessException.class, CommonException.class})
     @ResponseBody
     public ResponseResult<Void> errorHandleByBusiness(Exception ex) {
         LOGGER.error(ex.getMessage(), ex);

@@ -33,6 +33,7 @@
             <li lay-id="dept-manage" lay-href="${ctx}/organization/deptManagePage">部门管理</li>
             <li lay-id="user-manage" lay-href="${ctx}/organization/userManagePage">用户管理</li>
             </#if>
+            <li lay-id="synchro" lay-href="${ctx}/organization/synchroPage">同步设置</li>
         </ul>
         <div id="org-content" class="layui-tab-content">
             <iframe frameborder="0" style="width: 100%;height: 100%;"></iframe>

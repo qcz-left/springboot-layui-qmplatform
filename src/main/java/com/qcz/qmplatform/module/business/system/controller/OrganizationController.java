@@ -9,6 +9,8 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.Organization;
+import com.qcz.qmplatform.module.business.system.domain.dto.OrgCommonConfigDTO;
+import com.qcz.qmplatform.module.business.system.domain.dto.SynchroConfigDTO;
 import com.qcz.qmplatform.module.business.system.domain.pojo.OrgTree;
 import com.qcz.qmplatform.module.business.system.service.OrganizationService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -88,6 +90,14 @@ public class OrganizationController extends BaseController {
     }
 
     /**
+     * 组织架构同步设置页面
+     */
+    @GetMapping("/synchroPage")
+    public String synchroPage() {
+        return "/module/system/orgSynchro";
+    }
+
+    /**
      * 获取组织机构列表
      *
      * @param organization 请求参数
@@ -129,6 +139,15 @@ public class OrganizationController extends BaseController {
     @ResponseBody
     public ResponseResult<Organization> getOrgOne(@PathVariable String orgId) {
         return ResponseResult.ok(organizationService.getById(orgId));
+    }
+
+    /**
+     * 获取同步配置
+     */
+    @PostMapping("/getSynchroConfig")
+    @ResponseBody
+    public ResponseResult<SynchroConfigDTO> getSynchroConfig() {
+        return ResponseResult.ok(organizationService.getSynchroConfig());
     }
 
     /**
@@ -180,6 +199,52 @@ public class OrganizationController extends BaseController {
     @RecordLog(type = OperateType.DELETE, description = "删除组织机构")
     public ResponseResult<Void> deleteOrg(String orgIds) {
         return ResponseResult.newInstance(organizationService.deleteOrg(StringUtils.split(orgIds, ',')));
+    }
+
+    /**
+     * 保存组织架构同步配置
+     */
+    @PostMapping("/saveSynchroConfig")
+    @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
+    @RecordLog(type = OperateType.UPDATE, description = "保存组织架构同步配置")
+    public ResponseResult<Void> saveSynchroConfig(@RequestBody SynchroConfigDTO synchroConfigDTO) {
+        return ResponseResult.newInstance(organizationService.saveSynchroConfig(synchroConfigDTO));
+    }
+
+    /**
+     * 立即同步组织架构
+     */
+    @PostMapping("/immediatelySync")
+    @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
+    @RecordLog(type = OperateType.UPDATE, description = "立即同步组织架构")
+    public ResponseResult<Void> immediatelySync(@RequestBody SynchroConfigDTO synchroConfigDTO) {
+        organizationService.immediatelySync(synchroConfigDTO);
+        return ResponseResult.ok();
+    }
+
+    /**
+     * 更新未知部门
+     *
+     * @param deptId 部门ID
+     */
+    @PostMapping("/updateUnknownDept/{deptId}")
+    @ResponseBody
+    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
+    @RecordLog(type = OperateType.UPDATE, description = "更新未知部门")
+    public ResponseResult<Void> updateUnknownDept(@PathVariable("deptId") String deptId) {
+        organizationService.updateUnknownDept(deptId);
+        return ResponseResult.ok();
+    }
+
+    /**
+     * 获取组织架构通用设置
+     */
+    @PostMapping("/getOrgCommonConfig")
+    @ResponseBody
+    public ResponseResult<OrgCommonConfigDTO> getOrgCommonConfig() {
+        return ResponseResult.ok(organizationService.getOrgCommonConfig());
     }
 
 }

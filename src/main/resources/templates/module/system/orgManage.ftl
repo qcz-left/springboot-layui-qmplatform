@@ -2,7 +2,7 @@
 <html lang="en">
 <#include "/include/include.ftl">
 <script type="text/javascript" src="${ctx}/static/module/system/orgManage.js"></script>
-<style >
+<style>
     body > div {
         height: 100%;
     }
@@ -32,6 +32,16 @@
 </div>
 <div class="layui-col-xs10" style="height: 100%;">
     <iframe id="orgContent" name="orgContent" frameborder="0" style="width: 100%;height: 100%;"></iframe>
+</div>
+<div id="orgCommonSetting" class="hide" style="padding: 10px;">
+    <div class="layui-form detail-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">未知部门</label>
+            <div class="layui-input-block">
+                <div id="commonSettingDept"></div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
