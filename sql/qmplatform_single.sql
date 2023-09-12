@@ -1694,7 +1694,7 @@ CREATE TABLE "public"."sys_user" (
   "password" varchar COLLATE "pg_catalog"."default",
   "username" varchar(50) COLLATE "pg_catalog"."default",
   "loginname" varchar(50) COLLATE "pg_catalog"."default",
-  "user_sex" varchar(255) COLLATE "pg_catalog"."default",
+  "user_sex" varchar(255) DEFAULT 0 COLLATE "pg_catalog"."default",
   "remark" varchar(1000) COLLATE "pg_catalog"."default",
   "create_time" timestamp(6),
   "create_user_id" varchar(50) COLLATE "pg_catalog"."default",

@@ -1615,7 +1615,7 @@ CREATE TABLE sys_user (
                           password varchar(255) COMMENT '密码',
                           username varchar(50) COMMENT '用户名',
                           loginname varchar(50) COMMENT '登录名',
-                          user_sex varchar(255) COMMENT '用户性别',
+                          user_sex varchar(255) DEFAULT 0 COMMENT '用户性别',
                           remark varchar(1000) COMMENT '备注',
                           create_time timestamp(6) COMMENT '创建时间',
                           create_user_id varchar(50) COMMENT '创建人id',
