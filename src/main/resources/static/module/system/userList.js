@@ -7,7 +7,7 @@ layui.use(['table', 'form', 'element', 'layer', 'xmSelect'], function () {
     let layFilter = 'user';
 
     // 组织机构数据加载
-    let organizationIdsSelect = SelectUtil.renderTree(xmSelect, {
+    let organizationIdsSelect = SelectUtil.render(xmSelect, {
         el: '#organizationIdsStr',
         name: 'organizationIdsStr',
         tree: true,

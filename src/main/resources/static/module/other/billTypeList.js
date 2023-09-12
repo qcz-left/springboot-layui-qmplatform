@@ -84,7 +84,7 @@ layui.use(['table', 'treetable'], function () {
                     }
 
                     // 上级类型数据加载
-                    let parentIdSelect = SelectUtil.renderTree(iframeXmSelect, {
+                    let parentIdSelect = SelectUtil.render(iframeXmSelect, {
                         el: '#parentId',
                         name: 'parentId',
                         radio: true,

@@ -143,7 +143,7 @@
             }
 
             // 上级权限数据加载
-            let parentIdSelect = SelectUtil.renderTree(xmSelect, {
+            let parentIdSelect = SelectUtil.render(xmSelect, {
                 el: '#parentId',
                 name: 'parentId',
                 radio: true,
@@ -204,7 +204,7 @@
             }
 
             // 部门数据加载
-            let organizationIdsSelect = SelectUtil.renderTree(xmSelect, {
+            let organizationIdsSelect = SelectUtil.render(xmSelect, {
                 el: '#organizationIds',
                 name: 'organizationIds',
                 radio: true,
@@ -220,7 +220,7 @@
             });
 
             // 角色数据加载
-            let roleIdsSelect = SelectUtil.renderTree(xmSelect, {
+            let roleIdsSelect = SelectUtil.render(xmSelect, {
                 el: '#roleIds',
                 name: 'roleIds',
                 prop: {
@@ -239,7 +239,7 @@
             });
 
             // 性别数据加载
-            let userSexSelect = SelectUtil.renderTree(xmSelect, {
+            let userSexSelect = SelectUtil.render(xmSelect, {
                 el: '#userSex',
                 name: 'userSex',
                 radio: true,
@@ -256,7 +256,7 @@
             });
 
             // 账号状态数据加载
-            let lockedSelect = SelectUtil.renderTree(xmSelect, {
+            let lockedSelect = SelectUtil.render(xmSelect, {
                 el: '#locked',
                 name: 'locked',
                 radio: true,

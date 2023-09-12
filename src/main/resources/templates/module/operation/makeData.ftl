@@ -158,7 +158,7 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
     // 表单数据校验
     form.verify({});
 
-    let dbNameSelect = SelectUtil.renderTree(xmSelect, {
+    let dbNameSelect = SelectUtil.render(xmSelect, {
         el: '#dbName',
         name: 'dbName',
         radio: true,
@@ -247,7 +247,7 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
         }
     });
 
-    let typeSelect = SelectUtil.renderTree(xmSelect, {
+    let typeSelect = SelectUtil.render(xmSelect, {
         el: '#type',
         name: 'type',
         radio: true,
@@ -273,7 +273,7 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
         }]
     });
 
-    let valueTypeSelect = SelectUtil.renderTree(xmSelect, {
+    let valueTypeSelect = SelectUtil.render(xmSelect, {
         el: '#valueType',
         name: 'valueType',
         radio: true,

@@ -126,7 +126,7 @@
         }
 
         // 短信数据加载
-        SelectUtil.renderTree(xmSelect, {
+        SelectUtil.render(xmSelect, {
             el: '#smsProvider',
             name: 'smsProvider',
             radio: true,
@@ -175,7 +175,7 @@
         });
 
         // 短信模板类型
-        let templateTypeSelect = SelectUtil.renderTree(xmSelect, {
+        let templateTypeSelect = SelectUtil.render(xmSelect, {
             el: '#templateType',
             name: 'templateType',
             radio: true,

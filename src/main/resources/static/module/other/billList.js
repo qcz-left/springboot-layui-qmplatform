@@ -14,7 +14,7 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
         range: ['#consumeTimeStart', '#consumeTimeEnd']
     });
 
-    let typeSelect = SelectUtil.renderTree(xmSelect, {
+    let typeSelect = SelectUtil.render(xmSelect, {
         el: '#typeId',
         name: 'typeId',
         radio: true,
@@ -107,7 +107,7 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
                         value: new Date().format('yyyy-MM-dd')
                     });
 
-                    let iframeTypeSelect = SelectUtil.renderTree(iframeXmSelect, {
+                    let iframeTypeSelect = SelectUtil.render(iframeXmSelect, {
                         el: '#typeId',
                         name: 'typeId',
                         radio: true,

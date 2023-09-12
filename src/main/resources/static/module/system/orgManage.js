@@ -35,7 +35,7 @@ layui.use(['dtree', 'table', 'form', 'element', 'util', 'xmSelect'], function ()
                     deptSelectData = result.data;
                 });
                 // 侧边设置，部门数据
-                SelectUtil.renderTree(xmSelect, {
+                SelectUtil.render(xmSelect, {
                     el: '#commonSettingDept',
                     name: 'commonSettingDept',
                     radio: true,

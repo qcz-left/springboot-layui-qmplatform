@@ -536,7 +536,7 @@ const TreeUtil = {
  * XmSelect工具
  */
 const SelectUtil = {
-    renderTree: function (xmSelect, option) {
+    render: function (xmSelect, option) {
         // 单选
         let radio = option.radio || false;
         let treeExpandedKeys = option.treeExpandedKeys || [];

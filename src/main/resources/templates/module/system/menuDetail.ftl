@@ -129,7 +129,7 @@
         });
 
         // 上级权限数据加载
-        let parentIdSelect = SelectUtil.renderTree(xmSelect, {
+        let parentIdSelect = SelectUtil.render(xmSelect, {
             el: '#parentId',
             name: 'parentId',
             radio: true,

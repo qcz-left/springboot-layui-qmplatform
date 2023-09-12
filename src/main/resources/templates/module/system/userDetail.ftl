@@ -126,7 +126,7 @@
         let organizationIdsSelect;
         if (!parentId) {
             // 部门数据加载
-            organizationIdsSelect = SelectUtil.renderTree(xmSelect, {
+            organizationIdsSelect = SelectUtil.render(xmSelect, {
                 el: '#organizationIds',
                 name: 'organizationIds',
                 tree: true,
@@ -142,7 +142,7 @@
         }
 
         // 角色数据加载
-        let roleIdsSelect = SelectUtil.renderTree(xmSelect, {
+        let roleIdsSelect = SelectUtil.render(xmSelect, {
             el: '#roleIds',
             name: 'roleIds',
             prop: {
@@ -161,7 +161,7 @@
         });
 
         // 性别数据加载
-        let userSexSelect = SelectUtil.renderTree(xmSelect, {
+        let userSexSelect = SelectUtil.render(xmSelect, {
             el: '#userSex',
             name: 'userSex',
             radio: true,
@@ -178,7 +178,7 @@
         });
 
         // 账号状态数据加载
-        let lockedSelect = SelectUtil.renderTree(xmSelect, {
+        let lockedSelect = SelectUtil.render(xmSelect, {
             el: '#locked',
             name: 'locked',
             radio: true,

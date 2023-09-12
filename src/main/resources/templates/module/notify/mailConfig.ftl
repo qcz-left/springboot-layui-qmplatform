@@ -80,7 +80,7 @@
         });
 
         // 邮箱配置数据加载
-        SelectUtil.renderTree(xmSelect, {
+        SelectUtil.render(xmSelect, {
             el: '#host',
             name: 'host',
             radio: true,
