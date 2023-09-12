@@ -12,6 +12,7 @@
                     <option value=""></option>
                     <option value="dingtalk-code">钉钉扫码</option>
                     <option value="dingtalk-synchro">钉钉组织架构同步</option>
+                    <option value="work-wechat-synchro">企业微信组织架构同步</option>
                 </select>
             </div>
         </div>

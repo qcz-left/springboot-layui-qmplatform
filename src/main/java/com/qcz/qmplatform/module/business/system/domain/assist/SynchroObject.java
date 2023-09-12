@@ -4,6 +4,7 @@ import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.qcz.qmplatform.module.synchro.organization.OrganizationSynchro;
 import com.qcz.qmplatform.module.synchro.organization.dingtalk.DingTalkOrganizationSynchro;
+import com.qcz.qmplatform.module.synchro.organization.wechat.WorkWechatOrganizationSynchro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,7 +18,12 @@ public enum SynchroObject {
     /**
      * 钉钉
      */
-    DING_TALK("dingtalk-synchro", DingTalkOrganizationSynchro.class);
+    DING_TALK("dingtalk-synchro", DingTalkOrganizationSynchro.class),
+
+    /**
+     * 企业微信
+     */
+    WORK_WECHAT("work-wechat-synchro", WorkWechatOrganizationSynchro.class);
 
     String name;
 

@@ -80,11 +80,10 @@
         });
 
         // 邮箱配置数据加载
-        xmSelect.render({
+        SelectUtil.renderTree(xmSelect, {
             el: '#host',
             name: 'host',
             radio: true,
-            clickClose: true,
             model: {icon: 'hidden'},
             data: [{
                 name: '网易163邮箱',

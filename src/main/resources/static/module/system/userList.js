@@ -7,19 +7,10 @@ layui.use(['table', 'form', 'element', 'layer', 'xmSelect'], function () {
     let layFilter = 'user';
 
     // 组织机构数据加载
-    let organizationIdsSelect = xmSelect.render({
+    let organizationIdsSelect = SelectUtil.renderTree(xmSelect, {
         el: '#organizationIdsStr',
         name: 'organizationIdsStr',
-        tree: {
-            strict: false,
-            show: true,
-            showLine: false,
-            clickExpand: false
-        },
-        prop: {
-            value: 'id',
-            children: 'childes'
-        },
+        tree: true,
         data: []
     });
     CommonUtil.getAjax(ctx + '/organization/getOrgTree', {}, function (result) {

@@ -84,21 +84,11 @@ layui.use(['table', 'treetable'], function () {
                     }
 
                     // 上级类型数据加载
-                    let parentIdSelect = iframeXmSelect.render({
+                    let parentIdSelect = SelectUtil.renderTree(iframeXmSelect, {
                         el: '#parentId',
                         name: 'parentId',
                         radio: true,
-                        clickClose: true,//选中关闭
-                        tree: {
-                            strict: false,
-                            show: true,
-                            showLine: false,
-                            clickExpand: false
-                        },
-                        prop: {
-                            value: 'id',
-                            children: 'childes'
-                        },
+                        tree: true,
                         data: []
                     });
                     CommonUtil.getAjax(baseUrl + '/getBillTypeTree', {

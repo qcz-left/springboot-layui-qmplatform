@@ -158,11 +158,10 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
     // 表单数据校验
     form.verify({});
 
-    let dbNameSelect = xmSelect.render({
+    let dbNameSelect = SelectUtil.renderTree(xmSelect, {
         el: '#dbName',
         name: 'dbName',
         radio: true,
-        clickClose: true,
         model: {icon: 'hidden'},
         data: [{
             name: 'Postgre数据库',
@@ -248,11 +247,10 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
         }
     });
 
-    let typeSelect = xmSelect.render({
+    let typeSelect = SelectUtil.renderTree(xmSelect, {
         el: '#type',
         name: 'type',
         radio: true,
-        clickClose: true,
         model: {icon: 'hidden'},
         data: [{
             name: '字符串',
@@ -275,11 +273,10 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
         }]
     });
 
-    let valueTypeSelect = xmSelect.render({
+    let valueTypeSelect = SelectUtil.renderTree(xmSelect, {
         el: '#valueType',
         name: 'valueType',
         radio: true,
-        clickClose: true,
         model: {icon: 'hidden'},
         data: [{
             name: '固定值',
@@ -297,7 +294,7 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
                 $("#valueDiv").hide();
                 $("#lengthDiv").show();
             }
-        },
+        }
     });
 
     function openColumnDetail(obj) {

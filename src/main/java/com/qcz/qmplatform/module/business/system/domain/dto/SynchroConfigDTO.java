@@ -19,7 +19,7 @@ public class SynchroConfigDTO implements Serializable {
     private int enableSynchro;
 
     /**
-     * 同步类型（dingtalk-synchro：钉钉）
+     * 同步类型（dingtalk-synchro：钉钉; work-wechat-synchro：企业微信）
      */
     private String syncType;
 

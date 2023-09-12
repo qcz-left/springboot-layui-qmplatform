@@ -157,25 +157,30 @@ public interface OrganizationSynchro {
                     continue;
                 }
                 // 设置登录名
-                String loginname = user.getLoginname();
+                String loginName = user.getLoginname();
                 String emailAddr = user.getEmailAddr();
                 switch (loginNameSyncWay) {
                     case "usernamePinyin":
-                        loginname = PinyinUtil.getPinyin(username, "");
+                        loginName = PinyinUtil.getPinyin(username, "");
                         break;
                     case "emailPrefix":
                         if (StringUtils.isNotBlank(emailAddr)) {
-                            loginname = StringUtils.subPre(emailAddr, emailAddr.indexOf("@"));
+                            loginName = StringUtils.subPre(emailAddr, emailAddr.indexOf("@"));
                         }
                         break;
                 }
 
-                if (allLoginNames.contains(loginname) && !equalsId) {
-                    LOGGER.warn("login name: {} has exists, and skipping...", loginname);
+                if (allLoginNames.contains(loginName) && !equalsId) {
+                    LOGGER.warn("login name: {} has exists, and skipping...", loginName);
                     continue;
                 }
-                allLoginNames.add(loginname);
-                user.setLoginname(loginname);
+
+                if (StringUtils.isBlank(loginName)) {
+                    LOGGER.warn("[user name: {}]login name is blank, and skipping...", username);
+                    continue;
+                }
+                allLoginNames.add(loginName);
+                user.setLoginname(loginName);
 
                 if (equalsId) {
                     User updateUser = new User()

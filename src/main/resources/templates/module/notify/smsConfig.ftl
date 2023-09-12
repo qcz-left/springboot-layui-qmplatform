@@ -126,11 +126,10 @@
         }
 
         // 短信数据加载
-        xmSelect.render({
+        SelectUtil.renderTree(xmSelect, {
             el: '#smsProvider',
             name: 'smsProvider',
             radio: true,
-            clickClose: true,
             model: {icon: 'hidden'},
             data: [{
                 name: '腾讯云',
@@ -152,7 +151,7 @@
                     smsProvider = data.arr[0].value;
                 }
                 toggleProvider(smsProvider)
-            },
+            }
         });
 
         toggleProvider(detail.smsProvider)
@@ -176,11 +175,10 @@
         });
 
         // 短信模板类型
-        let templateTypeSelect = xmSelect.render({
+        let templateTypeSelect = SelectUtil.renderTree(xmSelect, {
             el: '#templateType',
             name: 'templateType',
             radio: true,
-            clickClose: true,
             model: {icon: 'hidden', label: {type: 'text'}}
         });
         reloadTemplateType();

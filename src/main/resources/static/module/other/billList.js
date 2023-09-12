@@ -14,22 +14,12 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
         range: ['#consumeTimeStart', '#consumeTimeEnd']
     });
 
-    let typeSelect = xmSelect.render({
+    let typeSelect = SelectUtil.renderTree(xmSelect, {
         el: '#typeId',
         name: 'typeId',
         radio: true,
-        clickClose: true,//选中关闭
+        tree: true,
         filterable: true,
-        tree: {
-            strict: false,
-            show: true,
-            showLine: false,
-            clickExpand: false
-        },
-        prop: {
-            value: 'id',
-            children: 'childes'
-        },
         data: []
     });
     CommonUtil.getAjax(ctx + '/other/bill-type/getBillTypeTree', {}, function (result) {
@@ -117,22 +107,12 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
                         value: new Date().format('yyyy-MM-dd')
                     });
 
-                    let iframeTypeSelect = iframeXmSelect.render({
+                    let iframeTypeSelect = SelectUtil.renderTree(iframeXmSelect, {
                         el: '#typeId',
                         name: 'typeId',
                         radio: true,
-                        clickClose: true,//选中关闭
+                        tree: true,
                         filterable: true,
-                        tree: {
-                            strict: false,
-                            show: true,
-                            showLine: false,
-                            clickExpand: false
-                        },
-                        prop: {
-                            value: 'id',
-                            children: 'childes'
-                        },
                         data: []
                     });
 

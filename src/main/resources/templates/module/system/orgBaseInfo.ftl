@@ -143,21 +143,11 @@
             }
 
             // 上级权限数据加载
-            let parentIdSelect = xmSelect.render({
+            let parentIdSelect = SelectUtil.renderTree(xmSelect, {
                 el: '#parentId',
                 name: 'parentId',
                 radio: true,
-                clickClose: true,//选中关闭
-                tree: {
-                    strict: false,
-                    show: true,
-                    showLine: false,
-                    clickExpand: false
-                },
-                prop: {
-                    value: 'id',
-                    children: 'childes'
-                },
+                tree: true,
                 data: []
             });
             CommonUtil.getAjax(ctx + '/organization/getOrgTree', {
@@ -214,21 +204,13 @@
             }
 
             // 部门数据加载
-            let organizationIdsSelect = xmSelect.render({
+            let organizationIdsSelect = SelectUtil.renderTree(xmSelect, {
                 el: '#organizationIds',
                 name: 'organizationIds',
-                tree: {
-                    strict: false,
-                    show: true,
-                    showLine: false,
-                    clickExpand: false,
-                    expandedKeys: detail.organizationIds,
-                },
-                prop: {
-                    value: 'id',
-                    children: 'childes'
-                },
-                data: []
+                radio: true,
+                tree: true,
+                data: [],
+                treeExpandedKeys: detail.organizationIds
             });
             CommonUtil.getAjax(ctx + '/organization/getOrgTree', {}, function (result) {
                 organizationIdsSelect.update({
@@ -238,7 +220,7 @@
             });
 
             // 角色数据加载
-            let roleIdsSelect = xmSelect.render({
+            let roleIdsSelect = SelectUtil.renderTree(xmSelect, {
                 el: '#roleIds',
                 name: 'roleIds',
                 prop: {
@@ -257,11 +239,10 @@
             });
 
             // 性别数据加载
-            let userSexSelect = xmSelect.render({
+            let userSexSelect = SelectUtil.renderTree(xmSelect, {
                 el: '#userSex',
                 name: 'userSex',
                 radio: true,
-                clickClose: true,
                 model: {label: {type: 'text'}},
                 data: []
             });
@@ -275,11 +256,10 @@
             });
 
             // 账号状态数据加载
-            let lockedSelect = xmSelect.render({
+            let lockedSelect = SelectUtil.renderTree(xmSelect, {
                 el: '#locked',
                 name: 'locked',
                 radio: true,
-                clickClose: true,
                 model: {label: {type: 'text'}},
                 data: []
             });

@@ -126,20 +126,11 @@
         let organizationIdsSelect;
         if (!parentId) {
             // 部门数据加载
-            organizationIdsSelect = xmSelect.render({
+            organizationIdsSelect = SelectUtil.renderTree(xmSelect, {
                 el: '#organizationIds',
                 name: 'organizationIds',
-                tree: {
-                    strict: false,
-                    show: true,
-                    showLine: false,
-                    clickExpand: false,
-                    expandedKeys: detail.organizationIds,
-                },
-                prop: {
-                    value: 'id',
-                    children: 'childes'
-                },
+                tree: true,
+                treeExpandedKeys: detail.organizationIds,
                 data: []
             });
             CommonUtil.getAjax(ctx + '/organization/getOrgTree', {}, function (result) {
@@ -151,7 +142,7 @@
         }
 
         // 角色数据加载
-        let roleIdsSelect = xmSelect.render({
+        let roleIdsSelect = SelectUtil.renderTree(xmSelect, {
             el: '#roleIds',
             name: 'roleIds',
             prop: {
@@ -170,11 +161,10 @@
         });
 
         // 性别数据加载
-        let userSexSelect = xmSelect.render({
+        let userSexSelect = SelectUtil.renderTree(xmSelect, {
             el: '#userSex',
             name: 'userSex',
             radio: true,
-            clickClose: true,
             model: {label: {type: 'text'}},
             data: []
         });
@@ -188,11 +178,10 @@
         });
 
         // 账号状态数据加载
-        let lockedSelect = xmSelect.render({
+        let lockedSelect = SelectUtil.renderTree(xmSelect, {
             el: '#locked',
             name: 'locked',
             radio: true,
-            clickClose: true,
             model: {label: {type: 'text'}},
             data: []
         });

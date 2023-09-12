@@ -7,7 +7,8 @@ layui.use(['form', 'table'], function () {
 
     let nameDef = {
         "dingtalk-code": "钉钉扫码",
-        "dingtalk-synchro": "钉钉组织架构同步"
+        "dingtalk-synchro": "钉钉组织架构同步",
+        "work-wechat-synchro": "企业微信组织架构同步"
     }
     table.render({
         elem: '#' + tableId,
@@ -17,7 +18,7 @@ layui.use(['form', 'table'], function () {
         toolbar: '#toolbar',
         cols: [[
             {
-                field: 'name', title: '应用名称', width: '10%', templet: function (row) {
+                field: 'name', title: '应用名称', width: '20%', templet: function (row) {
                     return nameDef[row.name];
                 }
             },

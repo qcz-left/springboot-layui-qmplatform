@@ -11,6 +11,7 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.system.domain.Organization;
 import com.qcz.qmplatform.module.business.system.domain.ThirdpartyApp;
 import com.qcz.qmplatform.module.business.system.domain.User;
+import com.qcz.qmplatform.module.business.system.domain.assist.SynchroObject;
 import com.qcz.qmplatform.module.business.system.domain.dto.SynchroConfigDTO;
 import com.qcz.qmplatform.module.business.system.service.OrganizationService;
 import com.qcz.qmplatform.module.business.system.service.ThirdpartyAppService;
@@ -67,7 +68,7 @@ public class DingTalkOrganizationSynchro implements OrganizationSynchro {
 
     @Override
     public void refreshConfig() {
-        thirdpartyApp = SpringContextUtils.getBean(ThirdpartyAppService.class).getByName("dingtalk-synchro");
+        thirdpartyApp = SpringContextUtils.getBean(ThirdpartyAppService.class).getByName(SynchroObject.DING_TALK.getName());
         if (Objects.isNull(thirdpartyApp)) {
             throw new BusinessException("未设置第三方参数");
         }

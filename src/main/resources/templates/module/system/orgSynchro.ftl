@@ -27,6 +27,7 @@
                 <select name="syncType" lay-verify="required">
                     <option value=""></option>
                     <option value="dingtalk-synchro">钉钉组织架构同步</option>
+                    <option value="work-wechat-synchro">企业微信组织架构同步</option>
                 </select>
             </div>
         </div>

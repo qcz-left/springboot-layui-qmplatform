@@ -75,21 +75,11 @@
 
         if (!parentId) {
             // 上级权限数据加载
-            let parentIdSelect = xmSelect.render({
+            let parentIdSelect = SelectUtil.renderTree(xmSelect, {
                 el: '#parentId',
                 name: 'parentId',
                 radio: true,
-                clickClose: true,//选中关闭
-                tree: {
-                    strict: false,
-                    show: true,
-                    showLine: false,
-                    clickExpand: false
-                },
-                prop: {
-                    value: 'id',
-                    children: 'childes'
-                },
+                tree: true,
                 data: []
             });
             CommonUtil.getAjax(ctx + '/organization/getOrgTree', {

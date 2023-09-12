@@ -531,3 +531,31 @@ const TreeUtil = {
         }, config));
     }
 };
+
+/**
+ * XmSelect工具
+ */
+const SelectUtil = {
+    renderTree: function (xmSelect, option) {
+        // 单选
+        let radio = option.radio || false;
+        let treeExpandedKeys = option.treeExpandedKeys || [];
+        let tree = option.tree || false;
+        if (typeof(tree) == "boolean" && tree) {
+            option.tree = {
+                strict: false,
+                show: true,
+                showLine: false,
+                clickExpand: false,
+                expandedKeys: treeExpandedKeys
+            };
+            option.prop = {
+                value: 'id',
+                children: 'childes'
+            };
+        }
+        option.clickClose = radio;
+
+        return xmSelect.render(option);
+    }
+};
