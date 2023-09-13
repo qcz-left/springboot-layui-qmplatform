@@ -85,16 +85,6 @@ public class WorkWechatOrganizationSynchro implements OrganizationSynchro {
         return organizationList;
     }
 
-    public static void main(String[] args) {
-//        String token = "TZpB4-jiShx_nXPSvfbiQ1YvnYeeH54oLGSO7cNQcZl3ukJkPGO0yE0TT-902yaSkAFiQMwVwz1ObOop8xLy2NcxB1DMOB3-PsCVTo9wGsFIFcHvnjRid71IUENavfZSNpIqgZfnbNr9Qp6d3cURqRigjGc5gpDbT_jrpWeCaCRy8BSHV_eC9R8urEFN2bqV_DYRwHfrx83dOdum62nPwA";
-        String token = "-V5Yxypfjrry26OXqE2zaY98152NGQ2BRRhdLLF0fPvIY9svMjyAF7DRUyDzMlyyHYzNA71CzjnUnVrMNRr9k4AGPwhjBOhvWF-H1P3xJFoA3O8dGjTtDT-WbAdNcdPyKhzJDDTBPthoPMf8_HV9XpXuqqI1ZZNh7JjsyQOH3oU0anjR2EJl63bZPc8NKK5jvphDU2TH612O7F8ewc1ykQ";
-        String userApiUrl = WORK_WECHAT_ENDPOINT + "/cgi-bin/user/list?access_token=" + token + "&department_id=" + 1;
-        String userResult = HttpUtil.get(userApiUrl);
-        System.out.println(userResult);
-//        System.out.println(new WorkWechatOrganizationSynchro().getWorkWechatAccessToken("wweaa3e63a1f097226", "fRPRTmJx4BwK3NgrfApf0h9NFBNuhCX9xo7awUQA6HE"));
-//        System.out.println(SecureUtils.aesEncrypt("R6xCsypdPD1FAiAzO4iCJD4PBfCct_ZFwG1tmDBb3Bc"));
-    }
-
     @Override
     public List<User> getUserListByDeptId(String deptId) {
         String userApiUrl = WORK_WECHAT_ENDPOINT + "/cgi-bin/user/list?access_token=" + accessToken + "&department_id=" + deptId;
