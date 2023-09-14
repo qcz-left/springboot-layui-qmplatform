@@ -77,9 +77,12 @@
     <div class="layui-body">
         <div class="layui-tab layui-tab-brief" lay-filter="main-tab" lay-stope="tabmore" lay-allowclose="true">
             <div id="main-tab-header">
-                <i id="collapseIcon" title="折叠菜单" class="layui-icon layui-icon-shrink-right"></i>
-                <i id="expandIcon" title="展开菜单" class="layui-icon layui-icon-spread-left" style="display: none"></i>
-                <span class="layui-font-gray">&nbsp;&nbsp;</span>
+                <div class="collapse-span layui-inline">
+                    <div class="vh-center">
+                        <i id="collapseIcon" title="折叠菜单" class="layui-icon layui-icon-shrink-right"></i>
+                        <i id="expandIcon" title="展开菜单" class="layui-icon layui-icon-spread-left" style="display: none"></i>
+                    </div>
+                </div>
                 <span class="currentLocationContent">
                     <span>当前位置：</span>
                     <span id="currentLocation" class="layui-font-gray"></span>

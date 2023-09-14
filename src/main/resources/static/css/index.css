@@ -212,14 +212,22 @@ html {
 }
 
 #main-tab-header,#main-tab-title {
-    width: calc(100% - 71px);
     border-bottom: 1px solid #eee;
     padding: 0 10px 0 10px;
     background: white;
 }
 
-#main-tab-header .layui-icon {
+#main-tab-header {
+    padding-left: 0;
+}
+
+.collapse-span:hover {
+    background: #e7e7e7;
+}
+
+.collapse-span {
     line-height: 40px;
+    width: 40px;
     cursor: pointer;
 }
 
