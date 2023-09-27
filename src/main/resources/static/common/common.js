@@ -356,15 +356,24 @@ const CommonUtil = {
      * <p> title: 弹窗标题（不填默认显示‘选择用户’）</p>
      * <p> success: 保存后的回调函数</p>
      * <p> checkbar: 是否开启复选框，true 或 false，默认false</p>
-     * <p> selected: 已有的值</p>
+     * <p> notExistsUserGroupId: 过滤已经存在于该用户组ID的用户</p>
      */
     chooseUserTree: function (option) {
         let checkbar = option.checkbar || false;
+        let notExistsUserGroupId = option.notExistsUserGroupId || '';
         let currentLayer = LayerUtil.openLayer({
             title: option.title || '选择用户',
-            content: ctx + "/user/chooseUserTree?checkbar=" + checkbar,
+            content: ctx + "/user/chooseUserTree",
             area: ['30%', '80%'],
             btn: ['选择', '取消'],
+            loaded: function (iframeWin) {
+                iframeWin.getParams = function () {
+                    return {
+                        notExistsUserGroupId: notExistsUserGroupId,
+                        checkbar: checkbar
+                    };
+                };
+            },
             submit: function (iframeWin) {
                 if (typeof option.success == "function") {
                     option.success(iframeWin.getCurrentNode());

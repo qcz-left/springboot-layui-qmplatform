@@ -21,12 +21,15 @@
 </form>
 <div id="orgTree"></div>
 <script>
-let checkbar = ${RequestParameters["checkbar"]};
 layui.use(['dtree'], function () {
     let dtree = layui.dtree;
 
+    let params = getParams();
+    let checkbar = params.checkbar;
     let orgData = [];
-    CommonUtil.getSync(ctx + '/organization/getOrgUserTree', {}, function (result) {
+    CommonUtil.getSync(ctx + '/organization/getOrgUserTree', {
+        notExistsUserGroupId: params.notExistsUserGroupId
+    }, function (result) {
         orgData = result.data;
     });
 
@@ -34,6 +37,7 @@ layui.use(['dtree'], function () {
         // 重新构造数据结构
         for (let i = data.length - 1; i >= 0; i--) {
             let item = data[i];
+            item.checkArr = "0";
             if (item.itype === 1) {
                 item.disabled = true;
                 item['iconClass'] = "dtree-icon-fenzhijigou";
@@ -74,6 +78,9 @@ layui.use(['dtree'], function () {
     }
 
     window.getCurrentNode = function () {
+        if (checkbar) {
+            return orgTree.getCheckbarNodesParam();
+        }
         return dtree.getNowParam(orgTree);
     }
 

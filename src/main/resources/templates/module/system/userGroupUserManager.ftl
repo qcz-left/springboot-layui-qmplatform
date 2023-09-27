@@ -53,7 +53,7 @@ layui.use(['form', 'table', 'dtree'], function () {
         if (event === 'add') {
             CommonUtil.chooseUserTree({
                 checkbar: true,
-                // selected: selected,
+                notExistsUserGroupId: userGroupId,
                 success: function (param) {
                     let nodeIds = CommonUtil.getAttrFromArray(param, "nodeId");
                     let loadIndex = layer.load(2);

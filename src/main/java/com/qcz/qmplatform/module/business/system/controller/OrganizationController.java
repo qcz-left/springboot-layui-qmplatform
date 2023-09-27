@@ -12,6 +12,7 @@ import com.qcz.qmplatform.module.business.system.domain.Organization;
 import com.qcz.qmplatform.module.business.system.domain.dto.OrgCommonConfigDTO;
 import com.qcz.qmplatform.module.business.system.domain.dto.SynchroConfigDTO;
 import com.qcz.qmplatform.module.business.system.domain.pojo.OrgTree;
+import com.qcz.qmplatform.module.business.system.domain.qo.OrganizationQO;
 import com.qcz.qmplatform.module.business.system.service.OrganizationService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -122,12 +123,12 @@ public class OrganizationController extends BaseController {
     /**
      * 获取组织机构
      *
-     * @param organization 请求参数
+     * @param qo 请求参数
      */
     @GetMapping("/getOrgUserTree")
     @ResponseBody
-    public ResponseResult<List<OrgTree>> getOrgUserTree(Organization organization) {
-        return ResponseResult.ok(organizationService.getOrgUserTree(organization));
+    public ResponseResult<List<OrgTree>> getOrgUserTree(OrganizationQO qo) {
+        return ResponseResult.ok(organizationService.getOrgUserTree(qo));
     }
 
     /**

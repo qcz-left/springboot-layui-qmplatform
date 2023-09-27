@@ -1693,8 +1693,8 @@ DROP TABLE IF EXISTS sys_user_group;
 CREATE TABLE sys_user_group (
                                 id varchar(64) PRIMARY KEY NOT NULL COMMENT '主键ID',
                                 name varchar(128) NOT NULL COMMENT '用户组名称',
-                                remark varchar(1024) NOT NULL COMMENT '备注',
-                                parent_id varchar(64) NOT NULL COMMENT '上级ID'
+                                remark varchar(1024) COMMENT '备注',
+                                parent_id varchar(64) COMMENT '上级ID'
 ) COMMENT = '用户组';
 
 DROP TABLE IF EXISTS sys_user_user_group;

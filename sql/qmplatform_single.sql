@@ -1788,8 +1788,8 @@ DROP TABLE IF EXISTS "public"."sys_user_group";
 CREATE TABLE "public"."sys_user_group" (
     id varchar(64) NOT NULL,
     "name" varchar(128) NOT NULL,
-    remark varchar(1024) NOT NULL,
-    parent_id varchar(64) NOT NULL,
+    remark varchar(1024),
+    parent_id varchar(64),
     CONSTRAINT tbl_sys_user_group_pk PRIMARY KEY (id)
 );
 COMMENT ON TABLE public.sys_user_group IS '用户组';

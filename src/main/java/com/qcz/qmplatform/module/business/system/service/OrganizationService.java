@@ -19,6 +19,7 @@ import com.qcz.qmplatform.module.business.system.domain.assist.SynchroObject;
 import com.qcz.qmplatform.module.business.system.domain.dto.OrgCommonConfigDTO;
 import com.qcz.qmplatform.module.business.system.domain.dto.SynchroConfigDTO;
 import com.qcz.qmplatform.module.business.system.domain.pojo.OrgTree;
+import com.qcz.qmplatform.module.business.system.domain.qo.OrganizationQO;
 import com.qcz.qmplatform.module.business.system.mapper.OrganizationMapper;
 import com.qcz.qmplatform.module.synchro.organization.OrganizationSynchro;
 import lombok.extern.slf4j.Slf4j;
@@ -68,8 +69,8 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
         return baseMapper.selectOrgTree(queryParams);
     }
 
-    public List<OrgTree> getOrgUserTree(Organization organization) {
-        return TreeUtils.buildTree(baseMapper.selectOrgUserTree(organization));
+    public List<OrgTree> getOrgUserTree(OrganizationQO qo) {
+        return TreeUtils.buildTree(baseMapper.selectOrgUserTree(qo));
     }
 
     public List<OrgTree> getOrgTree(Organization organization) {

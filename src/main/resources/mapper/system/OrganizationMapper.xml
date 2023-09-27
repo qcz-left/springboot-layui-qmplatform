@@ -35,6 +35,14 @@
         from
             sys_user su
         left join sys_user_organization suo on su.id = suo.user_id
+        where 1=1
+        [[
+            and not exists (
+                select 1 from sys_user_user_group suug
+                where suug.user_id = su.id
+                and suug.user_group_id = #notExistsUserGroupId#
+            )
+        ]]
 
         order by itype,iorder
     </select>
