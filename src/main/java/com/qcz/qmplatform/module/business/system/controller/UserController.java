@@ -27,7 +27,9 @@ import com.qcz.qmplatform.module.business.notify.domain.pojo.TemplateParam;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.TemplateType;
 import com.qcz.qmplatform.module.business.notify.domain.vo.SmsConfigVO;
 import com.qcz.qmplatform.module.business.system.domain.User;
+import com.qcz.qmplatform.module.business.system.domain.qo.UserGroupUserQO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserQO;
+import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO;
 import com.qcz.qmplatform.module.business.system.service.UserService;
 import com.qcz.qmplatform.module.business.system.domain.vo.CurrentUserInfoVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.PasswordVO;
@@ -123,6 +125,15 @@ public class UserController extends BaseController {
             user.setOrganizationIds(CollectionUtil.newArrayList(organizationIdsStr.split(",")));
         }
         return ResponseResult.ok(PageResultHelper.parseResult(userService.getUserList(user, pageRequest, export)));
+    }
+
+    /**
+     * 获取用户组用户列表
+     */
+    @PostMapping("/getUserGroupUserList")
+    @ResponseBody
+    public ResponseResult<PageResult<UserGroupUserVO>> getUserGroupUserList(PageRequest pageRequest, UserGroupUserQO qo) {
+        return ResponseResult.ok(PageResultHelper.parseResult(userService.getUserGroupUserList(pageRequest, qo)));
     }
 
     /**

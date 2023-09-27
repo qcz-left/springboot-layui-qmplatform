@@ -25,9 +25,11 @@ import com.qcz.qmplatform.module.business.system.domain.Role;
 import com.qcz.qmplatform.module.business.system.domain.User;
 import com.qcz.qmplatform.module.business.system.domain.UserOrganization;
 import com.qcz.qmplatform.module.business.system.domain.UserRole;
+import com.qcz.qmplatform.module.business.system.domain.qo.UserGroupUserQO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserQO;
 import com.qcz.qmplatform.module.business.system.domain.vo.CurrentUserInfoVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.PasswordVO;
+import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import com.qcz.qmplatform.module.business.system.mapper.UserMapper;
 import org.springframework.stereotype.Service;
@@ -336,5 +338,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         removeByIds(userIds);
         userOrganizationService.deleteByUserIds(userIds);
         userRoleService.deleteByUserIds(userIds);
+    }
+
+
+    public List<UserGroupUserVO> getUserGroupUserList(PageRequest pageRequest, UserGroupUserQO qo) {
+        PageResultHelper.startPage(pageRequest);
+        return baseMapper.getUserGroupUserList(qo);
     }
 }

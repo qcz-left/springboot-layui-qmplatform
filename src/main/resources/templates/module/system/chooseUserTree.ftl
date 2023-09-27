@@ -21,6 +21,7 @@
 </form>
 <div id="orgTree"></div>
 <script>
+let checkbar = ${RequestParameters["checkbar"]};
 layui.use(['dtree'], function () {
     let dtree = layui.dtree;
 
@@ -47,10 +48,15 @@ layui.use(['dtree'], function () {
 
     buildData(orgData);
 
-    let orgTree = TreeUtil.render(dtree, {
+    let userTreeOption = {
         elem: "#orgTree",
         data: orgData
-    });
+    };
+    if (checkbar) {
+        userTreeOption.checkbar = checkbar;
+        userTreeOption.checkbarType = 'self';
+    }
+    let orgTree = TreeUtil.render(dtree, userTreeOption);
 
     $("#btnSearch").click(function () {
         searchData();

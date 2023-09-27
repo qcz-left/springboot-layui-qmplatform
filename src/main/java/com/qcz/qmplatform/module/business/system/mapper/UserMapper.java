@@ -2,7 +2,9 @@ package com.qcz.qmplatform.module.business.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qcz.qmplatform.module.business.system.domain.User;
+import com.qcz.qmplatform.module.business.system.domain.qo.UserGroupUserQO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserQO;
+import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 
 import java.util.List;
@@ -23,5 +25,7 @@ public interface UserMapper extends BaseMapper<User> {
     List<UserVO> queryUserList(UserQO user);
 
     List<UserVO> queryByRoleSign(String roleSign);
+
+    List<UserGroupUserVO> getUserGroupUserList(UserGroupUserQO qo);
 
 }

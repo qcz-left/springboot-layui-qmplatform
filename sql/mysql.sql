@@ -1689,6 +1689,20 @@ INSERT INTO sys_user_role VALUES ('105a8170-39eb-4c00-9061-9ac6dc915165', 'test_
 INSERT INTO sys_user_role VALUES ('16', 'test_tv');
 INSERT INTO sys_user_role VALUES ('2185d74c-df5c-4125-9d3b-9fd048118f73', '67d86434-c302-4924-a75a-dfe5fbc4affd');
 
+DROP TABLE IF EXISTS sys_user_group;
+CREATE TABLE sys_user_group (
+                                id varchar(64) PRIMARY KEY NOT NULL COMMENT '主键ID',
+                                name varchar(128) NOT NULL COMMENT '用户组名称',
+                                remark varchar(1024) NOT NULL COMMENT '备注',
+                                parent_id varchar(64) NOT NULL COMMENT '上级ID'
+) COMMENT = '用户组';
+
+DROP TABLE IF EXISTS sys_user_user_group;
+CREATE TABLE sys_user_user_group (
+                                     user_id varchar(50) NOT NULL COMMENT '用户ID',
+                                     user_group_id varchar(50) NOT NULL COMMENT '用户组ID'
+) COMMENT = '用户-用户组关联';
+
 -- ----------------------------
 -- Table structure for tbl_attachment
 -- ----------------------------

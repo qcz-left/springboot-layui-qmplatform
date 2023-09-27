@@ -355,11 +355,14 @@ const CommonUtil = {
      * @param option 参数选项
      * <p> title: 弹窗标题（不填默认显示‘选择用户’）</p>
      * <p> success: 保存后的回调函数</p>
+     * <p> checkbar: 是否开启复选框，true 或 false，默认false</p>
+     * <p> selected: 已有的值</p>
      */
     chooseUserTree: function (option) {
+        let checkbar = option.checkbar || false;
         let currentLayer = LayerUtil.openLayer({
             title: option.title || '选择用户',
-            content: ctx + "/user/chooseUserTree",
+            content: ctx + "/user/chooseUserTree?checkbar=" + checkbar,
             area: ['30%', '80%'],
             btn: ['选择', '取消'],
             submit: function (iframeWin) {

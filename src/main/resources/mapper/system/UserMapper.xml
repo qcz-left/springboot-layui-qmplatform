@@ -88,4 +88,19 @@
         where
             sr.role_sign = #roleSign#
     </select>
+
+    <select id="getUserGroupUserList" resultType="com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO">
+        select
+            suug.user_id,
+            su.username,
+            so.organization_name
+        from
+            sys_user_user_group suug
+        left join sys_user su on su.id = suug.user_id
+        left join sys_user_organization suo on suo.user_id = su.id
+        left join sys_organization so on so.organization_id = suo.organization_id
+        where
+            suug.user_group_id = #userGroupId#
+        [[ and su.username like concat(concat('%', #username#), '%') ]]
+    </select>
 </mapper>

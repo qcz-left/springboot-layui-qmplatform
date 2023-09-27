@@ -1784,6 +1784,32 @@ INSERT INTO "public"."sys_user_role" VALUES ('105a8170-39eb-4c00-9061-9ac6dc9151
 INSERT INTO "public"."sys_user_role" VALUES ('16', 'test_tv');
 INSERT INTO "public"."sys_user_role" VALUES ('2185d74c-df5c-4125-9d3b-9fd048118f73', '67d86434-c302-4924-a75a-dfe5fbc4affd');
 
+DROP TABLE IF EXISTS "public"."sys_user_group";
+CREATE TABLE "public"."sys_user_group" (
+    id varchar(64) NOT NULL,
+    "name" varchar(128) NOT NULL,
+    remark varchar(1024) NOT NULL,
+    parent_id varchar(64) NOT NULL,
+    CONSTRAINT tbl_sys_user_group_pk PRIMARY KEY (id)
+);
+COMMENT ON TABLE public.sys_user_group IS '用户组';
+COMMENT ON COLUMN public.sys_user_group.id IS '主键ID';
+COMMENT ON COLUMN public.sys_user_group."name" IS '用户组名称';
+COMMENT ON COLUMN public.sys_user_group.remark IS '备注';
+COMMENT ON COLUMN public.sys_user_group.parent_id IS '上级ID';
+
+
+DROP TABLE IF EXISTS "public"."sys_user_user_group";
+CREATE TABLE public.sys_user_user_group (
+                                            user_id varchar(50) NOT NULL,
+                                            user_group_id varchar(50) NOT NULL
+);
+COMMENT ON TABLE public.sys_user_user_group IS '用户-用户组关联';
+-- Column comments
+COMMENT ON COLUMN public.sys_user_user_group.user_id IS '用户ID';
+COMMENT ON COLUMN public.sys_user_user_group.user_group_id IS '用户组ID';
+
+
 -- ----------------------------
 -- Table structure for tbl_attachment
 -- ----------------------------
