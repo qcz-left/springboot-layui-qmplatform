@@ -66,10 +66,10 @@ public class GenerateCode {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.qcz.qmplatform.module");
+        pc.setParent("com.qcz.qmplatform.module.business");
         pc.setEntity("domain");
         Map<String, String> pathInfo = new HashMap<>();
-        String parent = projectPath + "/src/main/java/com/qcz/qmplatform/module/" + pc.getModuleName() + "/";
+        String parent = projectPath + "/src/main/java/com/qcz/qmplatform/module/business/" + pc.getModuleName() + "/";
         pathInfo.put("xml_path", projectPath + "/src/main/resources/mapper/" + pc.getModuleName());
         pathInfo.put("entity_path", parent + pc.getEntity());
         pathInfo.put("mapper_path", parent + pc.getMapper());
