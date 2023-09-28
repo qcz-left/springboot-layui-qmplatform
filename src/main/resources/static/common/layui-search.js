@@ -77,6 +77,9 @@ function ($) {
                         '<div class="layui-inline">' +
                         '   <input type="text" class="layui-input" autocomplete="off" name="' + key + 'End">' +
                         '</div>';
+                } else if (type === "selectTree") {
+                    // 下拉树
+                    inputHtml = '<div id="' + key + '" name="' + key + '" style="width: 190px;"></div>';
                 }
 
                 $(selectDom).parents(".search-where:first").find(".input-content").html(inputHtml);
@@ -93,6 +96,15 @@ function ($) {
                         elem: '[name=' + key + 'End]',
                         type: 'datetime',
                         value: defaultValue.length > 1 ? defaultValue[1] : ""
+                    });
+                } else if (type === "selectTree") {
+                    SelectUtil.render(xmSelect, {
+                        el: '#' + key,
+                        name: key,
+                        radio: true,
+                        tree: true,
+                        filterable: true,
+                        data: item.treeData
                     });
                 }
 
