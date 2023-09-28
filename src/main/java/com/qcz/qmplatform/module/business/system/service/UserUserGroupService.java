@@ -51,4 +51,16 @@ public class UserUserGroupService extends ServiceImpl<UserUserGroupMapper, UserU
         }
         return false;
     }
+
+    /**
+     * 根据用户组ID删除用户关联信息
+     *
+     * @param userGroupIds 用户组ID
+     */
+    public void deleteByUserGroupIds(List<String> userGroupIds) {
+        super.remove(
+                Wrappers.lambdaQuery(UserUserGroup.class)
+                        .in(UserUserGroup::getUserGroupId, userGroupIds)
+        );
+    }
 }

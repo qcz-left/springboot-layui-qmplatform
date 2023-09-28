@@ -25,6 +25,7 @@
                 <div id="btnSearch" class="layui-input-split layui-input-suffix" style="cursor: pointer;">
                     <i class="layui-icon layui-icon-search"></i>
                 </div>
+                <button id="addRootNode" class="layui-btn layui-btn-primary" title="添加节点"><i class="layui-icon layui-icon-addition"></i></button>
             </div>
         </div>
     </form>

@@ -102,5 +102,6 @@
         where
             suug.user_group_id = #userGroupId#
         [[ and su.username like concat(concat('%', #username#), '%') ]]
+        [[ and so.organization_id = #organizationId# ]]
     </select>
 </mapper>

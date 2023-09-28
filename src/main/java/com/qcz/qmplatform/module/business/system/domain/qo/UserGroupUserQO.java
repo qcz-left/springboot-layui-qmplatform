@@ -18,4 +18,9 @@ public class UserGroupUserQO implements Serializable {
      * 用户名
      */
     private String username;
+
+    /**
+     * 部门ID
+     */
+    private String organizationId;
 }

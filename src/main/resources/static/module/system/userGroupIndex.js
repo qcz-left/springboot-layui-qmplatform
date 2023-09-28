@@ -18,7 +18,7 @@ layui.use(['dtree'], function () {
             }
         }, {
             toolbarId: "delete", icon: "dtree-icon-delete1", title: "删除节点", handler: function (node) {
-                top.layer.confirm("是否要删除用户组：<span class='text-success'>" + node.context + "</span>，删除后将不可恢复！", {
+                top.layer.confirm("是否要删除用户组：<span class='text-success'>" + node.context + "</span>，该操作会同时删除该用户组下的所有子用户组和用户关联信息，且不可恢复！", {
                     title: "警告",
                     skin: "my-layer-danger"
                 }, function (index) {
@@ -54,6 +54,10 @@ layui.use(['dtree'], function () {
         userGroupTree.fuzzySearch(inputName);
     });
 
+    $("#addRootNode").click(function () {
+        jumpToDetailPage();
+    });
+
     CommonUtil.enterKeyEvent('[name="inputName"]', function () {
         $("#btnSearch").click();
     });
@@ -69,6 +73,8 @@ layui.use(['dtree'], function () {
      * @param parentName 上级用户组名称
      */
     function jumpToDetailPage(nodeId, context, parentId, parentName) {
+        nodeId = nodeId || '';
+        context = context || '';
         parentId = parentId || '';
         parentName = parentName || '';
         $("#userGroupContent").attr("src", "{0}?nodeId={1}&context={2}&parentId={3}&parentName={4}".format(ctx + "/system/user-group/userGroupDetailPage", nodeId, context, parentId, parentName));

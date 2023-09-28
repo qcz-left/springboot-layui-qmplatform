@@ -12,19 +12,22 @@
     </table>
 </div>
 <script>
-layui.use(['form', 'table', 'dtree'], function () {
+layui.use(['form', 'table', 'xmSelect'], function () {
     let form = layui.form;
     let table = layui.table;
-    let dtree = layui.dtree;
 
     let tableId = 'user-list-tab';
     let layFilter = 'user';
 
+    let deptData;
+    CommonUtil.getSync(ctx + '/organization/getOrgTree', {}, function (result) {
+        deptData = result.data
+    });
     $("#searchDiv").laySearch({
         layFilter: 'user-search',
         data: [
             {key: "username", label: "用户名", type: "text"},
-            {key: "deptName", label: "部门", type: "text"}
+            {key: "organizationId", label: "部门", type: "selectTree", treeData: deptData}
         ],
         doSearch: function () {
             userTableReload();
