@@ -173,6 +173,9 @@ public class MybatisInterceptor implements Interceptor {
     }
 
     private BoundSql buildNewBoundSql(MappedStatement ms, BoundSql boundSql) throws IllegalAccessException {
+        String DYNAMIC_SQL_REG = "\\[\\[[\\s\\S]*?\\]\\]";
+        String DYNAMIC_PARAM_REG = "#[\\s\\S]*?#|\\$[\\s\\S]*?\\$";
+
         String sql = boundSql.getSql();
         Configuration configuration = ms.getConfiguration();
         Object parameterObject = boundSql.getParameterObject();
@@ -183,7 +186,7 @@ public class MybatisInterceptor implements Interceptor {
             // 单个参数的情况
             parameterMap = new HashMap<>();
 
-            Matcher matcher = Pattern.compile("#[\\s\\S]*?#|\\$[\\s\\S]*?\\$").matcher(sql);
+            Matcher matcher = Pattern.compile(DYNAMIC_PARAM_REG).matcher(sql);
             while (matcher.find()) {
                 String group = matcher.group();
                 String name = group.substring(1, group.length() - 1);
@@ -199,7 +202,6 @@ public class MybatisInterceptor implements Interceptor {
 
         Map<String, Object> additionalParameter = new HashMap<>();
 
-        String DYNAMIC_SQL_REG = "\\[\\[[\\s\\S]*?\\]\\]";
         Pattern ENC_PATTERN = Pattern.compile(DYNAMIC_SQL_REG);
         Matcher matcher = ENC_PATTERN.matcher(sql);
         while (matcher.find()) {
@@ -220,13 +222,13 @@ public class MybatisInterceptor implements Interceptor {
             }
         }
 
-        for (String key : parameterMap.keySet()) {
-            boolean isPlaceHolder = Pattern.compile("#" + key + "#").matcher(sql).find();
-            boolean isReplace = Pattern.compile(Matcher.quoteReplacement("$" + key + "$")).matcher(sql).find();
-            if (isPlaceHolder || isReplace) {
-                Object value = parameterMap.get(key);
-                sql = setParameter(sql, key, value, newParameterMappings, configuration, additionalParameter, isPlaceHolder);
-            }
+        Matcher paramMatcher = Pattern.compile(DYNAMIC_PARAM_REG).matcher(sql);
+        while (paramMatcher.find()) {
+            String group = paramMatcher.group();
+            boolean isPlaceHolder = group.contains("#");
+            String name = group.substring(1, group.length() - 1);
+            Object value = parameterMap.get(name);
+            sql = setParameter(sql, name, value, newParameterMappings, configuration, additionalParameter, isPlaceHolder);
         }
 
         BoundSql newBoundSql = new BoundSql(configuration, sql, newParameterMappings, parameterObject);
