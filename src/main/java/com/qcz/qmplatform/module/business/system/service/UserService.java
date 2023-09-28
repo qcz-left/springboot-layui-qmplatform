@@ -75,6 +75,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     private UserRoleService userRoleService;
 
     @Resource
+    private UserUserGroupService userUserGroupService;
+
+    @Resource
     private OrganizationService organizationService;
 
     /**
@@ -338,6 +341,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         removeByIds(userIds);
         userOrganizationService.deleteByUserIds(userIds);
         userRoleService.deleteByUserIds(userIds);
+        userUserGroupService.deleteByUserIds(userIds);
     }
 
 
