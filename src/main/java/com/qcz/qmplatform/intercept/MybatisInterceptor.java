@@ -215,7 +215,6 @@ public class MybatisInterceptor implements Interceptor {
             Object value = parameterMap.get(name);
             if (ObjectUtil.isNotEmpty(value)) {
                 sql = sql.replaceFirst(DYNAMIC_SQL_REG, Matcher.quoteReplacement(group.substring(2, group.length() - 2)));
-                sql = setParameter(sql, name, value, newParameterMappings, configuration, additionalParameter, isPlaceHolder);
             } else {
                 sql = sql.replaceFirst(DYNAMIC_SQL_REG, "");
             }
