@@ -72,7 +72,7 @@ public class UserGroupService extends ServiceImpl<UserGroupMapper, UserGroup> {
     }
 
     /**
-     * 向下递归查询出所有菜单id
+     * 向下递归查询出所有用户组id
      */
     public List<String> queryUserGroupIdRecursive(Collection<? extends Serializable> userGroupId) {
         List<String> allIds = new ArrayList<>();
