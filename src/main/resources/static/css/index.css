@@ -217,6 +217,10 @@ html {
     background: white;
 }
 
+#main-tab-title {
+    width: calc(100% - 100px);
+}
+
 #main-tab-header {
     padding-left: 0;
 }

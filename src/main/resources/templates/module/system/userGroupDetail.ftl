@@ -20,9 +20,9 @@ let parentId = '${RequestParameters["parentId"]!}';
 <body>
 <div class="layui-fluid">
     <#if isInsert>
-        <fieldset class="layui-elem-field layui-field-title">
-            <legend>新增</legend>
-        </fieldset>
+        <blockquote class="layui-elem-quote">
+            新增
+        </blockquote>
         <#include "./userGroupBaseInfo.ftl" />
     <#else>
         <div class="layui-tab layui-tab-brief" lay-filter="userGroup-detail">

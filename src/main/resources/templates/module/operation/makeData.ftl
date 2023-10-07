@@ -20,87 +20,85 @@
 </style>
 <body class="detail-body">
 <div class="layui-fluid">
+    <blockquote class="layui-elem-quote">
+        数据库配置
+    </blockquote>
     <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="database-form">
-        <div class="layui-card">
-            <div class="layui-card-header">数据库配置</div>
-            <div class="layui-card-body">
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">数据库类型</label>
-                    <div class="layui-input-inline">
-                        <div id="dbName"></div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">主机</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="host" lay-verify="required" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">端口</label>
-                    <div class="layui-input-inline">
-                        <input type="number" name="port" lay-verify="required" class="layui-input layui-input-inline" style="width: 60px;">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">数据库</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="database" lay-verify="required" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">用户名</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="user" lay-verify="required" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">密码</label>
-                    <div class="layui-input-inline">
-                        <input type="password" autocomplete="new-password" style="display:none">
-                        <input type="password" name="password" lay-verify="required" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label"></label>
-                    <div class="layui-input-inline">
-                        <button class="layui-btn layui-btn-primary layui-border-black" lay-submit lay-filter="connect-test-submit">测试连接</button>
-                    </div>
-                </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">数据库类型</label>
+            <div class="layui-input-inline">
+                <div id="dbName"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">主机</label>
+            <div class="layui-input-inline">
+                <input type="text" name="host" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">端口</label>
+            <div class="layui-input-inline">
+                <input type="number" name="port" lay-verify="required" class="layui-input layui-input-inline" style="width: 60px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">数据库</label>
+            <div class="layui-input-inline">
+                <input type="text" name="database" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="user" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">密码</label>
+            <div class="layui-input-inline">
+                <input type="password" autocomplete="new-password" style="display:none">
+                <input type="password" name="password" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-primary layui-border-black" lay-submit lay-filter="connect-test-submit">测试连接</button>
             </div>
         </div>
     </form>
+    <blockquote class="layui-elem-quote">
+        表配置
+    </blockquote>
     <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="table-form">
-        <div class="layui-card-header">表配置</div>
-        <div class="layui-card-body">
-            <div class="layui-form-item">
-                <label class="layui-form-label required">增加</label>
-                <div class="layui-input-block">
-                    <input type="number" name="insertNumber" lay-verify="required" autocomplete="off" class="layui-input layui-input-inline" style="width: 100px;">
-                    <div class="layui-form-mid">条数据</div>
-                </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">增加</label>
+            <div class="layui-input-block">
+                <input type="number" name="insertNumber" lay-verify="required" autocomplete="off" class="layui-input layui-input-inline" style="width: 100px;">
+                <div class="layui-form-mid">条数据</div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label required">表名</label>
-                <div class="layui-input-block">
-                    <input type="text" name="tableName" lay-verify="required" autocomplete="off" class="layui-input layui-input-inline">
-                    <button id="getColumnListBtn" class="layui-btn layui-btn-warm">获取字段信息</button>
-                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">表名</label>
+            <div class="layui-input-block">
+                <input type="text" name="tableName" lay-verify="required" autocomplete="off" class="layui-input layui-input-inline">
+                <button id="getColumnListBtn" class="layui-btn layui-btn-warm">获取字段信息</button>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">字段</label>
-                <div class="layui-input-inline" style="width: calc(100% - 200px);">
-                    <script type="text/html" id="toolbar">
-                    <div class="layui-btn-container">
-                        <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
-                    </div>
-                    </script>
-                    <script type="text/html" id="operator">
-                    <button class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</button>
-                    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
-                    </script>
-                    <table class="layui-hide" id="columnDetail-list-tab" lay-filter="columnDetail"></table>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">字段</label>
+            <div class="layui-input-inline" style="width: calc(100% - 200px);">
+                <script type="text/html" id="toolbar">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
                 </div>
+                </script>
+                <script type="text/html" id="operator">
+                <button class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
+                </script>
+                <table class="layui-hide" id="columnDetail-list-tab" lay-filter="columnDetail"></table>
             </div>
         </div>
     </form>
@@ -371,7 +369,7 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
         })
     });
 
-    $("#executeBtn").click( function () {
+    $("#executeBtn").click(function () {
         if (!form.doVerify($("[lay-filter=database-form]"))) {
             return;
         }
