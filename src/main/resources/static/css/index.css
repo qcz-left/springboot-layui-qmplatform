@@ -218,7 +218,15 @@ html {
 }
 
 #main-tab-title {
-    width: calc(100% - 100px);
+    display: inline-block;
+    min-width: calc(100% - 20px);
+    white-space: nowrap;
+    font-size: 0;
+    transition: transform 0.5s;
+}
+
+#main-tab-title > * {
+    display: inline-block;
 }
 
 #main-tab-header {

@@ -87,13 +87,12 @@
                     <span>当前位置：</span>
                     <span id="currentLocation" class="layui-font-gray"></span>
                 </span>
+                <div class="refresh-btn-content layui-inline">
+                    <i class="layui-icon layui-icon-refresh-3" title="刷新当前菜单页面" onclick="reloadFrame()" style="font-size: 30px;"></i>
+                </div>
             </div>
-
             <ul id="main-tab-title" class="layui-tab-title layui-inline">
             </ul>
-            <div class="refresh-btn-content layui-inline">
-                <i class="layui-icon layui-icon-refresh-3" title="刷新当前菜单页面" onclick="reloadFrame()" style="font-size: 30px;"></i>
-            </div>
             <div class="layui-tab-content">
             </div>
         </div>
@@ -148,6 +147,43 @@ layui.use(['element', 'dropdown'], function () {
         CommonUtil.changeSkin($, type);
     });
 
+    let boxDOM = document.querySelector('[lay-filter="main-tab"]');// 外层容器DOM
+    let contentDOM = document.querySelector('#main-tab-title'); // 内容容器DOM
+    let tabTitleScroll = {
+        offsetX: 0,// 偏移距离
+        setPosition: function () {
+            // 处理边界情况
+            if (this.offsetX < 0) {
+                this.offsetX = 0;
+            }
+            let maxX = contentDOM.offsetWidth - boxDOM.offsetWidth;
+            if (this.offsetX > maxX) {
+                this.offsetX = maxX;
+            }
+            // 设置偏移距离
+            contentDOM.style.transform = 'translateX(' + (-this.offsetX) + 'px)'; // css3模拟滚动
+        },
+        /**
+         * 增加偏移量
+         * @param offsetX 偏移量
+         */
+        increaseOffsetX: function (offsetX) {
+            this.offsetX += offsetX;
+            tabTitleScroll.setPosition();
+        }
+    }
+    // 监听wheel事件
+    boxDOM.addEventListener('wheel', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let delta = e.deltaX || e.deltaY || e.wheelDelta; // 滚动距离
+        tabTitleScroll.offsetX = tabTitleScroll.offsetX + delta; // 偏移距离
+        tabTitleScroll.setPosition();
+    })
+
+    // tab标题容器的边距+边框
+    let $mainTabTitle = $('#main-tab-title');
+    let tabTitlePaddingWidth = ($mainTabTitle.outerWidth(true) - $mainTabTitle.width()) / 2;
     // 监听选项卡切换
     element.on('tab(' + tabLayFilter + ')', function (data) {
         let layId = $(this).attr("lay-id");
@@ -155,6 +191,15 @@ layui.use(['element', 'dropdown'], function () {
         $("#currentLocation").text(currentLocation || $(this).text());
         $(".layui-side ." + classLayuiThis).removeClass(classLayuiThis);
         $(".layui-side a[lay-id=" + layId + "]").parent().addClass(classLayuiThis);
+
+        // 整个选项卡最右侧相对偏移量
+        let tabBoxOffsetLeft = data.elem.offset().left + data.elem.outerWidth(true);
+        // 当前tab最右侧相对偏移量
+        let tabOffsetLeft = $(this).offset().left + $(this).outerWidth(true);
+        if (tabOffsetLeft > tabBoxOffsetLeft) {
+            tabTitleScroll.increaseOffsetX(tabOffsetLeft - tabBoxOffsetLeft + tabTitlePaddingWidth);
+        }
+
     });
     // 监听选项卡删除
     element.on('tabDelete(' + tabLayFilter + ')', function () {
