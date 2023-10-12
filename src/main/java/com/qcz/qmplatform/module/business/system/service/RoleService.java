@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * <p>
- * 服务实现类
+ * 角色服务实现类
  * </p>
  *
  * @author quchangzhong
@@ -62,9 +62,7 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
     }
 
     public boolean saveRolePermission(String roleId, List<String> permissionIds) {
-        LambdaQueryWrapper<RolePermission> wrapper = Wrappers.lambdaQuery(RolePermission.class)
-                .eq(RolePermission::getRoleId, roleId);
-        rolePermissionService.remove(wrapper);
+        rolePermissionService.deleteByRoleId(roleId);
 
         List<RolePermission> saveRolePermissions = new ArrayList<>();
         for (String permissionId : permissionIds) {

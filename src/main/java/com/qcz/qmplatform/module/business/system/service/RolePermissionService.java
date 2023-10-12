@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.system.service;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.module.business.system.domain.RolePermission;
@@ -18,6 +19,15 @@ import java.util.List;
  */
 @Service
 public class RolePermissionService extends ServiceImpl<RolePermissionMapper, RolePermission> {
+
+    /**
+     * 根据角色ID删除角色权限关系
+     *
+     * @param roleId 角色ID
+     */
+    public void deleteByRoleId(String roleId) {
+        deleteByRoleIds(CollectionUtil.newArrayList(roleId));
+    }
 
     /**
      * 根据角色ID删除角色权限关系
