@@ -4,7 +4,6 @@ import com.qcz.qmplatform.common.validation.groups.Update;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
