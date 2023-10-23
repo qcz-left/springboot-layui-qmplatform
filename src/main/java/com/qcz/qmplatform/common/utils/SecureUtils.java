@@ -1,11 +1,19 @@
 package com.qcz.qmplatform.common.utils;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
 import cn.hutool.crypto.digest.BCrypt;
 import cn.hutool.crypto.symmetric.AES;
 import cn.hutool.crypto.symmetric.DES;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 加解密工具
@@ -36,7 +44,7 @@ public class SecureUtils {
      * 检查密码是否一致
      *
      * @param plaintext 明文密码
-     * @param hashed   数据库中加密的密码
+     * @param hashed    数据库中加密的密码
      * @return 加密后的字符串
      */
     public static boolean accountCheck(String plaintext, String hashed) {
@@ -136,4 +144,30 @@ public class SecureUtils {
         return !StringUtils.equals(PASSWORD_UNCHANGED, pwd);
     }
 
+    public static void main(String[] args) {
+        /*List<File> nacArcFiles = FileUtils.loopFiles(new File("D:\\workspace\\code\\main\\Agentless_Util\\uad"));
+        List<File> uniArcFiles = FileUtils.loopFiles(new File("D:\\workspace\\code\\version5protocol"));
+        Set<String> nacArcFileNames = new HashSet<>();
+        Set<String> uniArcFileNames = new HashSet<>();
+        for (File nacArcFile : nacArcFiles) {
+            String name = nacArcFile.getName();
+            if ("uad".equals(FileUtils.getFileSuf(name))) {
+                nacArcFileNames.add(name);
+            }
+        }
+        for (File uniArcFile : uniArcFiles) {
+            String name = uniArcFile.getName();
+            if ("uad".equals(FileUtils.getFileSuf(name))) {
+                uniArcFileNames.add(uniArcFile.getName());
+            }
+        }
+
+        Collection<String> intersection = CollectionUtil.intersection(nacArcFileNames, uniArcFileNames);
+        for (String s : intersection) {
+            System.out.println(s);
+        }*/
+
+        ThreadLocal<SimpleDateFormat> threadLocal = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyyMMdd HHmm"));
+
+    }
 }

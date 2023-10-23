@@ -1,8 +1,10 @@
 package com.qcz.qmplatform.module.business.system.domain.vo;
 
+import com.qcz.qmplatform.common.validation.groups.Update;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
@@ -23,13 +25,13 @@ public class PasswordVO implements Serializable {
     /**
      * 新密码
      */
-    @NotBlank(message = "原密码不能为空")
+    @NotBlank(message = "原密码不能为空", groups = {Update.class})
     private String newPassword;
 
     /**
      * 确认新密码
      */
-    @NotBlank(message = "确认密码不能为空")
+    @NotBlank(message = "确认密码不能为空", groups = {Update.class})
     private String confirmNewPassword;
 
     /**

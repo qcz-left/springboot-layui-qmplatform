@@ -20,6 +20,7 @@ import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.SmsUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
+import com.qcz.qmplatform.common.validation.groups.Update;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.notify.NotifyServiceFactory;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.SmsConfig;
@@ -36,6 +37,7 @@ import com.qcz.qmplatform.module.business.system.domain.vo.PasswordVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -183,7 +185,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增用户")
-    public ResponseResult<Void> addUser(@Valid @RequestBody UserVO user) {
+    public ResponseResult<Void> addUser(@Validated @RequestBody UserVO user) {
         return ResponseResult.newInstance(userService.insertUser(user));
     }
 
@@ -191,7 +193,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改用户")
-    public ResponseResult<Void> updateUser(@Valid @RequestBody UserVO user) {
+    public ResponseResult<Void> updateUser(@Validated @RequestBody UserVO user) {
         return ResponseResult.newInstance(userService.updateUser(user));
     }
 
@@ -204,14 +206,14 @@ public class UserController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户基本资料")
-    public ResponseResult<Void> saveCurrentUserInfo(@Valid @RequestBody CurrentUserInfoVO user) {
+    public ResponseResult<Void> saveCurrentUserInfo(@Validated @RequestBody CurrentUserInfoVO user) {
         return ResponseResult.newInstance(userService.saveCurrentUserInfo(user));
     }
 
     @PutMapping("/nnl/changeUserPwd")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "找回密码")
-    public ResponseResult<?> changeUserPwd(@Valid @RequestBody PasswordVO passwordVO) {
+    public ResponseResult<?> changeUserPwd(@Validated({Update.class}) @RequestBody PasswordVO passwordVO) {
         UserVO user = userService.queryUserByName(passwordVO.getLoginname());
 
         String cacheCode = (String) CacheUtils.get(user.getPhone());
@@ -241,7 +243,7 @@ public class UserController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户密码")
-    public ResponseResult<?> changeCurrentUserPwd(@Valid @RequestBody PasswordVO passwordVO) {
+    public ResponseResult<?> changeCurrentUserPwd(@Validated({Update.class}) @RequestBody PasswordVO passwordVO) {
         User user = SubjectUtils.getUser();
         assert user != null;
         // 比较原密码是否填写正确

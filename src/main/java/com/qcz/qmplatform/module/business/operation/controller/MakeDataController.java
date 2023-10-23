@@ -8,6 +8,7 @@ import com.qcz.qmplatform.module.business.operation.domain.pojo.DataDetail;
 import com.qcz.qmplatform.module.business.operation.service.MakeDataService;
 import com.qcz.qmplatform.module.business.operation.domain.vo.MakeDataVO;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,26 +37,26 @@ public class MakeDataController {
 
     @PostMapping("/start")
     @ResponseBody
-    public ResponseResult<Void> start(@RequestBody MakeDataVO makeDataVO) {
+    public ResponseResult<Void> start(@RequestBody @Validated MakeDataVO makeDataVO) {
         makeDataService.start(makeDataVO.getDbDetail(), makeDataVO.getDataDetail(), makeDataVO.getInsertNumber());
         return ResponseResult.ok();
     }
 
     @PostMapping("/testConnect")
     @ResponseBody
-    public ResponseResult<Void> testConnect(@RequestBody DBDetail dbDetail) {
+    public ResponseResult<Void> testConnect(@RequestBody @Validated DBDetail dbDetail) {
         return ResponseResult.newInstance(makeDataService.testConnect(dbDetail));
     }
 
     @PostMapping("/getColumnList")
     @ResponseBody
-    public ResponseResult<List<DataDetail.ColumnDetail>> getColumnList(@RequestBody MakeDataVO makeDataVO) {
+    public ResponseResult<List<DataDetail.ColumnDetail>> getColumnList(@RequestBody @Validated MakeDataVO makeDataVO) {
         return ResponseResult.ok(makeDataService.getColumnList(makeDataVO.getDbDetail(), makeDataVO.getDataDetail().getTableName()));
     }
 
     @PostMapping("/saveConfigToLocal")
     @ResponseBody
-    public ResponseResult<String> saveConfigToLocal(@RequestBody MakeDataVO makeDataVO) {
+    public ResponseResult<String> saveConfigToLocal(@RequestBody @Validated MakeDataVO makeDataVO) {
         String tmpFilePath = ConfigLoader.getDeleteTmpPath() + "/MakeData.dat";
         FileUtils.writeObjectToFile(makeDataVO, tmpFilePath);
         return ResponseResult.ok(null, tmpFilePath);

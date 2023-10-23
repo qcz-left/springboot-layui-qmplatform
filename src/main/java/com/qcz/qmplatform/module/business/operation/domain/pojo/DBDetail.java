@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.operation.domain.pojo;
 
+import com.qcz.qmplatform.common.validation.IpAddress;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -11,6 +12,7 @@ public class DBDetail implements Serializable {
 
     private String dbName;
 
+    @IpAddress
     private String host;
 
     private int port;
