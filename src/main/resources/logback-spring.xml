@@ -62,7 +62,7 @@
     </springProfile>
 
 
-    <springProfile name="dev">
+    <springProfile name="dev,default">
         <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
         </root>
