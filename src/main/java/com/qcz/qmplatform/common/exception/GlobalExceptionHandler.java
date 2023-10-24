@@ -58,10 +58,12 @@ public class GlobalExceptionHandler {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         int errorSize = fieldErrors.size();
         if (errorSize == 1) {
-            error.append(fieldErrors.get(0).getDefaultMessage());
+            FieldError fieldError = fieldErrors.get(0);
+            error.append(fieldError.getField()).append(" ").append(fieldError.getDefaultMessage());
         } else {
             for (int i = 0; i < errorSize; i++) {
-                error.append(i + 1).append(". ").append(fieldErrors.get(i).getDefaultMessage()).append(".</br>");
+                FieldError fieldError = fieldErrors.get(i);
+                error.append(i + 1).append(". ").append(fieldError.getField()).append(" ").append(fieldError.getDefaultMessage()).append(".</br>");
             }
         }
         return ResponseResult.error(error.toString());
