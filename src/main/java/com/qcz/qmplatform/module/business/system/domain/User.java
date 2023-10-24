@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.qcz.qmplatform.common.anno.ExcelField;
+import com.qcz.qmplatform.common.validation.EnumValue;
 import com.qcz.qmplatform.common.validation.Phone;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 
 /**
  * <p>
- *  用户
+ * 用户
  * </p>
  *
  * @author quchangzhong
@@ -62,6 +62,7 @@ public class User implements Serializable {
      * 用户性别
      */
     @TableField("user_sex")
+    @EnumValue(strValues = {"1", "2"}, message = "性别必须为合法值")
     private String userSex;
 
     /**
@@ -104,7 +105,7 @@ public class User implements Serializable {
      * 锁定状态（0：正常；1：锁定）
      */
     @TableField("locked")
-    @Range(min = 0, max = 1)
+    @EnumValue(intValues = {0, 1}, message = "锁定状态必须为合法值")
     private int locked;
 
     /**
