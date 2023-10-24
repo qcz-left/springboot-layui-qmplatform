@@ -3,6 +3,40 @@
  */
 const CommonUtil = {
 
+    /**
+     * 全局ajax提交操作
+     * @param _type 接口类型
+     * @param _url 接口路径 （必填）
+     * @param _data 请求数据 （必填）
+     * @param _success 成功回调函数 （非必填）
+     * @param _fail 失败回调函数 （非必填）
+     * @param _async 是否异步（默认异步）
+     * @param _transferJson 是否将参数转换成json（默认转换）
+     */
+    ajax: function (_type, _url, _data, _success, _fail, _async, _transferJson) {
+        $.ajax({
+            type: _type,
+            url: _url,
+            data: _transferJson ? encodeURIComponent(JSON.stringify(_data)) : _data,
+            contentType: _transferJson ? 'application/json;charset=UTF-8' : 'application/x-www-form-urlencoded;charset=UTF-8',
+            async: typeof (_async) == "undefined" ? true : _async,
+            success: function (result) {
+                if (result.code === ResponseCode.AUTHORIZED_EXPIRE) {
+                    top.window.location = ctx + "/nnl/loginAgain?code=" + ResponseCode.AUTHORIZED_EXPIRE;
+                    return;
+                }
+                if (_success && typeof _success == "function") {
+                    _success(result);
+                }
+            },
+            error: function () {
+                if (_fail && typeof _fail == "function") {
+                    _fail();
+                }
+            }
+        });
+    },
+
     getSync: function (_url, _data, _success, _fail) {
         CommonUtil.getAjax(_url, _data, _success, _fail, false)
     },
@@ -22,23 +56,7 @@ const CommonUtil = {
      */
     postAjax: function (_url, _data, _success, _fail, _async, _transferJson) {
         _transferJson = typeof (_transferJson) == "undefined" ? true : _transferJson;
-        $.ajax({
-            type: AjaxType.POST,
-            url: _url,
-            async: typeof (_async) == "undefined" ? true : _async,
-            data: _transferJson ? encodeURIComponent(JSON.stringify(_data)) : _data,
-            contentType: _transferJson ? 'application/json;charset=UTF-8' : 'application/x-www-form-urlencoded;charset=UTF-8',
-            success: function (msg) {
-                if (_success && typeof _success == "function") {
-                    _success(msg);
-                }
-            },
-            error: function () {
-                if (_fail && typeof _fail == "function") {
-                    _fail();
-                }
-            }
-        });
+        CommonUtil.ajax(AjaxType.POST, _url, _data, _success, _fail, _async, _transferJson)
     },
 
     /**
@@ -50,22 +68,7 @@ const CommonUtil = {
      * @param _async 是否异步（默认异步）
      */
     getAjax: function (_url, _data, _success, _fail, _async) {
-        $.ajax({
-            type: AjaxType.GET,
-            url: _url,
-            data: _data,
-            async: typeof (_async) == "undefined" ? true : _async,
-            success: function (msg) {
-                if (_success && typeof _success == "function") {
-                    _success(msg);
-                }
-            },
-            error: function () {
-                if (_fail && typeof _fail == "function") {
-                    _fail();
-                }
-            }
-        });
+        CommonUtil.ajax(AjaxType.GET, _url, _data, _success, _fail, _async, false)
     },
 
     /**
@@ -76,22 +79,7 @@ const CommonUtil = {
      * @param _fail 失败回调函数 （非必填）
      */
     putAjax: function (_url, _data, _success, _fail) {
-        $.ajax({
-            type: AjaxType.PUT,
-            url: _url,
-            data: encodeURIComponent(JSON.stringify(_data)),
-            contentType: 'application/json;charset=UTF-8',
-            success: function (msg) {
-                if (_success && typeof _success == "function") {
-                    _success(msg);
-                }
-            },
-            error: function () {
-                if (_fail && typeof _fail == "function") {
-                    _fail();
-                }
-            }
-        });
+        CommonUtil.ajax(AjaxType.PUT, _url, _data, _success, _fail, true, true)
     },
 
     /**
@@ -102,41 +90,12 @@ const CommonUtil = {
      * @param _fail 失败回调函数 （非必填）
      */
     patchAjax: function (_url, _data, _success, _fail) {
-        $.ajax({
-            type: AjaxType.PATCH,
-            url: _url,
-            data: encodeURIComponent(JSON.stringify(_data)),
-            contentType: 'application/json;charset=UTF-8',
-            success: function (msg) {
-                if (_success && typeof _success == "function") {
-                    _success(msg);
-                }
-            },
-            error: function () {
-                if (_fail && typeof _fail == "function") {
-                    _fail();
-                }
-            }
-        });
+        CommonUtil.ajax(AjaxType.PATCH, _url, _data, _success, _fail, true, true)
     },
 
     postOrPut: function (_isPut, _url, _data, _success, _fail) {
-        $.ajax({
-            type: _isPut ? AjaxType.PUT : AjaxType.POST,
-            url: _url,
-            data: encodeURIComponent(JSON.stringify(_data)),
-            contentType: 'application/json;charset=UTF-8',
-            success: function (msg) {
-                if (_success && typeof _success == "function") {
-                    _success(msg);
-                }
-            },
-            error: function () {
-                if (_fail && typeof _fail == "function") {
-                    _fail();
-                }
-            }
-        });
+        let _type = _isPut ? AjaxType.PUT : AjaxType.POST;
+        CommonUtil.ajax(_type, _url, _data, _success, _fail, true, true)
     },
 
     /**
@@ -147,21 +106,7 @@ const CommonUtil = {
      * @param _fail 失败回调函数 （非必填）
      */
     deleteAjax: function (_url, _data, _success, _fail) {
-        $.ajax({
-            type: AjaxType.DELETE,
-            url: _url,
-            data: _data,
-            success: function (msg) {
-                if (_success && typeof _success == "function") {
-                    _success(msg);
-                }
-            },
-            error: function () {
-                if (_fail && typeof _fail == "function") {
-                    _fail();
-                }
-            }
-        });
+        CommonUtil.ajax(AjaxType.DELETE, _url, _data, _success, _fail, true, false)
     },
 
     exportExcel: function (exportParam) {
@@ -190,7 +135,7 @@ const CommonUtil = {
      * @returns {boolean}
      */
     respSuccess: function (res) {
-        return res.code === 200 || res.code === 405;
+        return res.code === ResponseCode.SUCCESS || res.code === ResponseCode.DATA_BAK_RECOVER;
     },
 
     /**
@@ -553,7 +498,7 @@ const SelectUtil = {
         let radio = option.radio || false;
         let treeExpandedKeys = option.treeExpandedKeys || [];
         let tree = option.tree || false;
-        if (typeof(tree) == "boolean" && tree) {
+        if (typeof (tree) == "boolean" && tree) {
             option.tree = {
                 strict: false,
                 show: true,
