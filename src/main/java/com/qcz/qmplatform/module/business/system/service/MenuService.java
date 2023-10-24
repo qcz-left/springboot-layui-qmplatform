@@ -13,7 +13,7 @@ import com.qcz.qmplatform.module.business.system.domain.Menu;
 import com.qcz.qmplatform.module.business.system.mapper.MenuMapper;
 import com.qcz.qmplatform.module.business.system.domain.pojo.MenuTree;
 import com.qcz.qmplatform.module.business.system.domain.pojo.Permission;
-import com.qcz.qmplatform.module.business.system.domain.vo.PermissionVO;
+import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,7 +37,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
     @Resource
     private RolePermissionService rolePermissionService;
 
-    public List<MenuTree> getMenuTree(PermissionVO permission) {
+    public List<MenuTree> getMenuTree(PermissionQO permission) {
         String permissionId = permission.getPermissionId();
         if (StringUtils.isNotBlank(permissionId)
                 && permission.getPermissionType() == PermissionType.MENU.getType()) {
@@ -46,7 +46,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         return TreeUtils.buildTree(getMenuList(permission));
     }
 
-    public List<MenuTree> getMenuList(PermissionVO permission) {
+    public List<MenuTree> getMenuList(PermissionQO permission) {
         return baseMapper.selectMenuTree(permission);
     }
 

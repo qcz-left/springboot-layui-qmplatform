@@ -13,7 +13,7 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.Role;
 import com.qcz.qmplatform.module.business.system.service.RoleService;
-import com.qcz.qmplatform.module.business.system.domain.vo.RolePermissionVO;
+import com.qcz.qmplatform.module.business.system.domain.qo.RolePermissionQO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -165,14 +165,14 @@ public class RoleController extends BaseController {
     /**
      * 分配角色权限
      *
-     * @param rolePermissionVo 角色id和权限id数组
+     * @param rolePermissionQO 角色id和权限id数组
      */
     @PostMapping("/saveRolePermission")
     @RequiresPermissions(PrivCode.BTN_CODE_ROLE_ALLOT)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "分配角色权限")
-    public ResponseResult<Void> saveRolePermission(@RequestBody RolePermissionVO rolePermissionVo) {
-        return ResponseResult.newInstance(roleService.saveRolePermission(rolePermissionVo.getRoleId(), rolePermissionVo.getPermissionIds()));
+    public ResponseResult<Void> saveRolePermission(@RequestBody RolePermissionQO rolePermissionQO) {
+        return ResponseResult.newInstance(roleService.saveRolePermission(rolePermissionQO.getRoleId(), rolePermissionQO.getPermissionIds()));
     }
 }
 

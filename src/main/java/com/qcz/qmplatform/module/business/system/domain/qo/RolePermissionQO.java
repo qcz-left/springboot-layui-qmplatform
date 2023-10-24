@@ -1,4 +1,4 @@
-package com.qcz.qmplatform.module.business.system.domain.vo;
+package com.qcz.qmplatform.module.business.system.domain.qo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
-public class RolePermissionVO {
+public class RolePermissionQO {
 
     private String roleId;
 

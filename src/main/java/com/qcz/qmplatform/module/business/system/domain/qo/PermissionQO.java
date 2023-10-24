@@ -1,4 +1,4 @@
-package com.qcz.qmplatform.module.business.system.domain.vo;
+package com.qcz.qmplatform.module.business.system.domain.qo;
 
 import com.qcz.qmplatform.module.business.system.domain.pojo.Permission;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class PermissionVO extends Permission {
+public class PermissionQO extends Permission {
 
     private String userId;
 

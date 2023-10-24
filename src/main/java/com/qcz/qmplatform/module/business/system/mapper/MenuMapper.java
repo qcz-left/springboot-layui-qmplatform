@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qcz.qmplatform.module.business.system.domain.Menu;
 import com.qcz.qmplatform.module.business.system.domain.pojo.MenuTree;
 import com.qcz.qmplatform.module.business.system.domain.pojo.Permission;
-import com.qcz.qmplatform.module.business.system.domain.vo.PermissionVO;
+import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public interface MenuMapper extends BaseMapper<Menu> {
 
-    List<MenuTree> selectMenuTree(PermissionVO permission);
+    List<MenuTree> selectMenuTree(PermissionQO permission);
 
     List<Permission> getPermissionByIds(@Param("ids") List<String> ids);
 

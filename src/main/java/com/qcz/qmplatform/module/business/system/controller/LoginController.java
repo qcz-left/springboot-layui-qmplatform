@@ -28,8 +28,8 @@ import com.qcz.qmplatform.module.business.system.domain.User;
 import com.qcz.qmplatform.module.business.system.domain.UserThirdparty;
 import com.qcz.qmplatform.module.business.system.domain.assist.PermissionType;
 import com.qcz.qmplatform.module.business.system.domain.assist.Thirdparty;
-import com.qcz.qmplatform.module.business.system.domain.vo.LoginFormVO;
-import com.qcz.qmplatform.module.business.system.domain.vo.PermissionVO;
+import com.qcz.qmplatform.module.business.system.domain.dto.LoginDTO;
+import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
 import com.qcz.qmplatform.module.business.system.realm.CustomToken;
 import com.qcz.qmplatform.module.business.system.service.MenuService;
 import com.qcz.qmplatform.module.business.system.service.MessageService;
@@ -87,7 +87,7 @@ public class LoginController {
     @GetMapping("/")
     public String index(Map<String, Object> root) {
         User currUser = SubjectUtils.getUser();
-        PermissionVO permission = new PermissionVO();
+        PermissionQO permission = new PermissionQO();
         permission.setPermissionType(PermissionType.MENU.getType());
         permission.setDisplay(1);
         String userId = currUser.getId();
@@ -152,15 +152,15 @@ public class LoginController {
     /**
      * 登录操作
      *
-     * @param loginFormVO 前台传进参数，包含用户名和密码等
+     * @param loginDTO 前台传进参数，包含用户名和密码等
      */
     @PostMapping("/login")
     @ResponseBody
     @RecordLog(type = OperateType.LOGIN)
     @Retryable(value = {PSQLException.class})
-    public ResponseResult<?> login(@RequestBody LoginFormVO loginFormVO, HttpServletRequest request) {
-        String loginname = loginFormVO.getLoginname();
-        CustomToken token = new CustomToken(loginname, loginFormVO.getPassword());
+    public ResponseResult<?> login(@RequestBody LoginDTO loginDTO, HttpServletRequest request) {
+        String loginname = loginDTO.getLoginname();
+        CustomToken token = new CustomToken(loginname, loginDTO.getPassword());
 
         String clientIp = HttpServletUtils.getIpAddress(request);
 
@@ -178,7 +178,7 @@ public class LoginController {
                 userService.lockAccount(loginname);
                 loginRecordService.addRemark(loginname, clientIp, "账号登录错误次数达到" + lockAtErrorTimes + "次，已被锁定");
             } else {
-                String validateCode = loginFormVO.getValidateCode();
+                String validateCode = loginDTO.getValidateCode();
                 if (StringUtils.isBlank(validateCode)) {
                     if (currLoginErrorTimes >= codeAtErrorTimes) {
                         // 需要输入验证码
@@ -198,11 +198,11 @@ public class LoginController {
                 loginRecordService.clearLoginRecord(loginname, clientIp);
             }
             // 绑定第三方账号
-            String thirdparty = loginFormVO.getThirdparty();
+            String thirdparty = loginDTO.getThirdparty();
             if (StringUtils.isNotBlank(thirdparty)) {
                 UserThirdparty userThirdparty = new UserThirdparty();
                 userThirdparty.setUserId(SubjectUtils.getUserId());
-                userThirdparty.setThirdpartyId(loginFormVO.getThirdparyId());
+                userThirdparty.setThirdpartyId(loginDTO.getThirdparyId());
                 userThirdparty.setAccessType(thirdparty);
                 userThirdpartyService.saveOne(userThirdparty);
             }

@@ -1,4 +1,4 @@
-package com.qcz.qmplatform.module.business.system.domain.vo;
+package com.qcz.qmplatform.module.business.system.domain.dto;
 
 import com.qcz.qmplatform.common.validation.groups.Update;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Data
 @Accessors(chain = true)
-public class PasswordVO implements Serializable {
+public class PasswordDTO implements Serializable {
 
     /**
      * 登录名

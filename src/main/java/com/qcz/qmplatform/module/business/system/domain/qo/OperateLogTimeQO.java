@@ -1,4 +1,4 @@
-package com.qcz.qmplatform.module.business.system.domain.vo;
+package com.qcz.qmplatform.module.business.system.domain.qo;
 
 import com.qcz.qmplatform.module.business.system.domain.OperateLog;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class OperateLogTimeVO extends OperateLog {
+public class OperateLogTimeQO extends OperateLog {
 
     /**
      * 操作时间-开始

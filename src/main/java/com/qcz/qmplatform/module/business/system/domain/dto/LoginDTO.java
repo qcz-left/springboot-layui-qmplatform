@@ -1,4 +1,4 @@
-package com.qcz.qmplatform.module.business.system.domain.vo;
+package com.qcz.qmplatform.module.business.system.domain.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class LoginFormVO extends PasswordVO {
+public class LoginDTO extends PasswordDTO {
 
     /**
      * 第三方系统

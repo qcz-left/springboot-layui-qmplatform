@@ -31,8 +31,8 @@ import com.qcz.qmplatform.module.business.system.domain.User;
 import com.qcz.qmplatform.module.business.system.domain.dto.SaveUserDTO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserGroupUserQO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserQO;
-import com.qcz.qmplatform.module.business.system.domain.vo.CurrentUserInfoVO;
-import com.qcz.qmplatform.module.business.system.domain.vo.PasswordVO;
+import com.qcz.qmplatform.module.business.system.domain.dto.CurrentUserInfoDTO;
+import com.qcz.qmplatform.module.business.system.domain.dto.PasswordDTO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import com.qcz.qmplatform.module.business.system.service.UserService;
@@ -177,7 +177,7 @@ public class UserController extends BaseController {
      */
     @GetMapping("/getCurrentUserInfo")
     @ResponseBody
-    public ResponseResult<CurrentUserInfoVO> getCurrentUserInfo() {
+    public ResponseResult<CurrentUserInfoDTO> getCurrentUserInfo() {
         return ResponseResult.ok(userService.getCurrentUserInfo());
     }
 
@@ -206,29 +206,29 @@ public class UserController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户基本资料")
-    public ResponseResult<Void> saveCurrentUserInfo(@Validated @RequestBody CurrentUserInfoVO user) {
+    public ResponseResult<Void> saveCurrentUserInfo(@Validated @RequestBody CurrentUserInfoDTO user) {
         return ResponseResult.newInstance(userService.saveCurrentUserInfo(user));
     }
 
     @PutMapping("/nnl/changeUserPwd")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "找回密码")
-    public ResponseResult<?> changeUserPwd(@Validated({Update.class}) @RequestBody PasswordVO passwordVO) {
-        UserVO user = userService.queryUserByName(passwordVO.getLoginname());
+    public ResponseResult<?> changeUserPwd(@Validated({Update.class}) @RequestBody PasswordDTO passwordDTO) {
+        UserVO user = userService.queryUserByName(passwordDTO.getLoginname());
 
         String cacheCode = (String) CacheUtils.get(user.getPhone());
         if (StringUtils.isBlank(cacheCode)) {
             return ResponseResult.error("验证码不存在或已过期，请重新获取！");
         }
-        if (!StringUtils.equals(cacheCode, passwordVO.getValidateCode())) {
+        if (!StringUtils.equals(cacheCode, passwordDTO.getValidateCode())) {
             return ResponseResult.error("验证码不正确！");
         }
 
         // 两次密码比较
-        if (!StringUtils.equals(passwordVO.getNewPassword(), passwordVO.getConfirmNewPassword())) {
+        if (!StringUtils.equals(passwordDTO.getNewPassword(), passwordDTO.getConfirmNewPassword())) {
             return ResponseResult.error("两次密码填写不一致，请重新填写！");
         }
-        if (userService.changeUserPwd(passwordVO, user)) {
+        if (userService.changeUserPwd(passwordDTO, user)) {
             return ResponseResult.ok(user);
         }
         return ResponseResult.error();
@@ -237,25 +237,25 @@ public class UserController extends BaseController {
     /**
      * 修改当前用户密码
      *
-     * @param passwordVO 密码参数
+     * @param passwordDTO 密码参数
      */
     @PutMapping("/changeCurrentUserPwd")
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户密码")
-    public ResponseResult<?> changeCurrentUserPwd(@Validated({Update.class}) @RequestBody PasswordVO passwordVO) {
+    public ResponseResult<?> changeCurrentUserPwd(@Validated({Update.class}) @RequestBody PasswordDTO passwordDTO) {
         User user = SubjectUtils.getUser();
         assert user != null;
         // 比较原密码是否填写正确
-        if (!SecureUtils.accountCheck(passwordVO.getPassword(), user.getPassword())) {
+        if (!SecureUtils.accountCheck(passwordDTO.getPassword(), user.getPassword())) {
             return ResponseResult.error("当前密码填写错误，请重新填写！");
         }
 
         // 两次密码比较
-        if (!StringUtils.equals(passwordVO.getNewPassword(), passwordVO.getConfirmNewPassword())) {
+        if (!StringUtils.equals(passwordDTO.getNewPassword(), passwordDTO.getConfirmNewPassword())) {
             return ResponseResult.error("两次密码填写不一致，请重新填写！");
         }
-        if (userService.changeCurrentUserPwd(passwordVO, user)) {
+        if (userService.changeCurrentUserPwd(passwordDTO, user)) {
             return ResponseResult.ok(user);
         }
         return ResponseResult.error();

@@ -1,4 +1,4 @@
-package com.qcz.qmplatform.module.business.system.domain.vo;
+package com.qcz.qmplatform.module.business.system.domain.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @Accessors(chain = true)
-public class CurrentUserInfoVO implements Serializable {
+public class CurrentUserInfoDTO implements Serializable {
 
     /**
      * 我的角色（多个,号隔开）

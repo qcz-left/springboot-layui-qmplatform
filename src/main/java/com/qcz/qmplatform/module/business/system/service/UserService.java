@@ -28,8 +28,8 @@ import com.qcz.qmplatform.module.business.system.domain.UserRole;
 import com.qcz.qmplatform.module.business.system.domain.dto.SaveUserDTO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserGroupUserQO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserQO;
-import com.qcz.qmplatform.module.business.system.domain.vo.CurrentUserInfoVO;
-import com.qcz.qmplatform.module.business.system.domain.vo.PasswordVO;
+import com.qcz.qmplatform.module.business.system.domain.dto.CurrentUserInfoDTO;
+import com.qcz.qmplatform.module.business.system.domain.dto.PasswordDTO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import com.qcz.qmplatform.module.business.system.mapper.UserMapper;
@@ -189,19 +189,19 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     /**
      * 获取当前用户信息
      */
-    public CurrentUserInfoVO getCurrentUserInfo() {
-        CurrentUserInfoVO currentUserInfoVO = new CurrentUserInfoVO();
+    public CurrentUserInfoDTO getCurrentUserInfo() {
+        CurrentUserInfoDTO currentUserInfoDTO = new CurrentUserInfoDTO();
         User user = SubjectUtils.getUser();
         assert user != null;
-        currentUserInfoVO.setLoginname(user.getLoginname());
-        currentUserInfoVO.setUsername(user.getUsername());
-        currentUserInfoVO.setEmailAddr(user.getEmailAddr());
-        currentUserInfoVO.setPhone(user.getPhone());
-        currentUserInfoVO.setRemark(user.getRemark());
-        currentUserInfoVO.setUserSex(user.getUserSex());
+        currentUserInfoDTO.setLoginname(user.getLoginname());
+        currentUserInfoDTO.setUsername(user.getUsername());
+        currentUserInfoDTO.setEmailAddr(user.getEmailAddr());
+        currentUserInfoDTO.setPhone(user.getPhone());
+        currentUserInfoDTO.setRemark(user.getRemark());
+        currentUserInfoDTO.setUserSex(user.getUserSex());
         List<Role> roles = userRoleService.getBaseMapper().getRoleByUserId(user.getId());
-        currentUserInfoVO.setRoleName(CollectionUtil.join(CollectionUtil.getFieldValues(roles, "roleName", String.class), ","));
-        return currentUserInfoVO;
+        currentUserInfoDTO.setRoleName(CollectionUtil.join(CollectionUtil.getFieldValues(roles, "roleName", String.class), ","));
+        return currentUserInfoDTO;
     }
 
     /**
@@ -209,7 +209,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      *
      * @param currentUser 页面填写的用户信息
      */
-    public boolean saveCurrentUserInfo(CurrentUserInfoVO currentUser) {
+    public boolean saveCurrentUserInfo(CurrentUserInfoDTO currentUser) {
         User user = this.getById(SubjectUtils.getUserId());
         user.setUsername(currentUser.getUsername());
         user.setUserSex(currentUser.getUserSex());
@@ -223,11 +223,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     /**
      * 修改当前用户密码
      *
-     * @param passwordVO 密码信息
+     * @param passwordDTO 密码信息
      * @param user       当前用户对象
      */
-    public boolean changeCurrentUserPwd(PasswordVO passwordVO, User user) {
-        user.setPassword(SecureUtils.accountEncrypt(passwordVO.getNewPassword()));
+    public boolean changeCurrentUserPwd(PasswordDTO passwordDTO, User user) {
+        user.setPassword(SecureUtils.accountEncrypt(passwordDTO.getNewPassword()));
         SubjectUtils.setUser(user);
         return updateById(user);
     }
@@ -235,11 +235,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     /**
      * 修改用户密码
      *
-     * @param passwordVO 密码信息
+     * @param passwordDTO 密码信息
      * @param user       当前用户对象
      */
-    public boolean changeUserPwd(PasswordVO passwordVO, User user) {
-        user.setPassword(SecureUtils.accountEncrypt(passwordVO.getNewPassword()));
+    public boolean changeUserPwd(PasswordDTO passwordDTO, User user) {
+        user.setPassword(SecureUtils.accountEncrypt(passwordDTO.getNewPassword()));
         return updateById(user);
     }
 

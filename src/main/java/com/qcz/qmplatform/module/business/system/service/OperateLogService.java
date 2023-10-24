@@ -3,7 +3,7 @@ package com.qcz.qmplatform.module.business.system.service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.module.business.system.domain.OperateLog;
 import com.qcz.qmplatform.module.business.system.mapper.OperateLogMapper;
-import com.qcz.qmplatform.module.business.system.domain.vo.OperateLogTimeVO;
+import com.qcz.qmplatform.module.business.system.domain.qo.OperateLogTimeQO;
 import com.qcz.qmplatform.module.business.system.domain.vo.OperateLogVO;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Service
 public class OperateLogService extends ServiceImpl<OperateLogMapper, OperateLog> {
-    public List<OperateLogVO> queryOperateLogList(OperateLogTimeVO operateLogTimeVO) {
-        return baseMapper.queryOperateLogList(operateLogTimeVO);
+    public List<OperateLogVO> queryOperateLogList(OperateLogTimeQO operateLogTimeQO) {
+        return baseMapper.queryOperateLogList(operateLogTimeQO);
     }
 }

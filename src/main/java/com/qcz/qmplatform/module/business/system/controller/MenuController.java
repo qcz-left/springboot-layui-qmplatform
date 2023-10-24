@@ -11,7 +11,7 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.pojo.MenuTree;
 import com.qcz.qmplatform.module.business.system.domain.pojo.Permission;
 import com.qcz.qmplatform.module.business.system.service.MenuService;
-import com.qcz.qmplatform.module.business.system.domain.vo.PermissionVO;
+import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -59,7 +59,7 @@ public class MenuController extends BaseController {
      */
     @PostMapping("/getMenuList")
     @ResponseBody
-    public ResponseResult<List<MenuTree>> getMenuList(PermissionVO permission) {
+    public ResponseResult<List<MenuTree>> getMenuList(PermissionQO permission) {
         List<MenuTree> menuList = menuService.getMenuList(permission);
         return ResponseResult.ok(menuList);
     }
@@ -71,7 +71,7 @@ public class MenuController extends BaseController {
      */
     @GetMapping("/getMenuTree")
     @ResponseBody
-    public ResponseResult<List<MenuTree>> getMenuTree(PermissionVO permission) {
+    public ResponseResult<List<MenuTree>> getMenuTree(PermissionQO permission) {
         return ResponseResult.ok(menuService.getMenuTree(permission));
     }
 
