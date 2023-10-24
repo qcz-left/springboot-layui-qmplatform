@@ -7,6 +7,7 @@ import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.StringUtils;
+import com.qcz.qmplatform.common.validation.groups.Update;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.pojo.MenuTree;
 import com.qcz.qmplatform.module.business.system.domain.pojo.Permission;
@@ -14,6 +15,7 @@ import com.qcz.qmplatform.module.business.system.service.MenuService;
 import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.validation.groups.Default;
 import java.util.List;
 
 /**
@@ -107,7 +110,7 @@ public class MenuController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_MENU_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增权限")
-    public ResponseResult<Void> addPermission(@RequestBody Permission permission) {
+    public ResponseResult<Void> addPermission(@RequestBody @Validated Permission permission) {
         return savePermissionOne(permission);
     }
 
@@ -120,7 +123,7 @@ public class MenuController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_MENU_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改权限")
-    public ResponseResult<Void> updatePermission(@RequestBody Permission permission) {
+    public ResponseResult<Void> updatePermission(@RequestBody @Validated({Default.class, Update.class}) Permission permission) {
         return savePermissionOne(permission);
     }
 

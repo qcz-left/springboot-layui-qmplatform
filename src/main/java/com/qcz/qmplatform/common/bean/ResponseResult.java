@@ -65,6 +65,10 @@ public class ResponseResult<T> {
         return new ResponseResult<>(success ? ResponseCode.SUCCESS : ResponseCode.ERROR, null, null);
     }
 
+    public static ResponseResult<Void> newInstance(ResponseCode responseCode) {
+        return new ResponseResult<>(responseCode, null, null);
+    }
+
     public boolean isOk() {
         return code == ResponseCode.SUCCESS.code();
     }

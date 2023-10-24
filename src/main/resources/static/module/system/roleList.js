@@ -99,10 +99,11 @@ layui.use(['table'], function () {
                 if (!form.doVerify(iframeWin.$("form"))) {
                     return false;
                 }
-                top.layer.load(2);
+                let loadIndex = top.layer.load(2);
                 CommonUtil.postOrPut(id, ctx + '/role/' + (id ? 'updateRole' : 'addRole'), form.val('role-form'), function (result) {
-                    top.layer.closeAll();
+                    top.layer.close(loadIndex);
                     LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
+                        top.layer.closeAll();
                         tableReload();
                     })
                 });
