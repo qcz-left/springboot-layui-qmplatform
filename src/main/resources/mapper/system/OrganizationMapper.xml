@@ -44,7 +44,7 @@
             )
         ]]
 
-        order by itype,iorder
+        order by itype,iorder,name
     </select>
 
 </mapper>
