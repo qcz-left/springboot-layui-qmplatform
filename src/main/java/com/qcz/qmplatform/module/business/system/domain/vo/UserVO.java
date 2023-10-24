@@ -26,4 +26,25 @@ public class UserVO extends User {
     @ExcelField("所属部门")
     private String organizationName;
 
+    public String getUserSexName() {
+        switch (super.getUserSex()) {
+            case "1":
+                return "男";
+            case "2":
+                return "女";
+            default:
+                return "";
+        }
+    }
+
+    public String getLockedName() {
+        switch (super.getLocked()) {
+            case 0:
+                return "正常";
+            case 1:
+                return "锁定";
+            default:
+                return "";
+        }
+    }
 }

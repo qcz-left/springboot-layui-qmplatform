@@ -83,136 +83,134 @@
     </form>
 </div>
 <script type="text/javascript">
-    let id = "${RequestParameters["id"]!}";
-    let parentId = "${RequestParameters["parentId"]!}";
-    layui.use(['form', 'layer', 'xmSelect'], function () {
-        let form = layui.form;
-        let layer = layui.layer;
-        let xmSelect = layui.xmSelect;
-        // 表单数据校验
-        form.verify({
-            loginname: function (value) {
-                let valid;
-                CommonUtil.getSync(ctx + '/user/validateLoginName', {
-                    loginname: value,
-                    userId: id
-                }, function (result) {
-                    valid = result.ok;
-                });
-                if (!valid) {
-                    return '登录名已存在，请重新输入！';
-                }
-            },
-            password: [
-                /^[\S]{5,12}$/,
-                '密码必须5到12位，且不能出现空格'
-            ]
-        });
-
-        let detail = {
-            organizationIds: []
-        };
-        if (id) {
-            CommonUtil.getSync(ctx + '/user/getUser/' + id, {}, function (result) {
-                result.oldPassword = result.password;
-                result.password = Password.UN_CHANGED_PASSWORD;
-                form.val('user-form', result);
-                detail = result;
-            })
-        } else {
-            $("#loginname").removeAttr("disabled");
-        }
-
-        let organizationIdsSelect;
-        if (!parentId) {
-            // 部门数据加载
-            organizationIdsSelect = SelectUtil.render(xmSelect, {
-                el: '#organizationIds',
-                name: 'organizationIds',
-                tree: true,
-                treeExpandedKeys: detail.organizationIds,
-                data: []
+let id = "${RequestParameters["id"]!}";
+let parentId = "${RequestParameters["parentId"]!}";
+layui.use(['form', 'layer', 'xmSelect'], function () {
+    let form = layui.form;
+    let layer = layui.layer;
+    let xmSelect = layui.xmSelect;
+    // 表单数据校验
+    form.verify({
+        loginname: function (value) {
+            let valid;
+            CommonUtil.getSync(ctx + '/user/validateLoginName', {
+                loginname: value,
+                userId: id
+            }, function (result) {
+                valid = result.ok;
             });
-            CommonUtil.getAjax(ctx + '/organization/getOrgTree', {}, function (result) {
-                organizationIdsSelect.update({
-                    initValue: detail.organizationIds,
-                    data: result.data
-                })
-            })
-        }
-
-        // 角色数据加载
-        let roleIdsSelect = SelectUtil.render(xmSelect, {
-            el: '#roleIds',
-            name: 'roleIds',
-            prop: {
-                value: 'roleId',
-                name: 'roleName'
-            },
-            data: []
-        });
-        CommonUtil.postAjax(ctx + '/role/getRoleList', {
-            limit: 9999
-        }, function (result) {
-            roleIdsSelect.update({
-                initValue: detail.roleIds,
-                data: result.data.list
-            })
-        });
-
-        // 性别数据加载
-        let userSexSelect = SelectUtil.render(xmSelect, {
-            el: '#userSex',
-            name: 'userSex',
-            radio: true,
-            model: {label: {type: 'text'}},
-            data: []
-        });
-        CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
-            code: 'user-sex'
-        }, function (result) {
-            userSexSelect.update({
-                initValue: [detail.userSex],
-                data: result.data
-            })
-        });
-
-        // 账号状态数据加载
-        let lockedSelect = SelectUtil.render(xmSelect, {
-            el: '#locked',
-            name: 'locked',
-            radio: true,
-            model: {label: {type: 'text'}},
-            data: []
-        });
-        CommonUtil.getAjax(ctx + '/operation/dict-attr/getDictAttrListByCode', {
-            code: 'user-status'
-        }, function (result) {
-            lockedSelect.update({
-                initValue: [detail.locked],
-                data: result.data
-            })
-        });
-
-        form.on('submit(user-submit)', function (data) {
-            layer.load(2);
-            data.field.roleIds = roleIdsSelect.getValue('value');
-            data.field.organizationIds = [parentId] || organizationIdsSelect.getValue('value');
-            data.field.password = rsaEncrypt(data.field.password);
-            CommonUtil.postOrPut(id, ctx + (id ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
-                top.layer.closeAll();
-                LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
-                    if (parentId) {
-                        reloadFrame();
-                    } else {
-                        reloadParentTable();
-                    }
-                })
-            });
-            return false;
-        });
-
+            if (!valid) {
+                return '登录名已存在，请重新输入！';
+            }
+        },
+        password: [
+            /^[\S]{5,12}$/,
+            '密码必须5到12位，且不能出现空格'
+        ]
     });
+
+    let detail = {
+        organizationIds: []
+    };
+    if (id) {
+        CommonUtil.getSync(ctx + '/user/getUser/' + id, {}, function (result) {
+            result.oldPassword = result.password;
+            result.password = Password.UN_CHANGED_PASSWORD;
+            form.val('user-form', result);
+            detail = result;
+        })
+    } else {
+        $("#loginname").removeAttr("disabled");
+    }
+
+    let organizationIdsSelect;
+    if (!parentId) {
+        // 部门数据加载
+        organizationIdsSelect = SelectUtil.render(xmSelect, {
+            el: '#organizationIds',
+            name: 'organizationIds',
+            tree: true,
+            treeExpandedKeys: detail.organizationIds,
+            data: []
+        });
+        CommonUtil.getAjax(ctx + '/organization/getOrgTree', {}, function (result) {
+            organizationIdsSelect.update({
+                initValue: detail.organizationIds,
+                data: result.data
+            })
+        })
+    }
+
+    // 角色数据加载
+    let roleIdsSelect = SelectUtil.render(xmSelect, {
+        el: '#roleIds',
+        name: 'roleIds',
+        prop: {
+            value: 'roleId',
+            name: 'roleName'
+        },
+        data: []
+    });
+    CommonUtil.postAjax(ctx + '/role/getRoleList', {
+        limit: 9999
+    }, function (result) {
+        roleIdsSelect.update({
+            initValue: detail.roleIds,
+            data: result.data.list
+        })
+    });
+
+    // 性别数据加载
+    SelectUtil.render(xmSelect, {
+        el: '#userSex',
+        name: 'userSex',
+        radio: true,
+        model: {label: {type: 'text'}},
+        data: [{
+            name: "男",
+            value: "1"
+        }, {
+            name: "女",
+            value: "2"
+        }],
+        initValue: [detail.userSex]
+    });
+
+    // 账号状态数据加载
+    SelectUtil.render(xmSelect, {
+        el: '#locked',
+        name: 'locked',
+        radio: true,
+        model: {label: {type: 'text'}},
+        data: [{
+            name: "正常",
+            value: "0"
+        }, {
+            name: "锁定",
+            value: "1"
+        }],
+        initValue: [detail.locked]
+    });
+
+    form.on('submit(user-submit)', function (data) {
+        layer.load(2);
+        data.field.roleIds = roleIdsSelect.getValue('value');
+        data.field.organizationIds = [parentId] || organizationIdsSelect.getValue('value');
+        data.field.password = rsaEncrypt(data.field.password);
+        CommonUtil.postOrPut(id, ctx + (id ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
+            top.layer.closeAll();
+            LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
+                if (parentId) {
+                    reloadFrame();
+                } else {
+                    reloadParentTable();
+                }
+            })
+        });
+        return false;
+    });
+
+});
 </script>
 </body>
 </html>

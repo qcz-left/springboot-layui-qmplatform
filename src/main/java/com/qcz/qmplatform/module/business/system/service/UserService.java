@@ -25,6 +25,7 @@ import com.qcz.qmplatform.module.business.system.domain.Role;
 import com.qcz.qmplatform.module.business.system.domain.User;
 import com.qcz.qmplatform.module.business.system.domain.UserOrganization;
 import com.qcz.qmplatform.module.business.system.domain.UserRole;
+import com.qcz.qmplatform.module.business.system.domain.dto.SaveUserDTO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserGroupUserQO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserQO;
 import com.qcz.qmplatform.module.business.system.domain.vo.CurrentUserInfoVO;
@@ -105,7 +106,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         return baseMapper.queryUserByName(loginName);
     }
 
-    public boolean insertUser(UserVO user) {
+    public boolean insertUser(SaveUserDTO user) {
         String userId = IdUtils.getUUID();
         user.setId(userId);
         user.setCreateTime(DateUtils.getCurrTimestamp());
@@ -118,7 +119,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         return save(user);
     }
 
-    public boolean updateUser(UserVO user) {
+    public boolean updateUser(SaveUserDTO user) {
         String userId = user.getId();
         // 先删除关联的组织机构和角色，在增加
         userOrganizationService.deleteByUserIds(CollectionUtil.newArrayList(userId));
@@ -323,7 +324,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             }
 
             if (canSuccess) {
-                insertUser(userVO);
+                insertUser(BeanUtil.copyProperties(userVO, SaveUserDTO.class));
                 successCount++;
             }
         }

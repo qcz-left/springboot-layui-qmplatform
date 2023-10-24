@@ -28,13 +28,14 @@ import com.qcz.qmplatform.module.business.notify.domain.pojo.TemplateParam;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.TemplateType;
 import com.qcz.qmplatform.module.business.notify.domain.vo.SmsConfigVO;
 import com.qcz.qmplatform.module.business.system.domain.User;
+import com.qcz.qmplatform.module.business.system.domain.dto.SaveUserDTO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserGroupUserQO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserQO;
-import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO;
-import com.qcz.qmplatform.module.business.system.service.UserService;
 import com.qcz.qmplatform.module.business.system.domain.vo.CurrentUserInfoVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.PasswordVO;
+import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
+import com.qcz.qmplatform.module.business.system.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -49,7 +50,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -185,7 +185,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增用户")
-    public ResponseResult<Void> addUser(@Validated @RequestBody UserVO user) {
+    public ResponseResult<Void> addUser(@Validated @RequestBody SaveUserDTO user) {
         return ResponseResult.newInstance(userService.insertUser(user));
     }
 
@@ -193,7 +193,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改用户")
-    public ResponseResult<Void> updateUser(@Validated @RequestBody UserVO user) {
+    public ResponseResult<Void> updateUser(@Validated @RequestBody SaveUserDTO user) {
         return ResponseResult.newInstance(userService.updateUser(user));
     }
 

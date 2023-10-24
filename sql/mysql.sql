@@ -69,8 +69,6 @@ CREATE TABLE sys_dict (
 -- ----------------------------
 -- Records of sys_dict
 -- ----------------------------
-INSERT INTO sys_dict VALUES ('97e67908-5489-41f1-ae3a-dbc6b4752907', '性别', '用户管理-性别', 1, 'user-sex');
-INSERT INTO sys_dict VALUES ('148038cb-a0d5-4c62-9c8f-373a7c4f16ba', '用户状态', '用户管理-状态', 2, 'user-status');
 INSERT INTO sys_dict VALUES ('04202f98-521d-4e1e-895a-a7c8156a7f3e', '权限类型', '菜单管理-类型', 3, 'permission');
 INSERT INTO sys_dict VALUES ('a500f79b-5e4c-4dfb-8dae-d837587847d9', '菜单是否显示', '菜单管理-是否显示', 4, 'display');
 INSERT INTO sys_dict VALUES ('778223bf-498d-4625-a1f2-6cf9769291c8', '操作类型', '操作日志-操作类型', 5, 'operate-type');
@@ -94,15 +92,10 @@ CREATE TABLE sys_dict_attr (
 -- ----------------------------
 -- Records of sys_dict_attr
 -- ----------------------------
-INSERT INTO sys_dict_attr VALUES ('男', '1', '97e67908-5489-41f1-ae3a-dbc6b4752907', 'f4ad8e47-040e-4e46-a8d5-2e16758cceca', null);
-INSERT INTO sys_dict_attr VALUES ('女', '2', '97e67908-5489-41f1-ae3a-dbc6b4752907', '5283f8c6-0a87-41cc-a1ae-2f99e7b207a2', null);
-INSERT INTO sys_dict_attr VALUES ('太监', '0', '97e67908-5489-41f1-ae3a-dbc6b4752907', '1555209e-b398-47d5-bf2b-bf4f0b072f92', null);
 INSERT INTO sys_dict_attr VALUES ('菜单', '1', '04202f98-521d-4e1e-895a-a7c8156a7f3e', '546a6dd4-ff78-4665-abd8-88e2f0d42466', null);
 INSERT INTO sys_dict_attr VALUES ('按钮', '2', '04202f98-521d-4e1e-895a-a7c8156a7f3e', '4a5008d2-dc75-4be8-b6b2-abfa82da575b', null);
 INSERT INTO sys_dict_attr VALUES ('显示', '1', 'a500f79b-5e4c-4dfb-8dae-d837587847d9', '31f03a5a-9938-4b4f-af24-f5f7c3d7e743', null);
 INSERT INTO sys_dict_attr VALUES ('隐藏', '0', 'a500f79b-5e4c-4dfb-8dae-d837587847d9', '1421293d-d1f2-4c48-b89e-cbbdc0d27890', null);
-INSERT INTO sys_dict_attr VALUES ('正常', '0', '148038cb-a0d5-4c62-9c8f-373a7c4f16ba', 'ff703593-116d-4ce6-97f3-2bf403eb73f0', null);
-INSERT INTO sys_dict_attr VALUES ('锁定', '1', '148038cb-a0d5-4c62-9c8f-373a7c4f16ba', '6966baf2-8284-4126-9af0-ab35615a570c', null);
 INSERT INTO sys_dict_attr VALUES ('退出系统', '-1', '778223bf-498d-4625-a1f2-6cf9769291c8', 'c277f016-f060-4ee6-a4d3-7e521bcd0e31', null);
 INSERT INTO sys_dict_attr VALUES ('进入系统', '1', '778223bf-498d-4625-a1f2-6cf9769291c8', 'ecd9ea03-a262-44b6-9e71-d36e13335c9b', null);
 INSERT INTO sys_dict_attr VALUES ('新增', '3', '778223bf-498d-4625-a1f2-6cf9769291c8', '2d5cdc58-8b6d-47be-a886-6cc165ec784c', null);

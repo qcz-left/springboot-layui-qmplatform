@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.qcz.qmplatform.common.anno.ExcelField;
+import com.qcz.qmplatform.common.validation.Phone;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -85,6 +88,7 @@ public class User implements Serializable {
     @TableField("phone")
     @ExcelField("电话")
     @NotBlank(message = "手机号码不能为空")
+    @Phone
     private String phone;
 
     /**
@@ -92,12 +96,15 @@ public class User implements Serializable {
      */
     @TableField("email_addr")
     @ExcelField("邮箱")
+    @NotBlank(message = "邮箱地址不能为空")
+    @Email
     private String emailAddr;
 
     /**
-     * 邮箱地址
+     * 锁定状态（0：正常；1：锁定）
      */
     @TableField("locked")
+    @Range(min = 0, max = 1)
     private int locked;
 
     /**
