@@ -1885,4 +1885,16 @@ CREATE VIEW v_sys_dict_attr AS  SELECT sd.dict_code,
                                 FROM (sys_dict sd
                                          LEFT JOIN sys_dict_attr sda ON sd.dict_id = sda.dict_id);
 
+
+DROP VIEW IF EXISTS v_bill_type;
+CREATE VIEW v_bill_type AS
+select
+    tbt1.id,
+    tbt1.name,
+    tbt1.parent_id,
+    tbt2.name as parent_name
+from
+    tbl_bill_type tbt1
+left join tbl_bill_type tbt2 on tbt1.parent_id = tbt2.id;
+
 update sys_user set password = '$2a$10$5Z1ICMt2rEOEEoxZEFOgfONyFo0/ildC84PvHWtGIstVW/YZpxPwO' where loginname = 'admin';

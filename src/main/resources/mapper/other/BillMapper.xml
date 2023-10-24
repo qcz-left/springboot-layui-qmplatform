@@ -18,8 +18,8 @@
                 tbl_bill tb
             left join tbl_bill_type tbt on tbt.id = tb.type_id
             where 1=1
-            [[ and tb.remark like '%' || #remark# || '%' ]]
-            [[ and tb.consumer like '%' || #consumer# || '%' ]]
+            [[ and tb.remark like concat('%', concat(#remark#, '%')) ]]
+            [[ and tb.consumer like concat('%', concat(#consumer#, '%')) ]]
             [[ and tb.type_id = #typeId# ]]
             [[ and tb.consume_time >= #consumeTimeStart# ]]
             [[ and tb.consume_time <= #consumeTimeEnd# ]]
@@ -38,8 +38,8 @@
                 from tbl_bill tb
                 left join v_bill_type vbt on tb.type_id = vbt.id
                 where 1=1
-                [[ and tb.remark like '%' || #remark# || '%' ]]
-                [[ and tb.consumer like '%' || #consumer# || '%' ]]
+                [[ and tb.remark like concat('%', concat(#remark#, '%')) ]]
+                [[ and tb.consumer like concat('%', concat(#consumer#, '%')) ]]
                 [[ and tb.type_id = #typeId# ]]
                 [[ and tb.consume_time >= #consumeTimeStart# ]]
                 [[ and tb.consume_time <= #consumeTimeEnd# ]]
@@ -55,8 +55,8 @@
                 sum(amount) as value
             from tbl_bill
             where 1=1
-            [[ and remark like '%' || #remark# || '%' ]]
-            [[ and consumer like '%' || #consumer# || '%' ]]
+            [[ and remark like concat('%', concat(#remark#, '%')) ]]
+            [[ and consumer like concat('%', concat(#consumer#, '%')) ]]
             [[ and type_id = #typeId# ]]
             [[ and consume_time >= #consumeTimeStart# ]]
             [[ and consume_time <= #consumeTimeEnd# ]]

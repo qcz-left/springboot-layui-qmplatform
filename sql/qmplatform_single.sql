@@ -2002,6 +2002,17 @@ CREATE VIEW "public"."v_sys_dict_attr" AS  SELECT sd.dict_code,
    FROM (sys_dict sd
      LEFT JOIN sys_dict_attr sda ON (((sd.dict_id)::text = (sda.dict_id)::text)));
 
+DROP VIEW IF EXISTS "public"."v_bill_type";
+CREATE VIEW "public"."v_bill_type" AS
+select
+    tbt1.id,
+    tbt1.name,
+    tbt1.parent_id,
+    tbt2.name as parent_name
+from
+    tbl_bill_type tbt1
+left join tbl_bill_type tbt2 on tbt1.parent_id = tbt2.id
+
 -- ----------------------------
 -- Primary Key structure for table ope_data_bak
 -- ----------------------------
