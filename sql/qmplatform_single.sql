@@ -1892,7 +1892,7 @@ DROP TABLE IF EXISTS "public"."tbl_bill";
 CREATE TABLE public.tbl_bill (
     id varchar(50) NOT NULL,
     "type_id" varchar(50) NULL,
-    amount decimal NULL,
+    amount decimal(10, 2) NULL,
     consumer varchar(50) NULL,
     remark varchar(200) NULL,
     consume_time date NULL,

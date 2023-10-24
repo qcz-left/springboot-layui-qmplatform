@@ -1758,7 +1758,7 @@ DROP TABLE IF EXISTS tbl_bill;
 CREATE TABLE tbl_bill (
                           id varchar(50) NOT NULL COMMENT '账单id',
                           type_id varchar(50) NULL COMMENT '账单类型id',
-                          amount decimal NULL COMMENT '金额',
+                          amount decimal(10, 2) NULL COMMENT '金额',
                           consumer varchar(50) NULL COMMENT '消费人',
                           remark varchar(200) NULL COMMENT '备注',
                           consume_time date NULL COMMENT '消费日期',
