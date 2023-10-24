@@ -107,7 +107,7 @@ public class LoginController {
     }
 
     @GetMapping("/nnl/loginAgain")
-    public String loginAgain(RedirectAttributes redirectAttributes, String code) {
+    public String loginAgain(RedirectAttributes redirectAttributes, int code) {
         redirectAttributes.addFlashAttribute("code", code);
         return "redirect:/loginPage";
     }

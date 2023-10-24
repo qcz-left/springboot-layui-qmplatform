@@ -372,7 +372,7 @@ layui.use(['element', 'dropdown'], function () {
     socket.onmessage = function (msg) {
         let result = JSON.parse(msg.data);
         let code = result.code;
-        if (code === 402 || code === 405) {
+        if (code === ResponseCode.AUTHORIZED_EXPIRE || code === ResponseCode.DATA_BAK_RECOVER) {
             top.window.location = ctx + "/nnl/loginAgain?code=" + code;
         }
     };

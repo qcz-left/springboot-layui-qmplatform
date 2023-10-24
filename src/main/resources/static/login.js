@@ -8,8 +8,8 @@ layui.use(['form', 'layer'], function () {
     let form = layui.form;
 
     if (typeof code !== "undefined") {
-        let expire = code === '402';
-        let dataBakRecover = code === '405';
+        let expire = code === ResponseCode.AUTHORIZED_EXPIRE;
+        let dataBakRecover = code === ResponseCode.DATA_BAK_RECOVER;
         if (expire || dataBakRecover) {
             let msg;
             let icon;
