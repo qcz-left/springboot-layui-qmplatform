@@ -1,11 +1,12 @@
 package com.qcz.qmplatform.config;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.cache.ShiroCacheManager;
-import com.qcz.qmplatform.module.listen.ShiroSessionListener;
+import com.qcz.qmplatform.common.constant.Constant;
+import com.qcz.qmplatform.filter.ShiroLoginTimeoutFilter;
 import com.qcz.qmplatform.module.business.system.realm.CustomCredentialsMatch;
 import com.qcz.qmplatform.module.business.system.realm.UserRealm;
+import com.qcz.qmplatform.module.listen.ShiroSessionListener;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
@@ -19,7 +20,10 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
@@ -91,6 +95,12 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSuccessUrl("/");
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         shiroFilterFactoryBean.setLoginUrl("/loginPage");
+
+        // 配置拦截器
+        Map<String, Filter> filterMap = new HashMap<>();
+        filterMap.put("authc", new ShiroLoginTimeoutFilter());
+        shiroFilterFactoryBean.setFilters(filterMap);
+
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/loginPage", "anon");
