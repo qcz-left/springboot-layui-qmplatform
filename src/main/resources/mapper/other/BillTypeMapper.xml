@@ -11,7 +11,7 @@
         from
             tbl_bill_type tbt
         where 1=1
-        [[ and not in(#notExistsIds#) ]]
+        [[ and tbt.id not in(#notExistsIds#) ]]
 
     </select>
 
