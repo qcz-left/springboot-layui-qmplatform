@@ -13,7 +13,7 @@ public enum DBType {
 
     POSTGRE_SQL("postgresql", "org.postgresql.Driver", "jdbc:postgresql://{}:{}/{}", PgDBBackupRecovery.class),
 
-    MYSQL("mysql", "com.mysql.jdbc.Driver", "jdbc:mysql://{}:{}/{}", MySqlDBBackupRecovery.class),
+    MYSQL("mysql", "com.mysql.cj.jdbc.Driver", "jdbc:mysql://{}:{}/{}", MySqlDBBackupRecovery.class),
 
     ORACLE("oracle", "oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@{}:{}/{}", DBBackupRecovery.class),
 
