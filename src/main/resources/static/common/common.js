@@ -22,7 +22,7 @@ const CommonUtil = {
             async: typeof (_async) == "undefined" ? true : _async,
             success: function (result) {
                 if (result.code === ResponseCode.AUTHORIZED_EXPIRE) {
-                    top.window.location = ctx + "/nnl/loginAgain?code=" + ResponseCode.AUTHORIZED_EXPIRE;
+                    gotoLoginPage(ResponseCode.AUTHORIZED_EXPIRE);
                     return;
                 }
                 if (_success && typeof _success == "function") {

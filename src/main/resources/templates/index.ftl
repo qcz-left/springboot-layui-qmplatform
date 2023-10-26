@@ -373,7 +373,7 @@ layui.use(['element', 'dropdown'], function () {
         let result = JSON.parse(msg.data);
         let code = result.code;
         if (code === ResponseCode.AUTHORIZED_EXPIRE || code === ResponseCode.DATA_BAK_RECOVER) {
-            top.window.location = ctx + "/nnl/loginAgain?code=" + code;
+            gotoLoginPage(code);
         }
     };
     //关闭事件

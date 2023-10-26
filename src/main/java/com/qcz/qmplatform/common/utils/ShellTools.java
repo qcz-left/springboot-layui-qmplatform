@@ -1,13 +1,15 @@
 package com.qcz.qmplatform.common.utils;
 
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.RuntimeUtil;
-import com.qcz.qmplatform.common.database.DBBackupRecovery;
+import com.qcz.qmplatform.module.business.operation.domain.pojo.DBType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,9 +26,10 @@ public class ShellTools {
      * @param bakFilePath 备份路径
      */
     public static void databaseDump(String database, String bakFilePath) {
-        String dumpCmd = SpringContextUtils.getBean(DBBackupRecovery.class).getBackupCmd(database, bakFilePath);
+        DBType dbType = DBType.getDbTypeByDriverName(YmlPropertiesUtils.getDatasourceDriverName());
+        String dumpCmd = ReflectUtil.newInstance(dbType.getDbBackupRecoveryClass()).getBackupCmd(database, bakFilePath);
         LOGGER.debug("dump exe shell: " + dumpCmd);
-        LOGGER.debug(RuntimeUtil.execForStr(dumpCmd));
+        LOGGER.debug(execForStr(dumpCmd));
     }
 
     /**
@@ -36,7 +39,8 @@ public class ShellTools {
      */
     public static String databaseRecoverToCache(String database, String bakFilePath, String logPath) {
         String cmdId = IdUtils.getUUID();
-        CacheUtils.putCmd(cmdId, SpringContextUtils.getBean(DBBackupRecovery.class).getRecoveryCmd(database, bakFilePath, logPath));
+        DBType dbType = DBType.getDbTypeByDriverName(YmlPropertiesUtils.getDatasourceDriverName());
+        CacheUtils.putCmd(cmdId, ReflectUtil.newInstance(dbType.getDbBackupRecoveryClass()).getRecoveryCmd(database, bakFilePath, logPath));
         return cmdId;
     }
 
@@ -46,6 +50,14 @@ public class ShellTools {
         cmdList.add("-c");
         cmdList.addAll(Arrays.asList(cmd));
         return RuntimeUtil.exec(ArrayUtil.toArray(cmdList, String.class));
+    }
+
+    public static String execForStr(String... cmd) {
+        List<String> cmdList = new ArrayList<>();
+        cmdList.add("/bin/sh");
+        cmdList.add("-c");
+        cmdList.addAll(Arrays.asList(cmd));
+        return RuntimeUtil.execForStr(ArrayUtil.toArray(cmdList, String.class));
     }
 
     private ShellTools() {

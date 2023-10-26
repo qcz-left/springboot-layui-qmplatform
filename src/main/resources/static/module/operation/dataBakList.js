@@ -117,15 +117,23 @@ layui.use(['table'], function () {
             top.layer.loadingWithText('正在恢复备份，请稍后...');
             CommonUtil.postAjax(ctx + "/operation/data-bak/recoverDataBak/" + bakId, {}, function (data) {
                 top.layer.closeAll();
-                if (!CommonUtil.respSuccess(data)) {
-                    top.layer.error(data.msg || "恢复备份失败！");
-                } else {
+                if (CommonUtil.respSuccess(data)) {
                     LayerUtil.openLayer({
                         title: "恢复备份",
                         content: ctx + "/showLogPage?needReLogin=true&cmdId=" + data.data.cmdId + "&logPath=" + data.data.logPath,
                         area: ['50%', '65%'],
-                        closeBtn: 0
+                        closeBtn: 0,
+                        loaded: function () {
+                            // 完成备份3分钟后自动跳转登录页
+                            window.reloadEvent = function () {
+                                window.setTimeout(function () {
+                                    gotoLoginPage(ResponseCode.DATA_BAK_RECOVER);
+                                }, 3 * 60 * 1000);
+                            }
+                        }
                     }, true);
+                } else {
+                    top.layer.error(data.msg || "恢复备份失败！");
                 }
             })
         });

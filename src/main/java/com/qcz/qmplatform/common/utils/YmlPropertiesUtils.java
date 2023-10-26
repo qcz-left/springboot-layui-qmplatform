@@ -79,7 +79,7 @@ public class YmlPropertiesUtils {
      * 是否开启http重定向到https
      */
     public static boolean redirectHttps() {
-        return Boolean.parseBoolean(YML_PROP.getProperty("custom.redirect-https", "false"));
+        return Boolean.parseBoolean(YML_PROP.getProperty("custom.redirect-https", Boolean.FALSE.toString()));
     }
 
     /**
@@ -87,6 +87,20 @@ public class YmlPropertiesUtils {
      */
     public static String getPacking() {
         return YML_PROP.getProperty("custom.packing", "jar");
+    }
+
+    /**
+     * 数据库是否docker环境
+     */
+    public static boolean dbIsDocker() {
+        return Boolean.parseBoolean(YML_PROP.getProperty("custom.dbIsDocker", Boolean.FALSE.toString()));
+    }
+
+    /**
+     * 获取数据库驱动类名
+     */
+    public static String getDatasourceDriverName() {
+        return YML_PROP.getProperty("spring.datasource.driver-class-name");
     }
 
 }

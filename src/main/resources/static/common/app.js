@@ -103,6 +103,15 @@ function getFrameWindow() {
     return top.$(".layui-tab[lay-filter='main-tab'] .layui-show iframe:first")[0].contentWindow;
 }
 
+/**
+ * 跳转到登录页
+ * @param code 状态码（见：ResponseCode）
+ */
+function gotoLoginPage(code) {
+    code = code || 0;
+    top.window.location = ctx + "/nnl/loginAgain?code=" + code;
+}
+
 /*
  * layui数据表格排序监听事件 layuiTable layui表格对象 tableId table元素id
  */

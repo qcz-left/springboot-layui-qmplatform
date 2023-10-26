@@ -61,6 +61,15 @@
             <#if RequestParameters["needReLogin"]??>
                 CommonUtil.postSync(ctx + "/clearLoginInfo", {});
                 $("#reLogin").css("display", "inline-block");
+                // 完成后执行的操作
+                let reloadEvent = getFrameWindow().reloadEvent;
+                let hasReloadEvent = false;
+                if (reloadEvent && typeof reloadEvent === "function") {
+                    hasReloadEvent = true;
+                }
+                if (hasReloadEvent) {
+                    getFrameWindow().reloadEvent();
+                }
             </#if>
             $logTip.css("color", "green").text("执行成功！");
             $(".detail-operator").show();
@@ -69,7 +78,7 @@
     };
 
     function reLogin() {
-        top.location.href = "${ctx}/loginPage";
+        gotoLoginPage();
     }
 </script>
 </body>
