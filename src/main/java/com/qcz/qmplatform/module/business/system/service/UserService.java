@@ -15,6 +15,7 @@ import com.qcz.qmplatform.common.bean.PageRequest;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
+import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
@@ -36,6 +37,7 @@ import com.qcz.qmplatform.module.business.system.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.net.BindException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -339,6 +341,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     public void deleteUserByIds(List<String> userIds) {
+        List<String> allAdminId = CollectionUtil.getFieldValues(queryAllAdmin(), "id", String.class);
+        if (CollectionUtil.containsAny(userIds, allAdminId)) {
+            throw new BusinessException("禁止删除系统管理员！");
+        }
+
         removeByIds(userIds);
         userOrganizationService.deleteByUserIds(userIds);
         userRoleService.deleteByUserIds(userIds);

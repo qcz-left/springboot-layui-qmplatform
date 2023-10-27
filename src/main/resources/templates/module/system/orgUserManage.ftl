@@ -44,7 +44,9 @@
                 <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
             </@shiro.hasPermission>
             <@shiro.hasPermission name="${PrivCode.BTN_CODE_USER_DELETE}">
-                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
+                {{# if (!d.systemAdmin) { }}
+                    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
+                {{# } }}
             </@shiro.hasPermission>
         </div>
         </script>

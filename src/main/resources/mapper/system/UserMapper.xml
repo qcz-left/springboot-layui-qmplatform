@@ -52,7 +52,13 @@
                 <if test="_databaseId == 'mysql'">group_concat(so.organization_name)</if>
                 <if test="_databaseId == 'pg'">string_agg(so.organization_name, ',' )</if>
                 , ''
-            ) as organization_name
+            ) as organization_name,
+            exists (
+                select 1 from sys_user_role sur
+                left join sys_role sr on sur.role_id = sr.role_id
+                where sur.user_id = su.id
+                and sr.role_sign = 'system-admin'
+            ) as system_admin
         from
             sys_user su
         left join sys_user_organization suo on su.id = suo.user_id

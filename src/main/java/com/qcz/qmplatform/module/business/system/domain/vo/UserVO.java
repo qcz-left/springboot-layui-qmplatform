@@ -26,6 +26,11 @@ public class UserVO extends User {
     @ExcelField("所属部门")
     private String organizationName;
 
+    /**
+     * 是否系统管理员
+     */
+    private boolean systemAdmin;
+
     public String getUserSexName() {
         switch (super.getUserSex()) {
             case "1":
