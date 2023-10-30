@@ -70,7 +70,7 @@ public class OperateLogAspect {
         String requestUrl = request.getServletPath();
         String ipAddress = HttpServletUtils.getIpAddress(request);
         Object proceed;
-        User currentUser = SubjectUtils.getUser();
+        User currentUser = SubjectUtils.getUser(false);
         Timestamp currTimestamp = DateUtils.getCurrTimestamp();
         try {
             proceed = joinPoint.proceed();
@@ -98,7 +98,7 @@ public class OperateLogAspect {
         final HttpServletRequest request = HttpServletUtils.getCurrRequest();
         String requestUrl = request.getServletPath();
         String ipAddress = HttpServletUtils.getIpAddress(request);
-        User currentUser = SubjectUtils.getUser();
+        User currentUser = SubjectUtils.getUser(false);
         Timestamp currTimestamp = DateUtils.getCurrTimestamp();
         executorService.submit(() -> {
             String stackTrace = stackTraceToString(e.getClass().getName(), e.getMessage(), e.getStackTrace());
