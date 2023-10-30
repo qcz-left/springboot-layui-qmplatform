@@ -44,15 +44,15 @@
                 <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
             </@shiro.hasPermission>
             <@shiro.hasPermission name="${PrivCode.BTN_CODE_USER_DELETE}">
-                {{# if (!d.systemAdmin) { }}
-                    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
-                {{# } }}
+                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
             </@shiro.hasPermission>
         </div>
         </script>
         <script type="text/html" id="operator">
         <@shiro.hasPermission name="${PrivCode.BTN_CODE_USER_DELETE}">
-            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
+            {{# if (!d.systemAdmin) { }}
+                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
+            {{# } }}
         </@shiro.hasPermission>
         </script>
         <table class="layui-hide" id="user-list-tab" lay-filter="user"></table>
@@ -206,9 +206,11 @@ layui.use(['table', 'form', 'layer'], function () {
         }, function (index) {
             CommonUtil.deleteAjax(ctx + "/user/delUser", {
                 userIds: CommonUtil.joinMulti(ids)
-            }, function () {
+            }, function (result) {
                 top.layer.close(index);
-                reloadFrame();
+                if (CommonUtil.respSuccess(result)) {
+                    reloadFrame();
+                }
             })
         });
     }
