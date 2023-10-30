@@ -251,7 +251,7 @@ layui.use(['form', 'xmSelect'], function () {
                 name: "女",
                 value: "2"
             }],
-            initValue: [detail.userSex]
+            initValue: [detail.userSex || ""]
         });
 
         // 账号状态数据加载
