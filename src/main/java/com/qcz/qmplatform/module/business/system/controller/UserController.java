@@ -279,6 +279,15 @@ public class UserController extends BaseController {
         return upload;
     }
 
+    @PostMapping("/restoreDefaultUserPhoto")
+    @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
+    @ResponseBody
+    @RecordLog(type = OperateType.UPDATE, description = "恢复用户默认头像")
+    public ResponseResult<Void> restoreDefaultUserPhoto() {
+        userService.restoreDefaultUserPhoto();
+        return ResponseResult.ok();
+    }
+
     @DeleteMapping("/delUser")
     @RequiresPermissions(PrivCode.BTN_CODE_USER_DELETE)
     @ResponseBody

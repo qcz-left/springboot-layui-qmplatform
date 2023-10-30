@@ -357,4 +357,17 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         PageResultHelper.startPage(pageRequest);
         return baseMapper.getUserGroupUserList(qo);
     }
+
+    /**
+     * 恢复当前登录用户默认头像
+     */
+    public void restoreDefaultUserPhoto() {
+        User user = SubjectUtils.getUser();
+        user.setPhotoPath(null);
+        super.update(
+                Wrappers.lambdaUpdate(User.class)
+                        .set(User::getPhotoPath, null)
+                        .eq(User::getId, user.getId())
+        );
+    }
 }

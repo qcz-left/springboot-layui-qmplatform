@@ -16,6 +16,7 @@
         <div class="layui-form-item">
             <div class="detail-operator">
                 <button id="btnUpload" class="layui-btn layui-btn-normal">上传</button>
+                <button id="restoreDefault" class="layui-btn">恢复默认头像</button>
                 <button class="layui-btn layui-btn-primary" onclick="closeCurrentIframe()">取消</button>
             </div>
         </div>
@@ -50,6 +51,16 @@
             error: function () {
                 layer.error("上传失败！")
             }
+        });
+
+        $("#restoreDefault").click(function () {
+            layer.load(2);
+            CommonUtil.postAjax(ctx + '/user/restoreDefaultUserPhoto', {}, function (result) {
+                LayerUtil.respMsg(result, "恢复成功", "恢复失败", function () {
+                    top.$("#userImg").attr("src", ctx + '/static/common/image/charon.png');
+                    top.layer.closeAll();
+                })
+            })
         });
     });
 </script>
