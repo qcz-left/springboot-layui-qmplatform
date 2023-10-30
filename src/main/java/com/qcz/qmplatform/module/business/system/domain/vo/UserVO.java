@@ -1,17 +1,19 @@
 package com.qcz.qmplatform.module.business.system.domain.vo;
 
 import com.qcz.qmplatform.common.anno.ExcelField;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.system.domain.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class UserVO extends User {
+public class UserVO extends User implements Serializable {
 
     private List<String> organizationIds;
 
@@ -32,7 +34,7 @@ public class UserVO extends User {
     private boolean systemAdmin;
 
     public String getUserSexName() {
-        switch (super.getUserSex()) {
+        switch (StringUtils.nullToDefault(super.getUserSex(), "")) {
             case "1":
                 return "男";
             case "2":
