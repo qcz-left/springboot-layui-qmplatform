@@ -38,7 +38,7 @@ public class MakeDataService {
                 LOGGER.info("start sorting data...");
                 for (int i = 0; i < insertNumber; i++) {
                     Entity entity = new Entity();
-                    entity.setTableName(dataDetail.getTableName().toLowerCase());
+                    entity.setTableName(dataDetail.getTableName());
 
                     List<DataDetail.ColumnDetail> columnDetails = dataDetail.getColumnDetails();
                     for (DataDetail.ColumnDetail columnDetail : columnDetails) {

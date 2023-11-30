@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.business.operation.domain.pojo;
 
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.RandomUtils;
+import com.qcz.qmplatform.common.utils.StringUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -25,6 +26,10 @@ public class DataDetail implements Serializable {
      * 字段详情
      */
     private List<ColumnDetail> columnDetails;
+
+    public String getTableName() {
+        return StringUtils.toLowerCase(tableName);
+    }
 
     @Data
     @Accessors(chain = true)
