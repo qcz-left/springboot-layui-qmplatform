@@ -21,4 +21,11 @@ public class StringUtils extends StrUtil {
         return str.substring(0, maxLength) + "...";
     }
 
+    /**
+     * 将字符串转为小写
+     */
+    public static String toLowerCase(String str) {
+        return blankToDefault(str, "").toLowerCase();
+    }
+
 }
