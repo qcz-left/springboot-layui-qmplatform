@@ -285,10 +285,16 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
         }],
         on: function (data) {
             let value = data.arr[0].value;
+            let valueSelector = '[name="value"]';
+            let lengthSelector = '[name="length"]';
+            clearFormValid(valueSelector);
+            clearFormValid(lengthSelector);
             if (value === 1) {
+                addFormValid(valueSelector)
                 $("#valueDiv").show();
                 $("#lengthDiv").hide();
             } else if (value === 2) {
+                addFormValid(lengthSelector)
                 $("#valueDiv").hide();
                 $("#lengthDiv").show();
             }
