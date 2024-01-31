@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.common.utils;
 
 import cn.hutool.setting.Setting;
+import com.qcz.qmplatform.common.log.LogUtils;
 
 /**
  * INI 配置文件工具类
@@ -16,8 +17,13 @@ public class IniFileUtils {
 
     static {
         FileUtils.createIfNotExists(CONFIG_FILE_PATH);
-        configIniFile = new Setting(CONFIG_FILE_PATH);
-        configIniFile.autoLoad(true);
+        configIniFile = new MySetting(CONFIG_FILE_PATH);
+        configIniFile.autoLoad(true, aBoolean -> {
+            // 配置文件修改完的回调
+            if (aBoolean) {
+                LogUtils.resetLogLevel();
+            }
+        });
     }
 
     /**

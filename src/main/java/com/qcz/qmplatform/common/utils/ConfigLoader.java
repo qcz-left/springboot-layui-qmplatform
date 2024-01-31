@@ -2,6 +2,8 @@ package com.qcz.qmplatform.common.utils;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.setting.Setting;
+import com.qcz.qmplatform.common.constant.GroupDefine;
+import org.springframework.boot.logging.LogLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +15,12 @@ public class ConfigLoader {
 
     private static final Setting configFile = IniFileUtils.getConfigFile();
 
-    private static final String GROUP_COMMON = "Common";
-
-    private static final String GROUP_SECURE = "Secure";
-
     private static String getStringConfig(String group, String propertyName, String defaultValue) {
         return configFile.getStr(propertyName, group, defaultValue);
     }
 
     private static String getStringConfig(String propertyName, String defaultValue) {
-        return configFile.getStr(propertyName, GROUP_COMMON, defaultValue);
+        return configFile.getStr(propertyName, GroupDefine.COMMON, defaultValue);
     }
 
     private static String getStringConfig(String propertyName) {
@@ -34,7 +32,7 @@ public class ConfigLoader {
     }
 
     private static Long getLongConfig(String propertyName, Long defaultValue) {
-        return configFile.getLong(propertyName, GROUP_COMMON, defaultValue);
+        return configFile.getLong(propertyName, GroupDefine.COMMON, defaultValue);
     }
 
     private static Long getLongConfig(String propertyName) {
@@ -46,11 +44,15 @@ public class ConfigLoader {
     }
 
     private static Integer getIntConfig(String propertyName, Integer defaultValue) {
-        return configFile.getInt(propertyName, GROUP_COMMON, defaultValue);
+        return configFile.getInt(propertyName, GroupDefine.COMMON, defaultValue);
     }
 
     private static Integer getIntConfig(String propertyName) {
         return getIntConfig(propertyName, null);
+    }
+
+    public static Iterable<String> getPropertyNames(String group) {
+        return configFile.getMap(group).keySet();
     }
 
     /**
@@ -125,28 +127,28 @@ public class ConfigLoader {
      * 获取aes加密秘钥
      */
     public static String getAesKey() {
-        return getStringConfig(GROUP_SECURE, "AesKey", "0123456789ABHAEQ");
+        return getStringConfig(GroupDefine.SECURE, "AesKey", "0123456789ABHAEQ");
     }
 
     /**
      * 获取des加密秘钥
      */
     public static String getDesKey() {
-        return getStringConfig(GROUP_SECURE, "DesKey", "0123456789ABHAEQ");
+        return getStringConfig(GroupDefine.SECURE, "DesKey", "0123456789ABHAEQ");
     }
 
     /**
      * 获取rsa加密公钥
      */
     public static String getRsaPublicKey() {
-        return getStringConfig(GROUP_SECURE, "RsaPublicKey", "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC2qTJMYBIn2rk8W/fRFKd9kmZUd72+tGQg5oyQL/J9x4FyNKFFbcMapzDx431HpwWns/2bHH1loxA7fojpsHCAxzA47v5nVbOmIduxLaahpcz9E0xHKwOApXwF/CVJ/5luBaRLQQYmum9WvfMet6hI/jl+XfGJuHu8k3eA3by6OwIDAQAB");
+        return getStringConfig(GroupDefine.SECURE, "RsaPublicKey", "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC2qTJMYBIn2rk8W/fRFKd9kmZUd72+tGQg5oyQL/J9x4FyNKFFbcMapzDx431HpwWns/2bHH1loxA7fojpsHCAxzA47v5nVbOmIduxLaahpcz9E0xHKwOApXwF/CVJ/5luBaRLQQYmum9WvfMet6hI/jl+XfGJuHu8k3eA3by6OwIDAQAB");
     }
 
     /**
      * 获取rsa加密私钥
      */
     public static String getRsaPrivateKey() {
-        return getStringConfig(GROUP_SECURE, "RsaPrivateKey", "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALapMkxgEifauTxb99EUp32SZlR3vb60ZCDmjJAv8n3HgXI0oUVtwxqnMPHjfUenBaez/ZscfWWjEDt+iOmwcIDHMDju/mdVs6Yh27EtpqGlzP0TTEcrA4ClfAX8JUn/mW4FpEtBBia6b1a98x63qEj+OX5d8Ym4e7yTd4DdvLo7AgMBAAECgYA0/kp68QZjbKgAFHiFvrXHDyHEEMdKXCCOkQSn0llKV4a9IPrG30zS3z2qd8MBdjoESQpjJXVV9uR/Njs3fTpuDI9ENlsFbMcpH7T2VvTF4tfUkqJLrNG1bWy88iuHlg3s+gyoh95qj0FpQwvVNZu5y2T1ST9yJr4mNjEUKcuP1QJBAN/dNN45FOhNtDLuEO26VyHL8qWt9mmS/2V6Yv4mVop/dn0etutlW+TD7tOvEQpp8tU4yHICC81Se6zjpbuKF4UCQQDQ4dAJ3E0sHAxutwq0cKHLk47zAls+HK5CPvXz25WEY8iVkROjKXQ+nbL/kk9nEcPRKoxGOsA7yy/kE3iJnNa/AkEAvUBYrXU8Q5dNO7EfBpp9hsjP/Viv9FidKMDqZ0kp6DQRi30nzqEFqsQpZzOdCFzBOZijfB5Ws+GDRIm/VmhLsQJBANADEBnBuVhj1j2rKo3mXDlPCNwXTKXeCesOp//gfFUKyYWoo9WoQorYoJjCKzCJEGgL5wVJHIZvIZIPkcn41iECQGcPx8wUsEcx4oEr9fPQCM6nqJSP0vDm28vM0aOyQwoP8O9Oehvq7wk9GI4aY+YfzHA2S2utb/cSRp0rSmY46gc=");
+        return getStringConfig(GroupDefine.SECURE, "RsaPrivateKey", "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALapMkxgEifauTxb99EUp32SZlR3vb60ZCDmjJAv8n3HgXI0oUVtwxqnMPHjfUenBaez/ZscfWWjEDt+iOmwcIDHMDju/mdVs6Yh27EtpqGlzP0TTEcrA4ClfAX8JUn/mW4FpEtBBia6b1a98x63qEj+OX5d8Ym4e7yTd4DdvLo7AgMBAAECgYA0/kp68QZjbKgAFHiFvrXHDyHEEMdKXCCOkQSn0llKV4a9IPrG30zS3z2qd8MBdjoESQpjJXVV9uR/Njs3fTpuDI9ENlsFbMcpH7T2VvTF4tfUkqJLrNG1bWy88iuHlg3s+gyoh95qj0FpQwvVNZu5y2T1ST9yJr4mNjEUKcuP1QJBAN/dNN45FOhNtDLuEO26VyHL8qWt9mmS/2V6Yv4mVop/dn0etutlW+TD7tOvEQpp8tU4yHICC81Se6zjpbuKF4UCQQDQ4dAJ3E0sHAxutwq0cKHLk47zAls+HK5CPvXz25WEY8iVkROjKXQ+nbL/kk9nEcPRKoxGOsA7yy/kE3iJnNa/AkEAvUBYrXU8Q5dNO7EfBpp9hsjP/Viv9FidKMDqZ0kp6DQRi30nzqEFqsQpZzOdCFzBOZijfB5Ws+GDRIm/VmhLsQJBANADEBnBuVhj1j2rKo3mXDlPCNwXTKXeCesOp//gfFUKyYWoo9WoQorYoJjCKzCJEGgL5wVJHIZvIZIPkcn41iECQGcPx8wUsEcx4oEr9fPQCM6nqJSP0vDm28vM0aOyQwoP8O9Oehvq7wk9GI4aY+YfzHA2S2utb/cSRp0rSmY46gc=");
     }
 
     /**
@@ -201,4 +203,24 @@ public class ConfigLoader {
     public static String getHwSmsServerAddressConfig() {
         return getStringConfig("HwSmsServerAddress", "https://rtcsms.cn-north-1.myhuaweicloud.com:10743/sms/batchSendSms/v1");
     }
+
+    /**
+     * 获取日志等级
+     */
+    public static LogLevel getLogLevel(String loggerName) {
+        String logLevel = getStringConfig(GroupDefine.LOG_LEVEL, loggerName, "info");
+        if (!StringUtils.equalsAnyIgnoreCase(logLevel,
+                LogLevel.TRACE.name(),
+                LogLevel.DEBUG.name(),
+                LogLevel.INFO.name(),
+                LogLevel.WARN.name(),
+                LogLevel.ERROR.name(),
+                LogLevel.FATAL.name(),
+                LogLevel.OFF.name())
+        ) {
+            logLevel = LogLevel.INFO.name();
+        }
+        return LogLevel.valueOf(logLevel.toUpperCase());
+    }
+
 }
