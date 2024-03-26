@@ -32,6 +32,9 @@ public class YmlPropertiesUtils {
             if (StringUtils.isNotBlank(activeProfiles)) {
                 for (String activeProfile : StringUtils.split(activeProfiles, ",")) {
                     ClassPathResource activeResource = new ClassPathResource("application-" + activeProfile + ".yml");
+                    if (!activeResource.exists()) {
+                        continue;
+                    }
                     classPathResources.add(activeResource);
                 }
             }
