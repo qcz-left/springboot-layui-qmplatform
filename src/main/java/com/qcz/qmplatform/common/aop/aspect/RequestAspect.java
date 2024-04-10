@@ -2,12 +2,12 @@ package com.qcz.qmplatform.common.aop.aspect;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.Header;
 import com.qcz.qmplatform.common.utils.ClassUtils;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
-import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,10 +42,10 @@ public class RequestAspect {
      */
     @Before(value = "requestPointcut()")
     public void paramsLog(JoinPoint joinPoint) {
-        HttpServletRequest request = HttpServletUtils.getCurrRequest();
+        HttpServletRequest request = ServletUtils.getCurrRequest();
         LOGGER.info("【start】 - [{}] {}", request.getMethod(), request.getRequestURL().toString());
         LOGGER.info("{}", joinPoint.getSignature());
-        Map<String, String> paramMap = ServletUtil.getParamMap(request);
+        Map<String, String> paramMap = ServletUtils.getParamMap(request);
 
         String param = "";
         String body = "";
@@ -84,7 +83,7 @@ public class RequestAspect {
                 }
             }
         }
-        LOGGER.info("<<{}>> {}{}{}", HttpServletUtils.getIpAddress(request), request.getHeader(Header.USER_AGENT.toString()), param, body);
+        LOGGER.info("<<{}>> {}{}{}", ServletUtils.getIpAddress(request), request.getHeader(Header.USER_AGENT.toString()), param, body);
     }
 
     @Around(value = "requestPointcut()")

@@ -6,12 +6,12 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.qcz.qmplatform.common.anno.ExcelField;
 import com.qcz.qmplatform.common.validation.EnumValue;
 import com.qcz.qmplatform.common.validation.Phone;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.sql.Timestamp;
 

@@ -54,6 +54,7 @@
     <logger name="org.apache.poi" level="error"/>
     <logger name="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" level="off"/>
     <logger name="com.qcz.qmplatform.module.schedule" level="info"/>
+    <logger name="com.qcz.qmplatform.config.freemarker.MyFreeMarkerView" level="error"/>
 
     <springProfile name="pro">
         <root level="DEBUG">

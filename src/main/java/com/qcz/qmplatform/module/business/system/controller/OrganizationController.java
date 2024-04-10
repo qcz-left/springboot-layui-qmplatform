@@ -14,6 +14,7 @@ import com.qcz.qmplatform.module.business.system.domain.dto.SynchroConfigDTO;
 import com.qcz.qmplatform.module.business.system.domain.pojo.OrgTree;
 import com.qcz.qmplatform.module.business.system.domain.qo.OrganizationQO;
 import com.qcz.qmplatform.module.business.system.service.OrganizationService;
+import jakarta.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 

@@ -1,10 +1,9 @@
 package com.qcz.qmplatform.common.cache;
 
+import jakarta.annotation.Resource;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.CacheManager;
-
-import javax.annotation.Resource;
 
 public class ShiroCacheManager implements CacheManager {
 

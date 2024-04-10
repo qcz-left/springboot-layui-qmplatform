@@ -11,8 +11,9 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.other.domain.Bill;
 import com.qcz.qmplatform.module.business.other.domain.qo.BillQO;
-import com.qcz.qmplatform.module.business.other.service.BillService;
 import com.qcz.qmplatform.module.business.other.domain.vo.BillVO;
+import com.qcz.qmplatform.module.business.other.service.BillService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 

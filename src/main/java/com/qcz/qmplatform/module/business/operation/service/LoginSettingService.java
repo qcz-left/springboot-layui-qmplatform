@@ -3,12 +3,12 @@ package com.qcz.qmplatform.module.business.operation.service;
 import cn.hutool.core.bean.BeanUtil;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.operation.domain.dto.LoginSettingDTO;
-import com.qcz.qmplatform.module.business.system.domain.assist.IniDefine;
 import com.qcz.qmplatform.module.business.system.domain.Ini;
+import com.qcz.qmplatform.module.business.system.domain.assist.IniDefine;
 import com.qcz.qmplatform.module.business.system.service.IniService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

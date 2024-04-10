@@ -9,9 +9,9 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.operation.domain.Dict;
 import com.qcz.qmplatform.module.business.operation.domain.DictAttr;
 import com.qcz.qmplatform.module.business.operation.mapper.DictMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

@@ -10,10 +10,11 @@ import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.base.BaseController;
-import com.qcz.qmplatform.module.watch.DBChangeCenter;
 import com.qcz.qmplatform.module.business.system.domain.Message;
-import com.qcz.qmplatform.module.business.system.service.MessageService;
 import com.qcz.qmplatform.module.business.system.domain.vo.MessageVO;
+import com.qcz.qmplatform.module.business.system.service.MessageService;
+import com.qcz.qmplatform.module.watch.DBChangeCenter;
+import jakarta.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Map;
 

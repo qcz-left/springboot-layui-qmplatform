@@ -8,14 +8,14 @@ import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.operation.domain.LoginRecord;
-import com.qcz.qmplatform.module.business.operation.mapper.LoginRecordMapper;
 import com.qcz.qmplatform.module.business.operation.domain.vo.LoginStrategyVO;
-import com.qcz.qmplatform.module.business.system.domain.assist.IniDefine;
+import com.qcz.qmplatform.module.business.operation.mapper.LoginRecordMapper;
 import com.qcz.qmplatform.module.business.system.domain.Ini;
+import com.qcz.qmplatform.module.business.system.domain.assist.IniDefine;
 import com.qcz.qmplatform.module.business.system.service.IniService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 

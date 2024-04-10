@@ -7,6 +7,7 @@ import com.qcz.qmplatform.filter.ShiroLoginTimeoutFilter;
 import com.qcz.qmplatform.module.business.system.realm.CustomCredentialsMatch;
 import com.qcz.qmplatform.module.business.system.realm.UserRealm;
 import com.qcz.qmplatform.module.listen.ShiroSessionListener;
+import jakarta.servlet.Filter;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
@@ -20,7 +21,6 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;

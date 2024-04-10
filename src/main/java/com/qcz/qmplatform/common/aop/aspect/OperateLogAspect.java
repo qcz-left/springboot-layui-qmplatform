@@ -7,16 +7,18 @@ import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.DateUtils;
-import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.business.system.domain.OperateLog;
 import com.qcz.qmplatform.module.business.system.domain.User;
+import com.qcz.qmplatform.module.business.system.domain.dto.PasswordDTO;
 import com.qcz.qmplatform.module.business.system.mapper.OperateLogMapper;
 import com.qcz.qmplatform.module.business.system.service.UserService;
-import com.qcz.qmplatform.module.business.system.domain.dto.PasswordDTO;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -26,8 +28,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.concurrent.ExecutorService;
 
@@ -66,9 +66,9 @@ public class OperateLogAspect {
 
     @Around(value = "operateLogPointcut()")
     public Object operateLogAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        final HttpServletRequest request = HttpServletUtils.getCurrRequest();
+        final HttpServletRequest request = ServletUtils.getCurrRequest();
         String requestUrl = request.getServletPath();
-        String ipAddress = HttpServletUtils.getIpAddress(request);
+        String ipAddress = ServletUtils.getIpAddress(request);
         Object proceed;
         User currentUser = SubjectUtils.getUser(false);
         Timestamp currTimestamp = DateUtils.getCurrTimestamp();
@@ -95,9 +95,9 @@ public class OperateLogAspect {
      */
     @AfterThrowing(pointcut = "operateExceptionLogPointCut()", throwing = "e")
     public void saveExceptionLog(JoinPoint joinPoint, Throwable e) {
-        final HttpServletRequest request = HttpServletUtils.getCurrRequest();
+        final HttpServletRequest request = ServletUtils.getCurrRequest();
         String requestUrl = request.getServletPath();
-        String ipAddress = HttpServletUtils.getIpAddress(request);
+        String ipAddress = ServletUtils.getIpAddress(request);
         User currentUser = SubjectUtils.getUser(false);
         Timestamp currTimestamp = DateUtils.getCurrTimestamp();
         executorService.submit(() -> {
@@ -126,7 +126,7 @@ public class OperateLogAspect {
         if (recordLog != null) {
             type = recordLog.type();
             switch (type) {
-                case LOGIN:
+                case LOGIN -> {
                     moduleName = "登录系统";
                     PasswordDTO formUser = (PasswordDTO) joinPoint.getArgs()[0];
                     String loginName = formUser.getLoginname();
@@ -137,18 +137,18 @@ public class OperateLogAspect {
                     } else {
                         description = currentUser.getUsername() + " 进入了系统";
                     }
-                    break;
-                case LOGOUT:
+                }
+                case LOGOUT -> {
                     moduleName = "退出系统";
                     description = currentUser.getUsername() + " 退出了系统";
-                    break;
-                default:
+                }
+                default -> {
                     Module module = joinPoint.getTarget().getClass().getAnnotation(Module.class);
                     if (module != null) {
                         moduleName = module.value();
                     }
                     description = recordLog.description();
-                    break;
+                }
             }
         }
         OperateLog log = new OperateLog();

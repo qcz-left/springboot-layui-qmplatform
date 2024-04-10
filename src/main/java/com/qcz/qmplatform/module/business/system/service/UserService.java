@@ -26,18 +26,17 @@ import com.qcz.qmplatform.module.business.system.domain.Role;
 import com.qcz.qmplatform.module.business.system.domain.User;
 import com.qcz.qmplatform.module.business.system.domain.UserOrganization;
 import com.qcz.qmplatform.module.business.system.domain.UserRole;
+import com.qcz.qmplatform.module.business.system.domain.dto.CurrentUserInfoDTO;
+import com.qcz.qmplatform.module.business.system.domain.dto.PasswordDTO;
 import com.qcz.qmplatform.module.business.system.domain.dto.SaveUserDTO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserGroupUserQO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserQO;
-import com.qcz.qmplatform.module.business.system.domain.dto.CurrentUserInfoDTO;
-import com.qcz.qmplatform.module.business.system.domain.dto.PasswordDTO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import com.qcz.qmplatform.module.business.system.mapper.UserMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.net.BindException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -226,7 +225,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * 修改当前用户密码
      *
      * @param passwordDTO 密码信息
-     * @param user       当前用户对象
+     * @param user        当前用户对象
      */
     public boolean changeCurrentUserPwd(PasswordDTO passwordDTO, User user) {
         user.setPassword(SecureUtils.accountEncrypt(passwordDTO.getNewPassword()));
@@ -238,7 +237,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * 修改用户密码
      *
      * @param passwordDTO 密码信息
-     * @param user       当前用户对象
+     * @param user        当前用户对象
      */
     public boolean changeUserPwd(PasswordDTO passwordDTO, User user) {
         user.setPassword(SecureUtils.accountEncrypt(passwordDTO.getNewPassword()));

@@ -2,10 +2,10 @@ package com.qcz.qmplatform.module.business.system.domain.pojo;
 
 import com.qcz.qmplatform.common.validation.EnumValue;
 import com.qcz.qmplatform.common.validation.groups.Update;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**

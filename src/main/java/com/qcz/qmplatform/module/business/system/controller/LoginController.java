@@ -17,7 +17,7 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
-import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.business.operation.domain.vo.LoginStrategyVO;
@@ -36,6 +36,10 @@ import com.qcz.qmplatform.module.business.system.service.MessageService;
 import com.qcz.qmplatform.module.business.system.service.ThirdpartyAppService;
 import com.qcz.qmplatform.module.business.system.service.UserService;
 import com.qcz.qmplatform.module.business.system.service.UserThirdpartyService;
+import jakarta.annotation.Resource;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -54,10 +58,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -162,7 +162,7 @@ public class LoginController {
         String loginname = loginDTO.getLoginname();
         CustomToken token = new CustomToken(loginname, loginDTO.getPassword());
 
-        String clientIp = HttpServletUtils.getIpAddress(request);
+        String clientIp = ServletUtils.getIpAddress(request);
 
         Map<String, Object> result = new HashMap<>();
         // 当前登录错误次数

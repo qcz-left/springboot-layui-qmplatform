@@ -8,13 +8,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.module.business.system.domain.assist.MessageReceiver;
 import com.qcz.qmplatform.module.business.system.domain.Message;
-import com.qcz.qmplatform.module.business.system.mapper.MessageMapper;
+import com.qcz.qmplatform.module.business.system.domain.assist.MessageReceiver;
 import com.qcz.qmplatform.module.business.system.domain.vo.MessageVO;
+import com.qcz.qmplatform.module.business.system.mapper.MessageMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;

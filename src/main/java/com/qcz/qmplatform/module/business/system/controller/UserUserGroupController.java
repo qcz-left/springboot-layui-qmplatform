@@ -7,13 +7,13 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.dto.BatchUserUserGroupDTO;
 import com.qcz.qmplatform.module.business.system.service.UserUserGroupService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 /**
  * <p>
  * 用户-用户组关联 前端控制器

@@ -7,10 +7,10 @@ import com.qcz.qmplatform.module.business.system.domain.assist.IniDefine;
 import com.qcz.qmplatform.module.business.system.domain.dto.SynchroConfigDTO;
 import com.qcz.qmplatform.module.business.system.service.IniService;
 import com.qcz.qmplatform.module.business.system.service.OrganizationService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 /**

@@ -11,9 +11,10 @@ import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.SmsUtils;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.MailConfig;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.MailParam;
-import com.qcz.qmplatform.module.business.notify.service.mail.MailNotifyService;
 import com.qcz.qmplatform.module.business.notify.domain.vo.SmsConfigVO;
 import com.qcz.qmplatform.module.business.notify.domain.vo.TestMailVO;
+import com.qcz.qmplatform.module.business.notify.service.mail.MailNotifyService;
+import jakarta.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
 
 @Controller
 @RequestMapping("/notify")

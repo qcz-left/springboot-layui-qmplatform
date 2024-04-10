@@ -6,16 +6,15 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.module.base.BaseController;
-import com.qcz.qmplatform.module.business.system.service.OperateLogService;
 import com.qcz.qmplatform.module.business.system.domain.qo.OperateLogTimeQO;
 import com.qcz.qmplatform.module.business.system.domain.vo.OperateLogVO;
+import com.qcz.qmplatform.module.business.system.service.OperateLogService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
 
 /**
  * <p>

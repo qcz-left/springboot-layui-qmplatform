@@ -1,12 +1,12 @@
 package com.qcz.qmplatform.module.socket;
 
 import com.qcz.qmplatform.common.utils.StringUtils;
+import jakarta.websocket.Session;
+import jakarta.websocket.server.ServerEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,7 +17,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @ServerEndpoint("/socket/validateSession")
 @Component
 public class SessionWebSocketServer extends BaseWebSocketServer {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(SessionWebSocketServer.class);
 
     /**

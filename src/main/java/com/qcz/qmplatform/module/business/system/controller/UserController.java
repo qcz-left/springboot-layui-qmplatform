@@ -28,14 +28,15 @@ import com.qcz.qmplatform.module.business.notify.domain.pojo.TemplateParam;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.TemplateType;
 import com.qcz.qmplatform.module.business.notify.domain.vo.SmsConfigVO;
 import com.qcz.qmplatform.module.business.system.domain.User;
+import com.qcz.qmplatform.module.business.system.domain.dto.CurrentUserInfoDTO;
+import com.qcz.qmplatform.module.business.system.domain.dto.PasswordDTO;
 import com.qcz.qmplatform.module.business.system.domain.dto.SaveUserDTO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserGroupUserQO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserQO;
-import com.qcz.qmplatform.module.business.system.domain.dto.CurrentUserInfoDTO;
-import com.qcz.qmplatform.module.business.system.domain.dto.PasswordDTO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import com.qcz.qmplatform.module.business.system.service.UserService;
+import jakarta.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -49,7 +50,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -11,9 +11,9 @@ import com.qcz.qmplatform.module.business.system.domain.UserGroup;
 import com.qcz.qmplatform.module.business.system.domain.pojo.UserGroupTree;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupVO;
 import com.qcz.qmplatform.module.business.system.mapper.UserGroupMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,8 +63,7 @@ public class UserGroupService extends ServiceImpl<UserGroupMapper, UserGroup> {
         return userGroupVO;
     }
 
-    @Override
-    public boolean removeByIds(Collection<? extends Serializable> idList) {
+    public boolean removeByIds(List<String> idList) {
         List<String> userGroupIds = queryUserGroupIdRecursive(idList);
         // 删除用户关联
         userUserGroupService.deleteByUserGroupIds(userGroupIds);

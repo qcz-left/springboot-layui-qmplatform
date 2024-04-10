@@ -9,9 +9,9 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.system.domain.Role;
 import com.qcz.qmplatform.module.business.system.domain.RolePermission;
 import com.qcz.qmplatform.module.business.system.mapper.RoleMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 

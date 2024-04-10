@@ -22,10 +22,10 @@ import com.qcz.qmplatform.module.business.system.domain.pojo.OrgTree;
 import com.qcz.qmplatform.module.business.system.domain.qo.OrganizationQO;
 import com.qcz.qmplatform.module.business.system.mapper.OrganizationMapper;
 import com.qcz.qmplatform.module.synchro.organization.OrganizationSynchro;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

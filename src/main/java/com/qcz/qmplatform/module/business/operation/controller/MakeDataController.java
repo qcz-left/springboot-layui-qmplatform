@@ -5,8 +5,9 @@ import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.module.business.operation.domain.pojo.DBDetail;
 import com.qcz.qmplatform.module.business.operation.domain.pojo.DataDetail;
-import com.qcz.qmplatform.module.business.operation.service.MakeDataService;
 import com.qcz.qmplatform.module.business.operation.domain.vo.MakeDataVO;
+import com.qcz.qmplatform.module.business.operation.service.MakeDataService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
 

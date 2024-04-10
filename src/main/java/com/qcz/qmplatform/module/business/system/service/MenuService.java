@@ -7,16 +7,16 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
-import com.qcz.qmplatform.module.business.system.domain.assist.PermissionType;
 import com.qcz.qmplatform.module.business.system.domain.Button;
 import com.qcz.qmplatform.module.business.system.domain.Menu;
-import com.qcz.qmplatform.module.business.system.mapper.MenuMapper;
+import com.qcz.qmplatform.module.business.system.domain.assist.PermissionType;
 import com.qcz.qmplatform.module.business.system.domain.pojo.MenuTree;
 import com.qcz.qmplatform.module.business.system.domain.pojo.Permission;
 import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
+import com.qcz.qmplatform.module.business.system.mapper.MenuMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -11,8 +11,10 @@ import com.qcz.qmplatform.common.validation.groups.Update;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.pojo.MenuTree;
 import com.qcz.qmplatform.module.business.system.domain.pojo.Permission;
-import com.qcz.qmplatform.module.business.system.service.MenuService;
 import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
+import com.qcz.qmplatform.module.business.system.service.MenuService;
+import jakarta.annotation.Resource;
+import jakarta.validation.groups.Default;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -25,8 +27,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-import javax.validation.groups.Default;
 import java.util.List;
 
 /**
