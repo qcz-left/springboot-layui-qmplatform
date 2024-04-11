@@ -226,12 +226,6 @@
             <artifactId>dingtalk</artifactId>
             <version>${dingtalk.version}</version>
         </dependency>
-        <!--腾讯云-->
-        <dependency>
-            <groupId>com.github.qcloudsms</groupId>
-            <artifactId>qcloudsms</artifactId>
-            <version>${qcloudsms.version}</version>
-        </dependency>
         <!--阿里云-->
         <dependency>
             <groupId>com.aliyun</groupId>
