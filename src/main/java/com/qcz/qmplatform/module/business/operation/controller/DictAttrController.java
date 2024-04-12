@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.business.operation.controller;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -14,7 +15,6 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.operation.domain.DictAttr;
 import com.qcz.qmplatform.module.business.operation.service.DictAttrService;
 import jakarta.annotation.Resource;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,7 +107,7 @@ public class DictAttrController extends BaseController {
      */
     @PostMapping("/addDictAttr")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_DICT_ATTR_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_DICT_ATTR_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增字典属性")
     public ResponseResult<Void> addDictAttr(@RequestBody DictAttr dictAttr) {
         return ResponseResult.newInstance(dictAttrService.addDictAttrOne(dictAttr));
@@ -120,7 +120,7 @@ public class DictAttrController extends BaseController {
      */
     @PutMapping("/updateDictAttr")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_DICT_ATTR_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_DICT_ATTR_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改字典属性")
     public ResponseResult<Void> updateDictAttr(@RequestBody DictAttr dictAttr) {
         return ResponseResult.newInstance(dictAttrService.updateDictAttrOne(dictAttr));
@@ -133,7 +133,7 @@ public class DictAttrController extends BaseController {
      */
     @DeleteMapping("/deleteDictAttr")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_DICT_ATTR_DELETE)
+    @SaCheckPermission(PrivCode.BTN_CODE_DICT_ATTR_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除字典属性")
     public ResponseResult<Void> deleteDictAttr(String attrIds) {
         return ResponseResult.newInstance(dictAttrService.deleteDictAttr(StringUtils.split(attrIds, ',')));

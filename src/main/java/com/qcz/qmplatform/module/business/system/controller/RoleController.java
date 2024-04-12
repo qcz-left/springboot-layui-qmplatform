@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.business.system.controller;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -17,7 +18,6 @@ import com.qcz.qmplatform.module.business.system.domain.qo.RolePermissionQO;
 import com.qcz.qmplatform.module.business.system.service.RoleService;
 import jakarta.annotation.Resource;
 import jakarta.validation.groups.Default;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -120,7 +120,7 @@ public class RoleController extends BaseController {
      */
     @PostMapping("/addRole")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_ROLE_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ROLE_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增角色")
     public ResponseResult<Void> addRoleOne(@RequestBody @Validated Role role) {
         return saveRoleOne(role);
@@ -132,7 +132,7 @@ public class RoleController extends BaseController {
      * @param role 角色表单信息
      */
     @PostMapping("/saveRoleOne")
-    @RequiresPermissions(PrivCode.BTN_CODE_ROLE_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ROLE_SAVE)
     @ResponseBody
     public ResponseResult<Void> saveRoleOne(@RequestBody Role role) {
         return ResponseResult.newInstance(roleService.saveRoleOne(role));
@@ -145,7 +145,7 @@ public class RoleController extends BaseController {
      */
     @PutMapping("/updateRole")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_ROLE_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ROLE_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改角色")
     public ResponseResult<Void> updateRole(@RequestBody @Validated({Default.class, Update.class}) Role role) {
         return saveRoleOne(role);
@@ -157,7 +157,7 @@ public class RoleController extends BaseController {
      * @param roleIds 角色id数组
      */
     @DeleteMapping("/deleteRole")
-    @RequiresPermissions(PrivCode.BTN_CODE_ROLE_DELETE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ROLE_DELETE)
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除角色")
     public ResponseResult<Void> deleteRole(String roleIds) {
@@ -171,7 +171,7 @@ public class RoleController extends BaseController {
      * @param rolePermissionQO 角色id和权限id数组
      */
     @PostMapping("/saveRolePermission")
-    @RequiresPermissions(PrivCode.BTN_CODE_ROLE_ALLOT)
+    @SaCheckPermission(PrivCode.BTN_CODE_ROLE_ALLOT)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "分配角色权限")
     public ResponseResult<Void> saveRolePermission(@RequestBody RolePermissionQO rolePermissionQO) {

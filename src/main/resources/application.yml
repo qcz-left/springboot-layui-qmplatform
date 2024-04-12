@@ -1,6 +1,6 @@
 server:
-  port: 443
-  http-port: 80
+  port: 8443
+  http-port: 8080
   servlet:
     context-path: /qmplatform
   ssl:
@@ -44,11 +44,17 @@ spring:
       matching-strategy: ant_path_matcher
   servlet:
     multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
-  freemarker:
-    template-loader-path: classpath:/templates/
-    suffix: .ftl
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+
+# sa-token
+sa-token:
+  # token 有效期（单位：秒）
+  timeout: 86400
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结
+  active-timeout: 1800
+  is-log: true
+
 
 mybatis-plus:
   configuration:
@@ -73,3 +79,6 @@ jodconverter:
 custom:
   database: qmplatform_single
   packing: @packaging@
+  # 数据库是否docker环境
+  dbIsDocker: false
+

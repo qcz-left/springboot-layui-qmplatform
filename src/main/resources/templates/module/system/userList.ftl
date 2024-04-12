@@ -46,21 +46,21 @@
     <div class="layui-col-xs12">
         <script type="text/html" id="toolbar">
             <div class="layui-btn-container">
-                <@shiro.hasPermission name="${PrivCode.BTN_CODE_USER_SAVE}">
+                <@sa.hasPermission name="${PrivCode.BTN_CODE_USER_SAVE}">
                     <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
-                </@shiro.hasPermission>
-                <@shiro.hasPermission name="${PrivCode.BTN_CODE_USER_DELETE}">
+                </@sa.hasPermission>
+                <@sa.hasPermission name="${PrivCode.BTN_CODE_USER_DELETE}">
                     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
-                </@shiro.hasPermission>
+                </@sa.hasPermission>
             </div>
         </script>
         <script type="text/html" id="operator">
-            <@shiro.hasPermission name="${PrivCode.BTN_CODE_USER_SAVE}">
+            <@sa.hasPermission name="${PrivCode.BTN_CODE_USER_SAVE}">
                 <button class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</button>
-            </@shiro.hasPermission>
-            <@shiro.hasPermission name="${PrivCode.BTN_CODE_USER_DELETE}">
+            </@sa.hasPermission>
+            <@sa.hasPermission name="${PrivCode.BTN_CODE_USER_DELETE}">
                 <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
-            </@shiro.hasPermission>
+            </@sa.hasPermission>
         </script>
         <table class="layui-hide" id="user-list-tab" lay-filter="user"></table>
     </div>

@@ -1,19 +1,16 @@
 package com.qcz.qmplatform.common.utils;
 
-import com.qcz.qmplatform.common.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.stp.StpUtil;
 import com.qcz.qmplatform.module.business.system.domain.User;
 import com.qcz.qmplatform.module.business.system.service.UserService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 当前登录账号工具类
  */
+@Slf4j
 public class SubjectUtils {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SubjectUtils.class);
 
     /**
      * 获取当前用户（未获取到会抛出异常）
@@ -28,7 +25,7 @@ public class SubjectUtils {
      * @param throwException 是否抛出异常
      */
     public static User getUser(boolean throwException) {
-        Object principal = SecurityUtils.getSubject().getPrincipal();
+        Object principal = StpUtil.getLoginIdDefaultNull();
         if (principal != null) {
             String principalStr = principal.toString();
             User user = CacheUtils.USER_CACHE.get(principalStr);
@@ -40,7 +37,7 @@ public class SubjectUtils {
         }
 
         if (throwException) {
-            throw new NotLoginException("用户未登录");
+            throw new NotLoginException("用户未登录", "login", "not login");
         }
 
         return null;
@@ -52,20 +49,19 @@ public class SubjectUtils {
     }
 
     public static String getSessionId() {
-        return SecurityUtils.getSubject().getSession().getId().toString();
+        return StpUtil.getSession().getId();
     }
 
     /**
      * 用户登出
      */
     public static void removeUser() {
-        Subject subject = SecurityUtils.getSubject();
-        if (subject.isAuthenticated()) {
-            Object user = subject.getPrincipal();
+        if (StpUtil.isLogin()) {
+            Object user = StpUtil.getLoginId();
             CacheUtils.USER_CACHE.remove(user.toString());
             CacheUtils.SESSION_CACHE.remove(getSessionId());
-            subject.logout();
-            LOGGER.debug("logout : {}", user);
+            StpUtil.logout();
+            log.debug("logout : {}", user);
         }
     }
 

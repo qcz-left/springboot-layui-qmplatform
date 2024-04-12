@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.system.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.PrivCode;
@@ -7,7 +8,6 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.module.business.system.domain.dto.MoveUserDTO;
 import com.qcz.qmplatform.module.business.system.service.UserOrganizationService;
 import jakarta.annotation.Resource;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +34,7 @@ public class UserOrganizationController {
      */
     @PostMapping("moveUserToAnotherDept")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ORG_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "移动用户")
     public ResponseResult<Void> moveUserToAnotherDept(@RequestBody MoveUserDTO moveUserDTO) {
         userOrganizationService.updateDeptByUserIds(moveUserDTO.getUserIds(), moveUserDTO.getDeptId());

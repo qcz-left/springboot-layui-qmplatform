@@ -1,5 +1,7 @@
 package com.qcz.qmplatform.config;
 
+import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.stp.StpUtil;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import jakarta.annotation.Resource;
@@ -66,6 +68,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
+
+        // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
+        registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login", "/loginPage", "/logout", "/favicon.ico", "/static/**", "/druid/**", "/**/nnl/**", "/operation/loginSetting/get");
     }
 
 }

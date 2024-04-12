@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.operation.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -14,7 +15,6 @@ import com.qcz.qmplatform.module.business.operation.domain.LoginRecord;
 import com.qcz.qmplatform.module.business.operation.domain.vo.LoginStrategyVO;
 import com.qcz.qmplatform.module.business.operation.service.LoginRecordService;
 import jakarta.annotation.Resource;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,7 +62,7 @@ public class LoginRecordController extends BaseController {
 
     @PostMapping("/saveLoginStrategy")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_LOGIN_STRATEGY_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_LOGIN_STRATEGY_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "编辑登录策略")
     public ResponseResult<Void> saveLoginStrategy(@RequestBody LoginStrategyVO loginStrategyVO) {
         return ResponseResult.newInstance(loginRecordService.saveLoginStrategy(loginStrategyVO));
@@ -70,7 +70,7 @@ public class LoginRecordController extends BaseController {
 
     @DeleteMapping("/deleteLoginRecord")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_LOGIN_RECORD_DELETE)
+    @SaCheckPermission(PrivCode.BTN_CODE_LOGIN_RECORD_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除登录错误记录")
     public ResponseResult<Void> deleteLoginRecord(String recordIds) {
         return ResponseResult.newInstance(loginRecordService.deleteLoginRecord(StringUtils.split(recordIds, ',')));

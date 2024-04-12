@@ -41,7 +41,7 @@ public class SecureUtils {
     }
 
     /**
-     * 检查密码是否一致
+     * 检查登录账号密码是否一致
      *
      * @param plaintext 明文密码
      * @param hashed    数据库中加密的密码

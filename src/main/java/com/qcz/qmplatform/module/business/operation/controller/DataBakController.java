@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.operation.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -21,7 +22,6 @@ import com.qcz.qmplatform.module.business.operation.service.DataBakService;
 import com.qcz.qmplatform.module.business.system.domain.assist.IniDefine;
 import com.qcz.qmplatform.module.business.system.service.IniService;
 import jakarta.annotation.Resource;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,7 +107,7 @@ public class DataBakController extends BaseController {
      */
     @PostMapping("/saveDataBakStrategy")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_STRATEGY_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_DATA_BAK_STRATEGY_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "调整数据备份策略")
     public ResponseResult<Void> saveDataBakStrategy(@RequestBody DataBakStrategyVO dataBakStrategyVO) {
         return ResponseResult.newInstance(dataBakService.saveDataBakStrategy(dataBakStrategyVO));
@@ -118,7 +118,7 @@ public class DataBakController extends BaseController {
      */
     @PostMapping("/exeBackup")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_DATA_BAK_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "立即备份")
     public ResponseResult<Void> exeBackup(@RequestBody DataBak dataBak) {
         return dataBakService.exeBackup(dataBak.getRemark(), SubjectUtils.getUserId());
@@ -129,14 +129,14 @@ public class DataBakController extends BaseController {
      */
     @PostMapping("/recoverDataBak/{dataBakId}")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_RECOVER)
+    @SaCheckPermission(PrivCode.BTN_CODE_DATA_BAK_RECOVER)
     public ResponseResult<Map<String, String>> recoverDataBak(@PathVariable String dataBakId) {
         return dataBakService.recoverDataBak(dataBakId);
     }
 
     @DeleteMapping("/deleteDataBak")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_DATA_BAK_DELETE)
+    @SaCheckPermission(PrivCode.BTN_CODE_DATA_BAK_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除备份")
     public ResponseResult<Void> deleteDataBak(String dataBakIds) {
         return ResponseResult.newInstance(dataBakService.deleteDataBak(StringUtils.split(dataBakIds, ',')));

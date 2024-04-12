@@ -1,3 +1,4 @@
+/*
 package com.qcz.qmplatform.generator;
 
 import cn.hutool.db.DbUtil;
@@ -18,9 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+*/
 /**
  * 权限码生成器
- */
+ *//*
+
 @SuppressWarnings("DuplicatedCode")
 public class PrivCodeGenerator {
 
@@ -88,3 +91,4 @@ public class PrivCodeGenerator {
         return DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/qmplatform_single", "postgres", "postgres");
     }
 }
+*/

@@ -1,7 +1,7 @@
 package com.qcz.qmplatform.config;
 
-import com.jagregory.shiro.freemarker.ShiroTags;
 import com.qcz.qmplatform.config.freemarker.MyFreeMarkerViewResolver;
+import com.qcz.satoken.freemarker.tags.SaTokenTags;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.BeansWrapperBuilder;
 import freemarker.template.TemplateException;
@@ -27,14 +27,14 @@ public class FreemarkerConfig {
         freemarker.template.Configuration configuration = freeMarkerConfigurer.createConfiguration();
         configuration.setDefaultEncoding("UTF-8");
         //这里可以添加其他共享变量 比如sso登录地址
-        configuration.setSharedVariable("shiro", new ShiroTags());
+        configuration.setSharedVariable("sa", new SaTokenTags());
         freeMarkerConfigurer.setConfiguration(configuration);
         return freeMarkerConfigurer;
     }
 
     @Bean
     public FreeMarkerViewResolver resolver() {
-        FreeMarkerViewResolver resolver = new MyFreeMarkerViewResolver();
+        MyFreeMarkerViewResolver resolver = new MyFreeMarkerViewResolver();
         resolver.setSuffix(".ftl");
         resolver.setContentType("text/html;charset=UTF-8");
         resolver.setRequestContextAttribute("requestContext");

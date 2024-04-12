@@ -1,9 +1,10 @@
 package com.qcz.qmplatform.common.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.ResponseCode;
-import org.apache.shiro.authz.UnauthorizedException;
-import org.apache.shiro.session.InvalidSessionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -72,9 +73,9 @@ public class GlobalExceptionHandler {
     /**
      * 没有资源权限
      */
-    @ExceptionHandler(UnauthorizedException.class)
+    @ExceptionHandler({NotPermissionException.class, NotRoleException.class})
     @ResponseBody
-    public ResponseResult<Void> errorHandleByPermission(UnauthorizedException ex) {
+    public ResponseResult<Void> errorHandleByPermission(Exception ex) {
         LOGGER.error(ex.getMessage(), ex);
         return new ResponseResult<>(ResponseCode.PERMISSION_DENIED, "没有该资源权限！", null);
     }
@@ -87,8 +88,8 @@ public class GlobalExceptionHandler {
     /**
      * 会话过期
      */
-    @ExceptionHandler(InvalidSessionException.class)
-    public String sessionTimeout(InvalidSessionException ex) {
+    @ExceptionHandler(NotLoginException.class)
+    public String sessionTimeout(NotLoginException ex) {
         LOGGER.error("The session has expired and will redirect to the login page", ex);
         return "redirect:/loginPage";
     }

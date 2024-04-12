@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.business.archive.controller;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -25,7 +26,6 @@ import com.qcz.qmplatform.module.business.archive.domain.Attachment;
 import com.qcz.qmplatform.module.business.archive.service.AttachmentService;
 import com.qcz.qmplatform.module.business.system.domain.User;
 import jakarta.annotation.Resource;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,7 +80,7 @@ public class AttachmentController extends BaseController {
 
     @PostMapping("/uploadAttachment")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_FILE_UPLOAD)
+    @SaCheckPermission(PrivCode.BTN_CODE_FILE_UPLOAD)
     @RecordLog(type = OperateType.INSERT, description = "上传文件")
     public ResponseResult<Map<String, String>> uploadAttachment(MultipartFile file, Attachment attachment) throws IOException {
         ResponseResult<Map<String, String>> upload = upload(file);
@@ -101,7 +101,7 @@ public class AttachmentController extends BaseController {
 
     @DeleteMapping("/delAttachment")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_FILE_DELETE)
+    @SaCheckPermission(PrivCode.BTN_CODE_FILE_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除文件")
     public ResponseResult<Void> delAttachment(String attachmentIds) {
         List<String> idList = Arrays.asList(attachmentIds.split(","));

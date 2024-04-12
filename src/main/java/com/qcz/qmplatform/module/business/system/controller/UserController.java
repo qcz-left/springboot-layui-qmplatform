@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.system.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.lang.Assert;
@@ -37,7 +38,6 @@ import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import com.qcz.qmplatform.module.business.system.service.UserService;
 import jakarta.annotation.Resource;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -183,7 +183,7 @@ public class UserController extends BaseController {
 
     @PostMapping("/addUser")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_USER_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增用户")
     public ResponseResult<Void> addUser(@Validated @RequestBody SaveUserDTO user) {
         return ResponseResult.newInstance(userService.insertUser(user));
@@ -191,7 +191,7 @@ public class UserController extends BaseController {
 
     @PutMapping("/updateUser")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_USER_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改用户")
     public ResponseResult<Void> updateUser(@Validated @RequestBody SaveUserDTO user) {
         return ResponseResult.newInstance(userService.updateUser(user));
@@ -203,7 +203,7 @@ public class UserController extends BaseController {
      * @param user 需要修改的用户信息
      */
     @PutMapping("/saveCurrentUserInfo")
-    @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户基本资料")
     public ResponseResult<Void> saveCurrentUserInfo(@Validated @RequestBody CurrentUserInfoDTO user) {
@@ -240,7 +240,7 @@ public class UserController extends BaseController {
      * @param passwordDTO 密码参数
      */
     @PutMapping("/changeCurrentUserPwd")
-    @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户密码")
     public ResponseResult<?> changeCurrentUserPwd(@Validated({Update.class}) @RequestBody PasswordDTO passwordDTO) {
@@ -262,7 +262,7 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/uploadUserImg")
-    @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "更换用户头像")
     public ResponseResult<Map<String, String>> uploadUserImg(MultipartFile file) {
@@ -280,7 +280,7 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/restoreDefaultUserPhoto")
-    @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "恢复用户默认头像")
     public ResponseResult<Void> restoreDefaultUserPhoto() {
@@ -289,7 +289,7 @@ public class UserController extends BaseController {
     }
 
     @DeleteMapping("/delUser")
-    @RequiresPermissions(PrivCode.BTN_CODE_USER_DELETE)
+    @SaCheckPermission(PrivCode.BTN_CODE_USER_DELETE)
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除用户")
     public ResponseResult<Void> delUser(String userIds) {

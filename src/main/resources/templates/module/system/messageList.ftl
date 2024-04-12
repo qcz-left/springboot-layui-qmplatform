@@ -27,19 +27,19 @@
     <div class="layui-col-xs12">
         <script type="text/html" id="toolbar">
             <div class="layui-btn-container">
-                <@shiro.hasPermission name="${PrivCode.BTN_CODE_MESSAGE_SET_READ}">
+                <@sa.hasPermission name="${PrivCode.BTN_CODE_MESSAGE_SET_READ}">
                     <button class="layui-btn layui-btn-sm" lay-event="read"><i class="layui-icon layui-icon-read"></i>设置已读</button>
-                </@shiro.hasPermission>
-                <@shiro.hasPermission name="${PrivCode.BTN_CODE_MESSAGE_DELETE}">
+                </@sa.hasPermission>
+                <@sa.hasPermission name="${PrivCode.BTN_CODE_MESSAGE_DELETE}">
                     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
-                </@shiro.hasPermission>
+                </@sa.hasPermission>
             </div>
         </script>
         <script type="text/html" id="operator">
             <div class="layui-btn-container">
-                <@shiro.hasPermission name="${PrivCode.BTN_CODE_MESSAGE_DELETE}">
+                <@sa.hasPermission name="${PrivCode.BTN_CODE_MESSAGE_DELETE}">
                     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
-                </@shiro.hasPermission>
+                </@sa.hasPermission>
             </div>
         </script>
         <table class="layui-hide" id="message-list-tab" lay-filter="message"></table>

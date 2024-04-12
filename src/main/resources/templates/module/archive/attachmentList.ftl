@@ -48,12 +48,12 @@
     <div class="layui-col-xs12">
         <script type="text/html" id="toolbar">
             <div class="layui-btn-container">
-                <@shiro.hasPermission name="${PrivCode.BTN_CODE_FILE_UPLOAD}">
+                <@sa.hasPermission name="${PrivCode.BTN_CODE_FILE_UPLOAD}">
                     <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>上传</button>
-                </@shiro.hasPermission>
-                <@shiro.hasPermission name="${PrivCode.BTN_CODE_FILE_DELETE}">
+                </@sa.hasPermission>
+                <@sa.hasPermission name="${PrivCode.BTN_CODE_FILE_DELETE}">
                     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
-                </@shiro.hasPermission>
+                </@sa.hasPermission>
                 <i id="attachmentHelp" class="layui-icon layui-icon-help"></i>
             </div>
         </script>
@@ -62,9 +62,9 @@
                 <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="preview"><i class="layui-icon layui-icon-read"></i>预览</button>
             {{# } }}
             <button class="layui-btn layui-btn-sm" lay-event="download"><i class="layui-icon layui-icon-download-circle"></i>下载</button>
-            <@shiro.hasPermission name="${PrivCode.BTN_CODE_FILE_DELETE}">
+            <@sa.hasPermission name="${PrivCode.BTN_CODE_FILE_DELETE}">
                 <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</button>
-            </@shiro.hasPermission>
+            </@sa.hasPermission>
         </script>
         <table class="layui-hide" id="attachment-list-tab" lay-filter="attachment"></table>
     </div>

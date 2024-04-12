@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.system.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
@@ -17,6 +18,7 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
+import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
@@ -30,7 +32,7 @@ import com.qcz.qmplatform.module.business.system.domain.assist.PermissionType;
 import com.qcz.qmplatform.module.business.system.domain.assist.Thirdparty;
 import com.qcz.qmplatform.module.business.system.domain.dto.LoginDTO;
 import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
-import com.qcz.qmplatform.module.business.system.realm.CustomToken;
+import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import com.qcz.qmplatform.module.business.system.service.MenuService;
 import com.qcz.qmplatform.module.business.system.service.MessageService;
 import com.qcz.qmplatform.module.business.system.service.ThirdpartyAppService;
@@ -38,12 +40,9 @@ import com.qcz.qmplatform.module.business.system.service.UserService;
 import com.qcz.qmplatform.module.business.system.service.UserThirdpartyService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.subject.Subject;
 import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,8 +159,7 @@ public class LoginController {
     @Retryable(value = {PSQLException.class})
     public ResponseResult<?> login(@RequestBody LoginDTO loginDTO, HttpServletRequest request) {
         String loginname = loginDTO.getLoginname();
-        CustomToken token = new CustomToken(loginname, loginDTO.getPassword());
-
+        String password = loginDTO.getPassword();
         String clientIp = ServletUtils.getIpAddress(request);
 
         Map<String, Object> result = new HashMap<>();
@@ -190,33 +188,40 @@ public class LoginController {
                 }
             }
         }
-        try {
-            Subject subject = SecurityUtils.getSubject();
-            subject.login(token);
-            if (currLoginErrorTimes > 0) {
-                // 清空当前账号错误次数
-                loginRecordService.clearLoginRecord(loginname, clientIp);
-            }
-            // 绑定第三方账号
-            String thirdparty = loginDTO.getThirdparty();
-            if (StringUtils.isNotBlank(thirdparty)) {
-                UserThirdparty userThirdparty = new UserThirdparty();
-                userThirdparty.setUserId(SubjectUtils.getUserId());
-                userThirdparty.setThirdpartyId(loginDTO.getThirdparyId());
-                userThirdparty.setAccessType(thirdparty);
-                userThirdpartyService.saveOne(userThirdparty);
-            }
-            LOGGER.debug("login success, loginName : {}", loginname);
-            return ResponseResult.ok();
-        } catch (IncorrectCredentialsException e) {
-            // 密码错误
+        UserVO user = userService.queryUserByName(loginname);
+        // 账号不存在
+        if (user == null) {
+            throw new BusinessException("不存在该账号");
+        }
+        // 账号被锁定
+        if (user.getLocked() == 1) {
+            throw new BusinessException("账号已被锁定,请联系管理员");
+        }
+        // 密码错误
+        if (!SecureUtils.accountCheck(password, user.getPassword())) {
             loginRecordService.increaseErrorTimes(loginname, clientIp);
             result.put("needCode", enableCode && currLoginErrorTimes + 1 >= codeAtErrorTimes);
-            return ResponseResult.error(e.getMessage(), result);
-        } catch (AuthenticationException e) {
-            LOGGER.error("login fail : " + e.getMessage());
-            return ResponseResult.error(e.getMessage());
+            return ResponseResult.error("密码错误", result);
         }
+
+        StpUtil.login(user.getId());
+        SubjectUtils.setUser(user);
+
+        if (currLoginErrorTimes > 0) {
+            // 清空当前账号错误次数
+            loginRecordService.clearLoginRecord(loginname, clientIp);
+        }
+        // 绑定第三方账号
+        String thirdparty = loginDTO.getThirdparty();
+        if (StringUtils.isNotBlank(thirdparty)) {
+            UserThirdparty userThirdparty = new UserThirdparty();
+            userThirdparty.setUserId(SubjectUtils.getUserId());
+            userThirdparty.setThirdpartyId(loginDTO.getThirdparyId());
+            userThirdparty.setAccessType(thirdparty);
+            userThirdpartyService.saveOne(userThirdparty);
+        }
+        LOGGER.debug("login success, loginName : {}", loginname);
+        return ResponseResult.ok();
     }
 
     /**
@@ -285,9 +290,7 @@ public class LoginController {
 
         // 构造登录信息
         User user = userService.getById(userThirdparty.getUserId());
-        CustomToken token = new CustomToken(user.getLoginname());
-        Subject subject = SecurityUtils.getSubject();
-        subject.login(token);
+        StpUtil.login(user.getId());
         return "redirect:/";
     }
 

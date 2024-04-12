@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.intercept;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
@@ -26,7 +27,6 @@ import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,7 +102,7 @@ public class MybatisInterceptor implements Interceptor {
         if (args.length > 2
                 && (method = ReflectUtil.getMethodByName(clazz, methodName)) != null
                 && (authQuery = method.getAnnotation(AuthQuery.class)) != null
-                && !SecurityUtils.getSubject().hasRole(Constant.SYSTEM_ADMIN)) {
+                && !StpUtil.hasRole(Constant.SYSTEM_ADMIN)) {
             sql = StringUtils.format("select * from ({}) as tmp where {} = '{}'", sql, authQuery.userColumn(), SubjectUtils.getUserId());
         }
         MappedStatement newMappedStatement = setCurrentSql(ms, boundSql, sql);

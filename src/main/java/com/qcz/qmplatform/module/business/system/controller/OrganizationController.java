@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.business.system.controller;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -15,7 +16,6 @@ import com.qcz.qmplatform.module.business.system.domain.pojo.OrgTree;
 import com.qcz.qmplatform.module.business.system.domain.qo.OrganizationQO;
 import com.qcz.qmplatform.module.business.system.service.OrganizationService;
 import jakarta.annotation.Resource;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -158,7 +158,7 @@ public class OrganizationController extends BaseController {
      */
     @PostMapping("/addOrg")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ORG_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增组织机构")
     public ResponseResult<Void> addOrgOne(@RequestBody Organization org) {
         return saveOrgOne(org);
@@ -171,7 +171,7 @@ public class OrganizationController extends BaseController {
      */
     @PostMapping("/saveOrgOne")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ORG_SAVE)
     public ResponseResult<Void> saveOrgOne(@RequestBody Organization org) {
         return ResponseResult.newInstance(organizationService.saveOrgOne(org));
     }
@@ -183,7 +183,7 @@ public class OrganizationController extends BaseController {
      */
     @PutMapping("/updateOrg")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ORG_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改组织机构")
     public ResponseResult<Void> updateOrgOne(@RequestBody Organization org) {
         return saveOrgOne(org);
@@ -196,7 +196,7 @@ public class OrganizationController extends BaseController {
      */
     @DeleteMapping("/deleteOrg")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_ORG_DELETE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ORG_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除组织机构")
     public ResponseResult<Void> deleteOrg(String orgIds) {
         return ResponseResult.newInstance(organizationService.deleteOrg(StringUtils.split(orgIds, ',')));
@@ -207,7 +207,7 @@ public class OrganizationController extends BaseController {
      */
     @PostMapping("/saveSynchroConfig")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ORG_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "保存组织架构同步配置")
     public ResponseResult<Void> saveSynchroConfig(@RequestBody SynchroConfigDTO synchroConfigDTO) {
         return ResponseResult.newInstance(organizationService.saveSynchroConfig(synchroConfigDTO));
@@ -218,7 +218,7 @@ public class OrganizationController extends BaseController {
      */
     @PostMapping("/immediatelySync")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ORG_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "立即同步组织架构")
     public ResponseResult<Void> immediatelySync(@RequestBody SynchroConfigDTO synchroConfigDTO) {
         organizationService.immediatelySync(synchroConfigDTO);
@@ -232,7 +232,7 @@ public class OrganizationController extends BaseController {
      */
     @PostMapping("/updateUnknownDept/{deptId}")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_ORG_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "更新未知部门")
     public ResponseResult<Void> updateUnknownDept(@PathVariable("deptId") String deptId) {
         organizationService.updateUnknownDept(deptId);

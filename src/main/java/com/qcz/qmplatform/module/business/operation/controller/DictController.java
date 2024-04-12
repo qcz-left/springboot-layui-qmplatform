@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.operation.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -13,7 +14,6 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.operation.domain.Dict;
 import com.qcz.qmplatform.module.business.operation.service.DictService;
 import jakarta.annotation.Resource;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -93,7 +93,7 @@ public class DictController extends BaseController {
      */
     @PostMapping("/addDict")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_DICT_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_DICT_SAVE)
     @RecordLog(type = OperateType.INSERT, description = "新增字典")
     public ResponseResult<Void> addDict(@RequestBody Dict dict) {
         return ResponseResult.newInstance(dictService.addDictOne(dict));
@@ -106,7 +106,7 @@ public class DictController extends BaseController {
      */
     @PutMapping("/updateDict")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_DICT_SAVE)
+    @SaCheckPermission(PrivCode.BTN_CODE_DICT_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改字典")
     public ResponseResult<Void> updateDict(@RequestBody Dict dict) {
         return ResponseResult.newInstance(dictService.updateDictOne(dict));
@@ -119,7 +119,7 @@ public class DictController extends BaseController {
      */
     @DeleteMapping("/deleteDict")
     @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_DICT_DELETE)
+    @SaCheckPermission(PrivCode.BTN_CODE_DICT_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除字典")
     public ResponseResult<Void> deleteDict(String dictIds) {
         return ResponseResult.newInstance(dictService.deleteDict(StringUtils.split(dictIds, ',')));
