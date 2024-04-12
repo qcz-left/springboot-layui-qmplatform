@@ -223,4 +223,11 @@ public class ConfigLoader {
         return LogLevel.valueOf(logLevel.toUpperCase());
     }
 
+    /**
+     * 会话最大存活时长，单位：秒，默认1800秒
+     */
+    public static int getSessionTimeout() {
+        return getIntConfig("SessionTimeout", 1800);
+    }
+
 }

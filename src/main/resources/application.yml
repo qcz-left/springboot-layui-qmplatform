@@ -47,15 +47,6 @@ spring:
       max-file-size: 1000MB
       max-request-size: 1000MB
 
-# sa-token
-sa-token:
-  # token 有效期（单位：秒）
-  timeout: 86400
-  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结
-  active-timeout: 1800
-  is-log: true
-
-
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl

@@ -49,7 +49,7 @@ public class SubjectUtils {
     }
 
     public static String getSessionId() {
-        return StpUtil.getSession().getId();
+        return ServletUtils.getCurrRequest().getSession().getId();
     }
 
     /**

@@ -167,7 +167,8 @@ public class SecureUtils {
             System.out.println(s);
         }*/
 
-        ThreadLocal<SimpleDateFormat> threadLocal = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyyMMdd HHmm"));
+//        ThreadLocal<SimpleDateFormat> threadLocal = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyyMMdd HHmm"));
 
+        System.out.println("这是什么鬼东西啊asdfkjalllaskdjflkqwqcz_lefft@");
     }
 }

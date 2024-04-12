@@ -1,2 +1,3 @@
 [com.qcz.qmplatform.module.schedule]
 DeleteTmpFileSchedule.run = */3 * * * *
+SessionSchedule.run = */5 * * * *
