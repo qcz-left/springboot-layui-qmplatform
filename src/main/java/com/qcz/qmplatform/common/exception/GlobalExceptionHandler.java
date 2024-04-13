@@ -5,6 +5,7 @@ import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.ResponseCode;
+import com.qcz.qmplatform.common.utils.SubjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -89,9 +90,9 @@ public class GlobalExceptionHandler {
      * 会话过期
      */
     @ExceptionHandler(NotLoginException.class)
-    public String sessionTimeout(NotLoginException ex) {
+    public void sessionTimeout(NotLoginException ex) {
         LOGGER.error("The session has expired and will redirect to the login page", ex);
-        return "redirect:/loginPage";
+        SubjectUtils.toLoginPage();
     }
 
     /**

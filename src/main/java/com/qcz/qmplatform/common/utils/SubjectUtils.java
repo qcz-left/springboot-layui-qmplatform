@@ -2,8 +2,12 @@ package com.qcz.qmplatform.common.utils;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.json.JSONUtil;
+import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.constant.ResponseCode;
 import com.qcz.qmplatform.module.business.system.domain.User;
 import com.qcz.qmplatform.module.business.system.service.UserService;
+import com.qcz.qmplatform.module.socket.SessionWebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -48,6 +52,9 @@ public class SubjectUtils {
         CacheUtils.SESSION_CACHE.put(getSessionId(), user);
     }
 
+    /**
+     * 获取当前账号HttpSession ID
+     */
     public static String getSessionId() {
         return ServletUtils.getCurrRequest().getSession().getId();
     }
@@ -58,11 +65,48 @@ public class SubjectUtils {
     public static void removeUser() {
         if (StpUtil.isLogin()) {
             Object user = StpUtil.getLoginId();
-            CacheUtils.USER_CACHE.remove(user.toString());
-            CacheUtils.SESSION_CACHE.remove(getSessionId());
             StpUtil.logout();
+            clearCache();
             log.debug("logout : {}", user);
         }
+    }
+
+    /**
+     * 清除当前账号缓存
+     */
+    public static void clearCache() {
+        clearCache(getSessionId());
+    }
+
+    /**
+     * 清除指定会话缓存
+     *
+     * @param sessionId HttpSession ID
+     */
+    public static void clearCache(String sessionId) {
+        User user = CacheUtils.SESSION_CACHE.get(sessionId);
+        CacheUtils.USER_CACHE.remove(user.toString());
+        CacheUtils.SESSION_CACHE.remove(sessionId);
+    }
+
+    /**
+     * 指定账号跳转到登录页
+     *
+     * @param sessionId HttpSession ID
+     */
+    public static void toLoginPage(String sessionId) {
+        User user = CacheUtils.SESSION_CACHE.get(sessionId);
+        ResponseResult<String> responseResult = new ResponseResult<>(ResponseCode.AUTHORIZED_EXPIRE, "会话过期！", user.getUsername());
+        log.info("[{}] {}", user.getLoginname(), responseResult);
+        clearCache(sessionId);
+        SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), sessionId);
+    }
+
+    /**
+     * 当前账号跳转到登录页
+     */
+    public static void toLoginPage() {
+        SubjectUtils.toLoginPage(SubjectUtils.getSessionId());
     }
 
     public static String getUserId() {

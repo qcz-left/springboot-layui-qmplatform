@@ -8,6 +8,7 @@ import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -23,6 +24,7 @@ import java.util.Objects;
  *
  * @author changzhongq
  */
+@Slf4j
 public class ServletUtils {
 
     /**
@@ -67,6 +69,19 @@ public class ServletUtils {
      */
     public static HttpServletResponse getCurrResponse() {
         return getServletRequestAttributes().getResponse();
+    }
+
+    /**
+     * 重定向
+     *
+     * @param url 重定向的路径
+     */
+    public static void sendRedirect(String url) {
+        try {
+            getCurrResponse().sendRedirect(getCurrRequest().getContextPath() + url);
+        } catch (IOException e) {
+            log.error("redirect error!", e);
+        }
     }
 
     public static ServletRequestAttributes getServletRequestAttributes() {

@@ -1,12 +1,9 @@
 package com.qcz.qmplatform.module.schedule;
 
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.json.JSONUtil;
-import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.constant.ResponseCode;
 import com.qcz.qmplatform.common.utils.CacheUtils;
+import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.business.system.domain.User;
-import com.qcz.qmplatform.module.socket.SessionWebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -26,10 +23,7 @@ public class SessionSchedule {
             }
 
             if (!StpUtil.isLogin(user.getId())) {
-                ResponseResult<String> responseResult = new ResponseResult<>(ResponseCode.AUTHORIZED_EXPIRE, "会话过期！", user.getUsername());
-                log.info("[{}] {}", user.getLoginname(), responseResult);
-                CacheUtils.SESSION_CACHE.remove(sessionId);
-                SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), sessionId);
+                SubjectUtils.toLoginPage(sessionId);
             }
         });
     }
