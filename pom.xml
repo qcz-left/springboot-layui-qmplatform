@@ -170,14 +170,6 @@
             <version>${tinypinyin.version}</version>
         </dependency>
 
-        <!--对接第三方库-->
-        <!--阿里云-->
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>dysmsapi20170525</artifactId>
-            <version>${aliyun-sdk.version}</version>
-        </dependency>
-
         <!-- 获取系统信息 -->
         <dependency>
             <groupId>com.github.oshi</groupId>

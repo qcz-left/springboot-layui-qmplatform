@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.business.notify.service.tencent;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.format.FastDateFormat;
+import cn.hutool.core.util.HexUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -14,7 +15,6 @@ import com.qcz.qmplatform.module.business.notify.domain.pojo.SmsConfig;
 import com.qcz.qmplatform.module.business.notify.service.INotifyService;
 import com.qcz.qmplatform.module.business.notify.service.tencent.bean.TencentCloudSmsError;
 import com.qcz.qmplatform.module.business.notify.service.tencent.bean.TencentCloudSmsResponse;
-import jakarta.xml.bind.DatatypeConverter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
@@ -160,7 +160,7 @@ public class TencentCloudSmsNotifyService implements INotifyService {
                 + canonicalHeaders + "\n" + signedHeaders + "\n" + hashedRequestPayload;
         String hashedCanonicalRequest = SecureUtils.sha256Hex(canonicalRequest);
         String stringToSign = algorithm + "\n" + timestamp + "\n" + credentialScope + "\n" + hashedCanonicalRequest;
-        String signature = DatatypeConverter.printHexBinary(SecureUtils.hmac256(secretSigning, stringToSign)).toLowerCase();
+        String signature = HexUtil.encodeHexStr(SecureUtils.hmac256(secretSigning, stringToSign)).toLowerCase();
         String authorization = algorithm + " " + "Credential=" + smsConfig.getSecretId() + "/" + credentialScope + ", "
                 + "SignedHeaders=" + signedHeaders + ", " + "Signature=" + signature;
         request.header("Authorization", authorization);

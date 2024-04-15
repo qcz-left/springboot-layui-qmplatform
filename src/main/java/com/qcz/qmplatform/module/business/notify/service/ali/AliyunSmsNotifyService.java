@@ -1,6 +1,6 @@
 package com.qcz.qmplatform.module.business.notify.service.ali;
 
-import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.Header;
@@ -8,12 +8,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.http.Method;
-import cn.hutool.json.JSONUtil;
-import com.aliyun.dysmsapi20170525.Client;
-import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
-import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
-import com.aliyun.dysmsapi20170525.models.SendSmsResponseBody;
-import com.aliyun.teaopenapi.models.Config;
+import cn.hutool.json.JSONObject;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.JSONUtils;
@@ -21,7 +16,6 @@ import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.SmsConfig;
 import com.qcz.qmplatform.module.business.notify.service.INotifyService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -48,43 +42,6 @@ public class AliyunSmsNotifyService implements INotifyService {
 
     @Override
     public String send() {
-        Config config = new Config()
-                // 您的AccessKey ID
-                .setAccessKeyId(smsConfig.getSecretId())
-                // 您的AccessKey Secret
-                .setAccessKeySecret(smsConfig.getSecretKey());
-        // 访问的域名
-        config.endpoint = StringUtils.blankToDefault(smsConfig.getEndpoint(), "dysmsapi.aliyuncs.com");
-        Client client;
-        try {
-            client = new Client(config);
-            SendSmsRequest sendSmsRequest = new SendSmsRequest()
-                    .setPhoneNumbers(smsConfig.getPhones().get(0))
-                    .setSignName(smsConfig.getSign())
-                    .setTemplateCode(smsConfig.getTemplateID())
-                    .setTemplateParam(JSONUtil.toJsonStr(smsConfig.getTemplateParams()));
-            SendSmsResponse sendSmsResponse = client.sendSms(sendSmsRequest);
-            SendSmsResponseBody body = sendSmsResponse.getBody();
-            log.info(JSONUtil.toJsonStr(body));
-            return body.getCode();
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return e.getMessage();
-        }
-    }
-
-    public static void main(String[] args) {
-        AliyunSmsNotifyService service = new AliyunSmsNotifyService();
-        SmsConfig smsConfig = new SmsConfig();
-        service.setSmsConfig(smsConfig);
-        for (int i = 0; i < 100; i++) {
-            long currentTimeMillis = System.currentTimeMillis();
-            service.send2();
-            System.out.println(System.currentTimeMillis() - currentTimeMillis);
-        }
-    }
-
-    public String send2() {
         String responseHtml;
         try {
             Map<String, Object> params = new HashMap<>();
@@ -94,7 +51,7 @@ public class AliyunSmsNotifyService implements INotifyService {
             params.put("TemplateParam", JSONUtils.toJsonStr(smsConfig.getTemplateParams()));
             Map<String, Object> commonParams = getCommonParams(params);
 
-            HttpRequest request = HttpUtil.createRequest(Method.POST, "https://" + HOST + "?" + HttpUtil.toParams(commonParams));
+            HttpRequest request = HttpUtil.createRequest(Method.POST, "https://" + HOST + "?" + HttpUtil.toParams(commonParams, StandardCharsets.UTF_8, true));
             request.header(Header.CONTENT_TYPE, ContentType.FORM_URLENCODED.getValue());
             request.form(params);
 
@@ -106,8 +63,8 @@ public class AliyunSmsNotifyService implements INotifyService {
         }
 
         log.info("response result of the url [" + HOST + "]: " + JSONUtils.formatJsonStr(responseHtml));
-
-        return "";
+        JSONObject jsonResponse = JSONUtils.parseObj(responseHtml);
+        return (String) jsonResponse.get("Code");
     }
 
     /**
@@ -135,7 +92,6 @@ public class AliyunSmsNotifyService implements INotifyService {
         signatureParams.putAll(params);
         signatureParams.putAll(common);
         String rpcSignature = getRPCSignature(signatureParams, smsConfig.getSecretKey());
-        System.out.println(rpcSignature);
         common.put("Signature", rpcSignature);
 
         return common;
@@ -166,7 +122,7 @@ public class AliyunSmsNotifyService implements INotifyService {
                 log.error(null, e);
             }
             byte[] signData = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
-            return Base64.encodeBase64String(signData);
+            return Base64.encode(signData);
         } else {
             return secret;
         }
