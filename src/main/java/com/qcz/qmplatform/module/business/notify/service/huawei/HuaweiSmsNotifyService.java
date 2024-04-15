@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.business.notify.service.huawei;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
@@ -127,7 +128,7 @@ public class HuaweiSmsNotifyService implements INotifyService {
             log.info("buildWsseHeader(): appKey or appSecret is null.");
             return null;
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        SimpleDateFormat sdf = new SimpleDateFormat(DatePattern.UTC_PATTERN);
         String time = sdf.format(new Date()); // Created
         String nonce = UUID.randomUUID().toString().replace("-", "");
 

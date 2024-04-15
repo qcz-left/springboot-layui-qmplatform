@@ -5,6 +5,10 @@ import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
 import cn.hutool.crypto.digest.BCrypt;
+import cn.hutool.crypto.digest.DigestAlgorithm;
+import cn.hutool.crypto.digest.Digester;
+import cn.hutool.crypto.digest.HMac;
+import cn.hutool.crypto.digest.HmacAlgorithm;
 import cn.hutool.crypto.symmetric.AES;
 import cn.hutool.crypto.symmetric.DES;
 
@@ -142,6 +146,16 @@ public class SecureUtils {
      */
     public static boolean passwordChanged(String pwd) {
         return !StringUtils.equals(PASSWORD_UNCHANGED, pwd);
+    }
+
+    public static byte[] hmac256(byte[] key, String msg) {
+        HMac hMac = new HMac(HmacAlgorithm.HmacSHA256, key);
+        return hMac.digest(msg);
+    }
+
+    public static String sha256Hex(String msg) {
+        Digester sha256 = new Digester(DigestAlgorithm.SHA256);
+        return sha256.digestHex(msg);
     }
 
     public static void main(String[] args) {

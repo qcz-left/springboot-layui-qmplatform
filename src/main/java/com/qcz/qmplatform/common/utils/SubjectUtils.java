@@ -10,6 +10,10 @@ import com.qcz.qmplatform.module.business.system.service.UserService;
 import com.qcz.qmplatform.module.socket.SessionWebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Objects;
+
 /**
  * 当前登录账号工具类
  */
@@ -96,6 +100,10 @@ public class SubjectUtils {
      */
     public static void toLoginPage(String sessionId) {
         User user = CacheUtils.SESSION_CACHE.get(sessionId);
+        if (Objects.isNull(user)) {
+            ServletUtils.sendRedirect("/loginPage");
+            return;
+        }
         ResponseResult<String> responseResult = new ResponseResult<>(ResponseCode.AUTHORIZED_EXPIRE, "会话过期！", user.getUsername());
         log.info("[{}] {}", user.getLoginname(), responseResult);
         clearCache(sessionId);
@@ -117,4 +125,7 @@ public class SubjectUtils {
         return getUser().getUsername();
     }
 
+    public static void main(String[] args) throws UnsupportedEncodingException {
+        System.out.println(URLEncoder.encode("+"));
+    }
 }

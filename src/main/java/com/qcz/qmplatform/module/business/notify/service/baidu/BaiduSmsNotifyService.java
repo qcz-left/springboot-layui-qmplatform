@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.notify.service.baidu;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -171,7 +172,7 @@ public class BaiduSmsNotifyService implements INotifyService {
     }
 
     private String getUTCTime() {
-        SimpleDateFormat utcTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        SimpleDateFormat utcTimeFormat = new SimpleDateFormat(DatePattern.UTC_PATTERN);
         utcTimeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         return utcTimeFormat.format(new Date());
     }

@@ -2,10 +2,6 @@ package com.qcz.qmplatform.module.business.notify.service.tencent;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.format.FastDateFormat;
-import cn.hutool.crypto.digest.DigestAlgorithm;
-import cn.hutool.crypto.digest.Digester;
-import cn.hutool.crypto.digest.HMac;
-import cn.hutool.crypto.digest.HmacAlgorithm;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -13,6 +9,7 @@ import cn.hutool.http.Method;
 import cn.hutool.json.JSONObject;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.JSONUtils;
+import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.SmsConfig;
 import com.qcz.qmplatform.module.business.notify.service.INotifyService;
 import com.qcz.qmplatform.module.business.notify.service.tencent.bean.TencentCloudSmsError;
@@ -105,7 +102,7 @@ public class TencentCloudSmsNotifyService implements INotifyService {
                     "&time=" + now +
                     "&mobile=" + phoneNumber;
             body.put("tel", tel);
-            body.put("sig", sha256Hex(sig));
+            body.put("sig", SecureUtils.sha256Hex(sig));
             body.put("tpl_id", templateId);
             body.put("params", params);
             body.put("sign", sign);
@@ -153,30 +150,20 @@ public class TencentCloudSmsNotifyService implements INotifyService {
 
         // 计算签名
         String utcDate = DateUtils.format(date, FastDateFormat.getInstance(DatePattern.NORM_DATE_PATTERN, TimeZone.getTimeZone("UTC")));
-        byte[] secretDate = hmac256(("TC3" + smsConfig.getSecretKey()).getBytes(StandardCharsets.UTF_8), utcDate);
-        byte[] secretService = hmac256(secretDate, service);
-        byte[] secretSigning = hmac256(secretService, requestSign);
+        byte[] secretDate = SecureUtils.hmac256(("TC3" + smsConfig.getSecretKey()).getBytes(StandardCharsets.UTF_8), utcDate);
+        byte[] secretService = SecureUtils.hmac256(secretDate, service);
+        byte[] secretSigning = SecureUtils.hmac256(secretService, requestSign);
         String credentialScope = utcDate + "/" + service + "/" + requestSign;
         String payload = JSONUtils.toJsonStr(params);
-        String hashedRequestPayload = sha256Hex(payload);
+        String hashedRequestPayload = SecureUtils.sha256Hex(payload);
         String canonicalRequest = httpRequestMethod + "\n" + canonicalUri + "\n" + canonicalQueryString + "\n"
                 + canonicalHeaders + "\n" + signedHeaders + "\n" + hashedRequestPayload;
-        String hashedCanonicalRequest = sha256Hex(canonicalRequest);
+        String hashedCanonicalRequest = SecureUtils.sha256Hex(canonicalRequest);
         String stringToSign = algorithm + "\n" + timestamp + "\n" + credentialScope + "\n" + hashedCanonicalRequest;
-        String signature = DatatypeConverter.printHexBinary(hmac256(secretSigning, stringToSign)).toLowerCase();
+        String signature = DatatypeConverter.printHexBinary(SecureUtils.hmac256(secretSigning, stringToSign)).toLowerCase();
         String authorization = algorithm + " " + "Credential=" + smsConfig.getSecretId() + "/" + credentialScope + ", "
                 + "SignedHeaders=" + signedHeaders + ", " + "Signature=" + signature;
         request.header("Authorization", authorization);
-    }
-
-    private byte[] hmac256(byte[] key, String msg) {
-        HMac hMac = new HMac(HmacAlgorithm.HmacSHA256, key);
-        return hMac.digest(msg);
-    }
-
-    public String sha256Hex(String msg) {
-        Digester sha256 = new Digester(DigestAlgorithm.SHA256);
-        return sha256.digestHex(msg);
     }
 
     @Override
