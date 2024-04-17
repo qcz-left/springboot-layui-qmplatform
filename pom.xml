@@ -20,10 +20,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
         <postgresql.version>42.4.4</postgresql.version>
-        <mysql.version>8.0.28</mysql.version>
+        <mysql.version>8.0.31</mysql.version>
         <mybatis-plus.version>3.5.6</mybatis-plus.version>
-        <hutool.version>5.8.12</hutool.version>
-        <pagehelper-starter.version>1.4.2</pagehelper-starter.version>
+        <hutool.version>5.8.20</hutool.version>
+        <pagehelper-starter.version>2.1.0</pagehelper-starter.version>
         <oshi.version>5.1.0</oshi.version>
         <poi.version>5.2.2</poi.version>
         <jodconverter-boot.version>4.4.2</jodconverter-boot.version>
@@ -31,6 +31,8 @@
         <tinypinyin.version>2.0.3.RELEASE</tinypinyin.version>
         <sa-token.version>1.37.0</sa-token.version>
         <satoken-freemarker-tags.version>1.0</satoken-freemarker-tags.version>
+        <!-- 漏洞修复 -->
+        <commons-compress.version>1.26.0</commons-compress.version>
     </properties>
 
     <dependencies>
@@ -141,6 +143,13 @@
             <groupId>com.github.oshi</groupId>
             <artifactId>oshi-core</artifactId>
             <version>${oshi.version}</version>
+        </dependency>
+
+        <!-- 漏洞修复 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>${commons-compress.version}</version>
         </dependency>
 
         <dependency>
