@@ -21,21 +21,16 @@
         <java.version>17</java.version>
         <postgresql.version>42.4.4</postgresql.version>
         <mysql.version>8.0.28</mysql.version>
-        <druid.version>1.2.22</druid.version>
         <mybatis-plus.version>3.5.6</mybatis-plus.version>
         <hutool.version>5.8.12</hutool.version>
         <pagehelper-starter.version>1.4.2</pagehelper-starter.version>
-        <commons-io.version>2.7</commons-io.version>
-        <qcloudsms.version>1.0.6</qcloudsms.version>
-        <aliyun-sdk.version>2.0.1</aliyun-sdk.version>
-        <jasypt.version>2.1.1</jasypt.version>
         <oshi.version>5.1.0</oshi.version>
         <poi.version>5.2.2</poi.version>
         <jodconverter-boot.version>4.4.2</jodconverter-boot.version>
-        <dingtalk.version>1.1.99</dingtalk.version>
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
-        <junit.version>4.13.1</junit.version>
         <tinypinyin.version>2.0.3.RELEASE</tinypinyin.version>
+        <sa-token.version>1.37.0</sa-token.version>
+        <satoken-freemarker-tags.version>1.0</satoken-freemarker-tags.version>
     </properties>
 
     <dependencies>
@@ -59,12 +54,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.zaxxer</groupId>
-                    <artifactId>HikariCP</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!--邮件-->
         <dependency>
@@ -81,24 +70,12 @@
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot3-starter</artifactId>
-            <version>1.37.0</version>
+            <version>${sa-token.version}</version>
         </dependency>
         <dependency>
             <groupId>com.qcz</groupId>
             <artifactId>satoken-freemarker-tags</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <!-- 文件预览 -->
-        <dependency>
-            <groupId>org.jodconverter</groupId>
-            <artifactId>jodconverter-spring-boot-starter</artifactId>
-            <version>${jodconverter-boot.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jodconverter</groupId>
-            <artifactId>jodconverter-local</artifactId>
-            <version>${jodconverter-boot.version}</version>
+            <version>${satoken-freemarker-tags.version}</version>
         </dependency>
 
         <!-- Apache工具 -->
@@ -143,13 +120,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
-        </dependency>
-
-        <!--数据库连接池-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>${druid.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- hutool 工具类 -->
@@ -157,11 +128,6 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
         </dependency>
         <!-- 拼音 -->
         <dependency>

@@ -4,7 +4,6 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ReflectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -190,20 +189,9 @@ public class FileUtils extends FileUtil {
 
     private static String getWebPath() {
         try {
-            String webPath = new ClassPathResource("").getFile().getCanonicalPath();
-            // 本地运行
-            if (webPath.contains("target\\classes")) {
-                return new File("../").getCanonicalPath();
-            }
-            // war 运行
-            String packing = YmlPropertiesUtils.getPacking();
-            if ("war".equals(packing)) {
-                return new File("../../").getCanonicalPath();
-            }
-            // 以jar包部署方式路径则为jar所在目录
-            return webPath;
+            return new File("../").getCanonicalPath();
         } catch (IOException e) {
-            LOGGER.error(null, e);
+            // do something
         }
         return "/";
     }

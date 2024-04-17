@@ -9,6 +9,7 @@ import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.ImportResult;
+import com.qcz.qmplatform.common.bean.LoginUser;
 import com.qcz.qmplatform.common.bean.PageRequest;
 import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
@@ -244,7 +245,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户密码")
     public ResponseResult<?> changeCurrentUserPwd(@Validated({Update.class}) @RequestBody PasswordDTO passwordDTO) {
-        User user = SubjectUtils.getUser();
+        LoginUser user = SubjectUtils.getUser();
         assert user != null;
         // 比较原密码是否填写正确
         if (!SecureUtils.accountCheck(passwordDTO.getPassword(), user.getPassword())) {

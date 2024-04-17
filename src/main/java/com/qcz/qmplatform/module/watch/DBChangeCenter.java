@@ -68,6 +68,15 @@ public class DBChangeCenter implements Observed, Runnable {
         doNotify(dbNotifyInfo);
     }
 
+    /**
+     * 角色修改消息通知
+     */
+    public void notifyUpdateRole() {
+        DBNotifyInfo dbNotifyInfo = new DBNotifyInfo();
+        dbNotifyInfo.setTableName(DBProperties.Table.SYS_ROLE);
+        doNotify(dbNotifyInfo);
+    }
+
     public static DBChangeCenter getInstance() {
         return DBChangeCenterHolder.INSTANCE;
     }

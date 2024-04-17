@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +41,10 @@ public class DBChangeWatcher implements Observable {
                     CacheUtils.remove((String) dbNotifyInfoMsg);
                 }
                 break;
+            case DBProperties.Table.SYS_ROLE:
+                CacheUtils.ROLE_CACHE.clear();
+                CacheUtils.PERMISSION_CACHE.clear();
+                break;
             default:
                 break;
         }
@@ -51,17 +54,17 @@ public class DBChangeWatcher implements Observable {
      * 同步系统消息
      */
     private void syncMessage() {
-        Collection<Session> sessions = NotifyWebSocketServer.getSessions();
+        Map<String, Session> sessions = SpringContextUtils.getBean(NotifyWebSocketServer.class).getClients();
         if (!CollectionUtil.isEmpty(sessions)) {
             List<String> userIds = new ArrayList<>();
-            for (Session session : sessions) {
-                userIds.add(session.getUserPrincipal().toString());
+            for (String sessionId : sessions.keySet()) {
+                userIds.add(CacheUtils.SESSION_CACHE.get(sessionId));
             }
             MessageService messageService = SpringContextUtils.getBean(MessageService.class);
             Map<String, Map<String, Long>> noReadCount = messageService.selectNoReadCount(userIds);
-            for (Session session : sessions) {
-                String userId = session.getUserPrincipal().toString();
-                NotifyWebSocketServer.sendMsg(JSONUtil.toJsonStr(noReadCount.get(userId)), session);
+            for (String sessionId : sessions.keySet()) {
+                String userId = CacheUtils.SESSION_CACHE.get(sessionId);
+                NotifyWebSocketServer.sendMsg(JSONUtil.toJsonStr(noReadCount.get(userId)), sessions.get(sessionId));
             }
         }
     }

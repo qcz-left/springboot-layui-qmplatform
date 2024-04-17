@@ -125,9 +125,9 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public ResponseResult<Void> exeBackup(String bakRemark, String operator) {
-        if (!SystemUtils.OS.isLinux()) {
+        /*if (!SystemUtils.OS.isLinux()) {
             throw new BusinessException("非Linux环境不允许备份数据！");
-        }
+        }*/
         String dataBakPath = ConfigLoader.getDataBakPath();
         File file = new File(dataBakPath);
         if (!file.exists()) {

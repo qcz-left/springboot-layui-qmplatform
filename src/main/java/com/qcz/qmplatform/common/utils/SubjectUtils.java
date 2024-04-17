@@ -1,17 +1,19 @@
 package com.qcz.qmplatform.common.utils;
 
+import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
+import com.qcz.qmplatform.common.bean.LoginUser;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.ResponseCode;
 import com.qcz.qmplatform.module.business.system.domain.User;
 import com.qcz.qmplatform.module.business.system.service.UserService;
 import com.qcz.qmplatform.module.socket.SessionWebSocketServer;
+import jakarta.servlet.http.Cookie;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Objects;
 
 /**
@@ -23,7 +25,7 @@ public class SubjectUtils {
     /**
      * 获取当前用户（未获取到会抛出异常）
      */
-    public static User getUser() {
+    public static LoginUser getUser() {
         return getUser(true);
     }
 
@@ -32,14 +34,13 @@ public class SubjectUtils {
      *
      * @param throwException 是否抛出异常
      */
-    public static User getUser(boolean throwException) {
+    public static LoginUser getUser(boolean throwException) {
         Object principal = StpUtil.getLoginIdDefaultNull();
         if (principal != null) {
             String principalStr = principal.toString();
-            User user = CacheUtils.USER_CACHE.get(principalStr);
+            LoginUser user = CacheUtils.USER_CACHE.get(principalStr);
             if (user == null) {
-                user = SpringContextUtils.getBean(UserService.class).getById(principalStr);
-                setUser(user);
+                user = setUser(SpringContextUtils.getBean(UserService.class).getById(principalStr));
             }
             return user;
         }
@@ -51,9 +52,19 @@ public class SubjectUtils {
         return null;
     }
 
-    public static void setUser(User user) {
-        CacheUtils.USER_CACHE.put(user.getId(), user);
-        CacheUtils.SESSION_CACHE.put(getSessionId(), user);
+    public static LoginUser setUser(User user) {
+        LoginUser loginUser = new LoginUser();
+        BeanUtil.copyProperties(user, loginUser);
+        loginUser.setClientIp(ServletUtils.getClientIP(ServletUtils.getCurrRequest()));
+        CacheUtils.USER_CACHE.put(loginUser.getId(), loginUser);
+        String sessionId = getSessionId();
+        if (StringUtils.isNotBlank(sessionId)) {
+            // 重要，模拟登录设置HttpSession
+            ServletUtils.getCurrResponse().addCookie(new Cookie("JSESSIONID", getSessionId()));
+            CacheUtils.SESSION_CACHE.put(sessionId, loginUser.getId());
+        }
+
+        return loginUser;
     }
 
     /**
@@ -67,11 +78,11 @@ public class SubjectUtils {
      * 用户登出
      */
     public static void removeUser() {
-        if (StpUtil.isLogin()) {
+        if (!isExpire()) {
             Object user = StpUtil.getLoginId();
-            StpUtil.logout();
             clearCache();
-            log.debug("logout : {}", user);
+            StpUtil.logout();
+            log.info("logout : {}", user);
         }
     }
 
@@ -88,8 +99,11 @@ public class SubjectUtils {
      * @param sessionId HttpSession ID
      */
     public static void clearCache(String sessionId) {
-        User user = CacheUtils.SESSION_CACHE.get(sessionId);
-        CacheUtils.USER_CACHE.remove(user.toString());
+        String userId;
+        if (StringUtils.isBlank(sessionId) || StringUtils.isBlank(userId = CacheUtils.SESSION_CACHE.get(sessionId))) {
+            return;
+        }
+        CacheUtils.USER_CACHE.remove(userId);
         CacheUtils.SESSION_CACHE.remove(sessionId);
     }
 
@@ -99,13 +113,15 @@ public class SubjectUtils {
      * @param sessionId HttpSession ID
      */
     public static void toLoginPage(String sessionId) {
-        User user = CacheUtils.SESSION_CACHE.get(sessionId);
-        if (Objects.isNull(user)) {
+        String userId;
+        if (StringUtils.isBlank(sessionId) || Objects.isNull(userId = CacheUtils.SESSION_CACHE.get(sessionId))) {
             ServletUtils.sendRedirect("/loginPage");
             return;
         }
-        ResponseResult<String> responseResult = new ResponseResult<>(ResponseCode.AUTHORIZED_EXPIRE, "会话过期！", user.getUsername());
-        log.info("[{}] {}", user.getLoginname(), responseResult);
+        LoginUser user = CacheUtils.USER_CACHE.get(userId);
+        ResponseResult<String> responseResult = new ResponseResult<>(ResponseCode.AUTHORIZED_EXPIRE, "会话过期！", user.getClientIp());
+        // HttpSessionId-loginName[userName] clientIp
+        log.info("{}-{}[{}] {}", sessionId, user.getLoginname(), user.getUsername(), responseResult);
         clearCache(sessionId);
         SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), sessionId);
     }
@@ -114,7 +130,24 @@ public class SubjectUtils {
      * 当前账号跳转到登录页
      */
     public static void toLoginPage() {
-        SubjectUtils.toLoginPage(SubjectUtils.getSessionId());
+        String sessionId = SubjectUtils.getSessionId();
+        SubjectUtils.toLoginPage(sessionId);
+    }
+
+    /**
+     * 判断指定账号是否过期
+     *
+     * @param userId 用户ID
+     */
+    public static boolean isExpire(String userId) {
+        return StpUtil.getStpLogic().getTokenActiveTimeoutByToken(StpUtil.getTokenValueByLoginId(userId)) == SaTokenDao.NOT_VALUE_EXPIRE;
+    }
+
+    /**
+     * 判断当前账号是否过期
+     */
+    public static boolean isExpire() {
+        return isExpire(getUserId());
     }
 
     public static String getUserId() {
@@ -125,7 +158,4 @@ public class SubjectUtils {
         return getUser().getUsername();
     }
 
-    public static void main(String[] args) throws UnsupportedEncodingException {
-        System.out.println(URLEncoder.encode("+"));
-    }
 }

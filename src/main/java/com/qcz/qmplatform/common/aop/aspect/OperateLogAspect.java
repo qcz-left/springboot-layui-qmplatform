@@ -5,11 +5,12 @@ import cn.hutool.extra.mail.MailException;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
+import com.qcz.qmplatform.common.bean.LoginUser;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.DateUtils;
-import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
+import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.business.system.domain.OperateLog;
@@ -98,7 +99,7 @@ public class OperateLogAspect {
         final HttpServletRequest request = ServletUtils.getCurrRequest();
         String requestUrl = request.getServletPath();
         String ipAddress = ServletUtils.getIpAddress(request);
-        User currentUser = SubjectUtils.getUser(false);
+        LoginUser currentUser = SubjectUtils.getUser(false);
         Timestamp currTimestamp = DateUtils.getCurrTimestamp();
         executorService.submit(() -> {
             String stackTrace = stackTraceToString(e.getClass().getName(), e.getMessage(), e.getStackTrace());

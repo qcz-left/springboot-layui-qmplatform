@@ -30,7 +30,7 @@
             receiver
     </select>
 
-    <select id="selectList" resultType="com.qcz.qmplatform.module.business.system.domain.vo.MessageVO">
+    <select id="selectMessageList" resultType="com.qcz.qmplatform.module.business.system.domain.vo.MessageVO">
         select
             sm.*,
             va.attr_name typeName,

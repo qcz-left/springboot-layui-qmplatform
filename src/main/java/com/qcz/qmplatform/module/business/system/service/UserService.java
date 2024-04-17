@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.bean.ExcelRow;
 import com.qcz.qmplatform.common.bean.ImportFailReason;
 import com.qcz.qmplatform.common.bean.ImportResult;
+import com.qcz.qmplatform.common.bean.LoginUser;
 import com.qcz.qmplatform.common.bean.PageRequest;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.ResponseResult;
@@ -192,7 +193,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      */
     public CurrentUserInfoDTO getCurrentUserInfo() {
         CurrentUserInfoDTO currentUserInfoDTO = new CurrentUserInfoDTO();
-        User user = SubjectUtils.getUser();
+        LoginUser user = SubjectUtils.getUser();
         assert user != null;
         currentUserInfoDTO.setLoginname(user.getLoginname());
         currentUserInfoDTO.setUsername(user.getUsername());
@@ -361,7 +362,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * 恢复当前登录用户默认头像
      */
     public void restoreDefaultUserPhoto() {
-        User user = SubjectUtils.getUser();
+        LoginUser user = SubjectUtils.getUser();
         user.setPhotoPath(null);
         super.update(
                 Wrappers.lambdaUpdate(User.class)

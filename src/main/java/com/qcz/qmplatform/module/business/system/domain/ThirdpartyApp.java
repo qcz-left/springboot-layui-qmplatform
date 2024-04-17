@@ -1,7 +1,7 @@
 package com.qcz.qmplatform.module.business.system.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -49,12 +49,5 @@ public class ThirdpartyApp implements Serializable {
      */
     @TableField("remark")
     private String remark;
-
-    /**
-     * 状态（已废除）
-     */
-    @Deprecated
-    @TableField(value = "status", exist = false)
-    private int status;
 
 }

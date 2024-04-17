@@ -43,6 +43,7 @@ import java.util.regex.Pattern;
 /**
  * Mybatis SQL 数据权限 拦截器
  */
+@SuppressWarnings("unchecked")
 @Intercepts({@Signature(
         type = Executor.class,
         method = "query",
@@ -214,8 +215,7 @@ public class MybatisInterceptor implements Interceptor {
             lastIndexOf = isPlaceHolder ? lastIndexOf : group.lastIndexOf("$");
 
             String name = group.substring(indexOf + 1, lastIndexOf);
-            Object value = parameterMap.get(name);
-            if (ObjectUtil.isNotEmpty(value)) {
+            if (parameterMap.containsKey(name) && ObjectUtil.isNotEmpty(parameterMap.get(name))) {
                 sql = sql.replaceFirst(DYNAMIC_SQL_REG, Matcher.quoteReplacement(group.substring(2, group.length() - 2)));
             } else {
                 sql = sql.replaceFirst(DYNAMIC_SQL_REG, "");
@@ -259,14 +259,12 @@ public class MybatisInterceptor implements Interceptor {
     private String setNormalParameter(String sql, String key, Object value) {
         StringBuilder replacement = new StringBuilder();
         String replacementStr;
-        if (value instanceof List) {
-            List<?> valList = (List<?>) value;
+        if (value instanceof List<?> valList) {
             for (Object o : valList) {
                 replacement.append(",'").append(o).append("'");
             }
             replacementStr = replacement.deleteCharAt(0).toString();
-        } else if (value instanceof Object[]) {
-            Object[] valArray = (Object[]) value;
+        } else if (value instanceof Object[] valArray) {
             for (Object o : valArray) {
                 replacement.append(",'").append(o).append("'");
             }
@@ -290,8 +288,7 @@ public class MybatisInterceptor implements Interceptor {
     private String setParameterAndMapping(String sql, String key, Object value, List<ParameterMapping> newParameterMappings, Configuration configuration, Map<String, Object> additionalParameter) {
         StringBuilder replacement = new StringBuilder();
         String replacementStr;
-        if (value instanceof List) {
-            List<?> valList = (List<?>) value;
+        if (value instanceof List<?> valList) {
             for (int i = 0; i < valList.size(); i++) {
                 Object o = valList.get(i);
                 replacement.append(",?");
@@ -300,8 +297,7 @@ public class MybatisInterceptor implements Interceptor {
                 additionalParameter.put("__frch_" + key + "_" + i, o);
             }
             replacementStr = replacement.deleteCharAt(0).toString();
-        } else if (value instanceof Object[]) {
-            Object[] valArray = (Object[]) value;
+        } else if (value instanceof Object[] valArray) {
             for (int i = 0; i < valArray.length; i++) {
                 Object o = valArray[i];
                 replacement.append(",?");

@@ -69,10 +69,4 @@ public class ThirdpartyAppService extends ServiceImpl<ThirdpartyAppMapper, Third
         return CollectionUtil.isEmpty(list(queryWrapper));
     }
 
-    public boolean updateStatus(String id, int status) {
-        LambdaUpdateWrapper<ThirdpartyApp> updateWrapper = Wrappers.lambdaUpdate(ThirdpartyApp.class)
-                .eq(ThirdpartyApp::getId, id)
-                .set(ThirdpartyApp::getStatus, status);
-        return update(updateWrapper);
-    }
 }

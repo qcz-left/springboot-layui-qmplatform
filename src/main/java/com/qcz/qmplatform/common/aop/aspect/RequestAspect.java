@@ -28,6 +28,7 @@ import java.util.Map;
 
 @Aspect
 @Component
+@SuppressWarnings("unchecked")
 public class RequestAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("");
@@ -109,7 +110,6 @@ public class RequestAspect {
             parseParamVal(sb, key, "", level);
             Map<Object, Object> objectMap;
             if (value instanceof Map) {
-                //noinspection unchecked
                 objectMap = (Map<Object, Object>) value;
             } else {
                 objectMap = new HashMap<>();
@@ -128,11 +128,7 @@ public class RequestAspect {
      * @param num 空格数量
      */
     private static String retBlank(int num) {
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i < num; i++) {
-            str.append(" ");
-        }
-        return str.toString();
+        return " ".repeat(Math.max(0, num));
     }
 
     /**
@@ -144,8 +140,7 @@ public class RequestAspect {
      */
     private static String checkPwdFieldHidden(String fieldName, Object fieldValue) {
         String strFieldValue = String.valueOf(fieldValue);
-        if (fieldValue instanceof Object[]) {
-            Object[] arrFieldValue = (Object[]) fieldValue;
+        if (fieldValue instanceof Object[] arrFieldValue) {
             strFieldValue = StringUtils.format("[{}]", ArrayUtil.join(arrFieldValue, ","));
         }
         strFieldValue = StringUtils.isNullOrUndefined(strFieldValue) ? "" : strFieldValue;

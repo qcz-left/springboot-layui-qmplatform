@@ -13,6 +13,7 @@ import cn.hutool.http.Method;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
+import com.qcz.qmplatform.common.bean.LoginUser;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.exception.BusinessException;
@@ -86,7 +87,7 @@ public class LoginController {
 
     @GetMapping("/")
     public String index(Map<String, Object> root) {
-        User currUser = SubjectUtils.getUser();
+        LoginUser currUser = SubjectUtils.getUser();
         PermissionQO permission = new PermissionQO();
         permission.setPermissionType(PermissionType.MENU.getType());
         permission.setDisplay(1);

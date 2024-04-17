@@ -95,12 +95,4 @@ public class ThirdpartyAppController extends BaseController {
         return ResponseResult.newInstance(thirdpartyAppService.validateName(id, name));
     }
 
-    @PostMapping("/updateStatus")
-    @ResponseBody
-    @Deprecated
-    public ResponseResult<Void> updateStatus(@RequestBody ThirdpartyApp thirdpartyApp) {
-        boolean success = thirdpartyAppService.updateStatus(thirdpartyApp.getId(), thirdpartyApp.getStatus());
-        DBChangeCenter.getInstance().doNotify(DBNotifyInfo.newInstance(DBProperties.Table.SYS_THIRDPARTY_APP, thirdpartyApp.getName()));
-        return ResponseResult.newInstance(success);
-    }
 }

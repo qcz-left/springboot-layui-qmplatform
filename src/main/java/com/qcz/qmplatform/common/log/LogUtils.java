@@ -36,7 +36,7 @@ public class LogUtils {
     public static void setLogLevel(String loggerName, LogLevel logLevel) {
         LoggingSystem loggingSystem = SpringContextUtils.getBean(LoggingSystem.class);
         LoggerConfiguration loggerConfiguration = loggingSystem.getLoggerConfiguration(loggerName);
-        if (Objects.isNull(loggerConfiguration) || loggerConfiguration.getConfiguredLevel() == logLevel) {
+        if (Objects.isNull(loggerConfiguration)) {
             return;
         }
         log.info("set log level: {}={}", loggerName, logLevel);

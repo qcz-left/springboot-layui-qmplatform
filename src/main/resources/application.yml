@@ -19,26 +19,13 @@ spring:
   profiles:
     active: @spring.profiles.active@
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
+    type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    #Spring Boot 默认是不注入这些属性值的，需要自己绑定
-    #druid 数据源专有配置
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    #配置监控统计拦截的filters，stat:监控统计、wall：防御sql注入
-    filters: stat
-    maxPoolPreparedStatementPerConnectionSize: 20
-    useGlobalDataSourceStat: true
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-timeout: 3000
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -58,13 +45,6 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
-
-jodconverter:
-  local:
-    enabled: false
-    office-home: C:\Program Files (x86)\OpenOffice 4
-    max-tasks-per-process: 10
-    port-numbers: 8100
 
 # 自定义属性
 custom:

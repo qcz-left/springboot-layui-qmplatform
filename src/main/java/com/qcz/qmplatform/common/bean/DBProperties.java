@@ -17,6 +17,10 @@ public interface DBProperties {
          * 第三方系统对接配置信息
          */
         String SYS_THIRDPARTY_APP = "sys_thirdparty_app";
+        /**
+         * 第三方系统对接配置信息
+         */
+        String SYS_ROLE = "sys_role";
     }
 
 }

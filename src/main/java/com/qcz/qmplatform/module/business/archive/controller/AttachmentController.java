@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
+import com.qcz.qmplatform.common.bean.LoginUser;
 import com.qcz.qmplatform.common.bean.PageRequest;
 import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
@@ -90,7 +91,7 @@ public class AttachmentController extends BaseController {
             attachment.setAttachmentName(file.getOriginalFilename());
             attachment.setAttachmentUrl(upload.getData().get("filePath"));
             attachment.setUploadTime(DateUtils.getCurrTimestamp());
-            User currentUser = SubjectUtils.getUser();
+            LoginUser currentUser = SubjectUtils.getUser();
             attachment.setUploadUserId(currentUser.getId());
             attachment.setUploadUserName(currentUser.getUsername());
             attachment.setSize(file.getSize());

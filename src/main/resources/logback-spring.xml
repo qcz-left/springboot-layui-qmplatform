@@ -44,13 +44,11 @@
     <!--<logger name="org.springframework.web" level="debug"/>-->
     <logger name="com.baomidou" level="info"/>
     <logger name="org.mybatis" level="error"/>
-    <logger name="com.alibaba.druid" level="error"/>
+    <logger name="com.zaxxer.hikari" level="error"/>
     <logger name="org.hibernate" level="info"/>
     <logger name="io.netty" level="info"/>
     <logger name="com.netflix" level="error"/>
-    <logger name="com.ulisesbocchio.jasyptspringboot" level="error"/>
     <logger name="org.apache.http.impl.conn" level="error"/>
-    <logger name="org.apache.shiro" level="warn"/>
     <logger name="org.apache.poi" level="error"/>
     <logger name="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" level="off"/>
     <logger name="com.qcz.qmplatform.module.schedule" level="info"/>

@@ -16,6 +16,7 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.Role;
 import com.qcz.qmplatform.module.business.system.domain.qo.RolePermissionQO;
 import com.qcz.qmplatform.module.business.system.service.RoleService;
+import com.qcz.qmplatform.module.watch.DBChangeCenter;
 import jakarta.annotation.Resource;
 import jakarta.validation.groups.Default;
 import org.springframework.stereotype.Controller;
@@ -175,7 +176,9 @@ public class RoleController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "分配角色权限")
     public ResponseResult<Void> saveRolePermission(@RequestBody RolePermissionQO rolePermissionQO) {
-        return ResponseResult.newInstance(roleService.saveRolePermission(rolePermissionQO.getRoleId(), rolePermissionQO.getPermissionIds()));
+        boolean success = roleService.saveRolePermission(rolePermissionQO.getRoleId(), rolePermissionQO.getPermissionIds());
+        DBChangeCenter.getInstance().notifyUpdateRole();
+        return ResponseResult.newInstance(success);
     }
 }
 

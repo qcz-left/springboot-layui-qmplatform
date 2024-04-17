@@ -1,6 +1,7 @@
 package com.qcz.qmplatform.module.business.system.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.hutool.core.collection.ListUtil;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -65,7 +66,7 @@ public class MessageController extends BaseController {
     @SaCheckPermission(PrivCode.BTN_CODE_MESSAGE_SET_READ)
     @RecordLog(type = OperateType.UPDATE, description = "设置已读")
     public ResponseResult<Void> setHasRead(@RequestBody Map<String, String[]> params) {
-        boolean success = messageService.setHasRead(params.get("messageIds"));
+        boolean success = messageService.setHasRead(ListUtil.toList(params.get("messageIds")));
         if (success) {
             DBChangeCenter.getInstance().notifyMessage();
         }

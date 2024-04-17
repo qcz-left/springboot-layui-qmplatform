@@ -41,6 +41,7 @@ public class FreemarkerConfig {
 
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("Json", getModel("com.qcz.qmplatform.common.utils.JSONUtils"));
+        attributes.put("Subject", getModel("com.qcz.qmplatform.common.utils.SubjectUtils"));
         resolver.setAttributesMap(attributes);
         resolver.setOrder(0);
         return resolver;

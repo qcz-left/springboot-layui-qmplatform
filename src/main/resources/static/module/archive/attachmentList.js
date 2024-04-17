@@ -31,14 +31,6 @@ layui.use(['table', 'form', 'element'], function () {
         ]]
     });
 
-    LayerUtil.tips({
-        content: enableJodConverter ? '当前 OpenOffice 服务已开启，您可以使用文件预览功能' : '当前 OpenOffice 服务未开启，暂不提供文件预览功能',
-        follow: '#attachmentHelp',
-        trigger: 'click'
-    }, {
-        tips: [4, enableJodConverter ? '#5FB878' : '#FFB800']
-    });
-
     sortEventListen(table, layFilter, tableId);
 
 
@@ -63,9 +55,6 @@ layui.use(['table', 'form', 'element'], function () {
     table.on('tool(' + layFilter + ')', function (obj) {
         let data = obj.data;
         switch (obj.event) {
-            case 'preview':
-                window.open(ctx + "/previewFilePage?filePath=" + data.attachmentUrl);
-                break;
             case 'download':
                 location.href = ctx + '/downloadFile?filePath=' + data.attachmentUrl;
                 break;
