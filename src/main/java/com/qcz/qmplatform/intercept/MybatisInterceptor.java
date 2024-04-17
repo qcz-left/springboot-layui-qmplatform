@@ -2,6 +2,7 @@ package com.qcz.qmplatform.intercept;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.qcz.qmplatform.common.constant.Constant;
@@ -62,6 +63,13 @@ public class MybatisInterceptor implements Interceptor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MybatisInterceptor.class);
 
+    private static final String DYNAMIC_SQL_REG = "\\[\\[[\\s\\S]*?\\]\\]";
+    private static final String DYNAMIC_PARAM_REG = "#[\\s\\S]*?#|\\$[\\s\\S]*?\\$";
+    /**
+     * DYNAMIC_PARAM_REG || ?
+     */
+    private static final String DYNAMIC_PARAM_REG2 = "#[\\s\\S]*?#|\\$[\\s\\S]*?\\$|\\?";
+
     private static final Integer MAPPED_STATEMENT_INDEX = 0;
     private static final Integer PARAM_OBJ_INDEX = 1;
     private static final Integer ROW_BOUNDS_INDEX = 2;
@@ -91,8 +99,10 @@ public class MybatisInterceptor implements Interceptor {
             resultHandler = (ResultHandler<?>) args[RESULT_HANDLER_INDEX];
             cacheKey = executor.createCacheKey(ms, parameter, rowBounds, boundSql);
         } else if (args.length == 6) {
-            boundSql = (BoundSql) args[BOUND_SQL_INDEX];
+            rowBounds = (RowBounds) args[ROW_BOUNDS_INDEX];
+            resultHandler = (ResultHandler<?>) args[RESULT_HANDLER_INDEX];
             cacheKey = (CacheKey) args[CACHE_KEY_INDEX];
+            boundSql = (BoundSql) args[BOUND_SQL_INDEX];
         }
 
         boundSql = buildNewBoundSql(ms, boundSql);
@@ -174,8 +184,6 @@ public class MybatisInterceptor implements Interceptor {
     }
 
     private BoundSql buildNewBoundSql(MappedStatement ms, BoundSql boundSql) throws IllegalAccessException {
-        String DYNAMIC_SQL_REG = "\\[\\[[\\s\\S]*?\\]\\]";
-        String DYNAMIC_PARAM_REG = "#[\\s\\S]*?#|\\$[\\s\\S]*?\\$";
 
         String sql = boundSql.getSql();
         Configuration configuration = ms.getConfiguration();
@@ -196,7 +204,8 @@ public class MybatisInterceptor implements Interceptor {
         } else {
             parameterMap = BeanUtil.beanToMap(parameterObject);
         }
-        List<ParameterMapping> newParameterMappings = new ArrayList<>(boundSql.getParameterMappings());
+        List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+        List<ParameterMapping> newParameterMappings = new ArrayList<>();
         if (parameterMap == null) {
             parameterMap = new HashMap<>();
         }
@@ -222,9 +231,16 @@ public class MybatisInterceptor implements Interceptor {
             }
         }
 
-        Matcher paramMatcher = Pattern.compile(DYNAMIC_PARAM_REG).matcher(sql);
+        Matcher paramMatcher = Pattern.compile(DYNAMIC_PARAM_REG2).matcher(sql);
         while (paramMatcher.find()) {
             String group = paramMatcher.group();
+            if (StringUtils.equals(group, "?")) {
+                if (CollectionUtil.size(parameterMappings) > 0) {
+                    ParameterMapping remove = parameterMappings.remove(0);
+                    newParameterMappings.add(remove);
+                }
+                continue;
+            }
             boolean isPlaceHolder = group.contains("#");
             String name = group.substring(1, group.length() - 1);
             Object value = parameterMap.get(name);
