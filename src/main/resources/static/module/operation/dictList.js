@@ -68,7 +68,7 @@ layui.use(['table', 'form'], function () {
             id: 'dictIframe',
             type: 2,
             title: "定义属性 - " + dictName,
-            content: ctx + "/operation/dict-attr/dictAttrListPage/?dictId=" + dictId,
+            content: ctx + "/operation/dict-attr/dictAttrListPage?dictId=" + dictId,
             area: ['50%', '80%']
         });
     }
