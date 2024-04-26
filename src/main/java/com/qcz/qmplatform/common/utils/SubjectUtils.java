@@ -99,12 +99,13 @@ public class SubjectUtils {
      * @param sessionId HttpSession ID
      */
     public static void clearCache(String sessionId) {
-        String userId;
-        if (StringUtils.isBlank(sessionId) || StringUtils.isBlank(userId = CacheUtils.SESSION_CACHE.get(sessionId))) {
+        if (StringUtils.isBlank(sessionId)) {
             return;
         }
-        CacheUtils.USER_CACHE.remove(userId);
+
+        String userId = CacheUtils.SESSION_CACHE.get(sessionId);
         CacheUtils.SESSION_CACHE.remove(sessionId);
+        CacheUtils.USER_CACHE.remove(userId);
     }
 
     /**
@@ -113,16 +114,22 @@ public class SubjectUtils {
      * @param sessionId HttpSession ID
      */
     public static void toLoginPage(String sessionId) {
-        String userId;
-        if (StringUtils.isBlank(sessionId) || Objects.isNull(userId = CacheUtils.SESSION_CACHE.get(sessionId))) {
+        if (StringUtils.isBlank(sessionId)) {
             ServletUtils.sendRedirect("/loginPage");
             return;
         }
+
+        String userId = CacheUtils.SESSION_CACHE.get(sessionId);
+        CacheUtils.SESSION_CACHE.remove(sessionId);
         LoginUser user = CacheUtils.USER_CACHE.get(userId);
+        CacheUtils.USER_CACHE.remove(userId);
+        if (Objects.isNull(user)) {
+            ServletUtils.sendRedirect("/loginPage");
+            return;
+        }
         ResponseResult<String> responseResult = new ResponseResult<>(ResponseCode.AUTHORIZED_EXPIRE, "会话过期！", user.getClientIp());
         // HttpSessionId-loginName[userName] clientIp
         log.info("{}-{}[{}] {}", sessionId, user.getLoginname(), user.getUsername(), responseResult);
-        clearCache(sessionId);
         SessionWebSocketServer.sendMsg(JSONUtil.toJsonStr(responseResult), sessionId);
     }
 

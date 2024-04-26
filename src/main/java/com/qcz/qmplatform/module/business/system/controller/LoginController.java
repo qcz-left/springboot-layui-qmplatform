@@ -206,7 +206,7 @@ public class LoginController {
             return ResponseResult.error("密码错误", result);
         }
 
-        StpUtil.login(user.getId());
+        StpUtil.login(user.getId(), false);
         SubjectUtils.setUser(user);
 
         if (currLoginErrorTimes > 0) {
