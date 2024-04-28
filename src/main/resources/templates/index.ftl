@@ -56,7 +56,7 @@
             </li>
             <li class="layui-nav-item">
                 <a href="javascript:void(0);" class="layui-icon layui-icon-notice" lay-id="message" lay-href="${ctx}/system/message/messageListPage" lay-title="系统通知">
-                    <span id="messageCount" style="left: 30px;" class="layui-badge<#if messageCount.all == 0> hide</#if>">${messageCount.all}</span>
+                    <span id="messageCount" style="left: 30px; <#if messageCount.all == 0>display: none;</#if>" class="layui-badge">${messageCount.all}</span>
                 </a>
             </li>
             <li class="layui-nav-item"><a href="${ctx}/logout">退出</a></li>
@@ -393,6 +393,7 @@ layui.use(['element', 'dropdown'], function () {
     //获得消息事件
     socketMessage.onmessage = function (msg) {
         let result = JSON.parse(msg.data);
+        console.log("msg: " + msg.data)
         let all = result.all;
         if (all > 0) {
             $("#messageCount").text(all).show();
