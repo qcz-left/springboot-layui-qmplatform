@@ -17,7 +17,7 @@ import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
-import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.YmlPropertiesUtils;
 import com.qcz.qmplatform.module.base.BaseController;
@@ -46,9 +46,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -127,7 +127,7 @@ public class CommonController extends BaseController {
             ExcelWriter writer = ExcelUtil.getWriter();
 
             setExcel(writer, exportParam.getColNames());
-            String httpUrl = HttpServletUtils.getServerPath(request) + exportParam.getQueryUrl();
+            String httpUrl = ServletUtils.getServerPath(request) + exportParam.getQueryUrl();
             HttpRequest httpRequest = HttpUtil.createPost(httpUrl);
 
             Map<String, Object> param = exportParam.getQueryParam();

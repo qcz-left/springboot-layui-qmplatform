@@ -3,13 +3,12 @@ package com.qcz.qmplatform.module.business.system.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
-import com.aliyun.dingtalkcontact_1_0.models.GetUserHeaders;
-import com.aliyun.dingtalkcontact_1_0.models.GetUserResponseBody;
-import com.aliyun.dingtalkoauth2_1_0.models.GetUserTokenRequest;
-import com.aliyun.dingtalkoauth2_1_0.models.GetUserTokenResponse;
-import com.aliyun.tea.TeaException;
-import com.aliyun.teaopenapi.models.Config;
-import com.aliyun.teautil.models.RuntimeOptions;
+import cn.hutool.http.ContentType;
+import cn.hutool.http.Header;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.http.Method;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -17,7 +16,8 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
-import com.qcz.qmplatform.common.utils.HttpServletUtils;
+import com.qcz.qmplatform.common.utils.ServletUtils;
+import com.qcz.qmplatform.common.utils.JSONUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.business.operation.domain.vo.LoginStrategyVO;
@@ -29,6 +29,8 @@ import com.qcz.qmplatform.module.business.system.domain.UserThirdparty;
 import com.qcz.qmplatform.module.business.system.domain.assist.PermissionType;
 import com.qcz.qmplatform.module.business.system.domain.assist.Thirdparty;
 import com.qcz.qmplatform.module.business.system.domain.dto.LoginDTO;
+import com.qcz.qmplatform.module.business.system.domain.pojo.DingTalkUserAccessToken;
+import com.qcz.qmplatform.module.business.system.domain.pojo.DingTalkUserInfo;
 import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
 import com.qcz.qmplatform.module.business.system.realm.CustomToken;
 import com.qcz.qmplatform.module.business.system.service.MenuService;
@@ -36,6 +38,10 @@ import com.qcz.qmplatform.module.business.system.service.MessageService;
 import com.qcz.qmplatform.module.business.system.service.ThirdpartyAppService;
 import com.qcz.qmplatform.module.business.system.service.UserService;
 import com.qcz.qmplatform.module.business.system.service.UserThirdpartyService;
+import jakarta.annotation.Resource;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -54,10 +60,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -162,7 +164,7 @@ public class LoginController {
         String loginname = loginDTO.getLoginname();
         CustomToken token = new CustomToken(loginname, loginDTO.getPassword());
 
-        String clientIp = HttpServletUtils.getIpAddress(request);
+        String clientIp = ServletUtils.getIpAddress(request);
 
         Map<String, Object> result = new HashMap<>();
         // 当前登录错误次数
@@ -294,58 +296,40 @@ public class LoginController {
     /**
      * 钉钉：根据临时授权码获取用户信息
      */
-    private GetUserResponseBody getUserInfo(String code) throws Exception {
-        com.aliyun.dingtalkcontact_1_0.Client client = new com.aliyun.dingtalkcontact_1_0.Client(getDingConfig());
-        GetUserHeaders getUserHeaders = new GetUserHeaders();
-        getUserHeaders.xAcsDingtalkAccessToken = getAccessToken(code);
-        try {
-            return client.getUserWithOptions("me", getUserHeaders, new RuntimeOptions()).getBody();
-        } catch (TeaException err) {
-            LOGGER.error("", err);
-
-        } catch (Exception _err) {
-            TeaException err = new TeaException(_err.getMessage(), _err);
-            LOGGER.error("", err);
-        }
-        return new GetUserResponseBody();
+    private DingTalkUserInfo getUserInfo(String code) {
+        String httpUrl = "https://api.dingtalk.com/v1.0/contact/users/me";
+        HttpRequest request = HttpUtil.createRequest(Method.GET, httpUrl);
+        request.header(Header.CONTENT_TYPE, ContentType.JSON.getValue());
+        request.header("x-acs-dingtalk-access-token", getAccessToken(code));
+        HttpResponse response = request.execute();
+        String body = response.body();
+        LOGGER.info("get dingtalk user :" + JSONUtils.formatJsonStr(body));
+        return JSONUtils.toBean(body, DingTalkUserInfo.class);
     }
 
     /**
      * 钉钉：获取用户token
      */
-    private String getAccessToken(String code) throws Exception {
-        com.aliyun.dingtalkoauth2_1_0.Client client = new com.aliyun.dingtalkoauth2_1_0.Client(getDingConfig());
+    private String getAccessToken(String code) {
         ThirdpartyApp thirdpartyApp = thirdpartyAppService.getByName("dingtalk-code");
         if (thirdpartyApp == null) {
             throw new BusinessException("钉钉扫码参数未设置，请联系系统管理员设置相应的参数！");
         }
-        GetUserTokenRequest getUserTokenRequest = new GetUserTokenRequest()
-                .setClientId(thirdpartyApp.getAppKey())
-                .setClientSecret(thirdpartyApp.getAppSecret())
-                .setCode(code)
-                .setGrantType("authorization_code");
-        try {
-            GetUserTokenResponse userToken = client.getUserToken(getUserTokenRequest);
-            return userToken.getBody().getAccessToken();
-        } catch (TeaException err) {
-            LOGGER.error("", err);
-        } catch (Exception _err) {
-            TeaException err = new TeaException(_err.getMessage(), _err);
-            LOGGER.error("", err);
-        }
-        return "/";
-    }
+        String httpUrl = "https://api.dingtalk.com/v1.0/oauth2/userAccessToken";
+        HttpRequest request = HttpUtil.createRequest(Method.POST, httpUrl);
+        request.header(Header.CONTENT_TYPE, ContentType.JSON.getValue());
+        Map<String, Object> bodyParams = new HashMap<>();
+        bodyParams.put("clientId", thirdpartyApp.getAppKey());
+        bodyParams.put("clientSecret", thirdpartyApp.getAppSecret());
+        bodyParams.put("code", code);
+        bodyParams.put("grantType", "authorization_code");
+        request.body(JSONUtils.toJsonStr(bodyParams));
 
-    /**
-     * 钉钉：使用 Token 初始化账号Client
-     *
-     * @return Client
-     */
-    private Config getDingConfig() {
-        Config config = new Config();
-        config.protocol = "https";
-        config.regionId = "central";
-        return config;
+        HttpResponse response = request.execute();
+        String body = response.body();
+        LOGGER.info("get dingtalk accessToken :" + JSONUtils.formatJsonStr(body));
+
+        return JSONUtils.toBean(body, DingTalkUserAccessToken.class).getAccessToken();
     }
 
 }

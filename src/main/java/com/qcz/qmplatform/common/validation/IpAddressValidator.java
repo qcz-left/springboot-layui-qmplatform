@@ -2,8 +2,8 @@ package com.qcz.qmplatform.common.validation;
 
 import com.qcz.qmplatform.common.utils.IpUtils;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * IP地址格式校验器

@@ -11,39 +11,30 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.6</version>
+        <version>3.2.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <postgresql.version>42.4.3</postgresql.version>
-        <druid.version>1.1.10</druid.version>
-        <mybatis.version>3.5.6</mybatis.version>
-        <mybatis-plus.version>3.4.0</mybatis-plus.version>
-        <servlet-api.version>2.5</servlet-api.version>
-        <hutool.version>5.8.12</hutool.version>
-        <pagehelper-starter.version>1.4.2</pagehelper-starter.version>
-        <shiro.version>1.8.0</shiro.version>
-        <apache-commons-io.version>1.3.2</apache-commons-io.version>
-        <commons-io.version>2.7</commons-io.version>
-        <qcloudsms.version>1.0.6</qcloudsms.version>
-        <aliyun-sdk.version>2.0.1</aliyun-sdk.version>
-        <jasypt.version>2.1.1</jasypt.version>
+        <java.version>17</java.version>
+        <postgresql.version>42.4.4</postgresql.version>
+        <mysql.version>8.0.31</mysql.version>
+        <mybatis-plus.version>3.5.6</mybatis-plus.version>
+        <hutool.version>5.8.20</hutool.version>
+        <pagehelper-starter.version>2.1.0</pagehelper-starter.version>
+        <shiro.version>1.13.0</shiro.version>
         <shiro-freemarker.version>1.0.2</shiro-freemarker.version>
+        <jasypt.version>2.1.1</jasypt.version>
         <oshi.version>5.1.0</oshi.version>
-        <jna.version>5.5.0</jna.version>
         <poi.version>5.2.2</poi.version>
         <jodconverter-boot.version>4.4.2</jodconverter-boot.version>
-        <dingtalk.version>1.1.99</dingtalk.version>
-        <jackson.version>2.9.10</jackson.version>
-        <json-smart.version>2.4.9</json-smart.version>
-        <bcprov-jdk15on.version>1.67</bcprov-jdk15on.version>
-        <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
+        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <junit.version>4.13.1</junit.version>
         <tinypinyin.version>2.0.3.RELEASE</tinypinyin.version>
+        <!-- 漏洞修复 -->
+        <commons-compress.version>1.26.0</commons-compress.version>
     </properties>
 
     <dependencies>
@@ -55,47 +46,11 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate-validator.version}</version>
         </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>${bcprov-jdk15on.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>${mybatis.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.minidev</groupId>
-            <artifactId>json-smart</artifactId>
-            <version>${json-smart.version}</version>
-        </dependency>
 
-        <!--钉钉-->
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>dingtalk</artifactId>
-            <version>${dingtalk.version}</version>
-        </dependency>
         <!--Spring相关-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -116,12 +71,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.zaxxer</groupId>
-                    <artifactId>HikariCP</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -169,16 +118,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${apache-commons-io.version}</version>
-        </dependency>
 
         <!--MyBatis-Plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
             <version>${mybatis-plus.version}</version>
         </dependency>
         <dependency>
@@ -203,13 +147,8 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <!--数据库连接池-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>${druid.version}</version>
+            <version>${mysql.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- hutool 工具类 -->
@@ -219,11 +158,40 @@
             <version>${hutool.version}</version>
         </dependency>
 
-        <!--shiro-->
+        <!--`shiro`-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
+            <classifier>jakarta</classifier>
             <version>${shiro.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.shiro</groupId>
+                    <artifactId>shiro-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.shiro</groupId>
+                    <artifactId>shiro-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <classifier>jakarta</classifier>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <classifier>jakarta</classifier>
+            <version>${shiro.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.shiro</groupId>
+                    <artifactId>shiro-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.mingsoft</groupId>
@@ -242,30 +210,6 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>${pagehelper-starter.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis-spring</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!--腾讯云-->
-        <dependency>
-            <groupId>com.github.qcloudsms</groupId>
-            <artifactId>qcloudsms</artifactId>
-            <version>${qcloudsms.version}</version>
-        </dependency>
-
-        <!--阿里云-->
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>dysmsapi20170525</artifactId>
-            <version>${aliyun-sdk.version}</version>
         </dependency>
 
         <!--加密-->
@@ -279,26 +223,25 @@
             <groupId>com.github.oshi</groupId>
             <artifactId>oshi-core</artifactId>
             <version>${oshi.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>net.java.dev.jna</groupId>
-                    <artifactId>jna</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>net.java.dev.jna</groupId>
-                    <artifactId>jna-platform</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
+
         <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-            <version>${jna.version}</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>provided</scope>
         </dependency>
+
+        <!-- 漏洞修复 -->
         <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna-platform</artifactId>
-            <version>${jna.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>${commons-compress.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 
@@ -320,19 +263,12 @@
         </profile>
     </profiles>
 
-    <!-- 设置 jitpack.io 插件仓库 -->
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </pluginRepository>
-    </pluginRepositories>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
                 <configuration>
                     <excludes>
                         <exclude>application-pro.yml</exclude>
@@ -351,30 +287,10 @@
                     </archive>
                 </configuration>
             </plugin>
-            <!-- 加密工具，防止反编译 -->
             <plugin>
-                <groupId>com.github.core-lib</groupId>
-                <artifactId>xjar-maven-plugin</artifactId>
-                <version>2.0.9</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                        <phase>package</phase>
-                        <configuration>
-                            <!-- 需要加密的文件 -->
-                            <includes>
-                                com/qcz/qmplatform/**,application*.yml
-                            </includes>
-                            <!-- 加密后生成的jar-->
-                            <targetJar>qmplatform.jar</targetJar>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
                 <configuration>
                     <excludeScope>provided</excludeScope>
                 </configuration>

@@ -2,8 +2,8 @@ package com.qcz.qmplatform.common.validation;
 
 import com.qcz.qmplatform.common.utils.RegexPools;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import java.util.regex.Pattern;
 
 /**

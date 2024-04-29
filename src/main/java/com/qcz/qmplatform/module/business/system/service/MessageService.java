@@ -14,7 +14,7 @@ import com.qcz.qmplatform.module.business.system.mapper.MessageMapper;
 import com.qcz.qmplatform.module.business.system.domain.vo.MessageVO;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,7 +80,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
      *
      * @param messageIds 消息id
      */
-    public boolean setHasRead(String[] messageIds) {
+    public boolean setHasRead(List<String> messageIds) {
         LambdaUpdateWrapper<Message> updateWrapper = Wrappers.lambdaUpdate(Message.class)
                 .in(Message::getMessageId, messageIds)
                 .set(Message::getReaded, 1);

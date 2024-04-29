@@ -3,7 +3,7 @@ package com.qcz.qmplatform.module.business.system.domain.dto;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Data

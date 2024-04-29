@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.system.controller;
 
+import cn.hutool.core.collection.ListUtil;
 import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -65,7 +66,7 @@ public class MessageController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_MESSAGE_SET_READ)
     @RecordLog(type = OperateType.UPDATE, description = "设置已读")
     public ResponseResult<Void> setHasRead(@RequestBody Map<String, String[]> params) {
-        boolean success = messageService.setHasRead(params.get("messageIds"));
+        boolean success = messageService.setHasRead(ListUtil.toList(params.get("messageIds")));
         if (success) {
             DBChangeCenter.getInstance().notifyMessage();
         }

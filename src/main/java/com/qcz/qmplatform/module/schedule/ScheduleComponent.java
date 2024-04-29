@@ -10,7 +10,7 @@ import com.qcz.qmplatform.module.business.system.service.OrganizationService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.Map;
 
 /**

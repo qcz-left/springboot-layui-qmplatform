@@ -2,10 +2,10 @@ package com.qcz.qmplatform.module.socket;
 
 import org.apache.tomcat.websocket.WsSession;
 
-import javax.websocket.OnClose;
-import javax.websocket.OnError;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import jakarta.websocket.OnClose;
+import jakarta.websocket.OnError;
+import jakarta.websocket.OnOpen;
+import jakarta.websocket.Session;
 import java.util.Map;
 
 public abstract class BaseWebSocketServer {

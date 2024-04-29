@@ -16,7 +16,7 @@ import com.qcz.qmplatform.module.business.system.domain.pojo.Permission;
 import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 

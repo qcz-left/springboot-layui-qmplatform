@@ -8,7 +8,7 @@ import com.qcz.qmplatform.module.business.system.domain.Ini;
 import com.qcz.qmplatform.module.business.system.service.IniService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

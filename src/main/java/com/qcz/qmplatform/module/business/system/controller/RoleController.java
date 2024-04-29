@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-import javax.validation.groups.Default;
+import jakarta.annotation.Resource;
+import jakarta.validation.groups.Default;
 import java.util.List;
 
 /**
