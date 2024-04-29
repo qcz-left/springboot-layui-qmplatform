@@ -1,7 +1,7 @@
 #!/bin/bash
 export LANG=en_US.UTF-8
 start() {
-    /opt/jdk/bin/java -Xmx256m -Xms256m -DAPPID=QmplatformApplication -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -jar /opt/web/qmplatform.jar --xjar.keyfile=/opt/web/security/qmplatform.key > /dev/null 2>&1 &
+    /opt/jdk/bin/java -Xmx256m -Xms256m -DAPPID=QmplatformApplication -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -jar /opt/web/qmplatform.jar > /dev/null 2>&1 &
     isrunning=`ps aux | grep QmplatformApplication | grep -v grep | grep -v vim | grep -v vi | grep -v service | grep -v etc | awk '{print $2}'`
     echo "qmplatform is starting: $isrunning"
 }

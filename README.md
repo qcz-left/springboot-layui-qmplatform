@@ -1,8 +1,8 @@
 # qmplatform
 
 ## 介绍
-<br/>1、该项目是一个简单的单体应用，就没有比它更简洁的画面了，基于springboot2.6.6、mybatis-plus、shiro、layui、freemarker<br/>
-2、实现了maven打包jar加密，防止反编译，加载外部第三方库、加载外部配置文件，缩减jar包体积，高效部署，<br/>
+<br/>1、该项目是一个简单的单体应用，就没有比它更简洁的画面了，基于springboot3.2.5、mybatis-plus、shiro、layui、freemarker<br/>
+2、~~实现了maven打包jar加密，防止反编译~~（xjar不支持SpringBoot3，去掉加密），加载外部第三方库、加载外部配置文件，缩减jar包体积，高效部署，<br/>
 3、集成websocket，定时检测会话，自动跳转登录页，自动检测系统通知提醒<br/>
 4、简易可动态添加的定时任务<br/>
 5、集成Jenkins持续部署配置，提交代码自动部署流程。<br/>
@@ -38,7 +38,7 @@
 
 ## 文件目录说明
 /etc/init.d/qmplatform: 服务启动脚本（service qmplatform stop/start/status），直接放到/etc/init.d下使用<br/>
-security/qmplatform.key: 启动文件秘钥（打出来的jar是加了密的，具体加密方式在pom.xml里面，这个文件用来解密的）<br/>	
+~~security/qmplatform.key: 启动文件秘钥（打出来的jar是加了密的，具体加密方式在pom.xml里面，这个文件用来解密的）~~<br/>	
 shell：需要执行Linux shell脚本的文件夹，默认存放于与执行jar的同级目录下<br/>	
 &emsp;db_bak_recover.sh   数据库恢复备份脚本<br/>	
 sql：数据库初始化脚本文件
