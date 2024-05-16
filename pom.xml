@@ -22,7 +22,7 @@
         <postgresql.version>42.4.4</postgresql.version>
         <mysql.version>8.0.31</mysql.version>
         <mybatis-plus.version>3.5.6</mybatis-plus.version>
-        <hutool.version>5.8.20</hutool.version>
+        <hutool.version>5.8.21</hutool.version>
         <pagehelper-starter.version>2.1.0</pagehelper-starter.version>
         <shiro.version>1.13.0</shiro.version>
         <shiro-freemarker.version>1.0.2</shiro-freemarker.version>
