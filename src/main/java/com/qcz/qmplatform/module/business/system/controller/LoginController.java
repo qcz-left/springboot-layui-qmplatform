@@ -206,7 +206,7 @@ public class LoginController {
                 userThirdparty.setUserId(SubjectUtils.getUserId());
                 userThirdparty.setThirdpartyId(loginDTO.getThirdparyId());
                 userThirdparty.setAccessType(thirdparty);
-                userThirdpartyService.saveOne(userThirdparty);
+                userThirdpartyService.saveIfNotExists(userThirdparty);
             }
             LOGGER.debug("login success, loginName : {}", loginname);
             return ResponseResult.ok();

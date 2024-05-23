@@ -3,8 +3,8 @@ package com.qcz.qmplatform.module.business.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qcz.qmplatform.module.business.system.domain.assist.Thirdparty;
 import com.qcz.qmplatform.module.business.system.domain.UserThirdparty;
+import com.qcz.qmplatform.module.business.system.domain.assist.Thirdparty;
 import com.qcz.qmplatform.module.business.system.mapper.UserThirdpartyMapper;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +19,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserThirdpartyService extends ServiceImpl<UserThirdpartyMapper, UserThirdparty> {
 
-    public boolean saveOne(UserThirdparty userThirdparty) {
-        return save(userThirdparty);
-    }
+    /**
+     * 如果不存在就插入一条
+     */
+    public void saveIfNotExists(UserThirdparty userThirdparty) {
+        boolean exists = exists(
+                Wrappers.lambdaQuery(UserThirdparty.class)
+                        .eq(UserThirdparty::getUserId, userThirdparty.getUserId())
+                        .eq(UserThirdparty::getAccessType, userThirdparty.getAccessType())
+        );
+        if (!exists) {
+            save(userThirdparty);
+        }
 
-    public boolean updateOne(UserThirdparty userThirdparty) {
-        return updateById(userThirdparty);
     }
 
     /**
