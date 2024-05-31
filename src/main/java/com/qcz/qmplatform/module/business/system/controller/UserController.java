@@ -216,13 +216,15 @@ public class UserController extends BaseController {
     public ResponseResult<?> changeUserPwd(@Validated({Update.class}) @RequestBody PasswordDTO passwordDTO) {
         UserVO user = userService.queryUserByName(passwordDTO.getLoginname());
 
-        String cacheCode = (String) CacheUtils.get(user.getPhone());
+        String phone = user.getPhone();
+        String cacheCode = (String) CacheUtils.get(phone);
         if (StringUtils.isBlank(cacheCode)) {
             return ResponseResult.error("验证码不存在或已过期，请重新获取！");
         }
         if (!StringUtils.equals(cacheCode, passwordDTO.getValidateCode())) {
             return ResponseResult.error("验证码不正确！");
         }
+        CacheUtils.remove(phone);
 
         // 两次密码比较
         if (!StringUtils.equals(passwordDTO.getNewPassword(), passwordDTO.getConfirmNewPassword())) {
