@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Accessors(chain = true)
@@ -16,8 +16,8 @@ public class BillQO implements Serializable {
 
     private String typeId;
 
-    private LocalDateTime consumeTimeStart;
+    private LocalDate consumeTimeStart;
 
-    private LocalDateTime consumeTimeEnd;
+    private LocalDate consumeTimeEnd;
 
 }

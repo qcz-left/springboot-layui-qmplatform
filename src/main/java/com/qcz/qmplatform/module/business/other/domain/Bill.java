@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -57,7 +58,7 @@ public class Bill implements Serializable {
      * 消费日期
      */
     @TableField("consume_time")
-    private LocalDateTime consumeTime;
+    private LocalDate consumeTime;
 
     /**
      * 账单创建时间
