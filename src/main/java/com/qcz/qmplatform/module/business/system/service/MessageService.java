@@ -8,14 +8,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.module.business.system.domain.assist.MessageReceiver;
 import com.qcz.qmplatform.module.business.system.domain.Message;
-import com.qcz.qmplatform.module.business.system.mapper.MessageMapper;
+import com.qcz.qmplatform.module.business.system.domain.assist.MessageReceiver;
 import com.qcz.qmplatform.module.business.system.domain.vo.MessageVO;
+import com.qcz.qmplatform.module.business.system.mapper.MessageMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.Resource;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -93,8 +93,8 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
      * @param message 系统信息
      */
     public void saveOne(Message message) {
-        Timestamp currTimestamp = DateUtils.getCurrTimestamp();
-        message.setLastUpdateTime(currTimestamp);
+        LocalDateTime localDateTime = DateUtils.getCurrLocalDateTime();
+        message.setLastUpdateTime(localDateTime);
 
         LambdaQueryWrapper<Message> queryWrapper = Wrappers.lambdaQuery(Message.class)
                 .eq(Message::getType, message.getType())
@@ -107,7 +107,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
             if (StringUtils.isBlank(message.getMessageId())) {
                 message.setMessageId(IdUtils.getUUID());
             }
-            message.setCreateTime(currTimestamp);
+            message.setCreateTime(localDateTime);
             save(message);
         } else {
             message.setMessageId(tmpMessage.getMessageId());

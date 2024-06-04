@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -15,10 +15,10 @@ public class OperateLogTimeQO extends OperateLog {
     /**
      * 操作时间-开始
      */
-    private Timestamp operateTimeStart;
+    private LocalDateTime operateTimeStart;
     /**
      * 操作时间-截止
      */
-    private Timestamp operateTimeEnd;
+    private LocalDateTime operateTimeEnd;
 
 }

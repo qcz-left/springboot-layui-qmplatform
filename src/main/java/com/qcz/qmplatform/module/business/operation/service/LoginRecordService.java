@@ -107,7 +107,7 @@ public class LoginRecordService extends ServiceImpl<LoginRecordMapper, LoginReco
             loginRecord.setRecordId(IdUtils.getUUID());
             loginRecord.setErrorTimes(1);
             loginRecord.setLastLoginIp(clientIp);
-            loginRecord.setLastLoginTime(DateUtils.getCurrTimestamp());
+            loginRecord.setLastLoginTime(DateUtils.getCurrLocalDateTime());
             loginRecord.setLoginName(loginName);
 
             this.save(loginRecord);

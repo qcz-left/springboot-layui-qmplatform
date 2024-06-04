@@ -1,16 +1,14 @@
 package com.qcz.qmplatform.module.business.system.domain;
 
-import cn.hutool.core.date.DatePattern;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qcz.qmplatform.common.bean.DBProperties;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -50,15 +48,13 @@ public class Message implements Serializable {
      * 创建时间
      */
     @TableField("create_time")
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    private Timestamp createTime;
+    private LocalDateTime createTime;
 
     /**
      * 上次更新时间
      */
     @TableField("last_update_time")
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    private Timestamp lastUpdateTime;
+    private LocalDateTime lastUpdateTime;
 
     /**
      * 是否已读

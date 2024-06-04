@@ -1,15 +1,13 @@
 package com.qcz.qmplatform.module.business.operation.domain;
 
-import cn.hutool.core.date.DatePattern;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -46,8 +44,7 @@ public class LoginRecord implements Serializable {
      * 最近登录时间
      */
     @TableField("last_login_time")
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    private Timestamp lastLoginTime;
+    private LocalDateTime lastLoginTime;
 
     /**
      * 最近登录IP

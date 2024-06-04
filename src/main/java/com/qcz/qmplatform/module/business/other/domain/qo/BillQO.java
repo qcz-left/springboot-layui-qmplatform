@@ -1,11 +1,10 @@
 package com.qcz.qmplatform.module.business.other.domain.qo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
@@ -17,10 +16,8 @@ public class BillQO implements Serializable {
 
     private String typeId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date consumeTimeStart;
+    private LocalDateTime consumeTimeStart;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date consumeTimeEnd;
+    private LocalDateTime consumeTimeEnd;
 
 }
