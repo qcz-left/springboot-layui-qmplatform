@@ -15,7 +15,7 @@ import com.qcz.qmplatform.module.business.system.mapper.MessageMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,8 +92,8 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
      * @param message 系统信息
      */
     public void saveOne(Message message) {
-        Timestamp currTimestamp = DateUtils.getCurrTimestamp();
-        message.setLastUpdateTime(currTimestamp);
+        LocalDateTime localDateTime = DateUtils.getCurrLocalDateTime();
+        message.setLastUpdateTime(localDateTime);
 
         LambdaQueryWrapper<Message> queryWrapper = Wrappers.lambdaQuery(Message.class)
                 .eq(Message::getType, message.getType())
@@ -106,7 +106,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
             if (StringUtils.isBlank(message.getMessageId())) {
                 message.setMessageId(IdUtils.getUUID());
             }
-            message.setCreateTime(currTimestamp);
+            message.setCreateTime(localDateTime);
             save(message);
         } else {
             message.setMessageId(tmpMessage.getMessageId());

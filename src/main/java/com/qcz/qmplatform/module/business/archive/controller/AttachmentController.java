@@ -25,7 +25,6 @@ import com.qcz.qmplatform.common.utils.YmlPropertiesUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.archive.domain.Attachment;
 import com.qcz.qmplatform.module.business.archive.service.AttachmentService;
-import com.qcz.qmplatform.module.business.system.domain.User;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -90,7 +89,7 @@ public class AttachmentController extends BaseController {
             attachment.setAttachmentId(IdUtils.getUUID());
             attachment.setAttachmentName(file.getOriginalFilename());
             attachment.setAttachmentUrl(upload.getData().get("filePath"));
-            attachment.setUploadTime(DateUtils.getCurrTimestamp());
+            attachment.setUploadTime(DateUtils.getCurrLocalDateTime());
             LoginUser currentUser = SubjectUtils.getUser();
             attachment.setUploadUserId(currentUser.getId());
             attachment.setUploadUserName(currentUser.getUsername());

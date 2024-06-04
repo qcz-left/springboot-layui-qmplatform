@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.CronUtils;
 import com.qcz.qmplatform.common.utils.DateUtils;
@@ -14,7 +13,6 @@ import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.ShellTools;
 import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.common.utils.SystemUtils;
 import com.qcz.qmplatform.common.utils.YmlPropertiesUtils;
 import com.qcz.qmplatform.module.business.operation.domain.DataBak;
 import com.qcz.qmplatform.module.business.operation.domain.vo.DataBakStrategyVO;
@@ -153,7 +151,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         if (StringUtils.isNotBlank(saveDays)) {
             long beforeDaySeconds = DateUtils.currentSeconds() - Long.parseLong(saveDays) * 24 * 60 * 60;
             LambdaQueryWrapper<DataBak> dataBakQueryWrapper = Wrappers.lambdaQuery(DataBak.class)
-                    .le(DataBak::getCreateTime, DateUtils.timestamp(beforeDaySeconds * 1000L));
+                    .le(DataBak::getCreateTime, DateUtils.localDateTime(beforeDaySeconds * 1000L));
             List<DataBak> needDelDataBakes = list(dataBakQueryWrapper);
             // 删除数据库记录和对应备份文件
             for (DataBak needDelDataBake : needDelDataBakes) {
@@ -172,7 +170,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         dataBak.setBakId(IdUtils.getUUID());
         dataBak.setBakName(bakName);
         dataBak.setBakPath(bakFilePath);
-        dataBak.setCreateTime(DateUtils.timestamp(date));
+        dataBak.setCreateTime(DateUtils.localDateTime(date));
         dataBak.setFileSize(FileUtils.size(FileUtils.file(bakFilePath)));
         dataBak.setRemark(bakRemark);
         if (save(dataBak)) {

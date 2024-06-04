@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -58,8 +58,7 @@ public class Attachment implements Serializable {
      * 上传时间
      */
     @TableField("upload_time")
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    private Timestamp uploadTime;
+    private LocalDateTime uploadTime;
 
     /**
      * 附件说明

@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -46,8 +46,7 @@ public class DataBak implements Serializable {
      * 创建时间
      */
     @TableField("create_time")
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    private Timestamp createTime;
+    private LocalDateTime createTime;
 
     /**
      * 备注

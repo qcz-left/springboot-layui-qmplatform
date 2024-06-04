@@ -111,7 +111,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public boolean insertUser(SaveUserDTO user) {
         String userId = IdUtils.getUUID();
         user.setId(userId);
-        user.setCreateTime(DateUtils.getCurrTimestamp());
+        user.setCreateTime(DateUtils.getCurrLocalDateTime());
         user.setCreateUserId(SubjectUtils.getUserId());
         if (StringUtils.isNotBlank(user.getPassword())) {
             user.setPassword(SecureUtils.accountEncrypt(user.getPassword()));

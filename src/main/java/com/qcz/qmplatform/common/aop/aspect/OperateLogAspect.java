@@ -29,7 +29,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -72,10 +72,10 @@ public class OperateLogAspect {
         String ipAddress = ServletUtils.getIpAddress(request);
         Object proceed;
         User currentUser = SubjectUtils.getUser(false);
-        Timestamp currTimestamp = DateUtils.getCurrTimestamp();
+        LocalDateTime localDateTime = DateUtils.getCurrLocalDateTime();
         try {
             proceed = joinPoint.proceed();
-            executorService.submit(() -> insertOperateLog(1, currentUser, null, requestUrl, ipAddress, joinPoint, currTimestamp));
+            executorService.submit(() -> insertOperateLog(1, currentUser, null, requestUrl, ipAddress, joinPoint, localDateTime));
         } catch (Exception e) {// 原逻辑程序有异常，这里抛回
             String msg;
             if (e instanceof MailException && StringUtils.containsAny(e.getMessage(), "AuthenticationFailedException", "535")) {
@@ -100,10 +100,10 @@ public class OperateLogAspect {
         String requestUrl = request.getServletPath();
         String ipAddress = ServletUtils.getIpAddress(request);
         LoginUser currentUser = SubjectUtils.getUser(false);
-        Timestamp currTimestamp = DateUtils.getCurrTimestamp();
+        LocalDateTime localDateTime = DateUtils.getCurrLocalDateTime();
         executorService.submit(() -> {
             String stackTrace = stackTraceToString(e.getClass().getName(), e.getMessage(), e.getStackTrace());
-            insertOperateLog(0, currentUser, stackTrace, requestUrl, ipAddress, joinPoint, currTimestamp);
+            insertOperateLog(0, currentUser, stackTrace, requestUrl, ipAddress, joinPoint, localDateTime);
         });
 
     }
@@ -119,7 +119,7 @@ public class OperateLogAspect {
      * @param joinPoint     切点
      * @param operateTime   操作时间
      */
-    private void insertOperateLog(int operateStatus, User currentUser, String expMsg, String requestUrl, String ipAddress, JoinPoint joinPoint, Timestamp operateTime) {
+    private void insertOperateLog(int operateStatus, User currentUser, String expMsg, String requestUrl, String ipAddress, JoinPoint joinPoint, LocalDateTime operateTime) {
         RecordLog recordLog = ((MethodSignature) joinPoint.getSignature()).getMethod().getAnnotation(RecordLog.class);
         String moduleName = null;
         String description = null;
