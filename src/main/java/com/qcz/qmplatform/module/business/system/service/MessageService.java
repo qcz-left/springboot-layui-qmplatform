@@ -1,23 +1,24 @@
 package com.qcz.qmplatform.module.business.system.service;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.system.domain.Message;
+import com.qcz.qmplatform.module.business.system.domain.User;
 import com.qcz.qmplatform.module.business.system.domain.assist.MessageReceiver;
 import com.qcz.qmplatform.module.business.system.domain.vo.MessageVO;
+import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import com.qcz.qmplatform.module.business.system.mapper.MessageMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
      * @param receiver 接收人id
      */
     public Map<String, Long> selectNoReadCount(String receiver) {
-        return selectNoReadCount(CollectionUtil.newArrayList(receiver)).get(receiver);
+        return selectNoReadCount(CollectionUtils.newArrayList(receiver)).get(receiver);
     }
 
     /**
@@ -122,95 +123,17 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
      * @param messageReceiver 发送对象
      */
     public void createMessage(Message message, MessageReceiver messageReceiver) {
-        List<String> receiverIds = new ArrayList<>();
+        List<UserVO> receivers = new ArrayList<>();
         if (messageReceiver == MessageReceiver.ALL) {
-            receiverIds = CollectionUtil.getFieldValues(userService.getUserList(null, null, false), "id", String.class);
+            receivers = userService.getUserList(null, null, false);
         } else if (messageReceiver == MessageReceiver.ADMIN) {
-            receiverIds = CollectionUtil.getFieldValues(userService.queryAllAdmin(), "id", String.class);
+            receivers = userService.queryAllAdmin();
         }
+        List<String> receiverIds = CollectionUtils.map(receivers, User::getId);
         for (String receiverId : receiverIds) {
             message.setMessageId(IdUtils.getUUID());
             message.setReceiver(receiverId);
             saveOne(message);
-        }
-    }
-
-    public static void main(String[] args) {
-        /*Map<String, Object> map = new HashMap<>();
-        map.put("month", "2020-02");
-        List<Map<String, Object>> list = new ArrayList<>();
-        Map<String, Object> item1 = new HashMap<>();
-        item1.put("branch", "第一分行");
-        item1.put("terminalNum", "20");
-        Map<String, Object> testMap = new HashMap<>();
-        testMap.put("a", "1");
-        item1.put("testMap", testMap);
-        Map<String, Object> item2 = new HashMap<>();
-        item2.put("branch", "第一分行");
-        item2.put("terminalNum", "35");
-        Map<String, Object> testMap2 = new HashMap<>();
-        testMap2.put("a", "2");
-        item2.put("testMap", testMap2);
-        Map<String, Object> item3 = new HashMap<>();
-        item3.put("branch", "第三分行");
-        item3.put("terminalNum", "40");
-        Map<String, Object> testMap3 = new HashMap<>();
-        testMap3.put("a", "3");
-        item3.put("testMap", testMap3);
-        list.add(item1);
-        list.add(item2);
-        list.add(item3);
-        map.put("data", list);
-//        System.out.println(result);
-
-        Map map1 = JSONUtil.toBean("{\n" +
-                "\t\"month\": \"2020-02\",\n" +
-                "\t\"data\": [\n" +
-                "\t\t{\n" +
-                "\t\t\t\"branch\": \"第一分行\",\n" +
-                "\t\t\t\"terminalNum\": \"20\"\n" +
-                "\t\t},\n" +
-                "\t\t{\n" +
-                "\t\t\t\"branch\": \"第二分行\",\n" +
-                "\t\t\t\"terminalNum\": \"35\"\n" +
-                "\t\t}\n" +
-                "\t]\n" +
-                "}", Map.class);
-        List<Map<String, Object>> result = new ArrayList<>();
-        reBuildMapToList(BeanUtil.beanToMap(map1), MapUtil.newHashMap(), result);
-
-        System.out.println(CollectionUtil.groupByField(list, "branch"));*/
-
-        System.out.println(new Date(System.currentTimeMillis() - 365 * 24 * 3600 * 1000L));
-    }
-
-    private static void reBuildMapToList(Map<String, Object> row, Map<String, Object> common, List<Map<String, Object>> result) {
-        Map<String, Object> newRow = new HashMap<>(common);
-        for (String rowKey : row.keySet()) {
-            Object rowValue = row.get(rowKey);
-            if (rowValue instanceof String || rowValue instanceof Integer) {
-                newRow.put(rowKey, rowValue);
-            }
-        }
-
-        Map<String, Object> newCommon = new HashMap<>(newRow);
-        // 是否还有 List 或 Map 需要转换
-        boolean isEnd = true;
-        for (String rowKey : row.keySet()) {
-            Object rowValue = row.get(rowKey);
-            if (rowValue instanceof List) {
-                isEnd = false;
-                for (Object o : ((List) rowValue)) {
-                    reBuildMapToList((Map) o, newCommon, result);
-                }
-            } else if (rowValue instanceof Map) {
-                isEnd = false;
-                reBuildMapToList((Map) rowValue, newCommon, result);
-            }
-        }
-
-        if (isEnd) {
-            result.add(newRow);
         }
     }
 

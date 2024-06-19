@@ -1,7 +1,6 @@
 package com.qcz.qmplatform.module.business.archive.controller;
 
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -13,6 +12,7 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
@@ -107,7 +107,7 @@ public class AttachmentController extends BaseController {
         List<String> idList = Arrays.asList(attachmentIds.split(","));
         LambdaQueryWrapper<Attachment> queryWrapper = Wrappers.lambdaQuery(Attachment.class)
                 .in(Attachment::getAttachmentId, idList);
-        List<String> attachmentUrls = CollectionUtil.getFieldValues(attachmentService.list(queryWrapper), "attachmentUrl", String.class);
+        List<String> attachmentUrls = CollectionUtils.map(attachmentService.list(queryWrapper), Attachment::getAttachmentUrl);
         for (String attachmentUrl : attachmentUrls) {
             FileUtil.del(FileUtils.getRealFilePath(attachmentUrl));
         }

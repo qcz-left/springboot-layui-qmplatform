@@ -1,14 +1,15 @@
 package com.qcz.qmplatform.module.business.system.realm;
 
-import cn.hutool.core.collection.CollectionUtil;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.SpringContextUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
+import com.qcz.qmplatform.module.business.system.domain.Role;
 import com.qcz.qmplatform.module.business.system.domain.assist.LoginType;
+import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import com.qcz.qmplatform.module.business.system.mapper.UserMapper;
 import com.qcz.qmplatform.module.business.system.mapper.UserRoleMapper;
 import com.qcz.qmplatform.module.business.system.service.UserService;
-import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -39,7 +40,7 @@ public class UserRealm extends AuthorizingRealm {
 
         String userId = SubjectUtils.getUserId();
         Set<String> authorities = new HashSet<>(userMapper.queryAuthoritiesByUserId(userId));
-        Set<String> roles = new HashSet<>(CollectionUtil.getFieldValues(userRoleMapper.getRoleByUserId(userId), "roleSign", String.class));
+        Set<String> roles = new HashSet<>(CollectionUtils.map(userRoleMapper.getRoleByUserId(userId), Role::getRoleSign));
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(authorities);
