@@ -1,7 +1,5 @@
 package com.qcz.qmplatform.module.schedule;
 
-import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.stp.StpUtil;
 import com.qcz.qmplatform.common.utils.CacheUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;

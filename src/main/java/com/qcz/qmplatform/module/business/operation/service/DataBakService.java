@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.CronUtils;
@@ -13,6 +14,7 @@ import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.ShellTools;
 import com.qcz.qmplatform.common.utils.StringUtils;
+import com.qcz.qmplatform.common.utils.SystemUtils;
 import com.qcz.qmplatform.common.utils.YmlPropertiesUtils;
 import com.qcz.qmplatform.module.business.operation.domain.DataBak;
 import com.qcz.qmplatform.module.business.operation.domain.vo.DataBakStrategyVO;
@@ -58,7 +60,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
 
     private static final String SCHEDULE_ID = "dataBak";
 
-    private String database = YmlPropertiesUtils.getDatabase();
+    private final String database = YmlPropertiesUtils.getDatabase();
 
     @Resource
     private IniService iniService;
@@ -123,9 +125,9 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public ResponseResult<Void> exeBackup(String bakRemark, String operator) {
-        /*if (!SystemUtils.OS.isLinux()) {
+        if (!SystemUtils.OS.isLinux()) {
             throw new BusinessException("非Linux环境不允许备份数据！");
-        }*/
+        }
         String dataBakPath = ConfigLoader.getDataBakPath();
         File file = new File(dataBakPath);
         if (!file.exists()) {
