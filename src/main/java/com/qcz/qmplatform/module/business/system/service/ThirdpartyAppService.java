@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.utils.CacheUtils;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -66,7 +67,7 @@ public class ThirdpartyAppService extends ServiceImpl<ThirdpartyAppMapper, Third
         LambdaQueryWrapper<ThirdpartyApp> queryWrapper = Wrappers.lambdaQuery(ThirdpartyApp.class)
                 .ne(StringUtils.isNotBlank(id), ThirdpartyApp::getId, id)
                 .eq(ThirdpartyApp::getName, name);
-        return CollectionUtil.isEmpty(list(queryWrapper));
+        return CollectionUtils.isEmpty(list(queryWrapper));
     }
 
 }

@@ -1,11 +1,11 @@
 package com.qcz.qmplatform.module.business.system.service;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.constant.Constant;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.CronUtils;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
@@ -60,11 +60,11 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
         Map<String, Object> queryParams = new HashMap<>();
         // 查询当前部门下所有的部门id，包括当前部门
         if (StringUtils.isNotBlank(organizationId)) {
-            queryParams.put("notInIds", this.queryOrgIdRecursive(CollectionUtil.newArrayList(organizationId)));
+            queryParams.put("notInIds", this.queryOrgIdRecursive(CollectionUtils.newArrayList(organizationId)));
         }
         // 查询当前部门下所有的部门id，不包括当前部门
         if (StringUtils.isNotBlank(parentId)) {
-            queryParams.put("inIds", this.queryOrgIdRecursive(CollectionUtil.newArrayList(parentId)));
+            queryParams.put("inIds", this.queryOrgIdRecursive(CollectionUtils.newArrayList(parentId)));
         }
         return baseMapper.selectOrgTree(queryParams);
     }
@@ -112,17 +112,17 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
     public List<String> queryOrgIdRecursive(List<String> orgIds) {
         List<String> allIds = new ArrayList<>();
 
-        if (CollectionUtil.isNotEmpty(orgIds)) {
-            CollectionUtil.addAll(allIds, orgIds);
+        if (CollectionUtils.isNotEmpty(orgIds)) {
+            CollectionUtils.addAll(allIds, orgIds);
 
             List<String> childIds = new ArrayList<>();
-            CollectionUtil.addAll(childIds, baseMapper.selectObjs(
+            CollectionUtils.addAll(childIds, baseMapper.selectObjs(
                     Wrappers.lambdaQuery(Organization.class)
                             .in(Organization::getParentId, orgIds)
                             .select(Organization::getOrganizationId)
             ));
 
-            CollectionUtil.addAll(allIds, queryOrgIdRecursive(childIds));
+            CollectionUtils.addAll(allIds, queryOrgIdRecursive(childIds));
         }
 
         return allIds;

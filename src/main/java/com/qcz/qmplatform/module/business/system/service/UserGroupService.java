@@ -1,9 +1,9 @@
 package com.qcz.qmplatform.module.business.system.service;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
@@ -76,17 +76,17 @@ public class UserGroupService extends ServiceImpl<UserGroupMapper, UserGroup> {
     public List<String> queryUserGroupIdRecursive(Collection<? extends Serializable> userGroupId) {
         List<String> allIds = new ArrayList<>();
 
-        if (CollectionUtil.isNotEmpty(userGroupId)) {
-            CollectionUtil.addAll(allIds, userGroupId);
+        if (CollectionUtils.isNotEmpty(userGroupId)) {
+            CollectionUtils.addAll(allIds, userGroupId);
 
             List<String> childIds = new ArrayList<>();
-            CollectionUtil.addAll(childIds, baseMapper.selectObjs(
+            CollectionUtils.addAll(childIds, baseMapper.selectObjs(
                     Wrappers.lambdaQuery(UserGroup.class)
                             .in(UserGroup::getParentId, userGroupId)
                             .select(UserGroup::getId)
             ));
 
-            CollectionUtil.addAll(allIds, queryUserGroupIdRecursive(childIds));
+            CollectionUtils.addAll(allIds, queryUserGroupIdRecursive(childIds));
         }
 
         return allIds;

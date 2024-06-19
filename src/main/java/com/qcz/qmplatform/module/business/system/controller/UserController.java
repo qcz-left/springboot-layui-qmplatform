@@ -1,7 +1,6 @@
 package com.qcz.qmplatform.module.business.system.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
@@ -17,6 +16,7 @@ import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.CacheUtils;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.SmsUtils;
@@ -125,7 +125,7 @@ public class UserController extends BaseController {
     public ResponseResult<PageResult<UserVO>> getUserList(PageRequest pageRequest, UserQO user, boolean export) {
         String organizationIdsStr = user.getOrganizationIdsStr();
         if (StringUtils.isNotBlank(organizationIdsStr)) {
-            user.setOrganizationIds(CollectionUtil.newArrayList(organizationIdsStr.split(",")));
+            user.setOrganizationIds(CollectionUtils.newArrayList(organizationIdsStr.split(",")));
         }
         return ResponseResult.ok(PageResultHelper.parseResult(userService.getUserList(user, pageRequest, export)));
     }
@@ -319,7 +319,7 @@ public class UserController extends BaseController {
         config.setSecretId(smsConfigVO.getSecretId());
         config.setSecretKey(SecureUtils.aesDecrypt(smsConfigVO.getSecretKey()));
         config.setSign(smsConfigVO.getSign());
-        config.setPhones(CollectionUtil.newArrayList(phone));
+        config.setPhones(CollectionUtils.newArrayList(phone));
         // 短信模块参数
         TemplateParam templateParam = smsConfigVO.getTemplateParams().get(TemplateType.VALIDATE_CODE.type());
         config.setTemplateID(templateParam.getTemplateID());

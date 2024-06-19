@@ -1,8 +1,8 @@
 package com.qcz.qmplatform.module.business.system.service;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.module.business.system.domain.RolePermission;
 import com.qcz.qmplatform.module.business.system.mapper.RolePermissionMapper;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class RolePermissionService extends ServiceImpl<RolePermissionMapper, Rol
      * @param roleId 角色ID
      */
     public void deleteByRoleId(String roleId) {
-        deleteByRoleIds(CollectionUtil.newArrayList(roleId));
+        deleteByRoleIds(CollectionUtils.newArrayList(roleId));
     }
 
     /**

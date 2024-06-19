@@ -1,11 +1,11 @@
 package com.qcz.qmplatform.module.socket;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.RuntimeUtil;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.CacheUtils;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import jakarta.websocket.OnClose;
@@ -37,12 +37,12 @@ public class LogWebSocketServer {
     @OnOpen
     public void onOpen(Session session) {
         List<String> logPathList = session.getRequestParameterMap().get("logPath");
-        if (CollectionUtil.isEmpty(logPathList)) {
+        if (CollectionUtils.isEmpty(logPathList)) {
             onClose(session);
             throw new CommonException("日志路径参数缺失！");
         }
         List<String> cmdIdList = session.getRequestParameterMap().get("cmdId");
-        if (CollectionUtil.isEmpty(cmdIdList)) {
+        if (CollectionUtils.isEmpty(cmdIdList)) {
             onClose(session);
             throw new CommonException("命令ID参数缺失！");
         }

@@ -1,6 +1,6 @@
 package com.qcz.qmplatform.module.schedule;
 
-import cn.hutool.core.collection.CollectionUtil;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public class DeleteTmpFileSchedule {
         LOGGER.debug("Delete temporary file dir: {}, maximum file life: {} minutes, file details: \n{}",
                 deleteTmpPath,
                 tmpFileMaxLifeTime / 60000,
-                CollectionUtil.join(delFilePaths, ","));
+                CollectionUtils.join(delFilePaths, ","));
     }
 
 }

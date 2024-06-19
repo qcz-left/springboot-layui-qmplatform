@@ -1,8 +1,8 @@
 package com.qcz.qmplatform.common.bean;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class PageResultHelper extends PageHelper {
             for (int i = 0; i < orderNames.length; i++) {
                 orderBy.add(StringUtils.toUnderlineCase(orderNames[i]) + " " + (StringUtils.isBlank(orders[i]) ? "asc" : orders[i]));
             }
-            return PageHelper.startPage(pageReq.getPage(), pageReq.getLimit(), CollectionUtil.join(orderBy, ","));
+            return PageHelper.startPage(pageReq.getPage(), pageReq.getLimit(), CollectionUtils.join(orderBy, ","));
         }
     }
 

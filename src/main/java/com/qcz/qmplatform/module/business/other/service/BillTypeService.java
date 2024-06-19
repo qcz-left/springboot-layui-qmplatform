@@ -1,14 +1,14 @@
 package com.qcz.qmplatform.module.business.other.service;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
 import com.qcz.qmplatform.module.business.other.domain.BillType;
-import com.qcz.qmplatform.module.business.other.mapper.BillTypeMapper;
 import com.qcz.qmplatform.module.business.other.domain.pojo.BillTypeTree;
 import com.qcz.qmplatform.module.business.other.domain.qo.BillTypeQO;
+import com.qcz.qmplatform.module.business.other.mapper.BillTypeMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class BillTypeService extends ServiceImpl<BillTypeMapper, BillType> {
         // 过滤下当前账单类型
         String id = billTypeQO.getId();
         if (StringUtils.isNotBlank(id)) {
-            List<String> billTypeIdList = queryBillTypeIdRecursive(CollectionUtil.newArrayList(id));
+            List<String> billTypeIdList = queryBillTypeIdRecursive(CollectionUtils.newArrayList(id));
             billTypeQO.setNotExistsIds(billTypeIdList);
         }
         return baseMapper.getBillTypeList(billTypeQO);
@@ -85,17 +85,17 @@ public class BillTypeService extends ServiceImpl<BillTypeMapper, BillType> {
     public List<String> queryBillTypeIdRecursive(List<String> billTypeIds) {
         List<String> allIds = new ArrayList<>();
 
-        if (CollectionUtil.isNotEmpty(billTypeIds)) {
-            CollectionUtil.addAll(allIds, billTypeIds);
+        if (CollectionUtils.isNotEmpty(billTypeIds)) {
+            CollectionUtils.addAll(allIds, billTypeIds);
 
             List<String> childIds = new ArrayList<>();
-            CollectionUtil.addAll(childIds, baseMapper.selectObjs(
+            CollectionUtils.addAll(childIds, baseMapper.selectObjs(
                     Wrappers.lambdaQuery(BillType.class)
                             .in(BillType::getParentId, billTypeIds)
                             .select(BillType::getId)
             ));
 
-            CollectionUtil.addAll(allIds, queryBillTypeIdRecursive(childIds));
+            CollectionUtils.addAll(allIds, queryBillTypeIdRecursive(childIds));
         }
 
         return allIds;

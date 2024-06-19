@@ -1,8 +1,8 @@
 package com.qcz.qmplatform.module.synchro.organization;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.extra.pinyin.PinyinUtil;
 import com.qcz.qmplatform.common.constant.Constant;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.SpringContextUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.system.domain.Organization;
@@ -129,11 +129,11 @@ public interface OrganizationSynchro {
             }
         }
 
-        if (CollectionUtil.isNotEmpty(updateDeptList)) {
+        if (CollectionUtils.isNotEmpty(updateDeptList)) {
             organizationService.updateBatchById(updateDeptList);
             LOGGER.info("sync update dept finish, size: {}", updateDeptList.size());
         }
-        if (CollectionUtil.isNotEmpty(insertDeptList)) {
+        if (CollectionUtils.isNotEmpty(insertDeptList)) {
             organizationService.saveBatch(insertDeptList);
             LOGGER.info("sync insert dept finish, size: {}", insertDeptList.size());
         }
@@ -202,19 +202,19 @@ public interface OrganizationSynchro {
             }
         }
 
-        if (CollectionUtil.isNotEmpty(updateUserList)) {
+        if (CollectionUtils.isNotEmpty(updateUserList)) {
             userService.updateBatchById(updateUserList);
             LOGGER.info("sync update user finish, size: {}", updateUserList.size());
         }
-        if (CollectionUtil.isNotEmpty(insertUserList)) {
+        if (CollectionUtils.isNotEmpty(insertUserList)) {
             userService.saveBatch(insertUserList);
             LOGGER.info("sync insert user finish, size: {}", insertUserList.size());
         }
-        if (CollectionUtil.isNotEmpty(deleteUserIdByUserOrg)) {
+        if (CollectionUtils.isNotEmpty(deleteUserIdByUserOrg)) {
             userOrganizationService.deleteByUserIds(deleteUserIdByUserOrg);
             LOGGER.info("sync delete user-dept finish, size: {}", deleteUserIdByUserOrg.size());
         }
-        if (CollectionUtil.isNotEmpty(userOrganizationList)) {
+        if (CollectionUtils.isNotEmpty(userOrganizationList)) {
             userOrganizationService.saveBatch(userOrganizationList);
             LOGGER.info("sync insert user-dept finish, size: {}", userOrganizationList.size());
         }

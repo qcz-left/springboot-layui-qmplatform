@@ -1,11 +1,11 @@
 package com.qcz.qmplatform.module.business.operation.service;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.CronUtils;
 import com.qcz.qmplatform.common.utils.DateUtils;
@@ -112,7 +112,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
         if ((period & 32) == 32) {
             periodList.add("7");
         }
-        pattern += CollectionUtil.join(periodList, ",");
+        pattern += CollectionUtils.join(periodList, ",");
         CronUtils.schedule(SCHEDULE_ID, pattern, () -> LOGGER.debug("schedule data bak exe result[{}]: {}", DateUtils.now(), exeBackup("系统自动备份", "system")));
     }
 

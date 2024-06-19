@@ -1,10 +1,10 @@
 package com.qcz.qmplatform.module.synchro.organization.dingtalk;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.extra.pinyin.PinyinUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.qcz.qmplatform.common.exception.BusinessException;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.SpringContextUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -102,7 +102,7 @@ public class DingTalkOrganizationSynchro implements OrganizationSynchro {
         String errmsg = userResponse.getErrmsg();
         if (errcode != 0) {
             log.warn("user interface call failure with deptId: {}! error code: {}, error msg: {}", deptId, errcode, errmsg);
-            return CollectionUtil.newArrayList();
+            return CollectionUtils.newArrayList();
         }
 
         List<User> allUserList = new ArrayList<>();
@@ -140,7 +140,7 @@ public class DingTalkOrganizationSynchro implements OrganizationSynchro {
         String errmsg = deptResponse.getErrmsg();
         if (errcode != 0) {
             log.warn("dept interface call failure with dept parentId: {}! error code: {}, error msg: {}", parentId, errcode, errmsg);
-            return CollectionUtil.newArrayList();
+            return CollectionUtils.newArrayList();
         }
 
         List<Organization> allDeptList = new ArrayList<>();

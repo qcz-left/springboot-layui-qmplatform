@@ -1,8 +1,9 @@
 package com.qcz.qmplatform.module.business.system.realm;
 
 import cn.dev33.satoken.stp.StpInterface;
-import cn.hutool.core.collection.CollectionUtil;
 import com.qcz.qmplatform.common.utils.CacheUtils;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
+import com.qcz.qmplatform.module.business.system.domain.Role;
 import com.qcz.qmplatform.module.business.system.mapper.UserMapper;
 import com.qcz.qmplatform.module.business.system.mapper.UserRoleMapper;
 import jakarta.annotation.Resource;
@@ -39,7 +40,7 @@ public class StpInterfaceImpl implements StpInterface {
         String userId = (String) loginId;
         List<String> roleList = CacheUtils.ROLE_CACHE.get(userId);
         if (Objects.isNull(roleList)) {
-            roleList = CollectionUtil.getFieldValues(userRoleMapper.getRoleByUserId(userId), "roleSign", String.class);
+            roleList = CollectionUtils.map(userRoleMapper.getRoleByUserId(userId), Role::getRoleSign);
             CacheUtils.ROLE_CACHE.put(userId, roleList);
         }
 

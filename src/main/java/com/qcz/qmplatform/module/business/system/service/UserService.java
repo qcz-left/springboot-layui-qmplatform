@@ -1,7 +1,6 @@
 package com.qcz.qmplatform.module.business.system.service;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -17,6 +16,7 @@ import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.exception.BusinessException;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.SecureUtils;
@@ -124,8 +124,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public boolean updateUser(SaveUserDTO user) {
         String userId = user.getId();
         // 先删除关联的组织机构和角色，在增加
-        userOrganizationService.deleteByUserIds(CollectionUtil.newArrayList(userId));
-        userRoleService.deleteByUserIds(CollectionUtil.newArrayList(userId));
+        userOrganizationService.deleteByUserIds(CollectionUtils.newArrayList(userId));
+        userRoleService.deleteByUserIds(CollectionUtils.newArrayList(userId));
         insertUserOrg(userId, user.getOrganizationIds());
         insertUserRole(userId, user.getRoleIds());
         // 处理密码
@@ -160,7 +160,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         UserVO userVo = new UserVO();
         BeanUtil.copyProperties(user, userVo);
         userVo.setOrganizationIds(userOrganizationService.getBaseMapper().getOrganizationIdsByUserId(userId));
-        userVo.setRoleIds(CollectionUtil.getFieldValues(userRoleService.getBaseMapper().getRoleByUserId(userId), "roleId", String.class));
+        userVo.setRoleIds(CollectionUtils.map(userRoleService.getBaseMapper().getRoleByUserId(userId), Role::getRoleId));
         return userVo;
     }
 
@@ -202,7 +202,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         currentUserInfoDTO.setRemark(user.getRemark());
         currentUserInfoDTO.setUserSex(user.getUserSex());
         List<Role> roles = userRoleService.getBaseMapper().getRoleByUserId(user.getId());
-        currentUserInfoDTO.setRoleName(CollectionUtil.join(CollectionUtil.getFieldValues(roles, "roleName", String.class), ","));
+        currentUserInfoDTO.setRoleName(CollectionUtils.join(roles, ",", Role::getRoleName));
         return currentUserInfoDTO;
     }
 
@@ -341,8 +341,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     public void deleteUserByIds(List<String> userIds) {
-        List<String> allAdminId = CollectionUtil.getFieldValues(queryAllAdmin(), "id", String.class);
-        if (CollectionUtil.containsAny(userIds, allAdminId)) {
+        List<String> allAdminId = CollectionUtils.map(queryAllAdmin(), User::getId);
+        ;
+        if (CollectionUtils.containsAny(userIds, allAdminId)) {
             throw new BusinessException("禁止删除系统管理员！");
         }
 

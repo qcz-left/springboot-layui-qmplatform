@@ -2,11 +2,11 @@ package com.qcz.qmplatform.intercept;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.utils.ClassUtils;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -235,7 +235,7 @@ public class MybatisInterceptor implements Interceptor {
         while (paramMatcher.find()) {
             String group = paramMatcher.group();
             if (StringUtils.equals(group, "?")) {
-                if (CollectionUtil.size(parameterMappings) > 0) {
+                if (CollectionUtils.size(parameterMappings) > 0) {
                     ParameterMapping remove = parameterMappings.remove(0);
                     newParameterMappings.add(remove);
                 }

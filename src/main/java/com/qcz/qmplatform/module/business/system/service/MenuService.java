@@ -1,9 +1,9 @@
 package com.qcz.qmplatform.module.business.system.service;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
@@ -41,7 +41,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         String permissionId = permission.getPermissionId();
         if (StringUtils.isNotBlank(permissionId)
                 && permission.getPermissionType() == PermissionType.MENU.getType()) {
-            permission.setNotExistsMenuIds(queryMenuIdRecursive(CollectionUtil.newArrayList(permissionId)));
+            permission.setNotExistsMenuIds(queryMenuIdRecursive(CollectionUtils.newArrayList(permissionId)));
         }
         return TreeUtils.buildTree(getMenuList(permission));
     }
@@ -118,14 +118,14 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
                 buttonIds.add(permissionId);
             }
         }
-        if (CollectionUtil.isNotEmpty(menuIds)) {
+        if (CollectionUtils.isNotEmpty(menuIds)) {
             // 删除菜单同时删除按钮
             menuIds = queryMenuIdRecursive(menuIds);
             buttonService.deleteButtonByMenuId(menuIds);
             super.removeByIds(menuIds);
             rolePermissionService.deleteByPermissionIds(menuIds);
         }
-        if (CollectionUtil.isNotEmpty(buttonIds)) {
+        if (CollectionUtils.isNotEmpty(buttonIds)) {
             buttonService.removeByIds(buttonIds);
             rolePermissionService.deleteByPermissionIds(buttonIds);
         }
@@ -138,24 +138,24 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
     public List<String> queryMenuIdRecursive(List<String> menuIds) {
         List<String> allIds = new ArrayList<>();
 
-        if (CollectionUtil.isNotEmpty(menuIds)) {
-            CollectionUtil.addAll(allIds, menuIds);
+        if (CollectionUtils.isNotEmpty(menuIds)) {
+            CollectionUtils.addAll(allIds, menuIds);
 
             List<String> childIds = new ArrayList<>();
-            CollectionUtil.addAll(childIds, baseMapper.selectObjs(
+            CollectionUtils.addAll(childIds, baseMapper.selectObjs(
                     Wrappers.lambdaQuery(Menu.class)
                             .in(Menu::getParentId, menuIds)
                             .select(Menu::getMenuId)
             ));
 
-            CollectionUtil.addAll(allIds, queryMenuIdRecursive(childIds));
+            CollectionUtils.addAll(allIds, queryMenuIdRecursive(childIds));
         }
 
         return allIds;
     }
 
     public Permission getPermissionById(String permissionId) {
-        List<Permission> permissions = baseMapper.getPermissionByIds(CollectionUtil.newArrayList(permissionId));
+        List<Permission> permissions = baseMapper.getPermissionByIds(CollectionUtils.newArrayList(permissionId));
         if (permissions != null && permissions.size() > 0) {
             return permissions.get(0);
         }

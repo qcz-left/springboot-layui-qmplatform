@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.system.domain.Message;
+import com.qcz.qmplatform.module.business.system.domain.User;
 import com.qcz.qmplatform.module.business.system.domain.assist.MessageReceiver;
 import com.qcz.qmplatform.module.business.system.domain.vo.MessageVO;
 import com.qcz.qmplatform.module.business.system.mapper.MessageMapper;
@@ -45,7 +47,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
      * @param receiver 接收人id
      */
     public Map<String, Long> selectNoReadCount(String receiver) {
-        return selectNoReadCount(CollectionUtil.newArrayList(receiver)).get(receiver);
+        return selectNoReadCount(CollectionUtils.newArrayList(receiver)).get(receiver);
     }
 
     /**
@@ -123,9 +125,9 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
     public void createMessage(Message message, MessageReceiver messageReceiver) {
         List<String> receiverIds = new ArrayList<>();
         if (messageReceiver == MessageReceiver.ALL) {
-            receiverIds = CollectionUtil.getFieldValues(userService.getUserList(null, null, false), "id", String.class);
+            receiverIds = CollectionUtils.map(userService.getUserList(null, null, false), User::getId);
         } else if (messageReceiver == MessageReceiver.ADMIN) {
-            receiverIds = CollectionUtil.getFieldValues(userService.queryAllAdmin(), "id", String.class);
+            receiverIds = CollectionUtils.map(userService.queryAllAdmin(), User::getId);
         }
         for (String receiverId : receiverIds) {
             message.setMessageId(IdUtils.getUUID());

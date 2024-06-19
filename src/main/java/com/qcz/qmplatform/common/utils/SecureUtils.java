@@ -1,6 +1,5 @@
 package com.qcz.qmplatform.common.utils;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
@@ -11,13 +10,6 @@ import cn.hutool.crypto.digest.HMac;
 import cn.hutool.crypto.digest.HmacAlgorithm;
 import cn.hutool.crypto.symmetric.AES;
 import cn.hutool.crypto.symmetric.DES;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * 加解密工具
@@ -158,31 +150,4 @@ public class SecureUtils {
         return sha256.digestHex(msg);
     }
 
-    public static void main(String[] args) {
-        /*List<File> nacArcFiles = FileUtils.loopFiles(new File("D:\\workspace\\code\\main\\Agentless_Util\\uad"));
-        List<File> uniArcFiles = FileUtils.loopFiles(new File("D:\\workspace\\code\\version5protocol"));
-        Set<String> nacArcFileNames = new HashSet<>();
-        Set<String> uniArcFileNames = new HashSet<>();
-        for (File nacArcFile : nacArcFiles) {
-            String name = nacArcFile.getName();
-            if ("uad".equals(FileUtils.getFileSuf(name))) {
-                nacArcFileNames.add(name);
-            }
-        }
-        for (File uniArcFile : uniArcFiles) {
-            String name = uniArcFile.getName();
-            if ("uad".equals(FileUtils.getFileSuf(name))) {
-                uniArcFileNames.add(uniArcFile.getName());
-            }
-        }
-
-        Collection<String> intersection = CollectionUtil.intersection(nacArcFileNames, uniArcFileNames);
-        for (String s : intersection) {
-            System.out.println(s);
-        }*/
-
-//        ThreadLocal<SimpleDateFormat> threadLocal = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyyMMdd HHmm"));
-
-        System.out.println("这是什么鬼东西啊asdfkjalllaskdjflkqwqcz_lefft@");
-    }
 }

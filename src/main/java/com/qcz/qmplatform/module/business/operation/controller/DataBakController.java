@@ -1,7 +1,6 @@
 package com.qcz.qmplatform.module.business.operation.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.qcz.qmplatform.common.aop.annotation.Module;
@@ -12,6 +11,7 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.module.base.BaseController;
@@ -81,7 +81,7 @@ public class DataBakController extends BaseController {
     public ResponseResult<DataBakStrategyVO> getDataBakStrategy() {
         DataBakStrategyVO strategy = new DataBakStrategyVO();
         Map<String, String> iniPro = iniService.getBySec(SECTION);
-        if (CollectionUtil.isNotEmpty(iniPro)) {
+        if (CollectionUtils.isNotEmpty(iniPro)) {
             String enableBak = iniPro.get(IniDefine.DataBak.ENABLE_BAK);
             strategy.setEnable(StringUtils.isBlank(enableBak) ? 0 : Integer.parseInt(enableBak));
             String saveDays = iniPro.get(IniDefine.DataBak.SAVE_DAYS);

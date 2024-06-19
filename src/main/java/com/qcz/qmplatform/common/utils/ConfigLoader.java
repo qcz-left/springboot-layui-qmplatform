@@ -1,6 +1,5 @@
 package com.qcz.qmplatform.common.utils;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.setting.Setting;
 import com.qcz.qmplatform.common.constant.GroupDefine;
 import org.springframework.boot.logging.LogLevel;
@@ -159,7 +158,7 @@ public class ConfigLoader {
         if (StringUtils.isBlank(pwdFields)) {
             return new ArrayList<>(0);
         }
-        return CollectionUtil.newArrayList(pwdFields.split(","));
+        return CollectionUtils.newArrayList(pwdFields.split(","));
     }
 
     /**
@@ -173,14 +172,14 @@ public class ConfigLoader {
      * 获取可预览的文件后缀
      */
     public static List<String> getPreviewedSuffix() {
-        return CollectionUtil.newArrayList(getStringConfig("PreviewedSuffix", "txt,pdf,doc,docx,xls,xlsx,png,jpg,jpeg").split(","));
+        return CollectionUtils.newArrayList(getStringConfig("PreviewedSuffix", "txt,pdf,doc,docx,xls,xlsx,png,jpg,jpeg").split(","));
     }
 
     /**
      * 可提供下载的文件夹路径
      */
     public static List<String> getDownloadFilePath() {
-        return CollectionUtil.newArrayList(getStringConfig("DownloadFilePath", StringUtils.format("{},{}", getUploadFilePath(), getTmpPath())).split(","));
+        return CollectionUtils.newArrayList(getStringConfig("DownloadFilePath", StringUtils.format("{},{}", getUploadFilePath(), getTmpPath())).split(","));
     }
 
     /**

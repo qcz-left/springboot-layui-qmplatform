@@ -1,10 +1,10 @@
 package com.qcz.qmplatform.module.watch;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
 import com.qcz.qmplatform.common.bean.DBProperties;
 import com.qcz.qmplatform.common.bean.Observable;
 import com.qcz.qmplatform.common.utils.CacheUtils;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.SpringContextUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.system.service.MessageService;
@@ -55,7 +55,7 @@ public class DBChangeWatcher implements Observable {
      */
     private void syncMessage() {
         Map<String, Session> sessions = SpringContextUtils.getBean(NotifyWebSocketServer.class).getClients();
-        if (!CollectionUtil.isEmpty(sessions)) {
+        if (CollectionUtils.isNotEmpty(sessions)) {
             List<String> userIds = new ArrayList<>();
             for (String sessionId : sessions.keySet()) {
                 userIds.add(CacheUtils.SESSION_CACHE.get(sessionId));
