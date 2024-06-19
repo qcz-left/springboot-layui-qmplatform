@@ -60,7 +60,7 @@ public class DataBakService extends ServiceImpl<DataBakMapper, DataBak> {
 
     private static final String SCHEDULE_ID = "dataBak";
 
-    private String database = YmlPropertiesUtils.getDatabase();
+    private final String database = YmlPropertiesUtils.getDatabase();
 
     @Resource
     private IniService iniService;

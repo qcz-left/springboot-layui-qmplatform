@@ -271,11 +271,8 @@ public class SystemUtils extends SystemUtil {
     }
 
     public static List<Inet4Address> getLocalIp4AddressFromNetworkInterface() throws SocketException {
-        List<Inet4Address> addresses = new ArrayList<>(1);
+        List<Inet4Address> addresses = new ArrayList<>();
         Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
-        if (e == null) {
-            return addresses;
-        }
         while (e.hasMoreElements()) {
             NetworkInterface n = e.nextElement();
             if (!isValidInterface(n)) {
