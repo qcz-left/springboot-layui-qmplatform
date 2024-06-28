@@ -52,11 +52,13 @@
                     type: 1,
                     title: '上传进度',
                     area: ['80%', '30%'],
-                    content:    '<div style="width: 90%; text-align: center" class="vh-center">' +
-                                '   <div class="layui-progress layui-progress-big" lay-showpercent="yes" lay-filter="upload">' +
-                                '       <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>' +
+                    content:    '<div class="vh-center" style="height: 100%;">' +
+                                '   <div style="width: 90%; height: 50%; text-align: center;">' +
+                                '       <div class="layui-progress layui-progress-big" lay-showpercent="yes" lay-filter="upload">' +
+                                '           <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>' +
+                                '       </div>' +
+                                '       <div><span class="upload-loaded"></span> / <span class="upload-total"></span></div>' +
                                 '   </div>' +
-                                '   <div><span class="upload-loaded"></span> / <span class="upload-total"></span></div>' +
                                 '</div>'
                 });
             },
