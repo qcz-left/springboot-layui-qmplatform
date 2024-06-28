@@ -38,14 +38,14 @@
         let upload = layui.upload;
         let element = layui.element;
         let maxFileSize = "${maxFileSize!'1MB'}";
-        maxFileSize = maxFileSize.substring(0, maxFileSize.length - 2);
+        let maxFileByteSize = CommonUtil.convertToByte(maxFileSize);
         upload.render({
             elem: '#attachment',
             accept: 'file',
             url: ctx + '/archive/attachment/uploadAttachment',
             auto: false,
             bindAction: '#upload',
-            size: maxFileSize * 1024,// KB
+            size: maxFileByteSize / 1024,// KB
             before: function () {
                 this.data = form.val('attachment-form');
                 layer.open({
