@@ -260,6 +260,10 @@ const CommonUtil = {
         return str;
     },
 
+    /**
+     * 将字节byte长度转化为易读的KB/MB/GB
+     * @param byteSize 字节长度
+     */
     convertByte: function (byteSize) {
         let size = "";
         if (byteSize < 0.1 * 1024) { //如果小于0.1KB转化成B
@@ -279,6 +283,26 @@ const CommonUtil = {
             return sizeStr.substring(0, len) + sizeStr.substr(len + 3, 2);
         }
         return sizeStr;
+    },
+
+    /**
+     * 将KB/MB/GB长度转化为byte
+     * @param sizeStr KB/MB/GB长度
+     */
+    convertToByte: function (sizeStr) {
+        let unit = sizeStr.substring(sizeStr.length - 2).toUpperCase();
+        let size = sizeStr.substring(0, sizeStr.length - 2);
+        if (unit === "KB") {
+            size = size * 1024;
+        } else if (unit === "MB") {
+            size = size * 1024 * 1024;
+        } else if (unit === "GB") {
+            size = size * 1024 * 1024 * 1024;
+        } else {
+            // byte
+            size = sizeStr;
+        }
+        return size;
     },
 
     /**
