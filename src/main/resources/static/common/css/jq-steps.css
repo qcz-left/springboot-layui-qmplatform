@@ -59,6 +59,10 @@
     margin: 5px;
 }
 
+.steps-item-selected {
+    font-weight: bold;
+}
+
 .step-title-vertical {
     position: absolute;
     left: 50%;
@@ -77,6 +81,7 @@
     width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
     width: fill-available;
     padding: 0 10px 0 10px;
+    overflow: auto;
 }
 
 .steps-form-content .steps-form-item {

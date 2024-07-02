@@ -14,11 +14,12 @@ function ($) {
          */
         steps: function (opt) {
             let $this = this;
-            let selector = $this.selector;
+            let $stepsNav = $this.find(".steps-nav");
 
             let items = opt.items || [];
             let bindPre = opt.bindPre;
             let bindNext = opt.bindNext;
+            let bindSave = opt.bindSave;
             let direction = opt.direction || "horizontal";
             let isVertical = direction === "vertical";
 
@@ -31,7 +32,7 @@ function ($) {
 
                 // 水平方向
                 if (isVertical) {
-                    stepsContentHtml += '<div class="steps-item steps-item-vertical">'
+                    stepsContentHtml += '<div class="steps-item' + (i === 0 ? ' steps-item-selected' : '') + ' steps-item-vertical">'
                     stepsContentHtml += '' +
                         '<div class="vh-center" style="display: inline-block; position: relative;">' +
                         '   <div class="step-circle ' + (i === 0 ? 'step-circle-process' : 'step-circle-wait') + ' vh-center" step-index="' + stepNum + '">' +
@@ -54,7 +55,7 @@ function ($) {
                 }
 
                 // 垂直方向
-                stepsContentHtml += '<div class="steps-item">'
+                stepsContentHtml += '<div class="steps-item' + (i === 0 ? ' steps-item-selected' : '') + '">'
                 stepsContentHtml += '' +
                     '<div class="vh-center" style="display: inline-flex;">' +
                     '   <div class="step-circle ' + (i === 0 ? 'step-circle-process' : 'step-circle-wait') + ' vh-center" step-index="' + stepNum + '">' +
@@ -75,7 +76,7 @@ function ($) {
 
             }
 
-            $this.append('' +
+            $stepsNav.append('' +
                 '<div class="' + (isVertical ? 'steps-vertical' : 'steps') + '">' +
                 '   <div class="steps-content">' +
                 stepsContentHtml +
@@ -83,19 +84,48 @@ function ($) {
                 '</div>');
 
             if (isVertical) {
-                let lineLength = ($this.find('.steps-content').width() - itemsLength * 29) / (itemsLength - 1) - 10;
-                $this.find(".step-line-vertical").css("width", lineLength);
+                let lineLength = ($stepsNav.find('.steps-content').width() - itemsLength * 29) / (itemsLength - 1) - 10;
+                $stepsNav.find(".step-line-vertical").css("width", lineLength);
+
+                // 添加分割线
             } else {
-                let lineLength = ($this.find('.steps-content').height() - itemsLength * 29) / (itemsLength - 1) - 10;
-                $this.find(".step-line-horizontal").css("height", lineLength);
+                let lineLength = ($stepsNav.find('.steps-content').height() - itemsLength * 29) / (itemsLength - 1) - 10;
+                $stepsNav.find(".step-line-horizontal").css("height", lineLength);
+
+                // 添加分割线
+                $stepsNav.after('<div class="steps-separator"></div>');
             }
+
+            // css
+            $this.find(".steps-form-item").addClass("layui-anim layui-anim-scale");
+
+            /**
+             * 检查一下步骤，是否是第一步或最后一步
+             */
+            let checkStep = function () {
+                $(bindPre).hide();
+                $(bindNext).hide();
+                $(bindSave).hide();
+                let stepIndex = parseInt($this.find(".steps-item-selected .step-circle").text());
+                if (stepIndex > 1) {
+                    $(bindPre).show();
+                }
+                if (stepIndex < itemsLength) {
+                    $(bindNext).show();
+                }
+                if (stepIndex === itemsLength) {
+                    $(bindSave).show();
+                }
+            }
+
+            checkStep();
 
             /**
              * 获取步骤条下标
              * @returns {number}
              */
             let getStepIndex = function () {
-                return parseInt($this.find(".step-circle-process").attr("step-index"));
+                return parseInt($stepsNav.find(".step-circle-process").attr("step-index"));
             }
 
             // 上一步
@@ -106,18 +136,20 @@ function ($) {
                 }
                 let preStepIndex = stepIndex - 1;
                 let dataItem = items[preStepIndex - 1];
-                $this.parent().find(".steps-form-item").addClass("hide");
-                $this.parent().find(dataItem.bindForm).removeClass("hide");
+                $this.find(".steps-form-content").find(".steps-form-item").addClass("hide");
+                $this.find(".steps-form-content").find(dataItem.bindForm).removeClass("hide");
 
-                $this.find(".step-circle-process").removeClass("step-circle-process").addClass("step-circle-wait");
-                $this.find('.step-circle[step-index=' + preStepIndex + ']').html(preStepIndex).removeClass("step-circle-wait").addClass("step-circle-process");
+                $stepsNav.find(".step-circle-process").removeClass("step-circle-process").addClass("step-circle-wait");
+                let $preStepItem = $stepsNav.find('.step-circle[step-index=' + preStepIndex + ']');
+                $preStepItem.html(preStepIndex).removeClass("step-circle-wait").addClass("step-circle-process");
+                $stepsNav.find(".steps-item-selected").removeClass("steps-item-selected");
+                $preStepItem.parents(".steps-item").addClass("steps-item-selected");
+
+                checkStep();
             });
             // 下一步
             $(bindNext).click(function () {
                 let stepIndex = getStepIndex();
-                if (stepIndex === itemsLength) {
-                    return;
-                }
                 let nextStepIndex = stepIndex + 1;
                 let dataItem = items[stepIndex - 1];
                 let nextItem = items[nextStepIndex - 1];
@@ -135,12 +167,25 @@ function ($) {
                     return;
                 }
 
-                let $stepsFormContent = $('.steps-form-content[for=\'' + selector + '\']');
-                $stepsFormContent.find(".steps-form-item").addClass("hide");
-                $stepsFormContent.find(nextItem.bindForm).removeClass("hide");
+                if (stepIndex === itemsLength) {
+                    return;
+                }
 
-                $this.find(".step-circle-process").html('<i class="layui-icon layui-icon-ok"></i>').removeClass("step-circle-process").addClass("step-circle-finished");
-                $this.find('.step-circle[step-index=' + nextStepIndex + ']').removeClass("step-circle-wait").addClass("step-circle-process");
+                $this.find(".steps-form-content").find(".steps-form-item").addClass("hide");
+                $this.find(".steps-form-content").find(nextItem.bindForm).removeClass("hide");
+
+                $stepsNav.find(".step-circle-process").html('<i class="layui-icon layui-icon-ok"></i>').removeClass("step-circle-process").addClass("step-circle-finished");
+                let $nextStepItem = $stepsNav.find('.step-circle[step-index=' + nextStepIndex + ']');
+                $nextStepItem.removeClass("step-circle-wait").addClass("step-circle-process");
+                $stepsNav.find(".steps-item-selected").removeClass("steps-item-selected");
+                $nextStepItem.parents(".steps-item").addClass("steps-item-selected");
+
+                checkStep();
+            });
+
+            // 保存事件
+            $(bindSave).click(function () {
+                $(bindNext).click();
             });
         }
     });
