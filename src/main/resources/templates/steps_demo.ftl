@@ -14,12 +14,6 @@
         width: 120px;
     }
 
-    .jq-steps {
-        height: 100%;
-        width: calc(100% - 20px);
-        display: inline-flex;
-    }
-
 </style>
 <body class="detail-body">
 <div class="layui-fluid">
@@ -27,7 +21,7 @@
         <div class="steps-nav">
 
         </div>
-        <div class="steps-form-content" for="#stepsDemo">
+        <div class="steps-form-content">
             <div class="step-1 steps-form-item">
                 <#include "./steps_demo_baseinfo.ftl">
             </div>
@@ -37,30 +31,20 @@
             <div class="step-3 steps-form-item hide">
                 第3个表单
             </div>
-            <div class="step-4 steps-form-item hide">
-                第4个表单
-            </div>
-            <div class="step-5 steps-form-item hide">
-                第5个表单
-            </div>
-            <div class="step-6 steps-form-item hide">
-                第6个表单
-            </div>
             <div class="step-7 steps-form-item hide">
                 第7个表单
             </div>
         </div>
         <div class="detail-operator">
-            <button id="preStepBtn" type="button" class="layui-btn layui-btn-primary" style="display: none;">上一步</button>
-            <button id="nextStepBtn" type="button" class="layui-btn layui-btn-normal" style="display: none;">下一步</button>
-            <button id="saveBtn" type="button" class="layui-btn layui-btn-normal" style="display: none;">保存</button>
+            <button id="preStepBtn" type="button" class="layui-btn layui-btn-primary">上一步</button>
+            <button id="nextStepBtn" type="button" class="layui-btn layui-btn-normal">下一步</button>
         </div>
     </div>
 </div>
 <script type="text/javascript">
 layui.use(['form'], function () {
     $("#stepsDemo").steps({
-        // direction: "vertical",
+        direction: 'vertical',
         items: [
             {
                 label: "基本信息",
@@ -76,18 +60,6 @@ layui.use(['form'], function () {
             {
                 label: "接入控制",
                 bindForm: ".step-3"
-            },
-            {
-                label: "接入控制点",
-                bindForm: ".step-4"
-            },
-            {
-                label: "接入控制点5",
-                bindForm: ".step-5"
-            },
-            {
-                label: "接入控制点6",
-                bindForm: ".step-6"
             },
             {
                 label: "接入控制点7",

@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <#include "/include/include.ftl">
+<script type="text/javascript">
+top.rsaPublicKey = "${ConfigLoader.getRsaPublicKey()!}";
+</script>
 <style>
     .layui-form-label {
         width: 100px;
-    }
-
-    .layui-form {
-        margin: 0 auto;
-        max-width: 560px;
-        padding-top: 40px;
     }
 
     body {
@@ -35,86 +32,85 @@
     #stepForm {
         margin: 0 auto;
         background: white!important;
-        padding-top: 10px;
+        height: calc(100% - 85px);
     }
+
+    .hide {
+        display: none !important;
+    }
+
 </style>
-<body>
-<div style="background: white;">
-    <div class="ret-header">
-        <span class="ret-title">找回密码</span>
-        <a href="${ctx}/loginPage" class="btn-login">去登录</a>
+<body class="detail-body">
+<div class="layui-fluid">
+    <div style="background: white;">
+        <div class="ret-header">
+            <span class="ret-title">找回密码</span>
+            <a href="${ctx}/loginPage" class="btn-login">去登录</a>
+        </div>
     </div>
-</div>
-<br>
-<div class="layui-carousel" id="stepForm" lay-filter="stepForm">
-    <div carousel-item>
-        <div>
-            <form class="layui-form">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">登录名</label>
-                    <div class="layui-input-inline">
-                        <input id="loginName" name="loginName" lay-verify="required" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label"></label>
-                    <div class="layui-input-block">
-                        <button class="layui-btn" lay-submit lay-filter="confirm-loginName">确定</button>
-                    </div>
-                </div>
-            </form>
+    <br>
+    <div id="stepForm" class="jq-steps">
+        <div class="steps-nav">
+
         </div>
-        <div>
-            <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="password-form">
-                <input type="hidden" name="validateType" value="2">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">手机号码</label>
-                    <div class="layui-input-inline">
-                        <input id="phone" autocomplete="off" class="layui-input" disabled>
+        <div class="steps-form-content">
+            <div class="step-1 steps-form-item vh-center hide">
+                <div class="layui-form" lay-filter="account-info">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">登录名</label>
+                        <div class="layui-input-inline">
+                            <input id="loginName" name="loginName" lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">验证码</label>
-                    <div class="layui-input-inline">
-                        <input lay-verify="required" name="validateCode" autocomplete="off" class="layui-input">
+            </div>
+            <div class="step-2 steps-form-item vh-center hide">
+                <div class="layui-form detail-form" action="javascript:void(0);" lay-filter="password-form">
+                    <input type="hidden" name="validateType" value="2">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号码</label>
+                        <div class="layui-input-inline">
+                            <input id="phone" autocomplete="off" class="layui-input" disabled>
+                        </div>
                     </div>
-                    <div class="layui-inline">
-                        <button id="btnCode" class="layui-btn layui-btn-primary">获取验证码</button>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">验证码</label>
+                        <div class="layui-input-inline">
+                            <input lay-verify="required" name="validateCode" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-inline">
+                            <button id="btnCode" class="layui-btn layui-btn-primary">获取验证码</button>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">新密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" autocomplete="new-password" style="display:none">
+                            <input type="password" id="newPassword" name="newPassword" lay-verify="required|newPassword" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">确认新密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" name="confirmNewPassword" lay-verify="required|confirmNewPassword" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">新密码</label>
-                    <div class="layui-input-inline">
-                        <input type="password" autocomplete="new-password" style="display:none">
-                        <input type="password" id="newPassword" name="newPassword" lay-verify="required|newPassword" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">确认新密码</label>
-                    <div class="layui-input-inline">
-                        <input type="password" name="confirmNewPassword" lay-verify="required|confirmNewPassword" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
-                        <button class="layui-btn" lay-submit lay-filter="password-submit">确认修改</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div>
-            <form class="layui-form">
+            </div>
+            <div class="step-3 steps-form-item vh-center hide">
                 修改密码成功，赶快 <a class="text-success" href="${ctx}/loginPage">登录</a> 验证吧！
-            </form>
+            </div>
+        </div>
+        <div class="detail-operator">
+            <button id="preStepBtn" type="button" class="layui-btn layui-btn-primary">上一步</button>
+            <button id="nextStepBtn" type="button" class="layui-btn layui-btn-normal">下一步</button>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    layui.use(['form', 'layer', 'step'], function () {
+    layui.use(['form', 'layer'], function () {
         let form = layui.form;
         let layer = layui.layer;
-        let step = layui.step;
 
         // 表单数据校验
         form.verify({
@@ -129,62 +125,59 @@
             }
         });
 
-        step.render({
-            elem: '#stepForm',
-            filter: 'stepForm',
-            width: '60%', //设置容器宽度
-            stepWidth: '750px',
-            height: '500px',
-            stepItems: [{
-                title: '填写账号信息'
-            }, {
-                title: '修改密码'
-            }, {
-                title: '修改结果'
-            }]
-        });
-
-        /**
-         * 填写账号，确定下一步
-         */
-        form.on('submit(confirm-loginName)', function (data) {
-            CommonUtil.getAjax(ctx + '/user/nnl/queryPhoneByName', {
-                name: data.field.loginName
-            }, function (result) {
-                if (result.ok) {
-                    $("#phone").val(result.data);
-                    step.next('#stepForm');
-                } else {
-                    // 未查询到用户信息
-                    layer.error(result.msg || "不存在该账号信息，请重新输入！")
+        $("#stepForm").steps({
+            direction: 'vertical',
+            items: [
+                {
+                    label: "填写账号信息",
+                    bindForm: ".step-1",
+                    beforeSubmit: function () {
+                        if (!form.doVerify($('[lay-filter="account-info"]'))) {
+                            return false;
+                        }
+                        let success;
+                        CommonUtil.getSync(ctx + '/user/nnl/queryPhoneByName', {
+                            name: form.val('account-info').loginName
+                        }, function (result) {
+                            success = result.ok;
+                            if (success) {
+                                $("#phone").val(result.data);
+                            } else {
+                                // 未查询到用户信息
+                                layer.error(result.msg || "不存在该账号信息，请重新输入！");
+                            }
+                        });
+                        return success;
+                    }
+                },
+                {
+                    label: "修改密码",
+                    bindForm: ".step-2",
+                    beforeSubmit: function () {
+                        if (!form.doVerify($('[lay-filter="password-form"]'))) {
+                            return false;
+                        }
+                        let index = top.layer.load(2);
+                        let data = form.val('password-form');
+                        data.loginname = form.val('account-info').loginName;
+                        data.newPassword = rsaEncrypt(data.newPassword);
+                        data.confirmNewPassword = rsaEncrypt(data.confirmNewPassword);
+                        let success;
+                        CommonUtil.putSync(ctx + '/user/nnl/changeUserPwd', data, function (result) {
+                            success = result.ok;
+                            top.layer.close(index);
+                            LayerUtil.respMsg(result, '修改密码成功，请重新登录验证', '修改密码失败');
+                        });
+                        return success;
+                    }
+                },
+                {
+                    label: "修改结果",
+                    bindForm: ".step-3"
                 }
-            });
-            return false;
-        });
-
-        /**
-         * 修改密码提交结果
-         */
-        form.on('submit(password-submit)', function (data) {
-            let index = top.layer.load(2);
-            data.field.loginname = $("#loginName").val();
-            data.field.newPassword = rsaEncrypt(data.field.newPassword);
-            data.field.confirmNewPassword = rsaEncrypt(data.field.confirmNewPassword);
-            CommonUtil.putAjax(ctx + '/user/nnl/changeUserPwd', data.field, function (result) {
-                top.layer.close(index);
-                LayerUtil.respMsg(result, '修改密码成功，请重新登录验证', '修改密码失败', () => {
-                    step.next('#stepForm');
-                })
-            });
-            return false;
-        });
-
-        $('.pre').click(function () {
-            step.pre('#stepForm');
-        });
-
-        $('.next').click(function () {
-            step.next('#stepForm');
+            ],
+            bindPre: "#preStepBtn",
+            bindNext: "#nextStepBtn"
         });
 
         $("#btnCode").click(function () {

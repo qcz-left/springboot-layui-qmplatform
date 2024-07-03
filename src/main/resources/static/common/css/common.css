@@ -161,7 +161,7 @@ body .my-layer-warm .layui-layer-btn0 {
 
 .detail-body .layui-fluid {
     overflow: auto;
-    height: calc(100% - 50px);
+    height: calc(100% - 30px);
 }
 
 .layui-form-label.required:before {
@@ -223,6 +223,16 @@ body .my-layer-warm .layui-layer-btn0 {
     pointer-events: none;
     opacity: 0.5;
     color: #a9a9a9;
+}
+
+/* 禁用按钮 */
+.btn-gray-disabled {
+    opacity: 1;
+    border-color: #eee !important;
+    background-color: #FBFBFB !important;
+    color: #d2d2d2 !important;
+    cursor: not-allowed !important;
+    pointer-events: none;
 }
 
 .search-form .layui-form-label {

@@ -45,6 +45,10 @@ const CommonUtil = {
         CommonUtil.postAjax(_url, _data, _success, _fail, false)
     },
 
+    putSync: function (_url, _data, _success, _fail) {
+        CommonUtil.putAjax(_url, _data, _success, _fail, false)
+    },
+
     /**
      * post方式的异步提交操作
      * @param _url 接口路径 （必填）
@@ -77,9 +81,10 @@ const CommonUtil = {
      * @param _data 请求数据 （必填）
      * @param _success 成功回调函数 （非必填）
      * @param _fail 失败回调函数 （非必填）
+     * @param _async 是否异步（默认异步）
      */
-    putAjax: function (_url, _data, _success, _fail) {
-        CommonUtil.ajax(AjaxType.PUT, _url, _data, _success, _fail, true, true)
+    putAjax: function (_url, _data, _success, _fail, _async) {
+        CommonUtil.ajax(AjaxType.PUT, _url, _data, _success, _fail, _async, true)
     },
 
     /**

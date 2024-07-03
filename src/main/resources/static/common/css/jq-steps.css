@@ -1,3 +1,13 @@
+.jq-steps {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.jq-steps-horizontal {
+    display: inline-flex;
+}
+
 .step-circle-finished {
     background-color: #16b777;
     color: white;
@@ -25,25 +35,40 @@
     font-size: 14px;
 }
 
-.steps {
+.steps-nav {
     margin: 10px;
-    height: calc(100% - 20px);
-    display: inline-flex;
 }
 
-.steps-vertical {
-    margin: 10px;
+.steps-nav-horizontal {
+    height: calc(100% - 20px);
+    border-right: 1px solid rgb(228, 228, 228);
+    overflow-y: auto;
+    flex: 0 0 200px;
+    max-width: 200px;
+    min-width: 200px;
+    width: 200px;
+}
+
+.steps-nav-vertical {
     width: calc(100% - 20px);
+    border-bottom: 1px solid rgb(228, 228, 228);
+    overflow-x: auto;
+    flex: 0 0 0 80px;
+    max-height: 80px;
+    min-height: 80px;
+    height: 80px;
 }
 
 .step-line-horizontal {
     background: #E4E4E4;
     width: 1px;
+    height: 40px;
     margin: 5px 12px 5px 12px;
 }
 
 .step-line-vertical {
     background: #E4E4E4;
+    width: 80px;
     height: 1px;
     margin: 12px 5px 12px 5px;
 }
@@ -67,21 +92,33 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: max-content;
+    max-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .steps-content {
-    min-width: 200px;
+
 }
 
 .steps-form-content {
-    height: 100%;
+    overflow: auto;
+    padding: 10px;
+}
+
+.steps-form-content-vertical {
+    height: calc(100% - 121px);
+    width: calc(100% - 20px);
+
+}
+
+.steps-form-content-horizontal {
+    height: calc(100% - 20px);
     width: 100%;
     width: -moz-available; /* WebKit-based browsers will ignore this. */
     width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
     width: fill-available;
-    padding: 0 10px 0 10px;
-    overflow: auto;
 }
 
 .steps-form-content .steps-form-item {

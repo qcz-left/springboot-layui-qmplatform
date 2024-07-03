@@ -38,7 +38,7 @@ function ($) {
                         '   <div class="step-circle ' + (i === 0 ? 'step-circle-process' : 'step-circle-wait') + ' vh-center" step-index="' + stepNum + '">' +
                         stepNum +
                         '   </div>' +
-                        '   <div class="step-title step-title-vertical">' +
+                        '   <div class="step-title step-title-vertical" title="' + label + '">' +
                         label +
                         '   </div>' +
                         '</div>';
@@ -61,7 +61,7 @@ function ($) {
                     '   <div class="step-circle ' + (i === 0 ? 'step-circle-process' : 'step-circle-wait') + ' vh-center" step-index="' + stepNum + '">' +
                     stepNum +
                     '   </div>' +
-                    '   <div class="step-title">' +
+                    '   <div class="step-title" title="' + label + '">' +
                     label +
                     '   </div>' +
                     '</div>';
@@ -73,27 +73,19 @@ function ($) {
                 }
 
                 stepsContentHtml += '</div>';
-
             }
 
-            $stepsNav.append('' +
-                '<div class="' + (isVertical ? 'steps-vertical' : 'steps') + '">' +
-                '   <div class="steps-content">' +
-                stepsContentHtml +
-                '   </div>' +
-                '</div>');
+            $stepsNav.append('<div class="steps-content">' + stepsContentHtml + '</div>');
 
+            let $stepsFormContent = $this.find(".steps-form-content");
             if (isVertical) {
-                let lineLength = ($stepsNav.find('.steps-content').width() - itemsLength * 29) / (itemsLength - 1) - 10;
-                $stepsNav.find(".step-line-vertical").css("width", lineLength);
-
-                // 添加分割线
+                $stepsNav.addClass("steps-nav-vertical");
+                $stepsNav.find(".steps-content").addClass("vh-center");
+                $stepsFormContent.addClass("steps-form-content-vertical");
             } else {
-                let lineLength = ($stepsNav.find('.steps-content').height() - itemsLength * 29) / (itemsLength - 1) - 10;
-                $stepsNav.find(".step-line-horizontal").css("height", lineLength);
-
-                // 添加分割线
-                $stepsNav.after('<div class="steps-separator"></div>');
+                $stepsNav.addClass("steps-nav-horizontal");
+                $this.addClass("jq-steps-horizontal");
+                $stepsFormContent.addClass("steps-form-content-horizontal");
             }
 
             // css
@@ -103,19 +95,23 @@ function ($) {
              * 检查一下步骤，是否是第一步或最后一步
              */
             let checkStep = function () {
-                $(bindPre).hide();
-                $(bindNext).hide();
+                let btnDisabledClass = "btn-gray-disabled";
+                $(bindPre).addClass(btnDisabledClass);
+                $(bindNext).addClass(btnDisabledClass);
                 $(bindSave).hide();
                 let stepIndex = parseInt($this.find(".steps-item-selected .step-circle").text());
                 if (stepIndex > 1) {
-                    $(bindPre).show();
+                    $(bindPre).removeClass(btnDisabledClass);
                 }
                 if (stepIndex < itemsLength) {
-                    $(bindNext).show();
+                    $(bindNext).removeClass(btnDisabledClass);
                 }
                 if (stepIndex === itemsLength) {
                     $(bindSave).show();
                 }
+
+                $this.find(".steps-form-content .steps-form-item").addClass("hide");
+                $this.find(".steps-form-content").find(items[stepIndex - 1].bindForm).removeClass("hide");
             }
 
             checkStep();
@@ -135,9 +131,6 @@ function ($) {
                     return;
                 }
                 let preStepIndex = stepIndex - 1;
-                let dataItem = items[preStepIndex - 1];
-                $this.find(".steps-form-content").find(".steps-form-item").addClass("hide");
-                $this.find(".steps-form-content").find(dataItem.bindForm).removeClass("hide");
 
                 $stepsNav.find(".step-circle-process").removeClass("step-circle-process").addClass("step-circle-wait");
                 let $preStepItem = $stepsNav.find('.step-circle[step-index=' + preStepIndex + ']');
@@ -152,7 +145,6 @@ function ($) {
                 let stepIndex = getStepIndex();
                 let nextStepIndex = stepIndex + 1;
                 let dataItem = items[stepIndex - 1];
-                let nextItem = items[nextStepIndex - 1];
                 // 下一步 提交前的操作
                 let beforeSubmitResult = true;
                 let beforeSubmit = dataItem.beforeSubmit;
@@ -170,9 +162,6 @@ function ($) {
                 if (stepIndex === itemsLength) {
                     return;
                 }
-
-                $this.find(".steps-form-content").find(".steps-form-item").addClass("hide");
-                $this.find(".steps-form-content").find(nextItem.bindForm).removeClass("hide");
 
                 $stepsNav.find(".step-circle-process").html('<i class="layui-icon layui-icon-ok"></i>').removeClass("step-circle-process").addClass("step-circle-finished");
                 let $nextStepItem = $stepsNav.find('.step-circle[step-index=' + nextStepIndex + ']');
