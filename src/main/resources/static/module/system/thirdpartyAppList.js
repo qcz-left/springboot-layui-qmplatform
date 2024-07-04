@@ -13,7 +13,7 @@ layui.use(['form', 'table'], function () {
     table.render({
         elem: '#' + tableId,
         url: baseUrl + '/getThirdpartyAppList',
-        height: 'full-50',
+        height: 'full-30',
         page: true,
         toolbar: '#toolbar',
         cols: [[

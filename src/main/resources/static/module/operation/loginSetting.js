@@ -13,7 +13,7 @@ layui.use(['form'], function () {
         LayerUtil.openLayer({
             title: '登录设置',
             content: baseUrl + '/detail',
-            area: ['50%', '80%'],
+            area: ['50%', '85%'],
             loaded: function (iframeWin) {
                 iframeWin.layui.use(['form'], function () {
                     let form = iframeWin.layui.form;

@@ -2,15 +2,20 @@
 
 body {
     background: white;
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
-    padding: 10px;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    padding: 5px;
 }
 
 html {
-    margin: 10px;
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
+    margin: 5px;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+}
+
+.detail-body .layui-fluid {
+    overflow: auto;
+    height: calc(100% - 40px);
 }
 
 .content-body {
@@ -43,7 +48,7 @@ html {
 }
 
 #operator {
-    bottom: 0px;
+    bottom: 0;
     position: fixed;
     z-index: 9999;
     width: 100%;
@@ -106,11 +111,21 @@ body .my-layer-warm .layui-layer-btn0 {
     text-align: center;
 }
 
+.layui-layer-btn.layui-layer-btn- {
+    padding: 6px 0 6px 0 !important;
+}
+
 .layui-layer-iframe .layui-layer-btn- a,
 .layui-layer-page .layui-layer-btn- a {
-    height: 36px;
-    line-height: 36px;
+    height: 38px;
+    line-height: 38px;
     padding: 0 18px;
+    margin: 0;
+}
+
+.layui-layer-iframe .layui-layer-btn- a+a,
+.layui-layer-page .layui-layer-btn- a+a {
+    margin-left: 10px;
 }
 
 .jqgrid-wrapper {
@@ -126,7 +141,7 @@ body .my-layer-warm .layui-layer-btn0 {
 }
 
 .ui-jqgrid tr.jqgrow td {
-    font-family: "宋体"
+    font-family: "宋体";
 }
 
 .ui-jqgrid .ui-jqgrid-view {
@@ -145,23 +160,18 @@ body .my-layer-warm .layui-layer-btn0 {
 }
 
 .detail-form {
-    padding-top: 10px;
+    padding: 15px 0 5px 0;
 }
 
 .detail-operator {
     position: fixed;
-    bottom: 0px;
+    bottom: 0;
     width: 100%;
     left: 0;
     text-align: center;
     background: #f5f1f1;
     padding-top: 6px;
     padding-bottom: 6px;
-}
-
-.detail-body .layui-fluid {
-    overflow: auto;
-    height: calc(100% - 30px);
 }
 
 .layui-form-label.required:before {

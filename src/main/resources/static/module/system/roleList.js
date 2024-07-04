@@ -5,7 +5,7 @@ layui.use(['table'], function () {
     table.render({
         elem: '#' + tableId,
         url: ctx + '/role/getRoleList',
-        height: 'full-50',
+        height: 'full-30',
         page: true,
         toolbar: '#toolbar',
         cols: [[
@@ -69,7 +69,7 @@ layui.use(['table'], function () {
         LayerUtil.openLayer({
             title: id ? "编辑角色" : "添加角色",
             content: ctx + "/role/roleDetailPage?id=" + id,
-            area: ['30%', '40%'],
+            area: ['40%', '50%'],
             loaded: function(iframeWin) {
                 let form = iframeWin.layui.form;
                 // 表单数据校验

@@ -32,6 +32,7 @@ top.rsaPublicKey = "${ConfigLoader.getRsaPublicKey()!}";
     #stepForm {
         margin: 0 auto;
         background: white!important;
+        width: 100%;
         height: calc(100% - 85px);
     }
 

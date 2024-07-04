@@ -31,7 +31,7 @@ layui.use(['table', 'laydate', 'xmSelect', 'form'], function () {
     table.render({
         elem: '#' + tableId,
         url: baseUrl + '/getBillList',
-        height: 'full-151',
+        height: 'full-131',
         page: true,
         toolbar: '#toolbar',
         orderName: 'consumeTime',

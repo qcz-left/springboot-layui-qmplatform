@@ -1,7 +1,8 @@
 .jq-steps {
-    height: 100%;
-    width: 100%;
+    height: calc(100% - 10px);
+    width: calc(100% - 10px);
     overflow: hidden;
+    margin: 5px;
 }
 
 .jq-steps-horizontal {
@@ -36,11 +37,11 @@
 }
 
 .steps-nav {
-    margin: 10px;
+
 }
 
 .steps-nav-horizontal {
-    height: calc(100% - 20px);
+    height: 100%;
     border-right: 1px solid rgb(228, 228, 228);
     overflow-y: auto;
     flex: 0 0 200px;
@@ -50,7 +51,7 @@
 }
 
 .steps-nav-vertical {
-    width: calc(100% - 20px);
+    width: 100%;
     border-bottom: 1px solid rgb(228, 228, 228);
     overflow-x: auto;
     flex: 0 0 0 80px;
@@ -59,15 +60,17 @@
     height: 80px;
 }
 
-.step-line-horizontal {
+.step-line {
     background: #E4E4E4;
+}
+
+.step-line-horizontal {
     width: 1px;
     height: 40px;
     margin: 5px 12px 5px 12px;
 }
 
 .step-line-vertical {
-    background: #E4E4E4;
     width: 80px;
     height: 1px;
     margin: 12px 5px 12px 5px;
@@ -104,21 +107,22 @@
 
 .steps-form-content {
     overflow: auto;
-    padding: 10px;
 }
 
 .steps-form-content-vertical {
-    height: calc(100% - 121px);
-    width: calc(100% - 20px);
+    height: calc(100% - 111px);
+    width: 100%;
+    padding-top: 10px;
 
 }
 
 .steps-form-content-horizontal {
-    height: calc(100% - 20px);
-    width: 100%;
+    height: 100%;
+    width: calc(100% - 10px);
     width: -moz-available; /* WebKit-based browsers will ignore this. */
     width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
     width: fill-available;
+    padding-left: 10px;
 }
 
 .steps-form-content .steps-form-item {

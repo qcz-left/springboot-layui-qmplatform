@@ -44,7 +44,6 @@
 <script type="text/javascript">
 layui.use(['form'], function () {
     $("#stepsDemo").steps({
-        direction: 'vertical',
         items: [
             {
                 label: "基本信息",

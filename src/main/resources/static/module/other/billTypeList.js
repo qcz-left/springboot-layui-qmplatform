@@ -9,7 +9,7 @@ layui.use(['table', 'treetable'], function () {
         treetable.render({
             elem: '#' + tableId,
             url: baseUrl + '/getBillTypeList',
-            height: 'full-50',
+            height: 'full-30',
             treeColIndex: 0,	//树形图标显示在第几列
             treeSpid: '',		//最上级的父级id
             treeIdName: 'id',	//id字段的名称

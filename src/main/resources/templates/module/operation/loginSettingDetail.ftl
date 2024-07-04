@@ -11,7 +11,7 @@
         width: 200px;
     }
 </style>
-<body class="layui-fluid">
+<body class="detail-body">
 <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="login-setting-form">
     <div class="layui-form-item">
         <label class="layui-form-label required">登录页标签</label>

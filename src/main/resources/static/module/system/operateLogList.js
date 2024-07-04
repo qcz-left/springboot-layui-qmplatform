@@ -39,7 +39,7 @@ layui.use(['table', 'form', 'laydate'], function () {
     });
 
     table.render({
-        height: 'full-108',
+        height: 'full-88',
         elem: '#' + tableId,
         url: ctx + '/operate-log/getLogList',
         page: true,

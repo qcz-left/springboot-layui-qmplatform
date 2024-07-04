@@ -77,7 +77,7 @@ layui.use(['table', 'form', 'layer'], function () {
         },
         orderName: 'username',
         order: 'desc',
-        height: 'full-101',
+        height: 'full-71',
         page: true,
         toolbar: '#toolbar',
         defaultToolbar: ['filter', {

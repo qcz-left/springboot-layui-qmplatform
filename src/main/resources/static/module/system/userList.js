@@ -22,7 +22,7 @@ layui.use(['table', 'form', 'element', 'layer', 'xmSelect'], function () {
     let tableIns = table.render({
         elem: '#' + tableId,
         url: ctx + '/user/getUserList',
-        height: 'full-108',
+        height: 'full-88',
         page: true,
         toolbar: '#toolbar',
         defaultToolbar: ['filter', {

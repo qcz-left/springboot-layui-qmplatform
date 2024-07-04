@@ -38,7 +38,7 @@ layui.use(['form', 'table', 'xmSelect'], function () {
         elem: '#' + tableId,
         url: ctx + '/user/getUserGroupUserList?userGroupId=' + userGroupId,
         orderName: 'username',
-        height: 'full-160',
+        height: 'full-140',
         page: true,
         toolbar: '#toolbar',
         defaultToolbar: [],

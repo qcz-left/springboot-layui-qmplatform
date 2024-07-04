@@ -9,7 +9,7 @@ layui.use(['table'], function () {
             orderName: 'createTime',
             order: 'desc'
         },
-        height: 'full-50',
+        height: 'full-30',
         page: true,
         toolbar: '#toolbar',
         cols: [[

@@ -8,7 +8,7 @@
     }
 </style>
 <body class="detail-body">
-<div class="layui-fluid">
+<div>
     <form class="layui-form detail-form" action="javascript:void(0);" lay-filter="notepad-form">
         <input type="hidden" name="id">
         <div class="layui-form-item">

@@ -10,6 +10,7 @@ function ($) {
          * bindPre：绑定的上一步按钮选择器<br>
          * bindNext：绑定的下一步按钮选择器<br>
          * direction：展示方向，有水平“horizontal”、垂直“vertical”两种可选，默认：horizontal <br>
+         * splitLineSize：分割线的长度 <br>
          * @param opt
          */
         steps: function (opt) {
@@ -22,6 +23,7 @@ function ($) {
             let bindSave = opt.bindSave;
             let direction = opt.direction || "horizontal";
             let isVertical = direction === "vertical";
+            let splitLineSize = opt.splitLineSize;
 
             let stepsContentHtml = '';
             let itemsLength = items.length;
@@ -45,7 +47,7 @@ function ($) {
                     // 最后一项
                     if (i !== itemsLength - 1) {
                         stepsContentHtml += '' +
-                            '<div class="step-line-vertical">' +
+                            '<div class="step-line step-line-vertical">' +
                             '</div>';
                     }
 
@@ -68,7 +70,7 @@ function ($) {
                 // 最后一项
                 if (i !== itemsLength - 1) {
                     stepsContentHtml += '' +
-                        '<div class="step-line-horizontal">' +
+                        '<div class="step-line step-line-horizontal">' +
                         '</div>';
                 }
 
@@ -82,10 +84,18 @@ function ($) {
                 $stepsNav.addClass("steps-nav-vertical");
                 $stepsNav.find(".steps-content").addClass("vh-center");
                 $stepsFormContent.addClass("steps-form-content-vertical");
+                if (splitLineSize) {
+                    $stepsNav.find(".step-line").css("width", splitLineSize);
+                    $stepsNav.find(".step-title").css("max-width", splitLineSize + 20);
+                }
             } else {
                 $stepsNav.addClass("steps-nav-horizontal");
                 $this.addClass("jq-steps-horizontal");
                 $stepsFormContent.addClass("steps-form-content-horizontal");
+                if (splitLineSize) {
+                    $stepsNav.find(".step-line").css("height", splitLineSize);
+                    $stepsNav.find(".step-title").css("max-height", splitLineSize + 20);
+                }
             }
 
             // css
