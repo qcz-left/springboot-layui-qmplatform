@@ -38,6 +38,7 @@
         <div class="detail-operator">
             <button id="preStepBtn" type="button" class="layui-btn layui-btn-primary">上一步</button>
             <button id="nextStepBtn" type="button" class="layui-btn layui-btn-normal">下一步</button>
+            <button id="saveBtn" type="button" class="layui-btn layui-btn-normal hide">保存</button>
         </div>
     </div>
 </div>
@@ -64,7 +65,8 @@ layui.use(['form'], function () {
                 label: "接入控制点7",
                 bindForm: ".step-7",
                 beforeSubmit: function () {
-                    console.log("最后一步了。。。")
+                    console.log("最后一步了。。。");
+                    return true;
                 }
             }
         ],

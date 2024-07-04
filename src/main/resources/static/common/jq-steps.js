@@ -34,20 +34,20 @@ function ($) {
 
                 // 水平方向
                 if (isVertical) {
-                    stepsContentHtml += '<div class="steps-item' + (i === 0 ? ' steps-item-selected' : '') + ' steps-item-vertical">'
+                    stepsContentHtml += '<div class="steps-item ' + (i === 0 ? 'steps-item-selected' : 'steps-item-wait') + ' steps-item-vertical">'
                     stepsContentHtml += '' +
-                        '<div class="vh-center" style="display: inline-block; position: relative;">' +
-                        '   <div class="step-circle ' + (i === 0 ? 'step-circle-process' : 'step-circle-wait') + ' vh-center" step-index="' + stepNum + '">' +
+                        '<div class="steps-item-content vh-center" style="display: inline-block; position: relative;">' +
+                        '   <div class="steps-circle vh-center" steps-index="' + stepNum + '">' +
                         stepNum +
                         '   </div>' +
-                        '   <div class="step-title step-title-vertical" title="' + label + '">' +
+                        '   <div class="steps-title steps-title-vertical" title="' + label + '">' +
                         label +
                         '   </div>' +
                         '</div>';
                     // 最后一项
                     if (i !== itemsLength - 1) {
                         stepsContentHtml += '' +
-                            '<div class="step-line step-line-vertical">' +
+                            '<div class="steps-line steps-line-vertical">' +
                             '</div>';
                     }
 
@@ -57,20 +57,20 @@ function ($) {
                 }
 
                 // 垂直方向
-                stepsContentHtml += '<div class="steps-item' + (i === 0 ? ' steps-item-selected' : '') + '">'
+                stepsContentHtml += '<div class="steps-item ' + (i === 0 ? 'steps-item-selected' : 'steps-item-wait') + '">'
                 stepsContentHtml += '' +
-                    '<div class="vh-center" style="display: inline-flex;">' +
-                    '   <div class="step-circle ' + (i === 0 ? 'step-circle-process' : 'step-circle-wait') + ' vh-center" step-index="' + stepNum + '">' +
+                    '<div class="steps-item-content vh-center" style="display: inline-flex;">' +
+                    '   <div class="steps-circle vh-center" steps-index="' + stepNum + '">' +
                     stepNum +
                     '   </div>' +
-                    '   <div class="step-title" title="' + label + '">' +
+                    '   <div class="steps-title" title="' + label + '">' +
                     label +
                     '   </div>' +
                     '</div>';
                 // 最后一项
                 if (i !== itemsLength - 1) {
                     stepsContentHtml += '' +
-                        '<div class="step-line step-line-horizontal">' +
+                        '<div class="steps-line steps-line-horizontal">' +
                         '</div>';
                 }
 
@@ -85,21 +85,36 @@ function ($) {
                 $stepsNav.find(".steps-content").addClass("vh-center");
                 $stepsFormContent.addClass("steps-form-content-vertical");
                 if (splitLineSize) {
-                    $stepsNav.find(".step-line").css("width", splitLineSize);
-                    $stepsNav.find(".step-title").css("max-width", splitLineSize + 20);
+                    $stepsNav.find(".steps-line").css("width", splitLineSize);
+                    $stepsNav.find(".steps-title").css("max-width", splitLineSize + 20);
                 }
             } else {
                 $stepsNav.addClass("steps-nav-horizontal");
                 $this.addClass("jq-steps-horizontal");
                 $stepsFormContent.addClass("steps-form-content-horizontal");
                 if (splitLineSize) {
-                    $stepsNav.find(".step-line").css("height", splitLineSize);
-                    $stepsNav.find(".step-title").css("max-height", splitLineSize + 20);
+                    $stepsNav.find(".steps-line").css("height", splitLineSize);
+                    $stepsNav.find(".steps-title").css("max-height", splitLineSize + 20);
                 }
             }
 
             // css
             $this.find(".steps-form-item").addClass("layui-anim layui-anim-scale");
+
+            /**
+             * 获取当前步骤项的jQuery对象
+             */
+            let getSelectedDom = function () {
+                return $stepsNav.find(".steps-item-selected");
+            }
+
+            /**
+             * 获取步骤条下标
+             * @returns {number}
+             */
+            let getStepIndex = function () {
+                return parseInt(getSelectedDom().find(".steps-circle").attr("steps-index"));
+            }
 
             /**
              * 检查一下步骤，是否是第一步或最后一步
@@ -109,7 +124,7 @@ function ($) {
                 $(bindPre).addClass(btnDisabledClass);
                 $(bindNext).addClass(btnDisabledClass);
                 $(bindSave).hide();
-                let stepIndex = parseInt($this.find(".steps-item-selected .step-circle").text());
+                let stepIndex = getStepIndex();
                 if (stepIndex > 1) {
                     $(bindPre).removeClass(btnDisabledClass);
                 }
@@ -122,17 +137,23 @@ function ($) {
 
                 $this.find(".steps-form-content .steps-form-item").addClass("hide");
                 $this.find(".steps-form-content").find(items[stepIndex - 1].bindForm).removeClass("hide");
-            }
 
+
+
+                $stepsNav.find(".steps-item-finished .steps-circle").html('<i class="layui-icon layui-icon-ok"></i>');
+            }
             checkStep();
 
             /**
-             * 获取步骤条下标
-             * @returns {number}
+             * 设置当前步骤数
+             * @param stepIndex 步骤数
              */
-            let getStepIndex = function () {
-                return parseInt($stepsNav.find(".step-circle-process").attr("step-index"));
+            let setSteps = function (stepIndex) {
+                getSelectedDom().removeClass("steps-item-selected");
+                $stepsNav.find(".steps-circle[steps-index=" + stepIndex + "]").parents(".steps-item").removeClass("steps-item-wait").addClass("steps-item-selected");
             }
+
+            let stepsItemToClass = "steps-item-to";
 
             // 上一步
             $(bindPre).click(function () {
@@ -141,12 +162,10 @@ function ($) {
                     return;
                 }
                 let preStepIndex = stepIndex - 1;
-
-                $stepsNav.find(".step-circle-process").removeClass("step-circle-process").addClass("step-circle-wait");
-                let $preStepItem = $stepsNav.find('.step-circle[step-index=' + preStepIndex + ']');
-                $preStepItem.html(preStepIndex).removeClass("step-circle-wait").addClass("step-circle-process");
-                $stepsNav.find(".steps-item-selected").removeClass("steps-item-selected");
-                $preStepItem.parents(".steps-item").addClass("steps-item-selected");
+                if (!$stepsNav.find(".steps-item").hasClass(stepsItemToClass)) {
+                    getSelectedDom().addClass(stepsItemToClass);
+                }
+                setSteps(preStepIndex);
 
                 checkStep();
             });
@@ -169,15 +188,16 @@ function ($) {
                     return;
                 }
 
+                getSelectedDom().addClass("steps-item-finished");
                 if (stepIndex === itemsLength) {
+                    checkStep();
                     return;
                 }
 
-                $stepsNav.find(".step-circle-process").html('<i class="layui-icon layui-icon-ok"></i>').removeClass("step-circle-process").addClass("step-circle-finished");
-                let $nextStepItem = $stepsNav.find('.step-circle[step-index=' + nextStepIndex + ']');
-                $nextStepItem.removeClass("step-circle-wait").addClass("step-circle-process");
-                $stepsNav.find(".steps-item-selected").removeClass("steps-item-selected");
-                $nextStepItem.parents(".steps-item").addClass("steps-item-selected");
+                setSteps(nextStepIndex);
+                if ($stepsNav.find(".steps-item").hasClass(stepsItemToClass)) {
+                    getSelectedDom().removeClass(stepsItemToClass);
+                }
 
                 checkStep();
             });

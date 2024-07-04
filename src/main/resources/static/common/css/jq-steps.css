@@ -9,30 +9,38 @@
     display: inline-flex;
 }
 
-.step-circle-finished {
+.steps-item-finished .steps-circle {
     background-color: #16b777;
     color: white;
 }
 
-.step-circle-process {
+.steps-item-finished .steps-item-content {
+    cursor: pointer;
+}
+
+.steps-item-selected .steps-circle {
     background-color: #16baaa;
     color: white;
 }
 
-.step-circle-wait {
+.steps-item-wait .steps-circle {
     background-color: #F2F2F2;
     color: #A4A4A4;
 }
 
-.step-circle {
+.steps-item-to .steps-circle {
+    background-color: rgb(255, 186, 82);
+    color: white;
+}
+
+.steps-circle {
     width: 25px;
     height: 25px;
     border-radius: 50% 50% 50% 50%;
     font-size: 14px;
-    cursor: pointer;
 }
 
-.step-circle .layui-icon {
+.steps-circle .layui-icon {
     font-size: 14px;
 }
 
@@ -60,17 +68,17 @@
     height: 80px;
 }
 
-.step-line {
+.steps-line {
     background: #E4E4E4;
 }
 
-.step-line-horizontal {
+.steps-line-horizontal {
     width: 1px;
     height: 40px;
     margin: 5px 12px 5px 12px;
 }
 
-.step-line-vertical {
+.steps-line-vertical {
     width: 80px;
     height: 1px;
     margin: 12px 5px 12px 5px;
@@ -83,7 +91,7 @@
     margin: 0 0 0 20px;
 }
 
-.step-title {
+.steps-title {
     margin: 5px;
 }
 
@@ -91,7 +99,7 @@
     font-weight: bold;
 }
 
-.step-title-vertical {
+.steps-title-vertical {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
