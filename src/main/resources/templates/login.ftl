@@ -8,7 +8,7 @@
 </script>
 <script type="text/javascript" src="${ctx}/static/login.js"></script>
 <title></title>
-<body class="vh-center">
+<body>
 <#include "/include/loginInclude.ftl">
 </body>
 </html>

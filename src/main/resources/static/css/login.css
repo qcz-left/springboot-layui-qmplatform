@@ -3,6 +3,8 @@
 body {
 	background: #f2f2f2;
 	text-align: center;
+	min-width: 840px;
+	min-height: 600px;
 }
 
 .user-login-main {
@@ -119,7 +121,6 @@ body {
 }
 
 .user-login-footer {
-	position: absolute;
 	left: 0;
 	bottom: 0;
 	width: 100%;

@@ -34,7 +34,7 @@
         <ul class="layui-tab-title">
             <li id="loginPageTitle" class="layui-this" lay-id="1">登录系统</li>
         </ul>
-        <div class="layui-tab-content vh-center">
+        <div class="layui-tab-content">
             <#include "/include/loginInclude.ftl">
         </div>
     </div>
