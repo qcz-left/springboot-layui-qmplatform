@@ -116,6 +116,16 @@ function ($) {
                 return parseInt(getSelectedDom().find(".steps-circle").attr("steps-index"));
             }
 
+            let stepsItemToClass = "steps-item-to";
+            /**
+             * 回到已经完成的步骤时，检查并添加到达点的标记
+             */
+            let checkStepsItemTo = function () {
+                if (!$stepsNav.find(".steps-item").hasClass(stepsItemToClass)) {
+                    getSelectedDom().addClass(stepsItemToClass);
+                }
+            }
+
             /**
              * 检查一下步骤，是否是第一步或最后一步
              */
@@ -138,9 +148,12 @@ function ($) {
                 $this.find(".steps-form-content .steps-form-item").addClass("hide");
                 $this.find(".steps-form-content").find(items[stepIndex - 1].bindForm).removeClass("hide");
 
-
-
                 $stepsNav.find(".steps-item-finished .steps-circle").html('<i class="layui-icon layui-icon-ok"></i>');
+                $stepsNav.find(".steps-item-finished").unbind("click").click(function () {
+                    checkStepsItemTo();
+                    setSteps($(this).find(".steps-circle").attr("steps-index"));
+                    checkStep();
+                });
             }
             checkStep();
 
@@ -153,8 +166,6 @@ function ($) {
                 $stepsNav.find(".steps-circle[steps-index=" + stepIndex + "]").parents(".steps-item").removeClass("steps-item-wait").addClass("steps-item-selected");
             }
 
-            let stepsItemToClass = "steps-item-to";
-
             // 上一步
             $(bindPre).click(function () {
                 let stepIndex = getStepIndex();
@@ -162,11 +173,8 @@ function ($) {
                     return;
                 }
                 let preStepIndex = stepIndex - 1;
-                if (!$stepsNav.find(".steps-item").hasClass(stepsItemToClass)) {
-                    getSelectedDom().addClass(stepsItemToClass);
-                }
+                checkStepsItemTo();
                 setSteps(preStepIndex);
-
                 checkStep();
             });
             // 下一步
@@ -198,7 +206,6 @@ function ($) {
                 if ($stepsNav.find(".steps-item").hasClass(stepsItemToClass)) {
                     getSelectedDom().removeClass(stepsItemToClass);
                 }
-
                 checkStep();
             });
 
