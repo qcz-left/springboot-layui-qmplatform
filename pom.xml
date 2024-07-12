@@ -23,6 +23,7 @@
         <mysql.version>8.0.31</mysql.version>
         <mybatis-plus.version>3.5.6</mybatis-plus.version>
         <hutool.version>5.8.20</hutool.version>
+        <javax.mail.version>1.6.2</javax.mail.version>
         <pagehelper-starter.version>2.1.0</pagehelper-starter.version>
         <oshi.version>5.1.0</oshi.version>
         <poi.version>5.2.2</poi.version>
@@ -56,11 +57,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-        <!--邮件-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <!-- 模板引擎 -->
         <dependency>
@@ -130,6 +126,12 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
+        </dependency>
+        <!-- Hutool5.x基于JavaEE，不适配SpringBoot3，需要单独引入 -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${javax.mail.version}</version>
         </dependency>
         <!-- 拼音 -->
         <dependency>
