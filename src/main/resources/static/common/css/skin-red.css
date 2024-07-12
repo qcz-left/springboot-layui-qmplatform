@@ -1,10 +1,10 @@
 .layui-layout-admin .layui-header {
-    background: #a25454;
+    background: #774646;
 }
 
 .layui-side, .layui-side .layui-nav,
 .layui-layer .layui-layer-title {
-    background-color: #8c4646 !important;
+    background-color: #7c3f3f !important;
 }
 
 .layui-nav-tree .layui-this,
@@ -16,12 +16,12 @@
 .layui-nav .layui-this:after,
 .layui-nav-tree .layui-nav-bar,
 .layui-laypage .layui-laypage-curr .layui-laypage-em {
-    background-color: #f5c3c3;
+    background-color: #ff9595;
 }
 
 .layui-layout-admin .layui-logo,
 .layui-tab-brief > .layui-tab-title .layui-this {
-    color: #f5c3c3;
+    color: #ff9595;
 }
 
 .layui-tab-brief > .layui-tab-title .layui-this:after,
