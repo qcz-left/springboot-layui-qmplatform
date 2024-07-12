@@ -419,11 +419,11 @@ $(function () {
 <style>
     html {
         height: unset;
-        overflow-x: hidden;
     }
 
     .layui-container {
         width: 100%;
+        min-width: 1135px;
     }
 
     .collect-data .layui-panel {
@@ -440,11 +440,11 @@ $(function () {
         height: 300px;
     }
 
-    .layui-panel .layui-row, .layui-panel .layui-row .layui-col-lg6 {
+    .layui-panel .layui-row, .layui-panel .layui-row .layui-col-xs6 {
         height: 100%;
     }
 
-    .layui-panel .layui-row .layui-col-lg6 div {
+    .layui-panel .layui-row .layui-col-xs6 div {
         height: 50%;
     }
 
@@ -465,11 +465,11 @@ $(function () {
 <body>
 <div class="layui-container layui-fluid">
     <div class="collect-data layui-row">
-        <div class="layui-col-lg3">
+        <div class="layui-col-xs3">
             <div class="layui-panel">
                 <div class="layui-row">
-                    <div class="layui-col-lg6"><i class="layui-icon layui-icon-user" style="color: #21a4b9;"></i></div>
-                    <div class="layui-col-lg6">
+                    <div class="layui-col-xs6"><i class="layui-icon layui-icon-user" style="color: #21a4b9;"></i></div>
+                    <div class="layui-col-xs6">
                         <div class="statistic-title vh-center">
                             访问量
                         </div>
@@ -480,11 +480,11 @@ $(function () {
                 </div>
             </div>
         </div>
-        <div class="layui-col-lg3">
+        <div class="layui-col-xs3">
             <div class="layui-panel">
                 <div class="layui-row">
-                    <div class="layui-col-lg6"><i class="layui-icon layui-icon-reply-fill" style="color: #6c5050;"></i></div>
-                    <div class="layui-col-lg6">
+                    <div class="layui-col-xs6"><i class="layui-icon layui-icon-reply-fill" style="color: #6c5050;"></i></div>
+                    <div class="layui-col-xs6">
                         <div class="statistic-title vh-center">
                             消息
                         </div>
@@ -495,11 +495,11 @@ $(function () {
                 </div>
             </div>
         </div>
-        <div class="layui-col-lg3">
+        <div class="layui-col-xs3">
             <div class="layui-panel">
                 <div class="layui-row">
-                    <div class="layui-col-lg6"><i class="layui-icon layui-icon-rmb" style="color: #a70a0a;"></i></div>
-                    <div class="layui-col-lg6">
+                    <div class="layui-col-xs6"><i class="layui-icon layui-icon-rmb" style="color: #a70a0a;"></i></div>
+                    <div class="layui-col-xs6">
                         <div class="statistic-title vh-center">
                             金额
                         </div>
@@ -510,11 +510,11 @@ $(function () {
                 </div>
             </div>
         </div>
-        <div class="layui-col-lg3">
+        <div class="layui-col-xs3">
             <div class="layui-panel">
                 <div class="layui-row">
-                    <div class="layui-col-lg6"><i class="layui-icon layui-icon-cart-simple" style="color: #4a7e05;"></i></div>
-                    <div class="layui-col-lg6">
+                    <div class="layui-col-xs6"><i class="layui-icon layui-icon-cart-simple" style="color: #4a7e05;"></i></div>
+                    <div class="layui-col-xs6">
                         <div class="statistic-title vh-center">
                             订单
                         </div>
@@ -527,21 +527,21 @@ $(function () {
         </div>
     </div>
     <div class="dashboard-data layui-row">
-        <div class="layui-col-lg6">
+        <div class="layui-col-xs6">
             <div class="layui-panel">
-                <div style="width: 100%; height: 100%" id="dashboardView"></div>
+                <div style="width: 100%; height: 100%" id="dashboardView" class="vh-center"></div>
             </div>
         </div>
-        <div class="layui-col-lg6">
+        <div class="layui-col-xs6">
             <div class="layui-panel">
-                <div style="width: 100%; height: 100%" id="clockView"></div>
+                <div style="width: 100%; height: 100%" id="clockView" class="vh-center"></div>
             </div>
         </div>
     </div>
     <div class="temperature-data layui-row">
-        <div class="layui-col-lg12">
+        <div class="layui-col-xs12">
             <div class="layui-panel">
-                <div style="width: 100%; height: 100%" id="temperatureView"></div>
+                <div style="width: 100%; height: 100%" id="temperatureView" class="vh-center"></div>
             </div>
         </div>
     </div>
