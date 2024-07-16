@@ -17,7 +17,7 @@
     }
 </style>
 <body>
-<div class="layui-col-xs2" style="border-right: 1px solid #eee">
+<div class="layui-col-xs2" style="border-right: 1px solid #eee; min-width: 260px;">
     <form class="layui-form org-search-form" action="javascript:void(0);">
         <div class="layui-form-item">
             <div class="layui-input-group">
@@ -31,7 +31,7 @@
     </form>
     <div id="userGroupTree"></div>
 </div>
-<div class="layui-col-xs10 layui-fluid" style="height: 100%;">
+<div class="layui-col-xs10 layui-fluid" style="height: 100%; max-width: calc(100% - 260px);">
     <iframe id="userGroupContent" frameborder="0" style="width: 100%;height: 100%;"></iframe>
 </div>
 </body>
