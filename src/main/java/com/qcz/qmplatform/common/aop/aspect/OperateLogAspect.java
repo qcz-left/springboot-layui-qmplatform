@@ -49,7 +49,7 @@ public class OperateLogAspect {
     /**
      * 线程池服务
      */
-    private final ExecutorService executorService = ThreadUtil.newExecutor(50);
+    private final ExecutorService executorService = ThreadUtil.newExecutor(10, 50);
 
     @Pointcut("@annotation(com.qcz.qmplatform.common.aop.annotation.RecordLog)")
     public void operateLogPointcut() {
