@@ -227,7 +227,6 @@ layui.use(['element', 'dropdown'], function () {
     $("#collapseIcon").click(function () {
         $layuiSide.width($layuiSide.width() - collapseWidth);
         $layuiSide.find(".layui-nav-item").width($layuiSide.width() - collapseWidth);
-        $layuiBody.width($layuiBody.width() + collapseWidth);
         $layuiBody.offset({
             left: $layuiBody.offset().left - collapseWidth
         });
@@ -248,7 +247,6 @@ layui.use(['element', 'dropdown'], function () {
         $("#collapseIcon,.layui-side .layui-nav-more,.menu-name").show();
         $layuiSide.find(".layui-nav-item").width($layuiSide.width() + collapseWidth);
         $layuiSide.width($layuiSide.width() + collapseWidth);
-        $layuiBody.width($layuiBody.width() - collapseWidth);
         $layuiBody.offset({
             left: $layuiBody.offset().left + collapseWidth
         });
