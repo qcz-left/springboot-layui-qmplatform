@@ -220,7 +220,7 @@ layui.use(['element', 'dropdown'], function () {
         });
     });
 
-    let collapseWidth = 200;
+    let collapseWidth = 199;
     let $layuiSide = $(".layui-side");
     let $layuiBody = $(".layui-body");
     // 收缩菜单
