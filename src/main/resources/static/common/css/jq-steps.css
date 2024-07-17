@@ -14,7 +14,7 @@
     color: white;
 }
 
-.steps-item-finished .steps-item-content {
+.steps-item-finished,.steps-item-to .steps-item-content {
     cursor: pointer;
 }
 

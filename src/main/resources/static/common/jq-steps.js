@@ -125,6 +125,23 @@ function ($) {
                     getSelectedDom().addClass(stepsItemToClass);
                 }
             }
+            /**
+             * 删除到达点的标记
+             */
+            let removeStepsItemTo = function () {
+                if ($stepsNav.find(".steps-item").hasClass(stepsItemToClass)) {
+                    getSelectedDom().removeClass(stepsItemToClass);
+                }
+            }
+
+            /**
+             * 设置当前步骤数
+             * @param stepIndex 步骤数
+             */
+            let setSteps = function (stepIndex) {
+                getSelectedDom().removeClass("steps-item-selected");
+                $stepsNav.find(".steps-circle[steps-index=" + stepIndex + "]").parents(".steps-item").removeClass("steps-item-wait").addClass("steps-item-selected");
+            }
 
             /**
              * 检查一下步骤，是否是第一步或最后一步
@@ -149,22 +166,23 @@ function ($) {
                 $this.find(".steps-form-content").find(items[stepIndex - 1].bindForm).removeClass("hide");
 
                 $stepsNav.find(".steps-item-finished .steps-circle").html('<i class="layui-icon layui-icon-ok"></i>');
-                $stepsNav.find(".steps-item-finished").unbind("click").click(function () {
-                    checkStepsItemTo();
+                $stepsNav.find(".steps-item-finished,.steps-item-to").unbind("click").click(function () {
+                    if ($(this).hasClass("steps-item-selected")) {
+                        return;
+                    }
+                    // 如果当前点击的是到达点，则在设置步骤点后删除到达点标记，否则在设置步骤点之前加上到达点标记
+                    let isTo = $(this).hasClass(stepsItemToClass);
+                    if (!isTo) {
+                        checkStepsItemTo();
+                    }
                     setSteps($(this).find(".steps-circle").attr("steps-index"));
+                    if (isTo) {
+                        removeStepsItemTo();
+                    }
                     checkStep();
                 });
             }
             checkStep();
-
-            /**
-             * 设置当前步骤数
-             * @param stepIndex 步骤数
-             */
-            let setSteps = function (stepIndex) {
-                getSelectedDom().removeClass("steps-item-selected");
-                $stepsNav.find(".steps-circle[steps-index=" + stepIndex + "]").parents(".steps-item").removeClass("steps-item-wait").addClass("steps-item-selected");
-            }
 
             // 上一步
             $(bindPre).click(function () {
@@ -203,9 +221,7 @@ function ($) {
                 }
 
                 setSteps(nextStepIndex);
-                if ($stepsNav.find(".steps-item").hasClass(stepsItemToClass)) {
-                    getSelectedDom().removeClass(stepsItemToClass);
-                }
+                removeStepsItemTo();
                 checkStep();
             });
 
