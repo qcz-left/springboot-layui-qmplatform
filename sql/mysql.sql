@@ -161,7 +161,6 @@ INSERT INTO sys_menu VALUES ('82241eeb-ed7c-44f3-b9f0-56e986363907', '菜单管�
 INSERT INTO sys_menu VALUES ('042a5960-785f-442e-a76a-576f7eb389c4', '角色管理', 1, 'role', 'layui-icon-auz', '/role/roleListPage', '1', 1);
 INSERT INTO sys_menu VALUES ('f2a871d8-c1dd-4775-ad0d-8b8b3f53eede', '文件管理', 10, 'file', 'layui-icon-file', '/archive/attachment/attachmentListPage', '9ac8ef82-57c9-461e-9ee0-e2c892e8bcac', 1);
 INSERT INTO sys_menu VALUES ('326ad00b-2e0f-4941-9191-a573ada65410', '运维管理', 30, 'operation', 'layui-icon-survey', '', '', 1);
-INSERT INTO sys_menu VALUES ('e843dfa8-e868-4a83-aa35-215cbfbfd643', '数据库监控', 3, 'data-monitor', 'layui-icon-about', '/druid', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 INSERT INTO sys_menu VALUES ('80345dc4-cc15-405b-a371-82e50b64fcd9', '系统运行状态', 1, 'system-status', 'layui-icon-website', '/server/infoPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 INSERT INTO sys_menu VALUES ('428493a8-5e23-4e64-a24c-78e61b3ed854', '字典管理', 4, 'dict', 'layui-icon-tips', '/operation/dict/dictListPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
 INSERT INTO sys_menu VALUES ('bd8cae46-b3bc-48e1-bc6d-c623493fe64c', '短信配置', 50, 'sms', '', '/notify/smsConfigPage', '326ad00b-2e0f-4941-9191-a573ada65410', 1);
@@ -1527,7 +1526,6 @@ INSERT INTO sys_role_permission (role_id, permission_id) VALUES('67d86434-c302-4
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('67d86434-c302-4924-a75a-dfe5fbc4affd', 'e36040a7-f7cb-42f8-a55f-0a6f6e138958');
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '326ad00b-2e0f-4941-9191-a573ada65410');
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '80345dc4-cc15-405b-a371-82e50b64fcd9');
-INSERT INTO sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', 'e843dfa8-e868-4a83-aa35-215cbfbfd643');
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '428493a8-5e23-4e64-a24c-78e61b3ed854');
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', '1d1f59eb-69d8-4894-abfd-54805f36b7df');
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('3e8461bf-537d-4b7d-91db-9676a03fb6fb', 'd0ceae95-12d9-40ea-abe3-03df0b44dd2e');
@@ -1577,7 +1575,6 @@ INSERT INTO sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '15d0b9e4-7630-4826-975d-18d409bae421');
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '5ef5be70-684a-4a65-b2ae-ba95bb4bc4df');
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '80345dc4-cc15-405b-a371-82e50b64fcd9');
-INSERT INTO sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'e843dfa8-e868-4a83-aa35-215cbfbfd643');
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '428493a8-5e23-4e64-a24c-78e61b3ed854');
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', 'bc8a4903-3b5c-4b7e-a3e1-3c851603ff8b');
 INSERT INTO sys_role_permission (role_id, permission_id) VALUES('a77a83b4-abd7-4f3f-ac22-e914bb68ad5c', '318e6adb-e225-4636-9546-6b132b715c24');
