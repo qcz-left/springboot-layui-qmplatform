@@ -28,29 +28,28 @@ import com.qcz.qmplatform.module.business.notify.domain.pojo.TemplateParam;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.TemplateType;
 import com.qcz.qmplatform.module.business.notify.domain.vo.SmsConfigVO;
 import com.qcz.qmplatform.module.business.system.domain.User;
+import com.qcz.qmplatform.module.business.system.domain.dto.CurrentUserInfoDTO;
+import com.qcz.qmplatform.module.business.system.domain.dto.PasswordDTO;
 import com.qcz.qmplatform.module.business.system.domain.dto.SaveUserDTO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserGroupUserQO;
 import com.qcz.qmplatform.module.business.system.domain.qo.UserQO;
-import com.qcz.qmplatform.module.business.system.domain.dto.CurrentUserInfoDTO;
-import com.qcz.qmplatform.module.business.system.domain.dto.PasswordDTO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupUserVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import com.qcz.qmplatform.module.business.system.service.UserService;
+import jakarta.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -189,7 +188,7 @@ public class UserController extends BaseController {
         return ResponseResult.newInstance(userService.insertUser(user));
     }
 
-    @PutMapping("/updateUser")
+    @PostMapping("/updateUser")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改用户")
@@ -202,7 +201,7 @@ public class UserController extends BaseController {
      *
      * @param user 需要修改的用户信息
      */
-    @PutMapping("/saveCurrentUserInfo")
+    @PostMapping("/saveCurrentUserInfo")
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户基本资料")
@@ -210,7 +209,7 @@ public class UserController extends BaseController {
         return ResponseResult.newInstance(userService.saveCurrentUserInfo(user));
     }
 
-    @PutMapping("/nnl/changeUserPwd")
+    @PostMapping("/nnl/changeUserPwd")
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "找回密码")
     public ResponseResult<?> changeUserPwd(@Validated({Update.class}) @RequestBody PasswordDTO passwordDTO) {
@@ -241,7 +240,7 @@ public class UserController extends BaseController {
      *
      * @param passwordDTO 密码参数
      */
-    @PutMapping("/changeCurrentUserPwd")
+    @PostMapping("/changeCurrentUserPwd")
     @RequiresPermissions(PrivCode.BTN_CODE_USER_SAVE)
     @ResponseBody
     @RecordLog(type = OperateType.UPDATE, description = "修改当前用户密码")
@@ -290,12 +289,12 @@ public class UserController extends BaseController {
         return ResponseResult.ok();
     }
 
-    @DeleteMapping("/delUser")
+    @PostMapping("/delUser")
     @RequiresPermissions(PrivCode.BTN_CODE_USER_DELETE)
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除用户")
-    public ResponseResult<Void> delUser(String userIds) {
-        userService.deleteUserByIds(StringUtils.split(userIds, ","));
+    public ResponseResult<Void> delUser(@RequestBody List<String> userIds) {
+        userService.deleteUserByIds(userIds);
         return ResponseResult.ok();
     }
 

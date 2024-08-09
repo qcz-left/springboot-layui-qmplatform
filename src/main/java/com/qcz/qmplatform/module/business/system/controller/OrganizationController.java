@@ -6,7 +6,6 @@ import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.Organization;
 import com.qcz.qmplatform.module.business.system.domain.dto.OrgCommonConfigDTO;
@@ -14,18 +13,16 @@ import com.qcz.qmplatform.module.business.system.domain.dto.SynchroConfigDTO;
 import com.qcz.qmplatform.module.business.system.domain.pojo.OrgTree;
 import com.qcz.qmplatform.module.business.system.domain.qo.OrganizationQO;
 import com.qcz.qmplatform.module.business.system.service.OrganizationService;
+import jakarta.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -181,7 +178,7 @@ public class OrganizationController extends BaseController {
      *
      * @param org 组织机构信息
      */
-    @PutMapping("/updateOrg")
+    @PostMapping("/updateOrg")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_ORG_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改组织机构")
@@ -194,12 +191,12 @@ public class OrganizationController extends BaseController {
      *
      * @param orgIds 组织机构id数组
      */
-    @DeleteMapping("/deleteOrg")
+    @PostMapping("/deleteOrg")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_ORG_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除组织机构")
-    public ResponseResult<Void> deleteOrg(String orgIds) {
-        return ResponseResult.newInstance(organizationService.deleteOrg(StringUtils.split(orgIds, ',')));
+    public ResponseResult<Void> deleteOrg(@RequestBody List<String> orgIds) {
+        return ResponseResult.newInstance(organizationService.deleteOrg(orgIds));
     }
 
     /**

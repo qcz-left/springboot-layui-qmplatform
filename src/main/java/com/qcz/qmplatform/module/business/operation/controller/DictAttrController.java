@@ -9,13 +9,12 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.operation.domain.DictAttr;
 import com.qcz.qmplatform.module.business.operation.service.DictAttrService;
+import jakarta.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -114,28 +112,15 @@ public class DictAttrController extends BaseController {
     }
 
     /**
-     * 修改字典属性
-     *
-     * @param dictAttr 字典属性信息
-     */
-    @PutMapping("/updateDictAttr")
-    @ResponseBody
-    @RequiresPermissions(PrivCode.BTN_CODE_DICT_ATTR_SAVE)
-    @RecordLog(type = OperateType.UPDATE, description = "修改字典属性")
-    public ResponseResult<Void> updateDictAttr(@RequestBody DictAttr dictAttr) {
-        return ResponseResult.newInstance(dictAttrService.updateDictAttrOne(dictAttr));
-    }
-
-    /**
      * 删除字典属性
      *
      * @param attrIds 字典属性id数组
      */
-    @DeleteMapping("/deleteDictAttr")
+    @PostMapping("/deleteDictAttr")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_ATTR_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除字典属性")
-    public ResponseResult<Void> deleteDictAttr(String attrIds) {
-        return ResponseResult.newInstance(dictAttrService.deleteDictAttr(StringUtils.split(attrIds, ',')));
+    public ResponseResult<Void> deleteDictAttr(@RequestBody List<String> attrIds) {
+        return ResponseResult.newInstance(dictAttrService.deleteDictAttr(attrIds));
     }
 }

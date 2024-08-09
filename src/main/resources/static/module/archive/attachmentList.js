@@ -94,9 +94,7 @@ layui.use(['table', 'form', 'element'], function () {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
-            CommonUtil.deleteAjax(ctx + "/archive/attachment/delAttachment", {
-                attachmentIds: CommonUtil.joinMulti(ids)
-            }, function (data) {
+            CommonUtil.postAjax(ctx + "/archive/attachment/delAttachment", ids, function (data) {
                 LayerUtil.respMsg(data, null, null, function () {
                     tableReload();
                 });

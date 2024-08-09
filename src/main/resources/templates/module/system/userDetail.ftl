@@ -197,7 +197,7 @@ layui.use(['form', 'layer', 'xmSelect'], function () {
         data.field.roleIds = roleIdsSelect.getValue('value');
         data.field.organizationIds = [parentId] || organizationIdsSelect.getValue('value');
         data.field.password = rsaEncrypt(data.field.password);
-        CommonUtil.postOrPut(id, ctx + (id ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
+        CommonUtil.postAjax(ctx + (id ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
             top.layer.closeAll();
             LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
                 if (parentId) {

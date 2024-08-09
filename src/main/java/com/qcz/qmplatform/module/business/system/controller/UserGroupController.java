@@ -10,6 +10,7 @@ import com.qcz.qmplatform.module.business.system.domain.UserGroup;
 import com.qcz.qmplatform.module.business.system.domain.pojo.UserGroupTree;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserGroupVO;
 import com.qcz.qmplatform.module.business.system.service.UserGroupService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -78,7 +78,7 @@ public class UserGroupController extends BaseController {
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除用户组")
-    public ResponseResult<Void> delete(String ids) {
-        return ResponseResult.newInstance(userGroupService.removeByIds(StringUtils.split(ids, ',')));
+    public ResponseResult<Void> delete(@RequestBody List<String> ids) {
+        return ResponseResult.newInstance(userGroupService.removeByIds(ids));
     }
 }

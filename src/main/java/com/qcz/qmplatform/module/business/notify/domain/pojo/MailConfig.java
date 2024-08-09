@@ -25,7 +25,7 @@ public class MailConfig implements Serializable {
     /**
      * 是否需要加密连接
      */
-    private boolean enableSSL;
+    private boolean enableSSL = false;
 
     /**
      * 发送人地址

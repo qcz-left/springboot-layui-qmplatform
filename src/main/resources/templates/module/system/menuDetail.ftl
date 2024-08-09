@@ -148,7 +148,7 @@
 
         form.on('submit(menu-submit)', function (data) {
             layer.load(2);
-            CommonUtil.postOrPut(id, ctx + '/menu/' + (id ? 'updatePermission' : 'addPermission'), data.field, function (result) {
+            CommonUtil.postAjax(ctx + '/menu/' + (id ? 'updatePermission' : 'addPermission'), data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
                     reloadParentTable();

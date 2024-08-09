@@ -8,12 +8,13 @@ import com.qcz.qmplatform.common.bean.PageRequest;
 import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
+import com.qcz.qmplatform.module.business.system.domain.ThirdpartyApp;
+import com.qcz.qmplatform.module.business.system.domain.dto.ThirdpartyAppDeleteDTO;
+import com.qcz.qmplatform.module.business.system.service.ThirdpartyAppService;
 import com.qcz.qmplatform.module.watch.DBChangeCenter;
 import com.qcz.qmplatform.module.watch.DBNotifyInfo;
-import com.qcz.qmplatform.module.business.system.domain.ThirdpartyApp;
-import com.qcz.qmplatform.module.business.system.service.ThirdpartyAppService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import jakarta.annotation.Resource;
 
 /**
  * <p>
@@ -84,9 +83,9 @@ public class ThirdpartyAppController extends BaseController {
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除第三方应用参数配置信息")
-    public ResponseResult<Void> delete(String id, String name) {
-        boolean success = thirdpartyAppService.removeByIds(StringUtils.split(id, ','));
-        DBChangeCenter.getInstance().doNotify(DBNotifyInfo.newInstance(DBProperties.Table.SYS_THIRDPARTY_APP, name));
+    public ResponseResult<Void> delete(@RequestBody ThirdpartyAppDeleteDTO dto) {
+        boolean success = thirdpartyAppService.removeById(dto.getId());
+        DBChangeCenter.getInstance().doNotify(DBNotifyInfo.newInstance(DBProperties.Table.SYS_THIRDPARTY_APP, dto.getName()));
         return ResponseResult.newInstance(success);
     }
 

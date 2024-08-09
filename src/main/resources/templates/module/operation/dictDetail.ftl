@@ -64,7 +64,7 @@
 
         form.on('submit(dict-submit)', function (data) {
             layer.load(2);
-            CommonUtil.postOrPut(id, ctx + '/operation/dict/' + (id ? 'updateDict' : 'addDict'), data.field, function (result) {
+            CommonUtil.postAjax(ctx + '/operation/dict/' + (id ? 'updateDict' : 'addDict'), data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
                     reloadParentTable();

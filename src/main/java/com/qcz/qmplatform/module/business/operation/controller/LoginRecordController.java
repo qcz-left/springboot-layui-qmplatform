@@ -8,21 +8,20 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.operation.domain.LoginRecord;
-import com.qcz.qmplatform.module.business.operation.service.LoginRecordService;
 import com.qcz.qmplatform.module.business.operation.domain.vo.LoginStrategyVO;
+import com.qcz.qmplatform.module.business.operation.service.LoginRecordService;
+import jakarta.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,11 +67,11 @@ public class LoginRecordController extends BaseController {
         return ResponseResult.newInstance(loginRecordService.saveLoginStrategy(loginStrategyVO));
     }
 
-    @DeleteMapping("/deleteLoginRecord")
+    @PostMapping("/deleteLoginRecord")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_LOGIN_RECORD_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除登录错误记录")
-    public ResponseResult<Void> deleteLoginRecord(String recordIds) {
-        return ResponseResult.newInstance(loginRecordService.deleteLoginRecord(StringUtils.split(recordIds, ',')));
+    public ResponseResult<Void> deleteLoginRecord(@RequestBody List<String> recordIds) {
+        return ResponseResult.newInstance(loginRecordService.deleteLoginRecord(recordIds));
     }
 }

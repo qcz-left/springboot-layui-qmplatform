@@ -27,15 +27,14 @@ import com.qcz.qmplatform.module.business.system.domain.User;
 import jakarta.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -99,19 +98,18 @@ public class AttachmentController extends BaseController {
         return upload;
     }
 
-    @DeleteMapping("/delAttachment")
+    @PostMapping("/delAttachment")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_FILE_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除文件")
-    public ResponseResult<Void> delAttachment(String attachmentIds) {
-        List<String> idList = Arrays.asList(attachmentIds.split(","));
+    public ResponseResult<Void> delAttachment(@RequestBody List<String> attachmentIds) {
         LambdaQueryWrapper<Attachment> queryWrapper = Wrappers.lambdaQuery(Attachment.class)
-                .in(Attachment::getAttachmentId, idList);
+                .in(Attachment::getAttachmentId, attachmentIds);
         List<String> attachmentUrls = CollectionUtils.map(attachmentService.list(queryWrapper), Attachment::getAttachmentUrl);
         for (String attachmentUrl : attachmentUrls) {
             FileUtil.del(FileUtils.getRealFilePath(attachmentUrl));
         }
 
-        return ResponseResult.newInstance(attachmentService.removeByIds(idList));
+        return ResponseResult.newInstance(attachmentService.removeByIds(attachmentIds));
     }
 }

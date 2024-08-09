@@ -29,7 +29,6 @@ layui.use(['form', 'table'], function () {
     });
 
     form.on('switch(status)', function (obj) {
-        console.log(obj);
         let operateName = obj.othis[0].innerText;
         CommonUtil.postAjax(baseUrl + "/updateStatus", {
             id: $(obj.elem).attr("data-id"),
@@ -123,7 +122,7 @@ layui.use(['form', 'table'], function () {
     }
 
     function remove(id, name) {
-        layer.confirm("是否要删除第三方应用参数配置信息：<span class='text-success'>" + CommonUtil.joinMultiByLen(nameDef[name], 3) + "</span>，删除后将不可恢复！", {
+        layer.confirm("是否要删除第三方应用参数配置信息：<span class='text-success'>" + nameDef[name] + "</span>，删除后将不可恢复！", {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
@@ -135,7 +134,7 @@ layui.use(['form', 'table'], function () {
                     tableReload();
                 });
                 layer.close(index);
-            }, null, true, false);
+            });
         });
     }
 

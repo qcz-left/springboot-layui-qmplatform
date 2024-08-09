@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.common.utils;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ReflectUtil;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Date;
 
 /**
  * 文件工具类
@@ -206,6 +208,15 @@ public class FileUtils extends FileUtil {
             LOGGER.error(null, e);
         }
         return "/";
+    }
+
+    /**
+     * 根据原始文件名生成临时文件路径
+     *
+     * @param fileName 文件名
+     */
+    public static String generateTmpFilePath(String fileName) {
+        return ConfigLoader.getDeleteTmpPath() + DateUtils.format(new Date(), DatePattern.PURE_DATETIME_MS_FORMAT) + "_" + fileName;
     }
 
 }

@@ -122,14 +122,12 @@ layui.use(['table', 'treetable'], function () {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
-            CommonUtil.postAjax(baseUrl + "/delete", {
-                ids: CommonUtil.joinMulti(ids)
-            }, function (data) {
+            CommonUtil.postAjax(baseUrl + "/delete", ids, function (data) {
                 LayerUtil.respMsg(data, Msg.DELETE_SUCCESS, Msg.DELETE_FAILURE, function () {
                     tableReload();
                 });
                 layer.close(index);
-            }, null, true, false);
+            });
         });
     }
 });

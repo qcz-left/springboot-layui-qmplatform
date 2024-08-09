@@ -22,14 +22,12 @@ layui.use(['dtree'], function () {
                     title: "警告",
                     skin: "my-layer-danger"
                 }, function (index) {
-                    CommonUtil.postAjax(ctx + "/system/user-group/delete", {
-                        ids: node.nodeId
-                    }, function (data) {
+                    CommonUtil.postAjax(ctx + "/system/user-group/delete", [node.nodeId], function (data) {
                         top.layer.close(index);
                         LayerUtil.respMsg(data, null, null, function () {
                             reloadFrame();
                         });
-                    }, null, true, false)
+                    })
                 });
             }
         }],

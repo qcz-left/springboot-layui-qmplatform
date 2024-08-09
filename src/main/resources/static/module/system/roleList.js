@@ -100,7 +100,7 @@ layui.use(['table'], function () {
                     return false;
                 }
                 let loadIndex = top.layer.load(2);
-                CommonUtil.postOrPut(id, ctx + '/role/' + (id ? 'updateRole' : 'addRole'), form.val('role-form'), function (result) {
+                CommonUtil.postAjax(ctx + '/role/' + (id ? 'updateRole' : 'addRole'), form.val('role-form'), function (result) {
                     top.layer.close(loadIndex);
                     LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
                         top.layer.closeAll();
@@ -117,9 +117,7 @@ layui.use(['table'], function () {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
-            CommonUtil.deleteAjax(ctx + "/role/deleteRole", {
-                roleIds: CommonUtil.joinMulti(ids)
-            }, function (data) {
+            CommonUtil.postAjax(ctx + "/role/deleteRole", ids, function (data) {
                 LayerUtil.respMsg(data, null, null, function () {
                     tableReload();
                 });

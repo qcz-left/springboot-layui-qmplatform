@@ -8,22 +8,20 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.operation.domain.Dict;
 import com.qcz.qmplatform.module.business.operation.service.DictService;
+import jakarta.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -105,7 +103,7 @@ public class DictController extends BaseController {
      *
      * @param dict 字典信息
      */
-    @PutMapping("/updateDict")
+    @PostMapping("/updateDict")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改字典")
@@ -118,11 +116,11 @@ public class DictController extends BaseController {
      *
      * @param dictIds 字典id数组
      */
-    @DeleteMapping("/deleteDict")
+    @PostMapping("/deleteDict")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_DICT_DELETE)
     @RecordLog(type = OperateType.DELETE, description = "删除字典")
-    public ResponseResult<Void> deleteDict(String dictIds) {
-        return ResponseResult.newInstance(dictService.deleteDict(StringUtils.split(dictIds, ',')));
+    public ResponseResult<Void> deleteDict(@RequestBody List<String> dictIds) {
+        return ResponseResult.newInstance(dictService.deleteDict(dictIds));
     }
 }

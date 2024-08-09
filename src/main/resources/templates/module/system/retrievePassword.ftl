@@ -164,7 +164,7 @@ top.rsaPublicKey = "${ConfigLoader.getRsaPublicKey()!}";
                         data.newPassword = rsaEncrypt(data.newPassword);
                         data.confirmNewPassword = rsaEncrypt(data.confirmNewPassword);
                         let success;
-                        CommonUtil.putSync(ctx + '/user/nnl/changeUserPwd', data, function (result) {
+                        CommonUtil.postSync(ctx + '/user/nnl/changeUserPwd', data, function (result) {
                             success = result.ok;
                             top.layer.close(index);
                             LayerUtil.respMsg(result, '修改密码成功，请重新登录验证', '修改密码失败');

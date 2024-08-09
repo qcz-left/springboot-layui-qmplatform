@@ -161,7 +161,7 @@ layui.use(['form', 'xmSelect'], function () {
 
         form.on('submit(org-submit)', function (data) {
             let index = top.layer.load(2);
-            CommonUtil.postOrPut(nodeId, ctx + '/organization/' + (nodeId ? 'updateOrg' : 'addOrg'), data.field, function (result) {
+            CommonUtil.postAjax(ctx + '/organization/' + (nodeId ? 'updateOrg' : 'addOrg'), data.field, function (result) {
                 top.layer.close(index);
                 reloadFrame();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE)
@@ -275,7 +275,7 @@ layui.use(['form', 'xmSelect'], function () {
             data.field.roleIds = roleIdsSelect.getValue('value');
             data.field.organizationIds = organizationIdsSelect.getValue('value');
             data.field.password = rsaEncrypt(data.field.password);
-            CommonUtil.postOrPut(nodeId, ctx + (nodeId ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
+            CommonUtil.postAjax(ctx + (nodeId ? '/user/updateUser' : '/user/addUser'), data.field, function (result) {
                 top.layer.close(index);
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
                     reloadFrame();

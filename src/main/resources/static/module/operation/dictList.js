@@ -88,9 +88,7 @@ layui.use(['table', 'form'], function () {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
-            CommonUtil.deleteAjax(ctx + "/operation/dict/deleteDict", {
-                dictIds: CommonUtil.joinMulti(ids)
-            }, function (data) {
+            CommonUtil.postAjax(ctx + "/operation/dict/deleteDict", ids, function (data) {
                 LayerUtil.respMsg(data, null, null, function () {
                     tableReload();
                 });

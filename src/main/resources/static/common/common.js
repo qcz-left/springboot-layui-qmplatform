@@ -17,7 +17,7 @@ const CommonUtil = {
         $.ajax({
             type: _type,
             url: _url,
-            data: _transferJson ? encodeURIComponent(JSON.stringify(_data)) : _data,
+            data: _transferJson && typeof(_data) === "object" ? encodeURIComponent(JSON.stringify(_data)) : _data,
             contentType: _transferJson ? 'application/json;charset=UTF-8' : 'application/x-www-form-urlencoded;charset=UTF-8',
             async: typeof (_async) == "undefined" ? true : _async,
             success: function (result) {
@@ -43,10 +43,6 @@ const CommonUtil = {
 
     postSync: function (_url, _data, _success, _fail) {
         CommonUtil.postAjax(_url, _data, _success, _fail, false)
-    },
-
-    putSync: function (_url, _data, _success, _fail) {
-        CommonUtil.putAjax(_url, _data, _success, _fail, false)
     },
 
     /**
@@ -96,11 +92,6 @@ const CommonUtil = {
      */
     patchAjax: function (_url, _data, _success, _fail) {
         CommonUtil.ajax(AjaxType.PATCH, _url, _data, _success, _fail, true, true)
-    },
-
-    postOrPut: function (_isPut, _url, _data, _success, _fail) {
-        let _type = _isPut ? AjaxType.PUT : AjaxType.POST;
-        CommonUtil.ajax(_type, _url, _data, _success, _fail, true, true)
     },
 
     /**

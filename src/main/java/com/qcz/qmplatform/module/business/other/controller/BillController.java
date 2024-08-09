@@ -106,7 +106,7 @@ public class BillController extends BaseController {
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除账单")
-    public ResponseResult<Void> delete(String ids) {
-        return ResponseResult.newInstance(billService.removeByIds(StringUtils.split(ids, ',')));
+    public ResponseResult<Void> delete(@RequestBody List<String> ids) {
+        return ResponseResult.newInstance(billService.removeByIds(ids));
     }
 }

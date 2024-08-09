@@ -94,7 +94,7 @@
 
         form.on('submit(org-submit)', function (data) {
             layer.load(2);
-            CommonUtil.postOrPut(id, ctx + '/organization/' + (id ? 'updateOrg' : 'addOrg'), data.field, function (result) {
+            CommonUtil.postAjax(ctx + '/organization/' + (id ? 'updateOrg' : 'addOrg'), data.field, function (result) {
                 top.layer.closeAll();
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
                     if (parentId) {

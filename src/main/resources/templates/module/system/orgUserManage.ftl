@@ -204,9 +204,7 @@ layui.use(['table', 'form', 'layer'], function () {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
-            CommonUtil.deleteAjax(ctx + "/user/delUser", {
-                userIds: CommonUtil.joinMulti(ids)
-            }, function (result) {
+            CommonUtil.postAjax(ctx + "/user/delUser", ids, function (result) {
                 top.layer.close(index);
                 if (CommonUtil.respSuccess(result)) {
                     reloadFrame();

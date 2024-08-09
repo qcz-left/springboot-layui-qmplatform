@@ -107,9 +107,7 @@ layui.use(['table', 'form', 'element', 'layer', 'xmSelect'], function () {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
-            CommonUtil.deleteAjax(ctx + "/user/delUser", {
-                userIds: CommonUtil.joinMulti(ids)
-            }, function (data) {
+            CommonUtil.postAjax(ctx + "/user/delUser", ids, function (data) {
                 LayerUtil.respMsg(data, null, null, function () {
                     tableReload();
                 });

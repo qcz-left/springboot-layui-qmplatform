@@ -80,7 +80,7 @@ layui.use(['form'], function () {
 
     form.on('submit(user-submit)', function (data) {
         top.layer.load(2);
-        CommonUtil.putAjax(ctx + '/user/saveCurrentUserInfo', data.field, function (result) {
+        CommonUtil.postAjax(ctx + '/user/saveCurrentUserInfo', data.field, function (result) {
             top.layer.closeAll();
             LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
                 top.$("#currentUsername").text(form.val('user-form').username)

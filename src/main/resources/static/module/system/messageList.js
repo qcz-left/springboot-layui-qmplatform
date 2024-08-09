@@ -50,9 +50,7 @@ layui.use(['table', 'form'], function () {
                     title: "警告",
                     skin: "my-layer-danger"
                 }, function (index) {
-                    CommonUtil.putAjax(ctx + "/system/message/setHasRead", {
-                        messageIds: ids
-                    }, function (data) {
+                    CommonUtil.postAjax(ctx + "/system/message/setHasRead", ids, function (data) {
                         LayerUtil.respMsg(data, null, null, function () {
                             tableReload();
                         });
@@ -81,9 +79,7 @@ layui.use(['table', 'form'], function () {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
-            CommonUtil.deleteAjax(ctx + "/system/message/delete", {
-                messageIds: CommonUtil.joinMulti(ids)
-            }, function (data) {
+            CommonUtil.postAjax(ctx + "/system/message/delete", ids, function (data) {
                 LayerUtil.respMsg(data, null, null, function () {
                     tableReload();
                 });

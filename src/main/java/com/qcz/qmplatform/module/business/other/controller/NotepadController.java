@@ -8,11 +8,11 @@ import com.qcz.qmplatform.common.bean.PageRequest;
 import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.other.domain.Notepad;
-import com.qcz.qmplatform.module.business.other.service.NotepadService;
 import com.qcz.qmplatform.module.business.other.domain.vo.NotepadVO;
+import com.qcz.qmplatform.module.business.other.service.NotepadService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.annotation.Resource;
 import java.util.List;
 
 /**
@@ -81,8 +80,8 @@ public class NotepadController extends BaseController {
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除记事本")
-    public ResponseResult<Void> delete(String ids) {
-        return ResponseResult.newInstance(notepadService.removeByIds(StringUtils.split(ids, ',')));
+    public ResponseResult<Void> delete(@RequestBody List<String> ids) {
+        return ResponseResult.newInstance(notepadService.removeByIds(ids));
     }
 
 }

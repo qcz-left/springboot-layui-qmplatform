@@ -6,27 +6,24 @@ import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.validation.groups.Update;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.pojo.MenuTree;
 import com.qcz.qmplatform.module.business.system.domain.pojo.Permission;
-import com.qcz.qmplatform.module.business.system.service.MenuService;
 import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
+import com.qcz.qmplatform.module.business.system.service.MenuService;
+import jakarta.annotation.Resource;
+import jakarta.validation.groups.Default;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.annotation.Resource;
-import jakarta.validation.groups.Default;
 import java.util.List;
 
 /**
@@ -119,7 +116,7 @@ public class MenuController extends BaseController {
      *
      * @param permission 权限表单信息
      */
-    @PutMapping("/updatePermission")
+    @PostMapping("/updatePermission")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_MENU_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改权限")
@@ -144,11 +141,11 @@ public class MenuController extends BaseController {
      *
      * @param permissionIds 菜单id
      */
-    @DeleteMapping("/deletePermission")
+    @PostMapping("/deletePermission")
     @RequiresPermissions(PrivCode.BTN_CODE_MENU_DELETE)
     @ResponseBody
-    public ResponseResult<Void> deletePermission(String permissionIds) {
-        return ResponseResult.newInstance(menuService.deletePermission(StringUtils.split(permissionIds, ',')));
+    public ResponseResult<Void> deletePermission(List<String> permissionIds) {
+        return ResponseResult.newInstance(menuService.deletePermission(permissionIds));
     }
 }
 

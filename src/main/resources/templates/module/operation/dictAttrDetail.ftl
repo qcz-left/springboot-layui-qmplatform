@@ -61,7 +61,7 @@
 
         form.on('submit(dictAttr-submit)', function (data) {
             let index = layer.load(2);
-            CommonUtil.postOrPut(attrId, ctx + '/operation/dict-attr/' + (attrId ? 'updateDictAttr' : 'addDictAttr'), data.field, function (result) {
+            CommonUtil.postAjax(ctx + '/operation/dict-attr/' + (attrId ? 'updateDictAttr' : 'addDictAttr'), data.field, function (result) {
                 layer.close(index);
                 LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
                     reloadTable("dictIframe");

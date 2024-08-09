@@ -9,27 +9,23 @@ import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.PrivCode;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.utils.StringUtils;
-import com.qcz.qmplatform.common.validation.groups.Insert;
 import com.qcz.qmplatform.common.validation.groups.Update;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.Role;
-import com.qcz.qmplatform.module.business.system.service.RoleService;
 import com.qcz.qmplatform.module.business.system.domain.qo.RolePermissionQO;
+import com.qcz.qmplatform.module.business.system.service.RoleService;
+import jakarta.annotation.Resource;
+import jakarta.validation.groups.Default;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.annotation.Resource;
-import jakarta.validation.groups.Default;
 import java.util.List;
 
 /**
@@ -144,7 +140,7 @@ public class RoleController extends BaseController {
      *
      * @param role 角色信息
      */
-    @PutMapping("/updateRole")
+    @PostMapping("/updateRole")
     @ResponseBody
     @RequiresPermissions(PrivCode.BTN_CODE_ROLE_SAVE)
     @RecordLog(type = OperateType.UPDATE, description = "修改角色")
@@ -157,12 +153,12 @@ public class RoleController extends BaseController {
      *
      * @param roleIds 角色id数组
      */
-    @DeleteMapping("/deleteRole")
+    @PostMapping("/deleteRole")
     @RequiresPermissions(PrivCode.BTN_CODE_ROLE_DELETE)
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除角色")
-    public ResponseResult<Void> deleteRole(String roleIds) {
-        roleService.deleteRole(StringUtils.split(roleIds, ','));
+    public ResponseResult<Void> deleteRole(@RequestBody List<String> roleIds) {
+        roleService.deleteRole(roleIds);
         return ResponseResult.ok();
     }
 
