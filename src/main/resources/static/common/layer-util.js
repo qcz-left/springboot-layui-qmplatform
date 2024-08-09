@@ -30,12 +30,12 @@ const LayerUtil = {
     },
 
     /**
-     * 打开一个弹窗
-     * 1、loaded和success函数如果同时存在，只生效loaded
-     * 2、submit和yes函数如果同时存在，只生效submit
-     * 3、如果设置了submit函数，按钮显示默认为['保存', '取消']
-     * 4、默认宽高50%
-     * 5、layer默认type类型为2
+     * 打开一个弹窗<p>
+     * 1、loaded和success函数如果同时存在，只生效loaded <p>
+     * 2、submit和yes函数如果同时存在，只生效submit <p>
+     * 3、如果设置了submit函数，按钮显示默认为['保存', '取消'] <p>
+     * 4、默认宽高50% <p>
+     * 5、layer默认type类型为2 <p>
      * @param options 原生layer参数
      * @param isTop 是否顶层
      */
@@ -53,6 +53,13 @@ const LayerUtil = {
             }
             options.yes = function (index, layerDom) {
                 let iframeWin = layerDom.find('iframe')[0].contentWindow;
+                // 表单提交时做表单校验
+                let form = iframeWin.layui.form;
+                if (options.formVerify && form) {
+                    if (!form.doVerify(iframeWin.$("form"))) {
+                        return false;
+                    }
+                }
                 options.submit(iframeWin, index);
             }
         }
