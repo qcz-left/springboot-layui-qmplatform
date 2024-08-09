@@ -24,6 +24,9 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.base.ExcelTemplateVO;
 import com.qcz.qmplatform.module.base.ExportColumn;
 import com.qcz.qmplatform.module.base.ExportParamVO;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.DataValidation;
 import org.apache.poi.ss.usermodel.DataValidationConstraint;
 import org.apache.poi.ss.usermodel.DataValidationHelper;
@@ -39,16 +42,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -57,7 +57,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -104,16 +103,14 @@ public class CommonController extends BaseController {
     }
 
     /**
-     * 删除文件
-     *
-     * @param filePath 文件路径
+     * 上传文件（临时上传，会自动删除）
      */
-    @DeleteMapping("/deleteFile")
+    @PostMapping("/uploadTmpFile")
     @ResponseBody
-    public ResponseResult<Void> deleteFile(String filePath) {
-        validateFile(filePath);
-        FileUtils.del(FileUtils.getRealFilePath(filePath));
-        return ResponseResult.ok();
+    public ResponseResult<String> uploadTmpFile(MultipartFile file) throws IOException {
+        String tmpFilePath = FileUtils.generateTmpFilePath(file.getOriginalFilename());
+        file.transferTo(new File(tmpFilePath));
+        return ResponseResult.ok(null, tmpFilePath);
     }
 
     /**
@@ -142,7 +139,7 @@ public class CommonController extends BaseController {
             List<?> rows = JSONUtil.toList(queryResp.getJSONObject("data").getJSONArray("list"), Map.class);
             // 一次性写出内容，使用默认样式
             writer.write(rows);
-            tmpFilePath = ConfigLoader.getDeleteTmpPath() + DateUtils.format(new Date(), DatePattern.PURE_DATETIME_MS_FORMAT) + "_" + exportParam.getGenerateName();
+            tmpFilePath = FileUtils.generateTmpFilePath(exportParam.getGenerateName());
             writeExcel(writer, tmpFilePath);
         } catch (Exception e) {
             throw new CommonException("Failed to export file！", e);
@@ -177,7 +174,7 @@ public class CommonController extends BaseController {
         ExcelWriter writer = ExcelUtil.getWriter();
         setExcel(writer, templateVO.getColNames());
 
-        String tmpFilePath = ConfigLoader.getDeleteTmpPath() + DateUtils.format(new Date(), DatePattern.PURE_DATETIME_MS_FORMAT) + "_" + templateVO.getGenerateName();
+        String tmpFilePath = FileUtils.generateTmpFilePath(templateVO.getGenerateName());
         writeExcel(writer, tmpFilePath);
         return ResponseResult.ok(null, tmpFilePath);
     }
