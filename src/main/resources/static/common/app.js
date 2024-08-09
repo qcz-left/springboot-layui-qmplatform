@@ -138,10 +138,14 @@ function layuiTableReload(layuiTable, tableId, where) {
         where['orderName'] = oldWhere['orderName']
         where['order'] = oldWhere['order']
     }
-    layuiTable.reloadData(tableId, {
-        page: {
+    let page = config.page;
+    if (page) {
+        page = {
             curr: 1
-        },
+        }
+    }
+    layuiTable.reloadData(tableId, {
+        page: page,
         where: where
     });
 }

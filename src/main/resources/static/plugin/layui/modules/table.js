@@ -998,11 +998,18 @@ layui.define(['lay', 'laytpl', 'laypage', 'form', 'util'], function(exports){
       that.loading();
 
       options.parseData = function (res) { //res 即为原始返回的数据
+        if (options.page) {
+          return {
+            "code": res.code, //解析接口状态
+            "msg": res.msg, //解析提示文本
+            "count": res.data.count, //解析数据长度
+            "data": res.data.list //解析数据列表
+          };
+        }
         return {
           "code": res.code, //解析接口状态
           "msg": res.msg, //解析提示文本
-          "count": res.data.count, //解析数据长度
-          "data": res.data.list //解析数据列表
+          "data": res.data //解析数据列表
         };
       };
 
