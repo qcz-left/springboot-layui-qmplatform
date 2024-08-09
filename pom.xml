@@ -21,7 +21,7 @@
         <java.version>17</java.version>
         <postgresql.version>42.4.4</postgresql.version>
         <mysql.version>8.0.31</mysql.version>
-        <mybatis-plus.version>3.5.6</mybatis-plus.version>
+        <mybatis-plus.version>3.5.7</mybatis-plus.version>
         <hutool.version>5.8.21</hutool.version>
         <javax.mail.version>1.6.2</javax.mail.version>
         <pagehelper-starter.version>2.1.0</pagehelper-starter.version>
