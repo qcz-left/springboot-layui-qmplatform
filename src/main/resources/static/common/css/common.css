@@ -268,3 +268,7 @@ body .my-layer-warm .layui-layer-btn0 {
 .layui-header .layui-menu .layui-menu-item-checked:after {
     border-right: unset;
 }
+
+a {
+    color: rgb(45, 103, 239);
+}
