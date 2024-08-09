@@ -57,6 +57,7 @@ layui.use(['table'], function () {
             title: id ? "编辑${table.comment!}" : "添加${table.comment!}",
             content: baseUrl + "/${entity?uncap_first}DetailPage?id=" + id,
             area: ['30%', '80%'],
+            formVerify: true,
             loaded: function (iframeWin) {
                 let form = iframeWin.layui.form;
                 // 表单数据校验
@@ -70,9 +71,6 @@ layui.use(['table'], function () {
             },
             submit: function (iframeWin) {
                 let form = iframeWin.layui.form;
-                if (!form.doVerify(iframeWin.$("form"))) {
-                    return false;
-                }
                 layer.load(2);
                 CommonUtil.postAjax(baseUrl + (id ? '/update' : '/insert'), form.val('${table.entityPath}-form'), function (result) {
                     layer.closeAll();
@@ -89,14 +87,12 @@ layui.use(['table'], function () {
             title: "警告",
             skin: "my-layer-danger"
         }, function (index) {
-            CommonUtil.postAjax(baseUrl + "/delete", {
-                ids: CommonUtil.joinMulti(ids)
-            }, function (data) {
+            CommonUtil.postAjax(baseUrl + "/delete", ids, function (data) {
                 LayerUtil.respMsg(data, Msg.DELETE_SUCCESS, Msg.DELETE_FAILURE, function () {
                     tableReload();
                 });
                 layer.close(index);
-            }, null, true, false);
+            });
         });
     }
 

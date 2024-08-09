@@ -26,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.annotation.Resource;
+
+import java.util.List;
+
 /**
  * <p>
  * ${table.comment!} 前端控制器
@@ -53,19 +56,19 @@ public class ${table.controllerName} {
     @Resource
     private ${entity}Service ${entity?uncap_first}Service;
 
-    @GetMapping("/${entity?uncap_first}ListPage")
-    public String ${entity?uncap_first}ListPage() {
+    @GetMapping("/listPage")
+    public String listPage() {
         return "/module/${package.ModuleName}/${entity?uncap_first}List";
     }
 
-    @GetMapping("/${entity?uncap_first}DetailPage")
-    public String ${entity?uncap_first}DetailPage() {
+    @GetMapping("/detailPage")
+    public String detailPage() {
         return "/module/${package.ModuleName}/${entity?uncap_first}Detail";
     }
 
-    @PostMapping("/get${entity}List")
+    @PostMapping("/list")
     @ResponseBody
-    public ResponseResult<PageResult> get${entity}List(PageRequest pageRequest) {
+    public ResponseResult<PageResult> list(PageRequest pageRequest) {
         PageResultHelper.startPage(pageRequest);
         return ResponseResult.ok(PageResultHelper.parseResult(${entity?uncap_first}Service.list()));
     }
@@ -93,8 +96,8 @@ public class ${table.controllerName} {
     @PostMapping("/delete")
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除${table.comment!}")
-    public ResponseResult<Void> delete(String ids) {
-        return ResponseResult.newInstance(${entity?uncap_first}Service.removeByIds(StringUtils.split(ids, ',')));
+    public ResponseResult<Void> delete(@RequestBody List<String> ids) {
+        return ResponseResult.newInstance(${entity?uncap_first}Service.removeByIds(ids));
     }
 }
 </#if>
