@@ -1,9 +1,11 @@
 package com.qcz.qmplatform.common.aop.aspect;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.http.Header;
 import com.qcz.qmplatform.common.utils.ClassUtils;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -40,6 +42,7 @@ public class RequestAspect {
     /**
      * 打印请求参数
      */
+    @SuppressWarnings("unchecked")
     @Before(value = "requestPointcut()")
     public void paramsLog(JoinPoint joinPoint) {
         HttpServletRequest request = ServletUtils.getCurrRequest();
@@ -70,13 +73,22 @@ public class RequestAspect {
                         Class<?> argClass = arg.getClass();
                         Map<String, Object> argMap = BeanUtil.beanToMap(arg);
                         if (arg instanceof Map) {
-                            //noinspection unchecked
                             argMap = (Map<String, Object>) arg;
                         }
                         StringBuilder sb = new StringBuilder();
-                        for (String paramKey : argMap.keySet()) {
-                            Object paramValue = argMap.get(paramKey);
-                            parseParamVal(sb, paramKey, paramValue, 1);
+                        if (ClassUtils.isCommonDataType(argClass)) {
+                            sb.append(arg);
+                        } else if (arg instanceof List) {
+                            List<Object> argList = (List<Object>) arg;
+                            CollectionUtils.forEach(argList, (CollUtil.Consumer<Object>) (o, index) -> {
+                                if (ClassUtils.isCommonDataType(o.getClass())) {
+                                    sb.append("\n").append(retBlank(4)).append(o);
+                                } else {
+                                    parseMapParamVal(sb, BeanUtil.beanToMap(o));
+                                }
+                            });
+                        } else {
+                            parseMapParamVal(sb, argMap);
                         }
                         body = StringUtils.format("\n  [body] {} ==>{}\n", argClass.getSimpleName(), sb.toString());
                     }
@@ -93,6 +105,16 @@ public class RequestAspect {
         long endTime = System.currentTimeMillis();
         LOGGER.info("【 end 】 - cost: {} ms", endTime - startTime);
         return proceed;
+    }
+
+    /**
+     * 解析Map参数
+     */
+    private static void parseMapParamVal(StringBuilder sb, Map<String, Object> map) {
+        for (String oKey : map.keySet()) {
+            Object paramValue = map.get(oKey);
+            parseParamVal(sb, oKey, paramValue, 1);
+        }
     }
 
     /**
@@ -128,11 +150,7 @@ public class RequestAspect {
      * @param num 空格数量
      */
     private static String retBlank(int num) {
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i < num; i++) {
-            str.append(" ");
-        }
-        return str.toString();
+        return " ".repeat(Math.max(0, num));
     }
 
     /**
@@ -144,8 +162,7 @@ public class RequestAspect {
      */
     private static String checkPwdFieldHidden(String fieldName, Object fieldValue) {
         String strFieldValue = String.valueOf(fieldValue);
-        if (fieldValue instanceof Object[]) {
-            Object[] arrFieldValue = (Object[]) fieldValue;
+        if (fieldValue instanceof Object[] arrFieldValue) {
             strFieldValue = StringUtils.format("[{}]", ArrayUtil.join(arrFieldValue, ","));
         }
         strFieldValue = StringUtils.isNullOrUndefined(strFieldValue) ? "" : strFieldValue;
