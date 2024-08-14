@@ -12,7 +12,7 @@ layui.use(['treetable', 'table'], function () {
             treeSpid: '',		//最上级的父级id
             treeIdName: 'id',	//id字段的名称
             treePidName: 'parentId',	//父级节点字段
-            treeDefaultClose: false,	//是否默认折叠
+            treeDefaultClose: true,	//是否默认折叠
             treeLinkage: false,		//父级展开时是否自动展开所有子级
             toolbar: '#toolbar',
             cols: [[
