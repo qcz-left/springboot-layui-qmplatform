@@ -131,7 +131,7 @@ const CommonUtil = {
      * @returns {boolean}
      */
     respSuccess: function (res) {
-        return res.code === ResponseCode.SUCCESS || res.code === ResponseCode.DATA_BAK_RECOVER;
+        return res.ok;
     },
 
     /**

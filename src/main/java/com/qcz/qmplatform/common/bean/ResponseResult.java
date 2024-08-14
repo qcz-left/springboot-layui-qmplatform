@@ -70,7 +70,7 @@ public class ResponseResult<T> {
     }
 
     public boolean isOk() {
-        return code == ResponseCode.SUCCESS.code();
+        return code == ResponseCode.SUCCESS.code() || code == ResponseCode.DATA_BAK_RECOVER.code();
     }
 
 }
