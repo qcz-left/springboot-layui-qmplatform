@@ -15,11 +15,13 @@ import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.exception.BusinessException;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.JSONUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
+import com.qcz.qmplatform.common.utils.TreeUtils;
 import com.qcz.qmplatform.module.business.operation.domain.vo.LoginStrategyVO;
 import com.qcz.qmplatform.module.business.operation.service.LoginRecordService;
 import com.qcz.qmplatform.module.business.operation.service.LoginSettingService;
@@ -31,6 +33,7 @@ import com.qcz.qmplatform.module.business.system.domain.assist.Thirdparty;
 import com.qcz.qmplatform.module.business.system.domain.dto.LoginDTO;
 import com.qcz.qmplatform.module.business.system.domain.pojo.DingTalkUserAccessToken;
 import com.qcz.qmplatform.module.business.system.domain.pojo.DingTalkUserInfo;
+import com.qcz.qmplatform.module.business.system.domain.pojo.MenuTree;
 import com.qcz.qmplatform.module.business.system.domain.qo.PermissionQO;
 import com.qcz.qmplatform.module.business.system.realm.CustomToken;
 import com.qcz.qmplatform.module.business.system.service.MenuService;
@@ -62,6 +65,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -94,7 +98,9 @@ public class LoginController {
         permission.setDisplay(1);
         String userId = currUser.getId();
         permission.setUserId(userId);
-        root.put("menuTree", menuService.getMenuTree(permission));
+        List<MenuTree> menuList = menuService.getMenuList(permission);
+        root.put("menuTree", TreeUtils.buildTree(menuList));
+        root.put("menuMap", CollectionUtils.toMap(menuList, null, MenuTree::getId));
         root.put(Constant.CURRENT_USER_SIGN, currUser);
         root.put("maxTabs", ConfigLoader.getMaxTabs());
         root.put("messageCount", messageService.selectNoReadCount(userId));

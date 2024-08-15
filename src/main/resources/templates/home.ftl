@@ -464,6 +464,13 @@ $(function () {
 </style>
 <body>
 <div class="layui-container layui-fluid">
+    <div class="layui-panel">
+        <div style="padding: 30px;">最近访问：
+            <span id="recentlyVisitedMenu">
+
+            </span>
+        </div>
+    </div>
     <div class="collect-data layui-row">
         <div class="layui-col-xs3">
             <div class="layui-panel">
@@ -546,5 +553,15 @@ $(function () {
         </div>
     </div>
 </div>
+<script>
+let cacheMenus = StorageUtil.getItem("cacheMenus");
+for (let i = cacheMenus.length - 1; i >= 0; i--) {
+    let menuId = cacheMenus[i];
+    let menu = top.menuMap[menuId];
+    if (menu) {
+        $('#recentlyVisitedMenu').append('<a href="javascript:" onclick="top.toMenu(\'' + menuId + '\');">' + menu.name + '</a> ');
+    }
+}
+</script>
 </body>
 </html>

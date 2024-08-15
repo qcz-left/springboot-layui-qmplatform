@@ -11,6 +11,12 @@
     .hide {
         display: none !important;
     }
+
+    .layadmin-pagetabs, .layui-layout-admin .layui-body, .layui-layout-admin .layui-footer,
+    .layui-layout-admin .layui-layout-left {
+        left: 260px;
+    }
+
 </style>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -65,10 +71,10 @@
             </li>
         </ul>
     </div>
-    <div class="layui-side">
-        <div class="layui-side-scroll">
+    <div class="layui-side" style="width: 260px;">
+        <div class="layui-side-scroll" style="width: 260px; padding: 0;">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="menu-tree">
+            <ul class="layui-nav layui-nav-tree" lay-filter="menu-tree" style="width: 260px;">
                 <#include '/include/menuInclude.ftl'>
             </ul>
         </div>
@@ -121,6 +127,10 @@
 <link rel="stylesheet" href="${ctx}/static/css/index.css" />
 <script>
 let menuTree = JSON.parse('${Json.toJsonStr(menuTree)}');
+top.menuMap = JSON.parse('${Json.toJsonStr(menuMap)}');
+// 缓存当前访问的菜单
+let cacheMenus = StorageUtil.getItem("cacheMenus") || [];
+
 top.rsaPublicKey = "${rsaPublicKey!}";
 layui.use(['element', 'dropdown'], function () {
     let element = layui.element;
@@ -358,6 +368,29 @@ layui.use(['element', 'dropdown'], function () {
             document.getElementById("iframe-body-" + layId).contentWindow.location.reload();
         }
         element.tabChange(tabLayFilter, layId);
+
+        if (top.menuMap[layId].linkUrl === "/home") {
+            // 首页不加入
+            return;
+        }
+        if (cacheMenus.length >= 10) {
+            cacheMenus.shift();
+        }
+        let menuIndex = cacheMenus.indexOf(layId);
+        if (menuIndex > -1) {
+            cacheMenus.splice(menuIndex, 1);
+        }
+        cacheMenus.push(layId);
+
+        StorageUtil.setItem("cacheMenus", cacheMenus);
+    }
+
+    /**
+     * 跳转到指定的菜单页面
+     * @param menuId 菜单id
+     */
+    window.toMenu = function (menuId) {
+        $('.layui-side a[lay-id=' + menuId + ']').click().parents('.layui-nav-item:not(.layui-nav-itemed)').find('.parent-menu').click();
     }
 
     let socketUrl = CommonUtil.getWsProtocol() + "://" + window.location.host + ctx + "/socket/validateSession";

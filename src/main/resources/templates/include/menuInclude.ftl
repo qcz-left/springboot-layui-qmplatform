@@ -3,7 +3,7 @@
         <dd>
             <#if menu.hasChild>
                 <li class="layui-nav-item">
-                    <a style="padding-left: ${20 + menu.level * 25}px;" class="" href="javascript:void(0);"><i class="layui-icon <#if menu.icon?has_content>${menu.icon}<#else>layui-icon-list</#if>"></i>&nbsp;<span class="menu-name">&nbsp;${menu.name}</span></a>
+                    <a style="padding-left: ${20 + menu.level * 25}px;" class="parent-menu" href="javascript:void(0);"><i class="layui-icon <#if menu.icon?has_content>${menu.icon}<#else>layui-icon-list</#if>"></i>&nbsp;<span class="menu-name">&nbsp;${menu.name}</span></a>
                     <dl class="layui-nav-child">
                         <@menuTreeMacro menus = menu.childes />
                     </dl>
@@ -17,7 +17,7 @@
 <#list menuTree as menu>
     <#if menu.hasChild>
         <li class="layui-nav-item">
-            <a href="javascript:void(0);"><i class="layui-icon <#if menu.icon?has_content>${menu.icon}<#else>layui-icon-list</#if>"></i>&nbsp;<span class="menu-name">&nbsp;${menu.name}</span></a>
+            <a class="parent-menu" href="javascript:void(0);"><i class="layui-icon <#if menu.icon?has_content>${menu.icon}<#else>layui-icon-list</#if>"></i>&nbsp;<span class="menu-name">&nbsp;${menu.name}</span></a>
             <dl class="layui-nav-child">
                 <@menuTreeMacro menus = menu.childes />
             </dl>
