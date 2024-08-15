@@ -536,3 +536,24 @@ const SelectUtil = {
         return xmSelect.render(option);
     }
 };
+
+/**
+ * 本地缓存
+ */
+let StorageUtil = {
+
+    /**
+     * 设置缓存
+     */
+    setItem: function (key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+    },
+
+    /**
+     * 获取缓存
+     */
+    getItem: function (key) {
+        return JSON.parse(localStorage.getItem(key));
+    },
+
+}
