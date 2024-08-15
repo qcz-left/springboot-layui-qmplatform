@@ -10,6 +10,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class CurrentUserInfoDTO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 我的角色（多个,号隔开）
      */

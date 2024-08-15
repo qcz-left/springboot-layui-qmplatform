@@ -20,6 +20,8 @@ import java.io.Serializable;
 @TableName("sys_thirdparty_app")
 public class ThirdpartyApp implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 主键id
      */

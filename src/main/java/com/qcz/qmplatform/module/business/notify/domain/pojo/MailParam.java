@@ -14,6 +14,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class MailParam implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 接收人地址
      */

@@ -15,6 +15,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class UserVO extends User implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private List<String> organizationIds;
 
     private List<String> roleIds;

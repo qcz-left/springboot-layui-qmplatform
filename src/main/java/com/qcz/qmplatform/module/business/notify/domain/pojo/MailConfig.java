@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class MailConfig implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 邮件服务地址
      */

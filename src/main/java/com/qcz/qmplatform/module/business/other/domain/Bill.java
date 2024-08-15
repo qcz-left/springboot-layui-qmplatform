@@ -24,6 +24,8 @@ import java.time.LocalDateTime;
 @TableName("tbl_bill")
 public class Bill implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 账单id
      */

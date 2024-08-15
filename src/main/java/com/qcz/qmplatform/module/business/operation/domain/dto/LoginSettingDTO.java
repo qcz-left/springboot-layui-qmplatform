@@ -8,6 +8,8 @@ import java.io.Serializable;
 @Data
 public class LoginSettingDTO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 登录页标签
      */

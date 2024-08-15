@@ -10,6 +10,8 @@ import java.io.Serializable;
 @Data
 public class DingTalkUserAccessToken implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 生成的accessToken
      */

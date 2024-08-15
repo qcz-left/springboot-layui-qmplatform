@@ -10,6 +10,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class BatchUserUserGroupDTO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 用户组ID
      */

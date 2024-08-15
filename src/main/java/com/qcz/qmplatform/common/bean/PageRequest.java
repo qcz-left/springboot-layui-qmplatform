@@ -19,6 +19,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class PageRequest implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 页数，默认第一页
      */

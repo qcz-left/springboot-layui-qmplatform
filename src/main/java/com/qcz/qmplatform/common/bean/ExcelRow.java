@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class ExcelRow<T> implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 行号
      */

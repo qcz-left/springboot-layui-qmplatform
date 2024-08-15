@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class WorkWechatAccessToken implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 生成的access_token
      */

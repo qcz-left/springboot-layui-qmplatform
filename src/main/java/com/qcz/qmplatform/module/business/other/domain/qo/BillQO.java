@@ -10,6 +10,8 @@ import java.time.LocalDate;
 @Accessors(chain = true)
 public class BillQO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String remark;
 
     private String consumer;

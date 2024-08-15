@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 @TableName("sys_organization")
 public class Organization implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 组织机构id
      */

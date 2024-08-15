@@ -21,6 +21,8 @@ import java.io.Serializable;
 @TableName("sys_dict_attr")
 public class DictAttr implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 属性名称
      */

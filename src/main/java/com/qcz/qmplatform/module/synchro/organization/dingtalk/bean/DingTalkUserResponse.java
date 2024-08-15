@@ -13,6 +13,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class DingTalkUserResponse implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 返回码
      */

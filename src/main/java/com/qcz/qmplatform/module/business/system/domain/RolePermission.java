@@ -20,6 +20,8 @@ import java.io.Serializable;
 @TableName("sys_role_permission")
 public class RolePermission implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @TableField("role_id")
     private String roleId;
 

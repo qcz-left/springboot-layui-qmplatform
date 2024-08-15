@@ -10,6 +10,8 @@ import java.util.Map;
 @Accessors(chain = true)
 public class ExcelTemplateVO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 生成的文件名称
      */

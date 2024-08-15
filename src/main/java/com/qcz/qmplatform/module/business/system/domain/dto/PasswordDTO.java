@@ -11,6 +11,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class PasswordDTO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 登录名
      */

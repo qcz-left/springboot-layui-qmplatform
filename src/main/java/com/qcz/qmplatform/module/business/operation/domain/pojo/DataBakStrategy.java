@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class DataBakStrategy implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 备份周期（1：星期一，2：星期二，:4：星期三，8：星期四，16：星期五，32：星期六，64：星期天）按位取值相加
      */

@@ -13,6 +13,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class PageResult<T> implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 数据长度
      */

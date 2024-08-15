@@ -12,6 +12,8 @@ import java.util.Map;
 @Accessors(chain = true)
 public class SmsConfigVO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 秘钥id
      */

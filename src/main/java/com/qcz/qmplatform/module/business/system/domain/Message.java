@@ -23,6 +23,8 @@ import java.time.LocalDateTime;
 @TableName(DBProperties.Table.SYS_MESSAGE)
 public class Message implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 系统通知信息id
      */

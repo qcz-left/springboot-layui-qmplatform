@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class UserGroupVO extends UserGroup implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 上级用户组名称
      */

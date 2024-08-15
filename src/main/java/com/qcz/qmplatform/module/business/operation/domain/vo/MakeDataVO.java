@@ -11,6 +11,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class MakeDataVO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private DBDetail dbDetail;
 
     private DataDetail dataDetail;

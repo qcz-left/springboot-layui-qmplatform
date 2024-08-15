@@ -13,6 +13,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class UserQO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String username;
     private String userSex;
     private List<String> organizationIds;

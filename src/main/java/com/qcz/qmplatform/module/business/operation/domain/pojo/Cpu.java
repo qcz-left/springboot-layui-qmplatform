@@ -8,6 +8,9 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 public class Cpu implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 核心数
      */

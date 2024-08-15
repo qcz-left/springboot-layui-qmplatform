@@ -11,6 +11,9 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 public class SysFile implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 盘符路径
      */

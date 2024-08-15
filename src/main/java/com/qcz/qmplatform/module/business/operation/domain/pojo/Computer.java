@@ -9,6 +9,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class Computer implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 计算机名称
      */

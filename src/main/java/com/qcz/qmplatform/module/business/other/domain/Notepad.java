@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 @TableName("tbl_notepad")
 public class Notepad implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 数据id
      */

@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 @TableName("ope_data_bak")
 public class DataBak implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 备份主键id
      */

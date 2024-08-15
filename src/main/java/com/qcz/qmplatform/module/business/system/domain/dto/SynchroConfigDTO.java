@@ -13,6 +13,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class SynchroConfigDTO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 启用开关（0：关闭；2：开启）
      */

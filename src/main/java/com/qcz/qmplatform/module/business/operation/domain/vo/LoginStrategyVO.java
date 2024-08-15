@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class LoginStrategyVO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 策略开关（0：关；1：开）
      */

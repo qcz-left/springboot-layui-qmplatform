@@ -22,6 +22,8 @@ import java.io.Serializable;
 @TableName("sys_menu")
 public class Menu implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @TableId("menu_id")
     private String menuId;
 

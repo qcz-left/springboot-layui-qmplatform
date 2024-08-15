@@ -21,6 +21,8 @@ import java.io.Serializable;
 @TableName("sys_button")
 public class Button implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 按钮id
      */

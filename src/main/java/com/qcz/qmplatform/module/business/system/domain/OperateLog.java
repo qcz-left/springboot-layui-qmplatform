@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 @TableName("sys_operate_log")
 public class OperateLog implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 日志id，主键唯一标识
      */

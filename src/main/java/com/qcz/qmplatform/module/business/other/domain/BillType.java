@@ -21,6 +21,8 @@ import java.io.Serializable;
 @TableName("tbl_bill_type")
 public class BillType implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 账单类型id
      */

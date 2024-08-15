@@ -17,6 +17,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class DataDetail implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 表名
      */
@@ -34,6 +36,9 @@ public class DataDetail implements Serializable {
     @Data
     @Accessors(chain = true)
     public static class ColumnDetail implements Serializable {
+
+        private static final long serialVersionUID = 1L;
+
         /**
          * 字段名
          */

@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 @TableName("ope_login_record")
 public class LoginRecord implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 记录id
      */

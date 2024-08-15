@@ -20,6 +20,8 @@ import java.io.Serializable;
 @TableName("sys_user_role")
 public class UserRole implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @TableField("user_id")
     private String userId;
 

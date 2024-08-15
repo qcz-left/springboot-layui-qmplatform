@@ -13,6 +13,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class Tree implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 唯一标识，节点ID
      */

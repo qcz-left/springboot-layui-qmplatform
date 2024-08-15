@@ -10,6 +10,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class Disk implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private List<SysFile> sysFiles;
 
     /**
