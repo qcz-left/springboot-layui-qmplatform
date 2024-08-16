@@ -1,8 +1,11 @@
 spring:
   datasource:
-    url: jdbc:postgresql://ip:5432/qmplatform_single
+    url: jdbc:postgresql://127.0.0.1:5432/${custom.database}?&autoReconnect=true
     username: postgres
-    password: ENC(enc_pg_password)
-  mail:
-    username: your_mail_addr@163.com
-    password: ENC(enc_163_password)
+    password: 123456
+
+custom:
+  # 是否开启http重定向到https
+  redirect-https: false
+  # 数据库是否docker环境
+  dbIsDocker: false
