@@ -266,7 +266,23 @@
     </profiles>
 
     <build>
+        <finalName>qmplatform</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${parent.version}</version>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -279,9 +295,6 @@
                         <manifest>
                             <!--addClasspath表示需要加入到类构建路径-->
                             <addClasspath>true</addClasspath>
-                            <!--classpathPrefix指定生成的Manifest文件中Class-Path依赖lib前面都加上路径,构建出lib/xx.jar-->
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.qcz.qmplatform.QmplatformApplication</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Class-Path>./</Class-Path>
