@@ -13,8 +13,5 @@ ${a!'<#include "/include/include.ftl">'}
         </div>
     </form>
 </div>
-<script type="text/javascript">
-    layui.use(['form']);
-</script>
 </body>
 </html>

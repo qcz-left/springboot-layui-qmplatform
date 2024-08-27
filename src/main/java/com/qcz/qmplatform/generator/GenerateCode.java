@@ -61,6 +61,7 @@ public class GenerateCode {
                         .addTablePrefix(scanner("表名前缀") + "_")
                         .entityBuilder()
                         .enableTableFieldAnnotation()
+                        .enableFileOverride()
                         .enableLombok()
                         .enableChainModel()
                         .enableFileOverride()
@@ -77,24 +78,33 @@ public class GenerateCode {
                     if (StringUtils.equalsIgnoreCase(scanPage, "Y")) {
                         customFiles.add(new CustomFile.Builder()
                                 .templatePath("/ftl/list.ftl.ftl")
+                                .filePath(pageParent)
+                                .fileName("")
                                 .formatNameFunction(tableInfo -> {
                                     // 自定义输出文件名
-                                    return pageParent + StringUtils.lowerFirst(tableInfo.getEntityName()) + "List.ftl";
+                                    return StringUtils.lowerFirst(tableInfo.getEntityName()) + "List.ftl";
                                 }).build());
                         customFiles.add(new CustomFile.Builder()
                                 .templatePath("/ftl/detail.ftl.ftl")
+                                .filePath(pageParent)
+                                .fileName("")
                                 .formatNameFunction(tableInfo -> {
                                     // 自定义输出文件名
-                                    return pageParent + StringUtils.lowerFirst(tableInfo.getEntityName()) + "Detail.ftl";
+                                    return StringUtils.lowerFirst(tableInfo.getEntityName()) + "Detail.ftl";
                                 }).build());
                         customFiles.add(new CustomFile.Builder()
                                 .templatePath("/ftl/list.js.ftl")
+                                .filePath(jsParent)
+                                .fileName("")
                                 .formatNameFunction(tableInfo -> {
                                     // 自定义输出文件名
-                                    return jsParent + StringUtils.lowerFirst(tableInfo.getEntityName()) + ".js";
+                                    return StringUtils.lowerFirst(tableInfo.getEntityName()) + ".js";
                                 }).build());
                     }
-                    builder.customFile(customFiles);
+                    Map<String, Object> customMap = new HashMap<>();
+                    customMap.put("modulePrefix", modulePrefix);
+                    builder.customFile(customFiles)
+                            .customMap(customMap);
                 })
                 .templateEngine(new FreemarkerTemplateEngine())
                 .execute();

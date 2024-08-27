@@ -5,7 +5,7 @@ layui.use(['table'], function () {
     let baseUrl = ctx + '<#if package.ModuleName??>/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>';
     table.render({
         elem: '#' + tableId,
-        url: baseUrl + '/get${entity}List',
+        url: baseUrl + '/list',
         height: 'full-88',
         page: true,
         toolbar: '#toolbar',
@@ -55,19 +55,21 @@ layui.use(['table'], function () {
         id = id || '';
         LayerUtil.openLayer({
             title: id ? "编辑${table.comment!}" : "添加${table.comment!}",
-            content: baseUrl + "/${entity?uncap_first}DetailPage?id=" + id,
+            content: baseUrl + "/detailPage?id=" + id,
             area: ['30%', '80%'],
             formVerify: true,
             loaded: function (iframeWin) {
-                let form = iframeWin.layui.form;
-                // 表单数据校验
-                form.verify({});
+                iframeWin.layui.use(['form'], function () {
+                    let form = iframeWin.layui.form;
+                    // 表单数据校验
+                    form.verify({});
 
-                if (id) {
-                    CommonUtil.getSync(baseUrl + '/get/' + id, {}, function (result) {
-                        form.val('${table.entityPath}-form', result.data);
-                    })
-                }
+                    if (id) {
+                        CommonUtil.postSync(baseUrl + '/get/' + id, {}, function (result) {
+                            form.val('${table.entityPath}-form', result.data);
+                        });
+                    }
+                });
             },
             submit: function (iframeWin) {
                 let form = iframeWin.layui.form;

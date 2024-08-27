@@ -7,7 +7,6 @@ import com.qcz.qmplatform.common.bean.PageRequest;
 import com.qcz.qmplatform.common.bean.PageResult;
 import com.qcz.qmplatform.common.bean.PageResultHelper;
 import com.qcz.qmplatform.common.bean.ResponseResult;
-import com.qcz.qmplatform.common.utils.StringUtils;
 <#if superControllerClassPackage??>
 import ${superControllerClassPackage};
 </#if>
@@ -58,22 +57,22 @@ public class ${table.controllerName} {
 
     @GetMapping("/listPage")
     public String listPage() {
-        return "/module/${package.ModuleName}/${entity?uncap_first}List";
+        return "/module/${config.injectionConfig.customMap.modulePrefix}${package.ModuleName}/${entity?uncap_first}List";
     }
 
     @GetMapping("/detailPage")
     public String detailPage() {
-        return "/module/${package.ModuleName}/${entity?uncap_first}Detail";
+        return "/module/${config.injectionConfig.customMap.modulePrefix}${package.ModuleName}/${entity?uncap_first}Detail";
     }
 
     @PostMapping("/list")
     @ResponseBody
-    public ResponseResult<PageResult> list(PageRequest pageRequest) {
+    public ResponseResult<PageResult<${entity}>> list(PageRequest pageRequest) {
         PageResultHelper.startPage(pageRequest);
         return ResponseResult.ok(PageResultHelper.parseResult(${entity?uncap_first}Service.list()));
     }
 
-    @GetMapping("/get/{id}")
+    @PostMapping("/get/{id}")
     @ResponseBody
     public ResponseResult<${entity}> get(@PathVariable String id) {
         return ResponseResult.ok(${entity?uncap_first}Service.getById(id));

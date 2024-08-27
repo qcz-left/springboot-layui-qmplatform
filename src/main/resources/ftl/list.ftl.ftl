@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 ${a!'<#include "/include/include.ftl">'}
-<script type="text/javascript" src="${a!'$\{ctx}'}/static/module/${package.ModuleName}/${entity?uncap_first}List.js"></script>
+<script type="text/javascript" src="${a!'$\{ctx}'}/static/module/${config.injectionConfig.customMap.modulePrefix}${package.ModuleName}/${entity?uncap_first}.js"></script>
 <body>
 <div class="layui-fluid">
     <div class="layui-form" lay-filter="${entity?uncap_first}-search">
