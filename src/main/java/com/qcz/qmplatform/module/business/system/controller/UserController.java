@@ -272,7 +272,7 @@ public class UserController extends BaseController {
         if (upload.isOk()) {
             User user = userService.getById(SubjectUtils.getUserId());
             // 删除旧的头像img文件
-            FileUtils.del(FileUtils.getRealFilePath(user.getPhotoPath()));
+            FileUtils.delByVirtualPath(user.getPhotoPath());
             user.setPhotoPath(upload.getData().get("filePath"));
             userService.updateById(user);
             SubjectUtils.setUser(user);

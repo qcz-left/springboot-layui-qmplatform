@@ -1,6 +1,5 @@
 package com.qcz.qmplatform.module.base.controller;
 
-import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.ArrayUtil;
@@ -15,7 +14,6 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.exception.CommonException;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
-import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.FileUtils;
 import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
@@ -24,6 +22,7 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.base.ExcelTemplateVO;
 import com.qcz.qmplatform.module.base.ExportColumn;
 import com.qcz.qmplatform.module.base.ExportParamVO;
+import com.qcz.qmplatform.module.base.pojo.FileVO;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -107,10 +106,14 @@ public class CommonController extends BaseController {
      */
     @PostMapping("/uploadTmpFile")
     @ResponseBody
-    public ResponseResult<String> uploadTmpFile(MultipartFile file) throws IOException {
-        String tmpFilePath = FileUtils.generateTmpFilePath(file.getOriginalFilename());
+    public ResponseResult<FileVO> uploadTmpFile(MultipartFile file) throws IOException {
+        String fileName = file.getOriginalFilename();
+        String tmpFilePath = FileUtils.generateTmpFilePath(fileName);
         file.transferTo(new File(tmpFilePath));
-        return ResponseResult.ok(null, tmpFilePath);
+        FileVO fileVO = new FileVO()
+                .setFileName(fileName)
+                .setFilePath(tmpFilePath);
+        return ResponseResult.ok(null, fileVO);
     }
 
     /**

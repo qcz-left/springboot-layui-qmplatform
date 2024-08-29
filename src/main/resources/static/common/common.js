@@ -168,15 +168,15 @@ const CommonUtil = {
     /**
      * 通过逗号拼接字符串数组
      * @param array
-     * @param split
+     * @param joinChar
      * @returns {*}
      */
-    joinMulti: function (array, split) {
-        split = split || ',';
+    joinMulti: function (array, joinChar) {
+        joinChar = joinChar || ',';
         let result = "";
         let arrLen = array.length;
         for (let i = 0; i < arrLen; i++) {
-            result += split + array[i];
+            result += joinChar + array[i];
         }
         return result.substring(1);
     },
@@ -185,11 +185,11 @@ const CommonUtil = {
      * 通过逗号拼接字符串数组，显示几个长度
      * @param array
      * @param len
-     * @param split
+     * @param joinChar
      * @returns {string}
      */
-    joinMultiByLen: function (array, len, split) {
-        split = split || ',';
+    joinMultiByLen: function (array, len, joinChar) {
+        joinChar = joinChar || ',';
         let result = "";
         let arrLen = array.length;
         for (let i = 0; i < arrLen; i++) {
@@ -197,7 +197,7 @@ const CommonUtil = {
                 result += " 等 " + arrLen + " 条数据";
                 break;
             }
-            result += split + array[i];
+            result += joinChar + array[i];
         }
         return result.substring(1);
     },

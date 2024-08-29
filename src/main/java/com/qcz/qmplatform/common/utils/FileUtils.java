@@ -25,6 +25,9 @@ public class FileUtils extends FileUtil {
 
     public static final String WEB_PATH = getWebPath();
 
+    /**
+     * 虚拟文件前缀
+     */
     public static final String PATH_PRE = "/file/";
 
     /**
@@ -177,10 +180,17 @@ public class FileUtils extends FileUtil {
      * @return the real path of file
      */
     public static String getRealFilePath(String filePath) {
-        if (StringUtils.startWith(filePath, PATH_PRE)) {
+        if (isVirtualFile(filePath)) {
             return ConfigLoader.getUploadFilePath() + filePath.substring(6);
         }
         return filePath;
+    }
+
+    /**
+     * 是否虚拟文件
+     */
+    public static boolean isVirtualFile(String filePath) {
+        return StringUtils.startWith(filePath, PATH_PRE);
     }
 
     /**
@@ -217,6 +227,15 @@ public class FileUtils extends FileUtil {
      */
     public static String generateTmpFilePath(String fileName) {
         return ConfigLoader.getDeleteTmpPath() + DateUtils.format(new Date(), DatePattern.PURE_DATETIME_MS_FORMAT) + "_" + fileName;
+    }
+
+    /**
+     * 通过虚拟文件路径删除文件
+     *
+     * @param virtualFilePath 以 PATH_PRE 开头的虚拟文件路径
+     */
+    public static void delByVirtualPath(String virtualFilePath) {
+        FileUtils.del(getRealFilePath(virtualFilePath));
     }
 
 }
