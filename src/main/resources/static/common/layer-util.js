@@ -85,6 +85,7 @@ const LayerUtil = {
     tips: function (options, tipsOptions) {
         let content = options.content;
         let follow = options.follow;
+        let iframeWin = options.window || window;
         let trigger = options.trigger || 'move';
 
         let tipIndex;
@@ -98,10 +99,11 @@ const LayerUtil = {
             cancelTipsTrigger = "mouseleave";
         }
 
-        $(follow).css("cursor", "pointer");
-        $(follow).on(tipsTrigger, function (event) {
+        let $follow = iframeWin.$(follow);
+        $follow.css("cursor", "pointer");
+        $follow.on(tipsTrigger, function (event) {
             event.stopPropagation();
-            tipIndex = layer.tips(content, this, $.extend({
+            tipIndex = iframeWin.layer.tips(content, this, $.extend({
                 time: 0
             }, tipsOptions));
 
@@ -115,20 +117,20 @@ const LayerUtil = {
                         return;
                     }
                     window.$("html").click(function () {
-                        layer.close(tipIndex)
+                        window.layer.close(tipIndex)
                     });
                     if (window !== top) {
                         closeTips(window.parent);
                     }
                 }
 
-                closeTips(window);
+                closeTips(iframeWin);
             }
         });
 
         if (cancelTipsTrigger) {
-            $(follow).on(cancelTipsTrigger, function () {
-                layer.close(tipIndex)
+            $follow.on(cancelTipsTrigger, function () {
+                iframeWin.layer.close(tipIndex)
             })
         }
 
