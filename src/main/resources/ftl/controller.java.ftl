@@ -34,7 +34,7 @@ import java.util.List;
  * </p>
  *
  * @author ${author}
- * @since ${date}
+ * @date ${date}
  */
 <#if restControllerStyle>
 @RestController

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author ${author}
- * @since ${date}
+ * @date ${date}
  */
 @Service
 <#if kotlin>
