@@ -147,7 +147,7 @@ public class OperateLogAspect {
                     if (module != null) {
                         moduleName = module.value();
                     }
-                    description = recordLog.description();
+                    description = StringUtils.blankToDefault(recordLog.description(), StringUtils.format("{}{}", type.getName(), moduleName));
                     break;
             }
         }
