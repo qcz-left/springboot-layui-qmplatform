@@ -69,6 +69,10 @@ public class ResponseResult<T> {
         return new ResponseResult<>(responseCode, null, null);
     }
 
+    public static ResponseResult<Void> newInstance(ResponseCode responseCode, String msg) {
+        return new ResponseResult<>(responseCode, msg, null);
+    }
+
     public boolean isOk() {
         return code == ResponseCode.SUCCESS.code() || code == ResponseCode.DATA_BAK_RECOVER.code();
     }
