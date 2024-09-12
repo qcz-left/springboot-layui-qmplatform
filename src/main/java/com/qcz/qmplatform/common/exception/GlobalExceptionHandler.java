@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
@@ -62,8 +63,9 @@ public class GlobalExceptionHandler {
         return new ResponseResult<>(ResponseCode.PERMISSION_DENIED, "没有该资源权限！", null);
     }
 
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public String errorHandleBy404() {
+    @ExceptionHandler({NoHandlerFoundException.class, NoResourceFoundException.class})
+    public String errorHandleBy404(Exception e) {
+        LOGGER.error(e.getMessage());
         return "/error/404";
     }
 
