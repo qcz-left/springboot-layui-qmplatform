@@ -76,13 +76,10 @@ public class OperateLogAspect {
             proceed = joinPoint.proceed();
             executorService.submit(() -> insertOperateLog(1, currentUser, null, requestUrl, ipAddress, joinPoint, localDateTime));
         } catch (Exception e) {// 原逻辑程序有异常，这里抛回
-            String msg;
             if (e instanceof MailException && StringUtils.containsAny(e.getMessage(), "AuthenticationFailedException", "535")) {
-                msg = "邮箱账号验证失败";
-            } else {
-                msg = e.getMessage();
+                throw new CommonException("邮箱账号验证失败", e);
             }
-            throw new CommonException(msg, e);
+            throw e;
         }
         return proceed;
     }

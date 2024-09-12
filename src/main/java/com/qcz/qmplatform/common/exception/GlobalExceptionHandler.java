@@ -2,6 +2,11 @@ package com.qcz.qmplatform.common.exception;
 
 import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.common.constant.ResponseCode;
+import com.qcz.qmplatform.common.utils.JSONUtils;
+import com.qcz.qmplatform.common.utils.ServletUtils;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.session.InvalidSessionException;
 import org.slf4j.Logger;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.io.IOException;
 import java.util.List;
 
 @ControllerAdvice
@@ -82,9 +88,13 @@ public class GlobalExceptionHandler {
      * 服务器异常500
      */
     @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public ResponseResult<Void> errorHandleBy500(Exception ex) {
+    public void errorHandleBy500(Exception ex, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOGGER.error(ex.getMessage(), ex);
-        return new ResponseResult<>(ResponseCode.INTERNAL_SERVER_ERROR, "服务器好像出现错误了，请联系管理员！", null);
+        if (ServletUtils.isAjax(request)) {
+            ResponseResult<Void> responseResult = ResponseResult.newInstance(ResponseCode.INTERNAL_SERVER_ERROR, "服务器好像出现错误了，请联系管理员！");
+            ServletUtils.write(response, JSONUtils.toJsonStr(responseResult), "application/json; charset=utf-8");
+        } else {
+            request.getRequestDispatcher("/error/500").forward(request, response);
+        }
     }
 }
