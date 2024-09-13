@@ -71,7 +71,7 @@ public class OperateLogAspect {
         String ipAddress = ServletUtils.getIpAddress(request);
         Object proceed;
         User currentUser = SubjectUtils.getUser(false);
-        LocalDateTime localDateTime = DateUtils.getCurrLocalDateTime();
+        LocalDateTime localDateTime = DateUtils.nowLocalDateTime();
         try {
             proceed = joinPoint.proceed();
             executorService.submit(() -> insertOperateLog(1, currentUser, null, requestUrl, ipAddress, joinPoint, localDateTime));
@@ -96,7 +96,7 @@ public class OperateLogAspect {
         String requestUrl = request.getServletPath();
         String ipAddress = ServletUtils.getIpAddress(request);
         User currentUser = SubjectUtils.getUser(false);
-        LocalDateTime localDateTime = DateUtils.getCurrLocalDateTime();
+        LocalDateTime localDateTime = DateUtils.nowLocalDateTime();
         executorService.submit(() -> {
             String stackTrace = stackTraceToString(e.getClass().getName(), e.getMessage(), e.getStackTrace());
             insertOperateLog(0, currentUser, stackTrace, requestUrl, ipAddress, joinPoint, localDateTime);

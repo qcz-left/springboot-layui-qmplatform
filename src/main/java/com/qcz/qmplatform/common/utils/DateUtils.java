@@ -16,8 +16,8 @@ public class DateUtils extends DateUtil {
     /**
      * 获取当前时间对象LocalDateTime
      */
-    public static LocalDateTime getCurrLocalDateTime() {
-        return localDateTime(new Date());
+    public static LocalDateTime nowLocalDateTime() {
+        return LocalDateTime.now();
     }
 
     /**

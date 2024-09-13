@@ -26,7 +26,7 @@ public class NotepadService extends ServiceImpl<NotepadMapper, Notepad> {
         notepad.setId(IdUtils.getUUID());
         notepad.setCreateUserId(SubjectUtils.getUserId());
         notepad.setCreateUserName(SubjectUtils.getUserName());
-        notepad.setCreateTime(DateUtils.getCurrLocalDateTime());
+        notepad.setCreateTime(DateUtils.nowLocalDateTime());
         return save(notepad);
     }
 

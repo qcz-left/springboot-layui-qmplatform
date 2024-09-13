@@ -88,7 +88,7 @@ public class AttachmentController extends BaseController {
             attachment.setAttachmentId(IdUtils.getUUID());
             attachment.setAttachmentName(file.getOriginalFilename());
             attachment.setAttachmentUrl(upload.getData().get("filePath"));
-            attachment.setUploadTime(DateUtils.getCurrLocalDateTime());
+            attachment.setUploadTime(DateUtils.nowLocalDateTime());
             User currentUser = SubjectUtils.getUser();
             attachment.setUploadUserId(currentUser.getId());
             attachment.setUploadUserName(currentUser.getUsername());

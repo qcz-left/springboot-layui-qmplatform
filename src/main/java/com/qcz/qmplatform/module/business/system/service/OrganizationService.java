@@ -79,7 +79,7 @@ public class OrganizationService extends ServiceImpl<OrganizationMapper, Organiz
 
     public boolean addOrgOne(Organization org) {
         org.setOrganizationId(IdUtils.getUUID());
-        org.setCreateTime(DateUtils.getCurrLocalDateTime());
+        org.setCreateTime(DateUtils.nowLocalDateTime());
         return save(org);
     }
 

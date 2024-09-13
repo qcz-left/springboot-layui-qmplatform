@@ -94,7 +94,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
      * @param message 系统信息
      */
     public void saveOne(Message message) {
-        LocalDateTime localDateTime = DateUtils.getCurrLocalDateTime();
+        LocalDateTime localDateTime = DateUtils.nowLocalDateTime();
         message.setLastUpdateTime(localDateTime);
 
         LambdaQueryWrapper<Message> queryWrapper = Wrappers.lambdaQuery(Message.class)

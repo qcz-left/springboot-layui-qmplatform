@@ -40,7 +40,7 @@ public class BillService extends ServiceImpl<BillMapper, Bill> {
     }
 
     public boolean saveOne(Bill bill) {
-        bill.setCreateTime(DateUtils.getCurrLocalDateTime());
+        bill.setCreateTime(DateUtils.nowLocalDateTime());
         bill.setCreateUserId(SubjectUtils.getUserId());
         return save(bill);
     }
