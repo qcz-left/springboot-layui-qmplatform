@@ -2,13 +2,15 @@
 <html lang="en">
 <#include "/include/include.ftl">
 <style>
-    .main-content, .layui-tab {
-        height: 100%;
+    .main-content {
+        height: calc(100% - 10px);
+    }
+    .layui-tab {
+        height: calc(100% - 20px);
     }
 
     .layui-tab-content {
-        background: rgb(242, 242, 242);
-        height: calc(100% - 82px);
+        height: calc(100% - 71px);
         text-align: center;
     }
 
@@ -19,13 +21,9 @@
         right: 5px;
     }
 
-    body {
-        background: #fff !important;
-        padding: 5px !important;
-    }
 </style>
 <script type="text/javascript" src="${ctx}/static/module/operation/loginSetting.js"></script>
-<body class="layui-fluid">
+<body style="background: #fff; padding: 5px; width: calc(100% - 10px); height: calc(100% - 10px);">
 <div class="main-content">
     <button type="button" class="layui-btn hide edit-btn">
         编辑

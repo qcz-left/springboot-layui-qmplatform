@@ -1,11 +1,12 @@
 layui.use(['form'], function () {
     let baseUrl = ctx + '/operation/loginSetting';
 
-    $(".main-content").mouseout(function () {
-        $(this).find(".layui-tab").removeClass("gray-disabled")
+    let $mainContent = $(".main-content");
+    $mainContent.parents("html:first").mouseout(function () {
+        $mainContent.find(".layui-tab").removeClass("gray-disabled")
         $(".edit-btn").hide();
     }).mouseover(function () {
-        $(this).find(".layui-tab").addClass("gray-disabled")
+        $mainContent.find(".layui-tab").addClass("gray-disabled")
         $(".edit-btn").show();
     });
 

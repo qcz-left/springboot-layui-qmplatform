@@ -1,4 +1,27 @@
 <link rel="stylesheet" href="${ctx}/static/css/login.css" />
+<style>
+    #login-main {
+        background: url("${ctx}/static/common/image/login-background.png") 50%;
+        background-size: cover;
+        height: 100%;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    body {
+        background: unset;
+    }
+</style>
 <script type="text/javascript">
 CommonUtil.getAjax(ctx + '/operation/loginSetting/get', {}, function (result) {
     let data = result.data;
@@ -18,8 +41,8 @@ CommonUtil.getAjax(ctx + '/operation/loginSetting/get', {}, function (result) {
     $(".user-login-footer").html(data.bottomInfo);
 });
 </script>
-<div class="vh-center" style="width: 100%; height: calc(100% - 50px);">
-    <div class="user-login-main layui-row">
+<div id="login-main">
+    <div class="user-login-main layui-row vh-center">
         <div class="login-left vh-center layui-col-xs6">
             <div>
                 <p class="system-cn"></p>
@@ -41,29 +64,29 @@ CommonUtil.getAjax(ctx + '/operation/loginSetting/get', {}, function (result) {
             </div>
             <#-- 表单登录 -->
             <form class="layui-form pc-login" id="login-form" action="javascript:void(0);" method="post">
-                <div class="layui-form-item">
+                <div class="layui-form-item input-item">
                     <label class="layui-icon layui-icon-username" for="user-login-username"></label>
                     <input type="text" name="loginname" id="user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item input-item">
                     <label class="layui-icon layui-icon-password" for="user-login-password"></label>
                     <input type="password" autocomplete="new-password" style="display:none">
                     <input type="password" name="password" id="user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
                 </div>
-                <div id="codeDiv" class="layui-form-item hide">
+                <div id="codeDiv" class="layui-form-item input-item hide">
                     <label class="layui-icon layui-icon-vercode" for="user-login-code"></label>
                     <input type="text" name="validateCode" id="user-login-code" placeholder="验证码" lay-filter="validateCode" class="layui-input layui-input-inline">
                     <img id="codeImg" />
                 </div>
                 <div id="enableForgetPasswordDiv" class="layui-form-item hide">
-                    <a href="${ctx}/user/nnl/retrievePasswordPage" class="layui-btn" style="color: #1760D7; background: unset; font-weight: bold; float: right;">忘记密码？</a>
+                    <a href="${ctx}/user/nnl/retrievePasswordPage" class="layui-btn" style="background: unset; font-weight: bold; float: right;">忘记密码？</a>
                 </div>
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login">登 入</button>
                 </div>
             </form>
             <fieldset class="layui-elem-field layui-field-title">
-                <legend style="font-size: unset;">其他方式登录</legend>
+                <legend class="otherLoginWayTip" style="font-size: unset;">其他方式登录</legend>
             </fieldset>
             <div id="otherLoginWayContainer">
                 <i id="dingdingLogin" class="iconfont icon-dingding-o hide" title="使用钉钉登录"></i>
@@ -71,7 +94,7 @@ CommonUtil.getAjax(ctx + '/operation/loginSetting/get', {}, function (result) {
             </div>
         </div>
     </div>
-</div>
-<div class="user-login-footer">
+    <div class="user-login-footer">
 
+    </div>
 </div>
