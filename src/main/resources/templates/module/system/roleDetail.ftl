@@ -8,13 +8,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">角色名称</label>
             <div class="layui-input-block">
-                <input type="text" name="roleName" lay-verify="" placeholder="请输入角色名称" class="layui-input">
+                <input type="text" name="roleName" lay-verify="required" placeholder="请输入角色名称" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label required">标识</label>
             <div class="layui-input-block">
-                <input type="text" name="roleSign" lay-verify="" placeholder="请输入标识" class="layui-input">
+                <input type="text" name="roleSign" lay-verify="required|roleSign" placeholder="请输入标识" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
