@@ -1,5 +1,6 @@
 package com.qcz.qmplatform.module.business.system.controller;
 
+import com.qcz.qmplatform.common.aop.annotation.Module;
 import com.qcz.qmplatform.common.aop.annotation.RecordLog;
 import com.qcz.qmplatform.common.aop.assist.OperateType;
 import com.qcz.qmplatform.common.bean.PrivCode;
@@ -25,6 +26,7 @@ import jakarta.annotation.Resource;
  */
 @RestController
 @RequestMapping("/user-organization")
+@Module("用户-部门关联")
 public class UserOrganizationController {
 
     @Resource
