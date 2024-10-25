@@ -326,7 +326,7 @@ const CommonUtil = {
     chooseUserTree: function (option) {
         let checkbar = option.checkbar || false;
         let notExistsUserGroupId = option.notExistsUserGroupId || '';
-        let currentLayer = LayerUtil.openLayer({
+        let layerIndex = LayerUtil.openLayer({
             title: option.title || '选择用户',
             content: ctx + "/user/chooseUserTree",
             area: ['30%', '80%'],
@@ -342,7 +342,7 @@ const CommonUtil = {
             submit: function (iframeWin) {
                 if (typeof option.success == "function") {
                     option.success(iframeWin.getCurrentNode());
-                    currentLayer.closeAll();
+                    layer.close(layerIndex);
                 }
             }
         });
@@ -358,7 +358,7 @@ const CommonUtil = {
     chooseDept: function (option) {
         let title = option.title;
         let checkbar = option.checkbar || false;
-        let currentLayer = LayerUtil.openLayer({
+        let layerIndex = LayerUtil.openLayer({
             title: title || '选择部门',
             content: ctx + "/organization/chooseDept?checkbar=" + checkbar,
             area: ['30%', '80%'],
@@ -366,7 +366,7 @@ const CommonUtil = {
             submit: function (iframeWin) {
                 if (typeof option.success == "function") {
                     option.success(iframeWin.getCurrentNode());
-                    currentLayer.closeAll();
+                    layer.close(layerIndex);
                 }
             }
         });

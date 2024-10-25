@@ -76,8 +76,7 @@ const LayerUtil = {
         } else {
             currentLayer = layer;
         }
-        currentLayer.open(options);
-        return currentLayer;
+        return currentLayer.open(options);
     },
 
     /**
