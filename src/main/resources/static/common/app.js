@@ -7,9 +7,20 @@ $(function () {
     });
     let $iframe = top.$(".layui-show [id^=iframe-body]")[0];
     if ($iframe) {
-        $iframe.contentWindow.$("html:first").css("background-color", "#f2f2f2");
+        setIframe($iframe);
     }
 });
+
+function setIframe($iframe) {
+    if (typeof($iframe.contentWindow.$) === "undefined") {
+        setTimeout(() => {
+            setIframe($iframe);
+        }, 100);
+    } else {
+        $iframe.contentWindow.$("html:first").css("background-color", "#f2f2f2");
+    }
+}
+
 // 对Date的扩展，将 Date 转化为指定格式的String
 // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
 // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
