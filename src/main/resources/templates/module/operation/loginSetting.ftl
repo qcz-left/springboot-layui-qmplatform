@@ -3,22 +3,24 @@
 <#include "/include/include.ftl">
 <style>
     .main-content {
-        height: calc(100% - 10px);
+        height: 100%;
     }
     .layui-tab {
-        height: calc(100% - 20px);
+        margin: 0;
+        height: 100%;
     }
 
     .layui-tab-content {
-        height: calc(100% - 71px);
+        padding: 0;
+        height: calc(100% - 41px);
         text-align: center;
     }
 
     .edit-btn {
         background-color: #2f363c;
         position: absolute;
-        top: 15px;
-        right: 5px;
+        top: 10px;
+        right: 10px;
     }
 
 </style>
