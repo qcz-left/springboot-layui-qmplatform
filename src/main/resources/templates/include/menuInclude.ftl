@@ -1,3 +1,8 @@
+<style>
+    .layui-icon {
+        font-size: 14px;
+    }
+</style>
 <#macro menuTreeMacro menus>
     <#list menus as menu>
         <dd>
