@@ -17,8 +17,8 @@ import com.qcz.qmplatform.common.constant.Constant;
 import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
-import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.JSONUtils;
+import com.qcz.qmplatform.common.utils.ServletUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.common.utils.SubjectUtils;
 import com.qcz.qmplatform.common.utils.TreeUtils;
@@ -59,7 +59,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -230,7 +229,7 @@ public class LoginController {
     /**
      * 登出操作，返回登录页 如果登出操作时，用户已经登出了，需做校验判断，否则程序出错，直接返回登录页
      */
-    @RequestMapping(value = "/logout")
+    @GetMapping(value = "/logout")
     @RecordLog(type = OperateType.LOGOUT)
     public String logout() {
         SubjectUtils.removeUser();
@@ -247,7 +246,7 @@ public class LoginController {
     /**
      * 获取登录的图形验证码
      */
-    @RequestMapping("/nnl/getLoginCode")
+    @GetMapping("/nnl/getLoginCode")
     public void getLoginCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         RandomGenerator randomGenerator = new RandomGenerator("0123456789", 4);
         ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(100, 38);
@@ -266,7 +265,7 @@ public class LoginController {
      * @param thirdparty   第三方服务商
      * @param thirdpartyId 第三方系统账号唯一ID
      */
-    @RequestMapping("/nnl/bindingThirdpartyPage/{thirdparty}/{thirdpartyId}")
+    @GetMapping("/nnl/bindingThirdpartyPage/{thirdparty}/{thirdpartyId}")
     public String bindingThirdpartyPage(@PathVariable("thirdparty") String thirdparty,
                                         @PathVariable("thirdpartyId") String thirdpartyId,
                                         Map<String, Object> root) {
@@ -282,7 +281,7 @@ public class LoginController {
      * @param authCode   Oauth2 临时授权码
      * @param thirdparty 第三方服务商
      */
-    @RequestMapping("/nnl/preScanCodeLoginCheck/{thirdparty}")
+    @GetMapping("/nnl/preScanCodeLoginCheck/{thirdparty}")
     public String preScanCodeLoginCheck(String authCode, @PathVariable("thirdparty") String thirdparty) throws Exception {
         String unionId = getUserInfo(authCode).getUnionId();
         UserThirdparty userThirdparty = userThirdpartyService.getUserIdByThirdparty(unionId, Enum.valueOf(Thirdparty.class, thirdparty.toUpperCase()));

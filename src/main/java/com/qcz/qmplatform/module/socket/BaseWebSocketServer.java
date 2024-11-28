@@ -1,13 +1,15 @@
 package com.qcz.qmplatform.module.socket;
 
-import org.apache.tomcat.websocket.WsSession;
-
 import jakarta.websocket.OnClose;
 import jakarta.websocket.OnError;
 import jakarta.websocket.OnOpen;
 import jakarta.websocket.Session;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.websocket.WsSession;
+
 import java.util.Map;
 
+@Slf4j
 public abstract class BaseWebSocketServer {
 
     @OnOpen
@@ -26,7 +28,7 @@ public abstract class BaseWebSocketServer {
         if (getClients().get(sessionId) != null) {
             getClients().remove(sessionId);
         }
-        throwable.printStackTrace();
+        log.error("web socket error!", throwable);
     }
 
     private String getSessionId(Session session) {

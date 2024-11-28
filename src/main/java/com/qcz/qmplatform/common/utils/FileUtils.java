@@ -2,6 +2,7 @@ package com.qcz.qmplatform.common.utils;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.ReflectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,26 +47,19 @@ public class FileUtils extends FileUtil {
      * @param obj  对象
      * @param file 文件路径
      */
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void writeObjectToFile(Object obj, File file) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
+        createIfNotExists(file);
         try {
-            File parentFile = file.getParentFile();
-            if (!parentFile.exists()) {
-                parentFile.mkdirs();
-            }
-            if (!file.exists()) {
-                file.createNewFile();
-            }
             fos = new FileOutputStream(file);
             oos = new ObjectOutputStream(fos);
             oos.writeObject(obj);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         } finally {
-            CloseUtils.close(oos);
-            CloseUtils.close(fos);
+            IoUtil.close(oos);
+            IoUtil.close(fos);
         }
     }
 
@@ -79,24 +73,11 @@ public class FileUtils extends FileUtil {
         return readObjectFromFile(new File(filePath), clazz);
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> T readObjectFromFile(File file, Class<T> clazz) {
-        if (!file.exists()) {
+        if (!exist(file)) {
             return ReflectUtil.newInstance(clazz);
         }
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
-        try {
-            fis = new FileInputStream(file);
-            ois = new ObjectInputStream(fis);
-            return (T) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            LOGGER.error(e.getMessage(), e);
-        } finally {
-            CloseUtils.close(ois);
-            CloseUtils.close(fis);
-        }
-        return ReflectUtil.newInstance(clazz);
+        return readObjectFromFile(FileUtil.getInputStream(file), clazz);
     }
 
     public static <T> T readObjectFromFile(InputStream inputStream, Class<T> clazz) {
@@ -117,7 +98,7 @@ public class FileUtils extends FileUtil {
     }
 
     public static Object readObjectFromFile(File file) {
-        if (!file.exists()) {
+        if (!exist(file)) {
             try {
                 return new Object();
             } catch (Exception e) {
@@ -139,20 +120,28 @@ public class FileUtils extends FileUtil {
         return new Object();
     }
 
+    public static void createNewFile(File file) {
+        boolean newFile = false;
+        try {
+            newFile = file.createNewFile();
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+        if (!newFile) {
+            LOGGER.warn("create new file failed!");
+        }
+    }
+
     /**
      * 如果文件不存在就创建，如果父目录不存在也一并创建
      */
     public static void createIfNotExists(File file) {
-        if (!file.exists()) {
+        if (!exist(file)) {
             File parentFile = file.getParentFile();
-            if (!parentFile.exists()) {
-                parentFile.mkdirs();
+            if (!exist(parentFile)) {
+                mkdir(parentFile);
             }
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                LOGGER.error(null, e);
-            }
+            createNewFile(file);
         }
     }
 
@@ -164,8 +153,8 @@ public class FileUtils extends FileUtil {
      * 如果文件夹不存在就创建
      */
     public static void createDirIfNotExists(File file) {
-        if (!file.exists()) {
-            file.mkdirs();
+        if (!exist(file)) {
+            mkdir(file);
         }
     }
 

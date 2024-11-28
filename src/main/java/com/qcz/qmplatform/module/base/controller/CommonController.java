@@ -44,7 +44,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,8 +64,12 @@ public class CommonController extends BaseController {
 
     protected static Logger logger = LoggerFactory.getLogger(CommonController.class);
 
-    @Autowired(required = false)
     private DocumentConverter converter;
+
+    @Autowired(required = false)
+    public void setConverter(DocumentConverter converter) {
+        this.converter = converter;
+    }
 
     @GetMapping("/showLogPage")
     public String showLogPage() {
@@ -119,7 +122,7 @@ public class CommonController extends BaseController {
     /**
      * 生成导出文件
      */
-    @RequestMapping("/generateExportFile")
+    @PostMapping("/generateExportFile")
     @ResponseBody
     public ResponseResult<String> generateExportFile(@RequestBody ExportParamVO exportParam, HttpServletRequest request) {
         String tmpFilePath;

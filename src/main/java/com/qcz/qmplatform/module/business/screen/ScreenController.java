@@ -2,6 +2,7 @@ package com.qcz.qmplatform.module.business.screen;
 
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/screen")
 public class ScreenController {
 
-    @RequestMapping("/index")
+    @GetMapping("/index")
     public String screenPage() {
         return "/module/screen/index";
     }

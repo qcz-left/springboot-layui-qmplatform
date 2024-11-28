@@ -5,7 +5,9 @@ import com.qcz.qmplatform.common.utils.SmsUtils;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.SmsConfig;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.SmsProvider;
 import com.qcz.qmplatform.module.business.notify.service.INotifyService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class NotifyServiceFactory {
 
     public static INotifyService build(Class<? extends INotifyService> clazz, SmsConfig smsConfig) {
@@ -24,7 +26,7 @@ public class NotifyServiceFactory {
             notifyService = notifyServiceClass.newInstance();
             notifyService.setSmsConfig(smsConfig);
         } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+            log.error("build notify service impl failed!", e);
         }
         return notifyService;
     }

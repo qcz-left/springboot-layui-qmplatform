@@ -91,7 +91,7 @@ public class TencentCloudSmsNotifyService implements INotifyService {
         try {
             String url = "https://yun.tim.qq.com/v5/tlssmssvr/sendsms";
             long now = DateUtils.currentSeconds();
-            long random = (new Random(now)).nextInt(900000) + 100000;
+            long random = (new Random(now)).nextInt(900000) + 100000L;
 
             Map<String, Object> body = new HashMap<>();
             Map<String, Object> tel = new HashMap<>();
