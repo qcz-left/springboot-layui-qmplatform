@@ -48,6 +48,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -323,10 +324,9 @@ public class UserController extends BaseController {
         // 短信模块参数
         TemplateParam templateParam = smsConfigVO.getTemplateParams().get(TemplateType.VALIDATE_CODE.type());
         config.setTemplateID(templateParam.getTemplateID());
-        config.setTemplateParamCnt(templateParam.getParamCnt());
-        Map<String, String> templateParams = new HashMap<>();
-        templateParams.put("1", validateCode);
-        templateParams.put("2", String.valueOf(timeout));
+        List<String> templateParams = new ArrayList<>();
+        templateParams.add(validateCode);
+        templateParams.add(String.valueOf(timeout));
         config.setTemplateParams(templateParams);
         // 发送
         String code = NotifyServiceFactory.build(config).send();

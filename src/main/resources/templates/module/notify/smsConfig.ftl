@@ -166,7 +166,6 @@ layui.use(['form', 'xmSelect', 'table'], function () {
                 }
             },
             {field: 'templateID', title: '模板ID', width: '20%', edit: true},
-            {field: 'paramCnt', title: '参数个数', width: '20%', edit: true},
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
         ]]
     });

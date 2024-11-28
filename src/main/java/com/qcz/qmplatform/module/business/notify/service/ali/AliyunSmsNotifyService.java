@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.SimpleTimeZone;
 
@@ -48,33 +49,69 @@ public class AliyunSmsNotifyService implements INotifyService {
             params.put("PhoneNumbers", smsConfig.getPhones().get(0));
             params.put("SignName", smsConfig.getSign());
             params.put("TemplateCode", smsConfig.getTemplateID());
-            params.put("TemplateParam", JSONUtils.toJsonStr(smsConfig.getTemplateParams()));
-            Map<String, Object> commonParams = getCommonParams(params);
+            params.put("TemplateParam", buildTemplateParams());
 
-            HttpRequest request = HttpUtil.createRequest(Method.POST, "https://" + HOST + "?" + HttpUtil.toParams(commonParams, StandardCharsets.UTF_8, true));
-            request.header(Header.CONTENT_TYPE, ContentType.FORM_URLENCODED.getValue());
-            request.form(params);
-
-            HttpResponse response = request.execute();
-            responseHtml = response.body();
+            responseHtml = sendHttpRequest("SendSms", params);
         } catch (Exception e) {
             log.error("send ali sms failed!", e);
             return e.getMessage();
         }
 
-        log.info("response result of the url [" + HOST + "]: " + JSONUtils.formatJsonStr(responseHtml));
         JSONObject jsonResponse = JSONUtils.parseObj(responseHtml);
-        return (String) jsonResponse.get("Code");
+        return jsonResponse.getStr("Code");
+    }
+
+    /**
+     * 构建模板参数
+     */
+    private String buildTemplateParams() {
+        Map<String, String> templateParamMap = new HashMap<>();
+        List<String> templateParams = smsConfig.getTemplateParams();
+        List<String> templateParamNames = getTemplateParamNames(getTemplateContent());
+        for (int i = 0; i < templateParams.size(); i++) {
+            templateParamMap.put(templateParamNames.get(i), templateParams.get(i));
+        }
+
+        return JSONUtils.toJsonStr(templateParamMap);
+    }
+
+    /**
+     * 获取模板内容
+     */
+    private String getTemplateContent() {
+        Map<String, Object> params = new HashMap<>(2);
+        params.put("TemplateCode", smsConfig.getTemplateID());
+        String templateDetail = sendHttpRequest("QuerySmsTemplate", params);
+        return JSONUtils.parseObj(templateDetail).getStr("TemplateContent");
+    }
+
+    /**
+     * 发送http请求
+     *
+     * @param action 请求动作
+     * @param params 请求参数
+     * @return 响应信息
+     */
+    private String sendHttpRequest(String action, Map<String, Object> params) {
+        Map<String, Object> commonParams = getCommonParams(params, action);
+        HttpRequest request = HttpUtil.createRequest(Method.POST, "https://" + HOST + "?" + HttpUtil.toParams(commonParams, StandardCharsets.UTF_8, true));
+        request.header(Header.CONTENT_TYPE, ContentType.FORM_URLENCODED.getValue());
+        request.form(params);
+
+        HttpResponse response = request.execute();
+        String responseHtml = response.body();
+        log.debug("response result of the url [{} -> {}]: {}", HOST, action, JSONUtils.formatJsonStr(responseHtml));
+        return responseHtml;
     }
 
     /**
      * 设置公共请参数
      *
      * @param params 请求参数
+     * @param action API名称
      */
-    private Map<String, Object> getCommonParams(Map<String, Object> params) {
+    private Map<String, Object> getCommonParams(Map<String, Object> params, String action) {
         Date date = new Date();
-        String action = "SendSms";  // API名称
         String version = "2017-05-25"; // API版本号
         String timestamp = DateUtils.format(date, DateUtils.newSimpleFormat(DatePattern.UTC_PATTERN, null, new SimpleTimeZone(0, "GMT")));
         String signatureNonce = IdUtils.getUUID();

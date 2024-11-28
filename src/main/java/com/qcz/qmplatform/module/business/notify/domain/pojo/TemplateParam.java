@@ -21,9 +21,4 @@ public class TemplateParam implements Serializable {
      */
     private String templateID;
 
-    /**
-     * 模板参数个数
-     */
-    private int paramCnt;
-
 }

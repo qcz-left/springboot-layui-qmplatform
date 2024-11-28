@@ -10,6 +10,7 @@ import cn.hutool.http.HttpStatus;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.http.Method;
 import cn.hutool.json.JSONUtil;
+import com.qcz.qmplatform.common.utils.CollectionUtils;
 import com.qcz.qmplatform.common.utils.ConfigLoader;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.SmsConfig;
@@ -20,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -40,21 +42,17 @@ public class HuaweiSmsNotifyService implements INotifyService {
         try {
             String templateId = smsConfig.getTemplateID(); // 模板ID
 
-            Map<String, String> templateParamsMap = smsConfig.getTemplateParams();
-            StringBuilder sbparams = new StringBuilder();
-            sbparams.append("[");
-            for (int i = 0; i < templateParamsMap.size(); i++) {
-                sbparams.append("\"").append(templateParamsMap.get(i + 1 + "")).append("\"");
-                if (i < templateParamsMap.size() - 1) {
-                    sbparams.append(",");
-                }
-            }
-            sbparams.append("]");
+            List<String> templateParams = smsConfig.getTemplateParams();
+
             /*
              * 选填,使用无变量模板时请赋空值 String templateParas = ""; 单变量模板示例:模板内容为"您的验证码是${1}"时,templateParas可填写为"[\"369751\"]" 双变量模板示例:模板内容为"您有${1}件快递请到${2}领取"时, templateParas可填写为"[\"3\",\"人民公园正门\"]" 模板中的每个变量都必须赋值，且取值不能为空
              */
-            String templateParas = sbparams.toString();
-
+            String templateParas = "[" +
+                    CollectionUtils.join(templateParams, ",", param -> "\"" + param + "\"") +
+                    "]";
+            /*
+             * 选填,使用无变量模板时请赋空值 String templateParas = ""; 单变量模板示例:模板内容为"您的验证码是${1}"时,templateParas可填写为"[\"369751\"]" 双变量模板示例:模板内容为"您有${1}件快递请到${2}领取"时, templateParas可填写为"[\"3\",\"人民公园正门\"]" 模板中的每个变量都必须赋值，且取值不能为空
+             */
             String phone = smsConfig.getPhones().get(0);
             // 请求Body,不携带签名名称时,signature请填null
             Map<String, Object> body = buildRequestBody(smsConfig.getChannelNumber(), phone, templateId, templateParas, smsConfig.getSign());

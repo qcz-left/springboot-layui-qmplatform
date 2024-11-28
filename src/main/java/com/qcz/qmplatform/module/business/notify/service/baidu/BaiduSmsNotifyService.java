@@ -28,8 +28,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TimeZone;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class BaiduSmsNotifyService implements INotifyService {
 
@@ -42,31 +40,23 @@ public class BaiduSmsNotifyService implements INotifyService {
     private static final Charset UTF8 = StandardCharsets.UTF_8;
     private static final String HTTP_BASE_URL = "http://smsv3.bj.baidubce.com";
 
-    /**
-     * 缓存模板变量名称，如果修改了模板变量名称，需要重启重新读取
-     */
-    private static List<String> templateParamNames;
-    /**
-     * 上一次读取到的模板ID
-     */
-    private static String lastTemplateId;
-
     @Override
     public String send() {
         String signatureId = smsConfig.getSign();
         String templateId = smsConfig.getTemplateID();
 
-        addTemplateParamNames(templateId);
+        List<String> templateParamNames = getTemplateParamNames(getTemplateContent());
 
         Map<String, Object> contentVar = new HashMap<>();
         int paramsSize = templateParamNames.size();
         if (paramsSize > 0) {
-            if (paramsSize != smsConfig.getTemplateParamCnt()) {
+            List<String> templateParams = smsConfig.getTemplateParams();
+            if (paramsSize != templateParams.size()) {
                 LOGGER.warn("The number of template parameters does not match!");
             }
 
             for (int i = 0; i < paramsSize; i++) {
-                contentVar.put(templateParamNames.get(i), smsConfig.getTemplateParams().get(i + 1 + ""));
+                contentVar.put(templateParamNames.get(i), templateParams.get(i));
             }
         }
 
@@ -80,30 +70,16 @@ public class BaiduSmsNotifyService implements INotifyService {
         return "1000".equals(code) ? "ok" : String.valueOf(code);
     }
 
-    private void addTemplateParamNames(String templateId) {
-        if (!StringUtils.equals(lastTemplateId, templateId)) {
-            if (templateParamNames == null) {
-                templateParamNames = new ArrayList<>();
-            } else {
-                templateParamNames.clear();
-            }
-
-            String responseHtml = sendHttpRequest(HTTP_BASE_URL + "/sms/v3/template/" + templateId, Method.GET, null);
-
-            String content = (String) JSONUtil.toBean(responseHtml, Map.class).get("content");
-            if (StringUtils.isBlank(content)) {
-                throw new RuntimeException("The template content cannot be empty!");
-            }
-            Matcher matcher = Pattern.compile("\\$\\{[a-zA-Z0-9]+}").matcher(content);
-            while (matcher.find()) {
-                String group = matcher.group();
-                String name = group.substring(group.indexOf("{") + 1, group.lastIndexOf("}"));
-                templateParamNames.add(name);
-                LOGGER.debug("[BaiduSms] get template params name: " + name);
-            }
-
-            lastTemplateId = templateId;
+    /**
+     * 获取模板内容
+     */
+    private String getTemplateContent() {
+        String responseHtml = sendHttpRequest(HTTP_BASE_URL + "/sms/v3/template/" + smsConfig.getTemplateID(), Method.GET, null);
+        String content = (String) JSONUtil.toBean(responseHtml, Map.class).get("content");
+        if (StringUtils.isBlank(content)) {
+            throw new RuntimeException("The template content cannot be empty!");
         }
+        return content;
     }
 
     /**
@@ -151,7 +127,7 @@ public class BaiduSmsNotifyService implements INotifyService {
             LOGGER.error("[BaiduSms] Failed to call the HTTP interface: " + url, e);
         }
 
-        LOGGER.debug("response result of the url [" + url + "]: " + responseHtml);
+        LOGGER.debug("response result of the url [{}]: {}", url, responseHtml);
 
         return responseHtml;
     }

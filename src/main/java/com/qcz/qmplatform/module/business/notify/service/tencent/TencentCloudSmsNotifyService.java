@@ -18,9 +18,9 @@ import com.qcz.qmplatform.module.business.notify.service.tencent.bean.TencentClo
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -54,7 +54,7 @@ public class TencentCloudSmsNotifyService implements INotifyService {
             params.put("SmsSdkAppId", smsConfig.getAppId());
             params.put("SignName", smsConfig.getSign());
             params.put("TemplateId", smsConfig.getTemplateID());
-            params.put("TemplateParamSet", smsConfig.getTemplateParams().values());
+            params.put("TemplateParamSet", smsConfig.getTemplateParams());
             params.put("PhoneNumberSet", smsConfig.getPhones());
 
             HttpRequest request = HttpUtil.createRequest(Method.POST, "https://" + HOST);
@@ -86,7 +86,7 @@ public class TencentCloudSmsNotifyService implements INotifyService {
     private String sendByOldVersion() {
         String phoneNumber = smsConfig.getPhones().get(0);
         int templateId = Integer.parseInt(smsConfig.getTemplateID());
-        ArrayList<String> params = new ArrayList<>(smsConfig.getTemplateParams().values());
+        List<String> params = smsConfig.getTemplateParams();
         String sign = smsConfig.getSign();
         try {
             String url = "https://yun.tim.qq.com/v5/tlssmssvr/sendsms";

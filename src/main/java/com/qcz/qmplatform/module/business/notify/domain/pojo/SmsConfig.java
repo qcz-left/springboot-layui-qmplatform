@@ -5,7 +5,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 @Data
 @Accessors(chain = true)
@@ -54,11 +53,6 @@ public class SmsConfig implements Serializable {
     private String templateID;
 
     /**
-     * 模板参数个数
-     */
-    private int templateParamCnt;
-
-    /**
      * @see SmsProvider
      */
     private int smsProvider;
@@ -66,7 +60,7 @@ public class SmsConfig implements Serializable {
     /**
      * 模板参数
      */
-    private Map<String, String> templateParams;
+    private List<String> templateParams;
 
     /**
      * 手机号码
