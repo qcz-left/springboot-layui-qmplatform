@@ -9,6 +9,8 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.http.Method;
 import cn.hutool.json.JSONObject;
+import com.qcz.qmplatform.common.exception.BusinessException;
+import com.qcz.qmplatform.common.locale.LocaleUtils;
 import com.qcz.qmplatform.common.utils.DateUtils;
 import com.qcz.qmplatform.common.utils.IdUtils;
 import com.qcz.qmplatform.common.utils.JSONUtils;
@@ -21,6 +23,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,6 +41,11 @@ public class AliyunSmsNotifyService implements INotifyService {
      * 接口请求域名
      */
     private static final String HOST = "dysmsapi.aliyuncs.com";
+
+    /**
+     * 缓存的模板参数名称
+     */
+    private static final List<String> CACHE_TEMPLATE_PARAM_NAMES = new ArrayList<>();
 
     private SmsConfig smsConfig;
 
@@ -67,9 +75,20 @@ public class AliyunSmsNotifyService implements INotifyService {
     private String buildTemplateParams() {
         Map<String, String> templateParamMap = new HashMap<>();
         List<String> templateParams = smsConfig.getTemplateParams();
-        List<String> templateParamNames = getTemplateParamNames(getTemplateContent());
-        for (int i = 0; i < templateParams.size(); i++) {
-            templateParamMap.put(templateParamNames.get(i), templateParams.get(i));
+        int smsCenterTemplateParamSize = CACHE_TEMPLATE_PARAM_NAMES.size();
+        int localTemplateParamSize = templateParams.size();
+        if (smsCenterTemplateParamSize != localTemplateParamSize) {
+            // 重新获取一次模板内容
+            CACHE_TEMPLATE_PARAM_NAMES.clear();
+            CACHE_TEMPLATE_PARAM_NAMES.addAll(getTemplateParamNames(getTemplateContent()));
+            smsCenterTemplateParamSize = CACHE_TEMPLATE_PARAM_NAMES.size();
+            if (smsCenterTemplateParamSize != localTemplateParamSize) {
+                log.error("local template size is {}, central template size is {}", localTemplateParamSize, smsCenterTemplateParamSize);
+                throw new BusinessException(LocaleUtils.getMessage("sms_template_param_not_match"));
+            }
+        }
+        for (int i = 0; i < localTemplateParamSize; i++) {
+            templateParamMap.put(CACHE_TEMPLATE_PARAM_NAMES.get(i), templateParams.get(i));
         }
 
         return JSONUtils.toJsonStr(templateParamMap);

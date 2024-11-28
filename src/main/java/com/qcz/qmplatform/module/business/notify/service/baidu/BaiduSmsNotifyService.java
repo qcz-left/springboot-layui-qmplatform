@@ -5,6 +5,7 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.http.Method;
 import cn.hutool.json.JSONUtil;
+import com.qcz.qmplatform.common.locale.LocaleUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.notify.domain.pojo.SmsConfig;
 import com.qcz.qmplatform.module.business.notify.service.INotifyService;
@@ -40,23 +41,31 @@ public class BaiduSmsNotifyService implements INotifyService {
     private static final Charset UTF8 = StandardCharsets.UTF_8;
     private static final String HTTP_BASE_URL = "http://smsv3.bj.baidubce.com";
 
+    /**
+     * 缓存的模板参数名称
+     */
+    private static final List<String> CACHE_TEMPLATE_PARAM_NAMES = new ArrayList<>();
+
     @Override
     public String send() {
         String signatureId = smsConfig.getSign();
         String templateId = smsConfig.getTemplateID();
-
-        List<String> templateParamNames = getTemplateParamNames(getTemplateContent());
+        List<String> templateParams = smsConfig.getTemplateParams();
 
         Map<String, Object> contentVar = new HashMap<>();
-        int paramsSize = templateParamNames.size();
-        if (paramsSize > 0) {
-            List<String> templateParams = smsConfig.getTemplateParams();
-            if (paramsSize != templateParams.size()) {
-                LOGGER.warn("The number of template parameters does not match!");
+        int localTemplateParamSize = templateParams.size();
+        if (localTemplateParamSize > 0) {
+            int smsCenterTemplateParamSize = CACHE_TEMPLATE_PARAM_NAMES.size();
+            if (smsCenterTemplateParamSize != localTemplateParamSize) {
+                CACHE_TEMPLATE_PARAM_NAMES.clear();
+                CACHE_TEMPLATE_PARAM_NAMES.addAll(getTemplateParamNames(getTemplateContent()));
+                smsCenterTemplateParamSize = CACHE_TEMPLATE_PARAM_NAMES.size();
+                LOGGER.error("template not match, local template size is {}, central template size is {}", localTemplateParamSize, smsCenterTemplateParamSize);
+                return LocaleUtils.getMessage("sms_template_param_not_match");
             }
 
-            for (int i = 0; i < paramsSize; i++) {
-                contentVar.put(templateParamNames.get(i), templateParams.get(i));
+            for (int i = 0; i < localTemplateParamSize; i++) {
+                contentVar.put(CACHE_TEMPLATE_PARAM_NAMES.get(i), templateParams.get(i));
             }
         }
 
