@@ -106,7 +106,7 @@ public interface OrganizationSynchro {
             allLoginNames.add(user.getLoginname());
         }
 
-        List<String> deptIds = new ArrayList<>();
+        Set<String> deptIds = new HashSet<>();
         List<Organization> deptList = getDeptList();
         List<Organization> updateDeptList = new ArrayList<>();
         List<Organization> insertDeptList = new ArrayList<>();
