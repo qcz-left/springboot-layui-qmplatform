@@ -117,7 +117,7 @@ public interface OrganizationSynchro {
             boolean equalsId = StringUtils.equals(oldId, organizationId);
             if (deptNameIdMap.containsKey(organizationName) && !equalsId) {
                 // 同名但ID不一样，说明该部门不是通过同步过来的，跳过
-                LOGGER.warn("[dept name: {}]id is not equal, old id: {}, new id{}, and skipping.", organizationName, oldId, organizationId);
+                LOGGER.warn("[dept name: {}]id is not equal, old id: {}, new id：{}, and skipping.", organizationName, oldId, organizationId);
                 continue;
             }
             deptIds.add(organizationId);
