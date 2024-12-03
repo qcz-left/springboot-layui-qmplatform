@@ -14,11 +14,13 @@ import com.qcz.qmplatform.module.business.system.domain.assist.MessageReceiver;
 import com.qcz.qmplatform.module.business.system.domain.vo.MessageVO;
 import com.qcz.qmplatform.module.business.system.domain.vo.UserVO;
 import com.qcz.qmplatform.module.business.system.mapper.MessageMapper;
+import com.qcz.qmplatform.module.watch.DBChangeCenter;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +87,20 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
         LambdaUpdateWrapper<Message> updateWrapper = Wrappers.lambdaUpdate(Message.class)
                 .in(Message::getMessageId, messageIds)
                 .set(Message::getReaded, 1);
-        return this.update(updateWrapper);
+        boolean success = this.update(updateWrapper);
+        if (success) {
+            dbChange();
+        }
+        return success;
+    }
+
+    @Override
+    public boolean removeByIds(Collection<?> list) {
+        boolean success = super.removeByIds(list);
+        if (success) {
+            dbChange();
+        }
+        return success;
     }
 
     /**
@@ -135,6 +150,13 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
             message.setReceiver(receiverId);
             saveOne(message);
         }
+    }
+
+    /**
+     * 数据库通知
+     */
+    private void dbChange() {
+        DBChangeCenter.getInstance().notifyMessage();
     }
 
 }

@@ -13,7 +13,6 @@ import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.Message;
 import com.qcz.qmplatform.module.business.system.domain.vo.MessageVO;
 import com.qcz.qmplatform.module.business.system.service.MessageService;
-import com.qcz.qmplatform.module.watch.DBChangeCenter;
 import jakarta.annotation.Resource;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -62,11 +61,7 @@ public class MessageController extends BaseController {
     @RequiresPermissions(PrivCode.BTN_CODE_MESSAGE_SET_READ)
     @RecordLog(type = OperateType.UPDATE, description = "设置已读")
     public ResponseResult<Void> setHasRead(@RequestBody List<String> ids) {
-        boolean success = messageService.setHasRead(ids);
-        if (success) {
-            DBChangeCenter.getInstance().notifyMessage();
-        }
-        return ResponseResult.newInstance(success);
+        return ResponseResult.newInstance(messageService.setHasRead(ids));
     }
 
     @PostMapping("/delete")
@@ -74,11 +69,7 @@ public class MessageController extends BaseController {
     @ResponseBody
     @RecordLog(type = OperateType.DELETE, description = "删除系统消息")
     public ResponseResult<Void> delete(@RequestBody List<String> messageIds) {
-        boolean success = messageService.removeByIds(messageIds);
-        if (success) {
-            DBChangeCenter.getInstance().notifyMessage();
-        }
-        return ResponseResult.newInstance(success);
+        return ResponseResult.newInstance(messageService.removeByIds(messageIds));
     }
 
 }

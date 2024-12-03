@@ -6,6 +6,8 @@ import com.qcz.qmplatform.common.bean.Observed;
 import com.qcz.qmplatform.common.utils.ThreadPoolUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,17 @@ public class DBChangeCenter implements Observed, Runnable {
 
     @Override
     public void doNotify(Object msg) {
-        MSG_QUEUE.add(msg);
+        // 如果有事务，在事务提交后通知，没有事务则直接通知
+        if (TransactionSynchronizationManager.isActualTransactionActive()) {
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                @Override
+                public void afterCommit() {
+                    MSG_QUEUE.add(msg);
+                }
+            });
+        } else {
+            MSG_QUEUE.add(msg);
+        }
     }
 
     @Override
