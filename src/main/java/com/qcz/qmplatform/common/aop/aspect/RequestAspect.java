@@ -32,7 +32,7 @@ import java.util.Map;
 @Component
 public class RequestAspect {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("");
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestAspect.class);
 
     @Pointcut("execution(* com.qcz.qmplatform.module..*.controller..*.*(..))")
     public void requestPointcut() {
