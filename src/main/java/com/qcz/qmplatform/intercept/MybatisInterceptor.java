@@ -214,8 +214,7 @@ public class MybatisInterceptor implements Interceptor {
             lastIndexOf = isPlaceHolder ? lastIndexOf : group.lastIndexOf("$");
 
             String name = group.substring(indexOf + 1, lastIndexOf);
-            Object value = parameterMap.get(name);
-            if (ObjectUtil.isNotEmpty(value)) {
+            if (parameterMap.containsKey(name) && ObjectUtil.isNotEmpty(parameterMap.get(name))) {
                 sql = sql.replaceFirst(DYNAMIC_SQL_REG, Matcher.quoteReplacement(group.substring(2, group.length() - 2)));
             } else {
                 sql = sql.replaceFirst(DYNAMIC_SQL_REG, "");
@@ -227,7 +226,7 @@ public class MybatisInterceptor implements Interceptor {
             String group = paramMatcher.group();
             boolean isPlaceHolder = group.contains("#");
             String name = group.substring(1, group.length() - 1);
-            Object value = parameterMap.get(name);
+            Object value = parameterMap.getOrDefault(name, "");
             sql = setParameter(sql, name, value, newParameterMappings, configuration, additionalParameter, isPlaceHolder);
         }
 
