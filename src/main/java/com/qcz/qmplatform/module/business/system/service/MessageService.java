@@ -40,7 +40,7 @@ public class MessageService extends ServiceImpl<MessageMapper, Message> {
     UserService userService;
 
     public List<MessageVO> getList(Message message) {
-        return baseMapper.selectList(message);
+        return baseMapper.getList(message);
     }
 
     /**

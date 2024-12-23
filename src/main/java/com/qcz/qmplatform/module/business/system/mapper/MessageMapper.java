@@ -22,6 +22,6 @@ public interface MessageMapper extends BaseMapper<Message> {
 
     List<Map<String, Object>> selectTypeCountByUserIds(@Param("readed") int readed, @Param("receivers") List<String> receivers);
 
-    List<MessageVO> selectList(Message message);
+    List<MessageVO> getList(Message message);
 
 }
