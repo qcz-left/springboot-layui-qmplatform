@@ -1,8 +1,11 @@
 package com.qcz.qmplatform.common.bean;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.lang.Validator;
+import cn.hutool.core.util.ReUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.qcz.qmplatform.common.exception.BusinessException;
 import com.qcz.qmplatform.common.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -29,7 +32,20 @@ public class PageResultHelper extends PageHelper {
     }
 
     public static <E> Page<E> startPage(PageRequest pageReq) {
-        String orderName = pageReq.getOrderName();
+        String orderName = StringUtils.nullToDefault(pageReq.getOrderName(), "");
+        String order = StringUtils.nullToDefault(pageReq.getOrder(), "");
+        // 校验排序字段参数，防止order by注入
+        if (StringUtils.isNotBlank(orderName)) {
+            if (!ReUtil.isMatch(Validator.GENERAL, orderName.trim())) {
+                throw new BusinessException("排序字段参数异常，请检查！");
+            }
+        }
+        if (StringUtils.isNotBlank(order)) {
+            if (!StringUtils.equalsAnyIgnoreCase(order.trim(), "asc",  "desc")) {
+                throw new BusinessException("排序字段参数异常，请检查！");
+            }
+        }
+
         Integer page = pageReq.getPage();
         Integer limit = pageReq.getLimit();
         if (page == null) {
@@ -38,10 +54,9 @@ public class PageResultHelper extends PageHelper {
         if (limit == null) {
             pageReq.setLimit(10);
         }
-        if (StringUtils.isEmpty(orderName)) {
+        if (StringUtils.isBlank(orderName)) {
             return PageHelper.startPage(pageReq.getPage(), pageReq.getLimit());
         } else {
-            String order = StringUtils.nullToDefault(pageReq.getOrder(), "");
             String[] orderNames = orderName.split(",");
             String[] orders = order.split(",");
             List<String> orderBy = new ArrayList<>();
