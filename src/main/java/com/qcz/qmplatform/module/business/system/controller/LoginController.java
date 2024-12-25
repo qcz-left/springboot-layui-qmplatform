@@ -59,6 +59,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -143,7 +144,7 @@ public class LoginController {
     /**
      * 进入到404页面
      */
-    @GetMapping("/error/404")
+    @RequestMapping("/error/404")
     public String error404() {
         return "error/404";
     }
@@ -151,7 +152,7 @@ public class LoginController {
     /**
      * 进入到500页面
      */
-    @GetMapping("/error/500")
+    @RequestMapping("/error/500")
     public String error500() {
         return "error/500";
     }
