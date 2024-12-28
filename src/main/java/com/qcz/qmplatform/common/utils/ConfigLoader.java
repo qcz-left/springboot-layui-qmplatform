@@ -223,4 +223,18 @@ public class ConfigLoader {
         return LogLevel.valueOf(logLevel.toUpperCase());
     }
 
+    /**
+     * 获取企微API接口消息Token
+     */
+    public static String getWorkWechatApiToken() {
+        return getStringConfig("WorkWechatApiToken");
+    }
+
+    /**
+     * 获取企微API接口消息AES Key
+     */
+    public static String getWorkWechatApiEncodingAESKey() {
+        return getStringConfig("WorkWechatApiEncodingAESKey");
+    }
+
 }

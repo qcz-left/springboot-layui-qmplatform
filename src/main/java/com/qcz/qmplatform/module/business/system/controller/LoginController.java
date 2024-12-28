@@ -3,6 +3,14 @@ package com.qcz.qmplatform.module.business.system.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.ByteUtil;
+import cn.hutool.crypto.Mode;
+import cn.hutool.crypto.Padding;
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.symmetric.AES;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
@@ -60,10 +68,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,6 +129,46 @@ public class LoginController {
     public String loginAgain(RedirectAttributes redirectAttributes, int code) {
         redirectAttributes.addFlashAttribute("code", code);
         return "redirect:/loginPage";
+    }
+
+    /**
+     * 校验企微API接口消息
+     *
+     * @return 明文消息内容
+     */
+    @GetMapping("/nnl/workWechatValidator")
+    @ResponseBody
+    public String workWechatValidator(@RequestParam("msg_signature") String msgSignature,
+                                      @RequestParam("timestamp") String timestamp,
+                                      @RequestParam("nonce") String nonce,
+                                      @RequestParam("echostr") String echoStr
+    ) {
+        LOGGER.debug("密文消息内容：{}", echoStr);
+        String workWechatApiToken = ConfigLoader.getWorkWechatApiToken();
+        String workWechatApiEncodingAESKey = ConfigLoader.getWorkWechatApiEncodingAESKey();
+
+        ArrayList<String> needSortParams = ListUtil.toList(workWechatApiToken, timestamp, nonce, echoStr);
+        // 参数值按照字母字典排序
+        ListUtil.sort(needSortParams, String::compareTo);
+        // 从小到大拼接成一个字符串
+        String hadSortParams = StringUtils.join("", needSortParams);
+        String devMsgSignature = SecureUtil.sha1(hadSortParams);
+        if (!StringUtils.equals(devMsgSignature, msgSignature)) {
+            LOGGER.debug("校验企微消息失败");
+            return "";
+        }
+        // 验证通过，返回明文消息内容
+        byte[] aesMsg = Base64.decode(echoStr);
+        byte[] aesKeyBytes = Base64.decode(workWechatApiEncodingAESKey);
+        byte[] aesIvBytes = ArrayUtil.sub(aesKeyBytes, 0, 16);
+        byte[] decryptMsg = new AES(Mode.CBC, Padding.NoPadding, aesKeyBytes, aesIvBytes).decrypt(aesMsg);
+        // 明文消息的长度
+        int msgLen = ByteUtil.bytesToInt(ArrayUtil.sub(decryptMsg, 16, 20), ByteOrder.BIG_ENDIAN);
+        String msg = new String(ArrayUtil.sub(decryptMsg, 20, 20 + msgLen));
+        if (StringUtils.isNotBlank(msg)) {
+            LOGGER.debug("解析消息成功：{}", msg);
+        }
+        return msg;
     }
 
     /**
