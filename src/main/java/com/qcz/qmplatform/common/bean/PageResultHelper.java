@@ -36,13 +36,17 @@ public class PageResultHelper extends PageHelper {
         String order = StringUtils.nullToDefault(pageReq.getOrder(), "");
         // 校验排序字段参数，防止order by注入
         if (StringUtils.isNotBlank(orderName)) {
-            if (!ReUtil.isMatch(Validator.GENERAL, orderName.trim())) {
-                throw new BusinessException("排序字段参数异常，请检查！");
+            for (String orderNameItem : StringUtils.split(orderName, ",")) {
+                if (!ReUtil.isMatch(Validator.GENERAL, orderNameItem.trim())) {
+                    throw new BusinessException("排序字段参数异常，请检查！");
+                }
             }
         }
         if (StringUtils.isNotBlank(order)) {
-            if (!StringUtils.equalsAnyIgnoreCase(order.trim(), "asc",  "desc")) {
-                throw new BusinessException("排序字段参数异常，请检查！");
+            for (String orderItem : StringUtils.split(order, ",")) {
+                if (!StringUtils.equalsAnyIgnoreCase(orderItem.trim(), "asc",  "desc")) {
+                    throw new BusinessException("排序字段参数异常，请检查！");
+                }
             }
         }
 
