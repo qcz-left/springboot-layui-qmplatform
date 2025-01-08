@@ -26,7 +26,7 @@ public class SessionWebSocketServer extends BaseWebSocketServer {
     private static final Map<String, Session> clients = new ConcurrentHashMap<>();
 
     public static void sendMsg(String result, String id) {
-        if (StringUtils.isNotBlank(id) && clients.containsKey(id)) {
+        if (StringUtils.isNotBlank(id) && hasSession(id)) {
             try {
                 clients.get(id).getBasicRemote().sendText(result);
             } catch (IOException e) {
@@ -38,6 +38,15 @@ public class SessionWebSocketServer extends BaseWebSocketServer {
     @Override
     public Map<String, Session> getClients() {
         return clients;
+    }
+
+    /**
+     * 是否存在这个会话
+     *
+     * @param sessionId 会话ID
+     */
+    public static boolean hasSession(String sessionId) {
+        return clients.containsKey(sessionId);
     }
 
 }
