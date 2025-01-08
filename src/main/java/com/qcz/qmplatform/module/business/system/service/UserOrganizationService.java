@@ -6,6 +6,7 @@ import com.qcz.qmplatform.module.business.system.domain.UserOrganization;
 import com.qcz.qmplatform.module.business.system.mapper.UserOrganizationMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -50,7 +51,7 @@ public class UserOrganizationService extends ServiceImpl<UserOrganizationMapper,
      *
      * @param userIds 用户ID集合
      */
-    public void deleteByUserIds(List<String> userIds) {
+    public void deleteByUserIds(Collection<String> userIds) {
         super.remove(
                 Wrappers.lambdaQuery(UserOrganization.class)
                         .in(UserOrganization::getUserId, userIds)

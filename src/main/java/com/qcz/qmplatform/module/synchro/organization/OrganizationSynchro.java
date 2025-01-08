@@ -47,6 +47,11 @@ public interface OrganizationSynchro {
     String getRootId();
 
     /**
+     * 同步对象名称
+     */
+    String synchroObjectName();
+
+    /**
      * 转换根部门ID为系统根部门ID
      */
     default String covertRootDeptId(String rootId) {
@@ -73,21 +78,12 @@ public interface OrganizationSynchro {
     }
 
     /**
-     * 执行同步
+     * 同步部门，并记录部门ID
+     *
+     * @param deptIds 同步部门ID集合
      */
-    @Transactional
-    default void execute() {
-        LOGGER.info("starting sync organization and user to system.");
-        long startTimeMillis = System.currentTimeMillis();
-
-        refreshConfig();
-        String loginNameSyncWay = StringUtils.blankToDefault(getLoginNameSyncWay(), "");
-        LOGGER.info("loginNameSyncWay: {}", loginNameSyncWay);
-
-        UserService userService = SpringContextUtils.getBean(UserService.class);
+    default void syncOrg(Set<String> deptIds) {
         OrganizationService organizationService = SpringContextUtils.getBean(OrganizationService.class);
-        UserOrganizationService userOrganizationService = SpringContextUtils.getBean(UserOrganizationService.class);
-
         // 现有数据库中已存在的数据，用来做对比
         List<Organization> allOrganizationList = organizationService.list();
         // 部门名->部门ID映射
@@ -96,17 +92,6 @@ public interface OrganizationSynchro {
             deptNameIdMap.put(organization.getOrganizationName(), organization.getOrganizationId());
         }
 
-        List<User> allUserList = userService.list();
-        // 记录所有登录名
-        Set<String> allLoginNames = new HashSet<>();
-        // 用户名->用户ID映射
-        Map<String, String> userNameIdMap = new HashMap<>();
-        for (User user : allUserList) {
-            userNameIdMap.put(user.getUsername(), user.getId());
-            allLoginNames.add(user.getLoginname());
-        }
-
-        Set<String> deptIds = new HashSet<>();
         List<Organization> deptList = getDeptList();
         List<Organization> updateDeptList = new ArrayList<>();
         List<Organization> insertDeptList = new ArrayList<>();
@@ -137,13 +122,32 @@ public interface OrganizationSynchro {
             organizationService.saveBatch(insertDeptList);
             LOGGER.info("sync insert dept finish, size: {}", insertDeptList.size());
         }
+    }
 
-        deptIds.add(getRootId());
+    /**
+     * 同步用户
+     *
+     * @param deptIds           需要同步的部门ID
+     * @param userIds           需要同步的用户ID
+     * @param insertUserOrgList 新增用户-部门关联数据集合
+     */
+    default void syncUser(Set<String> deptIds, Set<String> userIds, List<UserOrganization> insertUserOrgList) {
+        String loginNameSyncWay = StringUtils.blankToDefault(getLoginNameSyncWay(), "");
+        LOGGER.info("loginNameSyncWay: {}", loginNameSyncWay);
+
+        UserService userService = SpringContextUtils.getBean(UserService.class);
+        List<User> allUserList = userService.list();
+        // 记录所有登录名
+        Set<String> allLoginNames = new HashSet<>();
+        // 用户名->用户ID映射
+        Map<String, String> userNameIdMap = new HashMap<>();
+        for (User user : allUserList) {
+            userNameIdMap.put(user.getUsername(), user.getId());
+            allLoginNames.add(user.getLoginname());
+        }
+
         List<User> updateUserList = new ArrayList<>();
         List<User> insertUserList = new ArrayList<>();
-        List<UserOrganization> userOrganizationList = new ArrayList<>();
-        // 需要删除的用户部门关联ID（采用先删除后插入的方式）
-        List<String> deleteUserIdByUserOrg = new ArrayList<>();
         for (String deptId : deptIds) {
             List<User> userList = getUserListByDeptId(deptId);
             for (User user : userList) {
@@ -194,11 +198,12 @@ public interface OrganizationSynchro {
                     insertUserList.add(user);
                 }
 
-                deleteUserIdByUserOrg.add(userId);
+                userIds.add(userId);
+
                 UserOrganization userOrganization = new UserOrganization()
                         .setOrganizationId(covertRootDeptId(deptId))
                         .setUserId(userId);
-                userOrganizationList.add(userOrganization);
+                insertUserOrgList.add(userOrganization);
             }
         }
 
@@ -210,17 +215,70 @@ public interface OrganizationSynchro {
             userService.saveBatch(insertUserList);
             LOGGER.info("sync insert user finish, size: {}", insertUserList.size());
         }
-        if (CollectionUtil.isNotEmpty(deleteUserIdByUserOrg)) {
-            userOrganizationService.deleteByUserIds(deleteUserIdByUserOrg);
-            LOGGER.info("sync delete user-dept finish, size: {}", deleteUserIdByUserOrg.size());
+    }
+
+    /**
+     * 同步用户-部门关联
+     *
+     * @param userIds           需要同步的用户ID
+     * @param insertUserOrgList 新增用户-部门关联数据集合
+     */
+    default void syncUserDept(Set<String> userIds, List<UserOrganization> insertUserOrgList) {
+        UserOrganizationService userOrganizationService = SpringContextUtils.getBean(UserOrganizationService.class);
+        if (CollectionUtil.isNotEmpty(userIds)) {
+            userOrganizationService.deleteByUserIds(userIds);
+            LOGGER.info("sync delete user-dept finish, size: {}", userIds.size());
         }
-        if (CollectionUtil.isNotEmpty(userOrganizationList)) {
-            userOrganizationService.saveBatch(userOrganizationList);
-            LOGGER.info("sync insert user-dept finish, size: {}", userOrganizationList.size());
+        if (CollectionUtil.isNotEmpty(insertUserOrgList)) {
+            userOrganizationService.saveBatch(insertUserOrgList);
+            LOGGER.info("sync insert user-dept finish, size: {}", insertUserOrgList.size());
         }
+
+    }
+
+    /**
+     * 执行前的检查
+     */
+    default void executeCheck() {
+
+    }
+
+    /**
+     * 执行完成后的操作
+     */
+    default void executeFinished() {
+
+    }
+
+    /**
+     * 执行同步
+     */
+    @Transactional
+    default void execute() {
+        executeCheck();
+
+        LOGGER.info("starting sync organization and user to system.");
+        long startTimeMillis = System.currentTimeMillis();
+
+        refreshConfig();
+
+        // 所有需要同步的部门ID集合
+        Set<String> deptIds = new HashSet<>();
+        syncOrg(deptIds);
+
+        deptIds.add(getRootId());
+
+        // 所有需要同步的用户ID集合
+        Set<String> userIds = new HashSet<>();
+        // 新增用户-部门关联数据集合
+        List<UserOrganization> insertUserOrgList = new ArrayList<>();
+        syncUser(deptIds, userIds, insertUserOrgList);
+
+        syncUserDept(userIds, insertUserOrgList);
 
         LOGGER.info("end sync organization and user to system, it's cost {}ms", System.currentTimeMillis() - startTimeMillis);
 
+        executeFinished();
     }
 
 }
