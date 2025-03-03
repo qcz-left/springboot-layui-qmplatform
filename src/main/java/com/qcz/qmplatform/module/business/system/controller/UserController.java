@@ -329,7 +329,7 @@ public class UserController extends BaseController {
         templateParams.add(String.valueOf(timeout));
         config.setTemplateParams(templateParams);
         // 发送
-        String code = NotifyServiceFactory.build(config).send();
+        String code = NotifyServiceFactory.createNotifyService(config).send();
         Map<String, String> retData = new HashMap<>(4);
         retData.put("code", code);
         retData.put("phone", phone);
