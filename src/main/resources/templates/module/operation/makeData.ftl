@@ -142,7 +142,7 @@
         <div class="layui-form-item hide" id="lengthDiv">
             <label class="layui-form-label required">字段长度</label>
             <div class="layui-input-inline">
-                <input type="number" name="length" lay-verify="required" autocomplete="off" class="layui-input" style="width: 60px;">
+                <input type="number" name="columnLength" lay-verify="required" autocomplete="off" class="layui-input" style="width: 60px;">
             </div>
         </div>
     </form>
@@ -215,7 +215,7 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
                 }
             },
             {field: 'value', title: '字段值', width: '20%'},
-            {field: 'length', title: '字段长度', width: '10%'},
+            {field: 'columnLength', title: '字段长度', width: '10%'},
             {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
         ]]
     });
@@ -286,7 +286,7 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
         on: function (data) {
             let value = data.arr[0].value;
             let valueSelector = '[name="value"]';
-            let lengthSelector = '[name="length"]';
+            let lengthSelector = '[name="columnLength"]';
             clearFormValid(valueSelector);
             clearFormValid(lengthSelector);
             if (value === 1) {
@@ -315,7 +315,7 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
                     form.val('column-detail-form', {
                         name: '',
                         value: '',
-                        length: ''
+                        columnLength: ''
                     });
                     typeSelect.setValue(['string']);
                     valueTypeSelect.setValue([1], null, true);

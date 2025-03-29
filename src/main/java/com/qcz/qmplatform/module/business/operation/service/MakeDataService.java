@@ -110,7 +110,7 @@ public class MakeDataService {
                         || type == Types.SMALLINT
                         || type == Types.TINYINT) {
                     columnDetail.setType("number");
-                    columnDetail.setLength(2);
+                    columnDetail.setColumnLength(2);
                 } else if (type == Types.DATE
                         || type == Types.TIME
                         || type == Types.TIME_WITH_TIMEZONE
@@ -119,7 +119,7 @@ public class MakeDataService {
                     columnDetail.setType("date");
                 } else {
                     columnDetail.setType("string");
-                    columnDetail.setLength(10);
+                    columnDetail.setColumnLength(10);
                 }
                 columnDetail.setValueType(2);
 

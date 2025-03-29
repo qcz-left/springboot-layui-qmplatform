@@ -58,7 +58,7 @@ public class DataDetail implements Serializable {
         /**
          * 字段长度
          */
-        int length;
+        int columnLength;
 
         public Object getFinallyValue() {
             if (valueType == 1) {
@@ -72,7 +72,7 @@ public class DataDetail implements Serializable {
             }
 
             if (valueType == 2) {
-                return ColumnType.getColumnType(type).random(length);
+                return ColumnType.getColumnType(type).random(columnLength);
             }
 
             return null;
