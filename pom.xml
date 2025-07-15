@@ -27,7 +27,7 @@
         <pagehelper-starter.version>2.1.0</pagehelper-starter.version>
         <shiro.version>1.13.0</shiro.version>
         <shiro-freemarker.version>1.0.2</shiro-freemarker.version>
-        <jasypt.version>2.1.1</jasypt.version>
+        <jasypt.version>3.0.5</jasypt.version>
         <oshi.version>5.1.0</oshi.version>
         <poi.version>5.2.2</poi.version>
         <jodconverter-boot.version>4.4.2</jodconverter-boot.version>
@@ -76,7 +76,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>provided</scope>
+            <scope>test</scope>
             <exclusions>
                 <exclusion>
                     <groupId>com.vaadin.external.google</groupId>
@@ -231,7 +231,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
 
         <!-- 漏洞修复 -->
