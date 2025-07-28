@@ -424,17 +424,17 @@ layui.use(['form', 'xmSelect', 'table', 'upload'], function () {
         accept: 'file',
         url: ctx + '/operation/make-data/importLocalConfig',
         done: function (result) {
-            let data = result.data;
-            form.val("database-form", data.dbDetail)
-            dbNameSelect.setValue([data.dbDetail.dbName])
-            form.val("table-form", {
-                tableName: data.dataDetail.tableName,
-                insertNumber: data.insertNumber
-            })
-            columnDetailTableIns.reload({
-                data: data.dataDetail.columnDetails
+            LayerUtil.respMsg(result, "导入成功", "导入失败", function (data) {
+                form.val("database-form", data.dbDetail)
+                dbNameSelect.setValue([data.dbDetail.dbName])
+                form.val("table-form", {
+                    tableName: data.dataDetail.tableName,
+                    insertNumber: data.insertNumber
+                })
+                columnDetailTableIns.reload({
+                    data: data.dataDetail.columnDetails
+                });
             });
-            LayerUtil.respMsg(result, "导入成功", "导入失败");
         }
     });
 })

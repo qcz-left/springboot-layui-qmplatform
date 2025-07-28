@@ -9,12 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Date;
 
 /**
@@ -37,7 +33,7 @@ public class FileUtils extends FileUtil {
      * @param obj      对象
      * @param filePath 文件路径
      */
-    public static void writeObjectToFile(Object obj, String filePath) {
+    public static <T> void writeObjectToFile(T obj, String filePath) {
         writeObjectToFile(obj, new File(filePath));
     }
 
@@ -47,20 +43,11 @@ public class FileUtils extends FileUtil {
      * @param obj  对象
      * @param file 文件路径
      */
-    public static void writeObjectToFile(Object obj, File file) {
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
+    public static <T> void writeObjectToFile(T obj, File file) {
         createIfNotExists(file);
-        try {
-            fos = new FileOutputStream(file);
-            oos = new ObjectOutputStream(fos);
-            oos.writeObject(obj);
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-        } finally {
-            IoUtil.close(oos);
-            IoUtil.close(fos);
-        }
+        String jsonStr = JSONUtils.toJsonStr(obj);
+        String encodedJsonStr = SecureUtils.aesEncrypt(jsonStr);
+        writeUtf8String(encodedJsonStr, file);
     }
 
     /**
@@ -81,43 +68,15 @@ public class FileUtils extends FileUtil {
     }
 
     public static <T> T readObjectFromFile(InputStream inputStream, Class<T> clazz) {
-        ObjectInputStream ois = null;
+        String encodedJsonStr = IoUtil.readUtf8(inputStream);
         try {
-            ois = new ObjectInputStream(inputStream);
-            return clazz.cast(ois.readObject());
-        } catch (IOException | ClassNotFoundException e) {
-            LOGGER.error(e.getMessage(), e);
-        } finally {
-            CloseUtils.close(ois);
+            String jsonStr = SecureUtils.aesDecrypt(encodedJsonStr);
+            return JSONUtils.toBean(jsonStr, clazz);
+        } catch (Exception e) {
+            LOGGER.error("read object from file failed!", e);
         }
+
         return ReflectUtil.newInstance(clazz);
-    }
-
-    public static Object readObjectFromFile(String filePath) {
-        return readObjectFromFile(new File(filePath));
-    }
-
-    public static Object readObjectFromFile(File file) {
-        if (!exist(file)) {
-            try {
-                return new Object();
-            } catch (Exception e) {
-                LOGGER.error(null, e);
-            }
-        }
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
-        try {
-            fis = new FileInputStream(file);
-            ois = new ObjectInputStream(fis);
-            return ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            LOGGER.error(e.getMessage(), e);
-        } finally {
-            CloseUtils.close(ois);
-            CloseUtils.close(fis);
-        }
-        return new Object();
     }
 
     public static void createNewFile(File file) {
