@@ -29,7 +29,7 @@
         <shiro-freemarker.version>1.0.2</shiro-freemarker.version>
         <jasypt.version>3.0.5</jasypt.version>
         <oshi.version>5.1.0</oshi.version>
-        <poi.version>5.2.2</poi.version>
+        <poi.version>5.4.0</poi.version>
         <jodconverter-boot.version>4.4.2</jodconverter-boot.version>
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <junit.version>4.13.1</junit.version>
