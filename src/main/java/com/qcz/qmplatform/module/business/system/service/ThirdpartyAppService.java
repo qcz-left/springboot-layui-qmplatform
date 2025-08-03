@@ -12,10 +12,13 @@ import com.qcz.qmplatform.common.utils.SecureUtils;
 import com.qcz.qmplatform.common.utils.StringUtils;
 import com.qcz.qmplatform.module.business.system.domain.ThirdpartyApp;
 import com.qcz.qmplatform.module.business.system.domain.dto.ThirdpartyAppDeleteDTO;
+import com.qcz.qmplatform.module.business.system.domain.vo.ManageBindAccountVO;
 import com.qcz.qmplatform.module.business.system.mapper.ThirdpartyAppMapper;
 import com.qcz.qmplatform.module.watch.DBChangeCenter;
 import com.qcz.qmplatform.module.watch.DBNotifyInfo;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -139,6 +142,13 @@ public class ThirdpartyAppService extends ServiceImpl<ThirdpartyAppMapper, Third
      */
     private void dbChange(String name) {
         DBChangeCenter.getInstance().doNotify(DBNotifyInfo.newInstance(DBProperties.Table.SYS_THIRDPARTY_APP, name));
+    }
+
+    /**
+     * 第三方绑定账号数据列表
+     */
+    public List<ManageBindAccountVO> manageBindAccountList() {
+        return baseMapper.manageBindAccountList();
     }
 
 }

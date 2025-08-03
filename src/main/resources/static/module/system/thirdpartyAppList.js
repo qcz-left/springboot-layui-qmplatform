@@ -47,6 +47,9 @@ layui.use(['form', 'table'], function () {
             case 'add':
                 open();
                 break;
+            case 'manageBindAccount':
+                openManageBindAccountPage();
+                break;
         }
     });
 
@@ -112,6 +115,71 @@ layui.use(['form', 'table'], function () {
                     LayerUtil.respMsg(result, Msg.SAVE_SUCCESS, Msg.SAVE_FAILURE, () => {
                         tableReload();
                     })
+                });
+            }
+        });
+    }
+
+    /**
+     * 管理绑定账号页面
+     */
+    function openManageBindAccountPage() {
+        LayerUtil.openLayer({
+            title: "管理绑定账号",
+            content: baseUrl + "/manageBindAccountPage",
+            area: ['50%', '80%'],
+            loaded: function (iframeWin) {
+                iframeWin.layui.use(['table'], function () {
+                    let iframeWinTable = iframeWin.layui.table;
+                    let appNameDef = {
+                        "dingtalk": "钉钉"
+                    };
+                    iframeWinTable.render({
+                        elem: '#manageBindAccount-list-tab',
+                        url: baseUrl + '/manageBindAccountList',
+                        height: 'full-30',
+                        page: true,
+                        cols: [[
+                            {
+                                field: 'appName', title: '平台名称', width: '20%', templet: function (row) {
+                                    return appNameDef[row.appName];
+                                }
+                            },
+                            {field: 'accountName', title: '账号名称', width: '20%', sort: true},
+                            {fixed: 'right', title: '操作', align: 'center', templet: '#operator'}
+                        ]]
+                    });
+
+                    function bindAccountTableReload() {
+                        layuiTableReload(iframeWinTable, "manageBindAccount-list-tab", {});
+                    }
+
+                    function deleteBindAccount(id, name) {
+                        iframeWin.layer.confirm("是否要删除第三方绑定账号：<span class='text-success'>" + name + "</span>，删除后将不可恢复！", {
+                            title: "警告",
+                            skin: "my-layer-danger"
+                        }, function (index) {
+                            CommonUtil.postAjax(baseUrl + "/deleteBindAccount/" + id, {
+                                id: id
+                            }, function (data) {
+                                LayerUtil.respMsg(data, Msg.DELETE_SUCCESS, Msg.DELETE_FAILURE, function () {
+                                    bindAccountTableReload();
+                                });
+                                iframeWin.layer.close(index);
+                            });
+                        });
+                    }
+
+                    iframeWinTable.on('tool(manageBindAccount)', function (obj) {
+                        let data = obj.data;
+                        let id = data.thirdpartyId
+                        let name = appNameDef[data.appName] + "-" + data.accountName;
+                        switch (obj.event) {
+                            case 'delete':
+                                deleteBindAccount(id, name);
+                                break;
+                        }
+                    });
                 });
             }
         });

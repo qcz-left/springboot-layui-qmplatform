@@ -8,6 +8,7 @@
         <script type="text/html" id="toolbar">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
+                <button class="layui-btn layui-btn-sm" lay-event="manageBindAccount"><i class="layui-icon layui-icon-edit"></i>管理绑定账号</button>
             </div>
         </script>
         <script type="text/html" id="status">

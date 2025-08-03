@@ -2,6 +2,9 @@ package com.qcz.qmplatform.module.business.system.mapper;
 
 import com.qcz.qmplatform.module.business.system.domain.ThirdpartyApp;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qcz.qmplatform.module.business.system.domain.vo.ManageBindAccountVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface ThirdpartyAppMapper extends BaseMapper<ThirdpartyApp> {
 
+    List<ManageBindAccountVO> manageBindAccountList();
 }

@@ -10,7 +10,9 @@ import com.qcz.qmplatform.common.bean.ResponseResult;
 import com.qcz.qmplatform.module.base.BaseController;
 import com.qcz.qmplatform.module.business.system.domain.ThirdpartyApp;
 import com.qcz.qmplatform.module.business.system.domain.dto.ThirdpartyAppDeleteDTO;
+import com.qcz.qmplatform.module.business.system.domain.vo.ManageBindAccountVO;
 import com.qcz.qmplatform.module.business.system.service.ThirdpartyAppService;
+import com.qcz.qmplatform.module.business.system.service.UserThirdpartyService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +36,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ThirdpartyAppController extends BaseController {
 
     @Resource
-    ThirdpartyAppService thirdpartyAppService;
+    private ThirdpartyAppService thirdpartyAppService;
+
+    @Resource
+    private UserThirdpartyService userThirdpartyService;
 
     @GetMapping("/thirdpartyAppListPage")
     public String thirdpartyAppListPage() {
@@ -46,11 +51,23 @@ public class ThirdpartyAppController extends BaseController {
         return "/module/system/thirdpartyAppDetail";
     }
 
+    @GetMapping("/manageBindAccountPage")
+    public String manageBindAccountPage() {
+        return "/module/system/manageBindAccount";
+    }
+
     @PostMapping("/getThirdpartyAppList")
     @ResponseBody
     public ResponseResult<PageResult<ThirdpartyApp>> getThirdpartyAppList(PageRequest pageRequest) {
         PageResultHelper.startPage(pageRequest);
         return ResponseResult.ok(PageResultHelper.parseResult(thirdpartyAppService.list()));
+    }
+
+    @PostMapping("/manageBindAccountList")
+    @ResponseBody
+    public ResponseResult<PageResult<ManageBindAccountVO>> manageBindAccountList(PageRequest pageRequest) {
+        PageResultHelper.startPage(pageRequest);
+        return ResponseResult.ok(PageResultHelper.parseResult(thirdpartyAppService.manageBindAccountList()));
     }
 
     @GetMapping("/get/{id}")
@@ -78,6 +95,13 @@ public class ThirdpartyAppController extends BaseController {
     @RecordLog(type = OperateType.DELETE, description = "删除第三方应用参数配置信息")
     public ResponseResult<Void> delete(@RequestBody ThirdpartyAppDeleteDTO dto) {
         return ResponseResult.newInstance(thirdpartyAppService.removeOne(dto));
+    }
+
+    @PostMapping("/deleteBindAccount/{thirdpartyId}")
+    @ResponseBody
+    @RecordLog(type = OperateType.DELETE, description = "删除第三方绑定账号")
+    public ResponseResult<Void> deleteBindAccount(@PathVariable("thirdpartyId") String thirdpartyId) {
+        return ResponseResult.newInstance(userThirdpartyService.removeByThirdpartyId(thirdpartyId));
     }
 
     @GetMapping("/validateName")

@@ -46,4 +46,11 @@ public class UserThirdpartyService extends ServiceImpl<UserThirdpartyMapper, Use
                 .eq(UserThirdparty::getAccessType, thirdparty.getType());
         return baseMapper.selectOne(queryWrapper);
     }
+
+    public boolean removeByThirdpartyId(String thirdpartyId) {
+        return super.remove(Wrappers.lambdaUpdate(UserThirdparty.class)
+                .eq(UserThirdparty::getThirdpartyId, thirdpartyId)
+        );
+    }
+
 }
