@@ -179,21 +179,23 @@ public class MybatisInterceptor implements Interceptor {
         String sql = boundSql.getSql();
         Configuration configuration = ms.getConfiguration();
         Object parameterObject = boundSql.getParameterObject();
-        Map<String, Object> parameterMap;
-        if (parameterObject instanceof Map) {
-            parameterMap = (Map<String, Object>) parameterObject;
-        } else if (ClassUtils.isCommonDataType(parameterObject.getClass())) {
-            // 单个参数的情况
-            parameterMap = new HashMap<>();
+        Map<String, Object> parameterMap = null;
+        if (parameterObject != null ){
+            if (parameterObject instanceof Map) {
+                parameterMap = (Map<String, Object>) parameterObject;
+            } else if (ClassUtils.isCommonDataType(parameterObject.getClass())) {
+                // 单个参数的情况
+                parameterMap = new HashMap<>();
 
-            Matcher matcher = Pattern.compile(DYNAMIC_PARAM_REG).matcher(sql);
-            while (matcher.find()) {
-                String group = matcher.group();
-                String name = group.substring(1, group.length() - 1);
-                parameterMap.put(name, parameterObject);
+                Matcher matcher = Pattern.compile(DYNAMIC_PARAM_REG).matcher(sql);
+                while (matcher.find()) {
+                    String group = matcher.group();
+                    String name = group.substring(1, group.length() - 1);
+                    parameterMap.put(name, parameterObject);
+                }
+            } else {
+                parameterMap = BeanUtil.beanToMap(parameterObject);
             }
-        } else {
-            parameterMap = BeanUtil.beanToMap(parameterObject);
         }
         List<ParameterMapping> newParameterMappings = new ArrayList<>(boundSql.getParameterMappings());
         if (parameterMap == null) {
