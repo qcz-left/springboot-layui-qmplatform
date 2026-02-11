@@ -25,7 +25,7 @@
         <hutool.version>5.8.21</hutool.version>
         <javax.mail.version>1.6.2</javax.mail.version>
         <pagehelper-starter.version>2.1.0</pagehelper-starter.version>
-        <shiro.version>1.13.0</shiro.version>
+        <shiro.version>2.1.0</shiro.version>
         <shiro-freemarker.version>1.0.2</shiro-freemarker.version>
         <jasypt.version>3.0.5</jasypt.version>
         <oshi.version>5.1.0</oshi.version>
